@@ -85,6 +85,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // contentPanel
             // 
+            this.contentPanel.AutoScroll = true;
             this.contentPanel.BackColor = System.Drawing.Color.FromArgb(248, 249, 250);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 160);
