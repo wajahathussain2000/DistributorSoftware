@@ -11,7 +11,6 @@ namespace DistributionSoftware.Presentation.Forms
     {
         private SqlConnection connection;
         private string connectionString;
-        private bool isEditMode = false;
         private int currentProductId = 0;
 
         public ProductMasterForm()

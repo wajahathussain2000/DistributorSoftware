@@ -12,6 +12,7 @@ using LiveChartsCore.SkiaSharpView.WinForms;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using DistributionSoftware.Business;
+using DistributionSoftware.Presentation.Forms;
 
 namespace DistributionSoftware.Presentation.Forms
 {
@@ -71,13 +72,6 @@ namespace DistributionSoftware.Presentation.Forms
             // Users Dropdown (User Management Module)
             usersDropdown = new ContextMenuStrip();
             usersDropdown.Font = dropdownFont;
-            usersDropdown.Items.Add("User Registration Form", null, (s, e) => OpenUserRegistrationForm());
-            usersDropdown.Items.Add("User Login Form", null, (s, e) => OpenUserLoginForm());
-            usersDropdown.Items.Add("Role & Permissions Form", null, (s, e) => OpenRolePermissionsForm());
-            usersDropdown.Items.Add("Activity Log Viewer", null, (s, e) => OpenActivityLogViewer());
-            usersDropdown.Items.Add("-");
-            usersDropdown.Items.Add("User Activity Report", null, (s, e) => OpenUserActivityReport());
-            usersDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReport());
 
             // Products Dropdown (Product & Inventory Management Module)
             productsDropdown = new ContextMenuStrip();
@@ -88,63 +82,27 @@ namespace DistributionSoftware.Presentation.Forms
             productsDropdown.Items.Add("Units Management", null, (s, e) => OpenUnitsForm());
             productsDropdown.Items.Add("Barcode Generator", null, (s, e) => OpenBarcodeGenerator());
             productsDropdown.Items.Add("Stock Adjustment Form", null, (s, e) => OpenStockAdjustmentForm());
-            productsDropdown.Items.Add("Reorder Level Setup", null, (s, e) => OpenReorderLevelForm());
             productsDropdown.Items.Add("-");
+            productsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
 
 
             // Inventory Dropdown (Additional Inventory Features)
             inventoryDropdown = new ContextMenuStrip();
             inventoryDropdown.Font = dropdownFont;
-            inventoryDropdown.Items.Add("Stock Transfer", null, (s, e) => MessageBox.Show("Opening Stock Transfer...", "Inventory", MessageBoxButtons.OK, MessageBoxIcon.Information));
             inventoryDropdown.Items.Add("Warehouse Management", null, (s, e) => OpenWarehouseForm());
-            inventoryDropdown.Items.Add("Inventory Count", null, (s, e) => MessageBox.Show("Opening Inventory Count...", "Inventory", MessageBoxButtons.OK, MessageBoxIcon.Information));
-            inventoryDropdown.Items.Add("-");
-            inventoryDropdown.Items.Add("Inventory Valuation Report", null, (s, e) => MessageBox.Show("Opening Inventory Valuation Report...", "Inventory", MessageBoxButtons.OK, MessageBoxIcon.Information));
-            inventoryDropdown.Items.Add("Stock Aging Report", null, (s, e) => MessageBox.Show("Opening Stock Aging Report...", "Inventory", MessageBoxButtons.OK, MessageBoxIcon.Information));
 
             // Sales Dropdown (Sales & Distribution Module)
             salesDropdown = new ContextMenuStrip();
             salesDropdown.Font = dropdownFont;
-            salesDropdown.Items.Add("Sales Invoice Form", null, (s, e) => OpenSalesInvoiceForm());
-            salesDropdown.Items.Add("Sales Return Form", null, (s, e) => OpenSalesReturnForm());
-            salesDropdown.Items.Add("Delivery Challan Form", null, (s, e) => OpenDeliveryChallanForm());
-            salesDropdown.Items.Add("Salesman Target & Achievement", null, (s, e) => OpenSalesmanTargetForm());
-            salesDropdown.Items.Add("Pricing & Discount Setup", null, (s, e) => OpenPricingDiscountForm());
-            salesDropdown.Items.Add("-");
-            salesDropdown.Items.Add("Sales Register", null, (s, e) => OpenSalesRegister());
-            salesDropdown.Items.Add("Sales Return Report", null, (s, e) => OpenSalesReturnReport());
-            salesDropdown.Items.Add("Sales Summary Report", null, (s, e) => OpenSalesSummaryReport());
-            salesDropdown.Items.Add("Product-wise Sales Report", null, (s, e) => OpenProductWiseSalesReport());
-            salesDropdown.Items.Add("Customer-wise Sales Report", null, (s, e) => OpenCustomerWiseSalesReport());
-            salesDropdown.Items.Add("Salesman-wise Sales Report", null, (s, e) => OpenSalesmanWiseSalesReport());
-            salesDropdown.Items.Add("Invoice-wise Report", null, (s, e) => OpenInvoiceWiseReport());
-            salesDropdown.Items.Add("Profit Margin Report", null, (s, e) => OpenProfitMarginReport());
 
             // Purchases Dropdown (Purchase Module)
             purchasesDropdown = new ContextMenuStrip();
             purchasesDropdown.Font = dropdownFont;
             purchasesDropdown.Items.Add("Purchase Invoice Entry", null, (s, e) => OpenPurchaseInvoiceForm());
-            purchasesDropdown.Items.Add("Purchase Return Form", null, (s, e) => OpenPurchaseReturnForm());
-            purchasesDropdown.Items.Add("GRN Form", null, (s, e) => OpenGRNForm());
-            purchasesDropdown.Items.Add("Supplier Debit Note Form", null, (s, e) => OpenSupplierDebitNoteForm());
-            purchasesDropdown.Items.Add("-");
-            purchasesDropdown.Items.Add("Purchase Register", null, (s, e) => OpenPurchaseRegister());
-            purchasesDropdown.Items.Add("Purchase Return Report", null, (s, e) => OpenPurchaseReturnReport());
-            purchasesDropdown.Items.Add("Purchase Summary Report", null, (s, e) => OpenPurchaseSummaryReport());
-            purchasesDropdown.Items.Add("Supplier-wise Purchase Report", null, (s, e) => OpenSupplierWisePurchaseReport());
 
             // Customers Dropdown (Customer Management Module)
             customersDropdown = new ContextMenuStrip();
             customersDropdown.Font = dropdownFont;
-            customersDropdown.Items.Add("Customer Master", null, (s, e) => OpenCustomerMasterForm());
-            customersDropdown.Items.Add("Customer Ledger", null, (s, e) => OpenCustomerLedgerForm());
-            customersDropdown.Items.Add("Customer Receipts Form", null, (s, e) => OpenCustomerReceiptsForm());
-            customersDropdown.Items.Add("Customer Categories", null, (s, e) => OpenCustomerCategoriesForm());
-            customersDropdown.Items.Add("-");
-            customersDropdown.Items.Add("Customer Ledger Report", null, (s, e) => OpenCustomerLedgerReport());
-            customersDropdown.Items.Add("Customer Balance Report", null, (s, e) => OpenCustomerBalanceReport());
-            customersDropdown.Items.Add("Customer Receipts Report", null, (s, e) => OpenCustomerReceiptsReport());
-            customersDropdown.Items.Add("Aging Report", null, (s, e) => OpenAgingReport());
 
             // Suppliers Dropdown (Supplier Management Module)
             suppliersDropdown = new ContextMenuStrip();
@@ -160,51 +118,12 @@ namespace DistributionSoftware.Presentation.Forms
             // Reports Dropdown (Reports Dashboard & Additional Reports)
             reportsDropdown = new ContextMenuStrip();
             reportsDropdown.Font = dropdownFont;
-            reportsDropdown.Items.Add("Sales Trend Charts", null, (s, e) => OpenSalesTrendCharts());
-            reportsDropdown.Items.Add("Purchase vs Sales Analysis", null, (s, e) => OpenPurchaseVsSalesAnalysis());
-            reportsDropdown.Items.Add("Profitability Analysis", null, (s, e) => OpenProfitabilityAnalysis());
-            reportsDropdown.Items.Add("Top 10 Analysis", null, (s, e) => OpenTop10Analysis());
-            reportsDropdown.Items.Add("Aging Analysis Graphs", null, (s, e) => OpenAgingAnalysisGraphs());
-            reportsDropdown.Items.Add("-");
-            reportsDropdown.Items.Add("Delivery Schedule Report", null, (s, e) => OpenDeliveryScheduleReport());
-            reportsDropdown.Items.Add("Dispatch Report", null, (s, e) => OpenDispatchReport());
-            reportsDropdown.Items.Add("Pending Delivery Report", null, (s, e) => OpenPendingDeliveryReport());
-            reportsDropdown.Items.Add("Vehicle Utilization Report", null, (s, e) => OpenVehicleUtilizationReport());
-            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
 
 
             // Settings Dropdown (Security & Backup Module)
             settingsDropdown = new ContextMenuStrip();
             settingsDropdown.Font = dropdownFont;
-            settingsDropdown.Items.Add("Database Backup & Restore", null, (s, e) => OpenDatabaseBackupForm());
-            settingsDropdown.Items.Add("User Access Control Settings", null, (s, e) => OpenUserAccessControlForm());
-            settingsDropdown.Items.Add("Audit Trail Viewer", null, (s, e) => OpenAuditTrailViewer());
-            settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("Audit Trail Report", null, (s, e) => OpenAuditTrailReport());
-            settingsDropdown.Items.Add("Backup History Report", null, (s, e) => OpenBackupHistoryReport());
-            settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("Chart of Accounts", null, (s, e) => OpenChartOfAccountsForm());
-            settingsDropdown.Items.Add("Journal Voucher Form", null, (s, e) => OpenJournalVoucherForm());
-            settingsDropdown.Items.Add("Payment Voucher Form", null, (s, e) => OpenPaymentVoucherForm());
-            settingsDropdown.Items.Add("Receipt Voucher Form", null, (s, e) => OpenReceiptVoucherForm());
-            settingsDropdown.Items.Add("Bank Reconciliation Form", null, (s, e) => OpenBankReconciliationForm());
-            settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("General Ledger Report", null, (s, e) => OpenGeneralLedgerReport());
-            settingsDropdown.Items.Add("Trial Balance", null, (s, e) => OpenTrialBalanceReport());
-            settingsDropdown.Items.Add("Profit & Loss Statement", null, (s, e) => OpenProfitLossReport());
-            settingsDropdown.Items.Add("Balance Sheet", null, (s, e) => OpenBalanceSheetReport());
-            settingsDropdown.Items.Add("Cash Flow Report", null, (s, e) => OpenCashFlowReport());
-            settingsDropdown.Items.Add("Bank Reconciliation Report", null, (s, e) => OpenBankReconciliationReport());
-            settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("Expense Entry Form", null, (s, e) => OpenExpenseEntryForm());
-            settingsDropdown.Items.Add("Expense Category Master", null, (s, e) => OpenExpenseCategoriesForm());
-            settingsDropdown.Items.Add("Expense Report", null, (s, e) => OpenExpenseReport());
-            settingsDropdown.Items.Add("Expense Summary", null, (s, e) => OpenExpenseSummaryReport());
-            settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("Tax Configuration", null, (s, e) => OpenTaxConfigurationForm());
-            settingsDropdown.Items.Add("Tax Return Filing Export", null, (s, e) => OpenTaxReturnExport());
-            settingsDropdown.Items.Add("Tax Summary Report", null, (s, e) => OpenTaxSummaryReport());
-            settingsDropdown.Items.Add("Tax Invoice Report", null, (s, e) => OpenTaxInvoiceReport());
         }
 
         private void InitializeCharts()
@@ -863,13 +782,6 @@ namespace DistributionSoftware.Presentation.Forms
 
         #region Form Opening Methods
 
-        // User Management Module
-        private void OpenUserRegistrationForm() { MessageBox.Show("Opening User Registration Form...", "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenUserLoginForm() { MessageBox.Show("Opening User Login Form...", "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenRolePermissionsForm() { MessageBox.Show("Opening Role & Permissions Form...", "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenActivityLogViewer() { MessageBox.Show("Opening Activity Log Viewer...", "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenUserActivityReport() { MessageBox.Show("Opening User Activity Report...", "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenLoginHistoryReport() { MessageBox.Show("Opening Login History Report...", "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
 
         // Product & Inventory Management Module
         private void OpenProductMasterForm() 
@@ -909,108 +821,120 @@ namespace DistributionSoftware.Presentation.Forms
             StockAdjustmentForm stockAdjustmentForm = new StockAdjustmentForm();
             stockAdjustmentForm.Show();
         }
-        private void OpenReorderLevelForm() { MessageBox.Show("Opening Reorder Level Form...", "Inventory", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+        
+        private void OpenStockReportForm()
+        {
+            try
+            {
+                StockReportForm stockReportForm = new StockReportForm();
+                stockReportForm.Owner = this;
+                stockReportForm.ShowDialog();
+                stockReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
 
 
         // Supplier Management Module
-        private void OpenSupplierMasterForm() { MessageBox.Show("Opening Supplier Master Form...", "Supplier Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierLedgerForm() { MessageBox.Show("Opening Supplier Ledger Form...", "Supplier Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierPaymentForm() { MessageBox.Show("Opening Supplier Payment Form...", "Supplier Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierLedgerReport() { MessageBox.Show("Opening Supplier Ledger Report...", "Supplier Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierBalanceReport() { MessageBox.Show("Opening Supplier Balance Report...", "Supplier Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierPaymentHistory() { MessageBox.Show("Opening Supplier Payment History...", "Supplier Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+        private void OpenSupplierMasterForm() 
+        { 
+            try
+            {
+                SupplierMasterForm supplierMasterForm = new SupplierMasterForm();
+                supplierMasterForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSupplierLedgerForm() 
+        { 
+            try
+            {
+                SupplierLedgerForm supplierLedgerForm = new SupplierLedgerForm();
+                supplierLedgerForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Ledger Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSupplierPaymentForm() 
+        { 
+            try
+            {
+                SupplierPaymentForm supplierPaymentForm = new SupplierPaymentForm();
+                supplierPaymentForm.StartPosition = FormStartPosition.CenterParent;
+                supplierPaymentForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Payment Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSupplierLedgerReport() 
+        { 
+            try
+            {
+                SupplierLedgerForm supplierLedgerForm = new SupplierLedgerForm();
+                supplierLedgerForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSupplierBalanceReport() 
+        { 
+            try
+            {
+                SupplierLedgerForm supplierLedgerForm = new SupplierLedgerForm();
+                supplierLedgerForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSupplierPaymentHistory() 
+        { 
+            try
+            {
+                SupplierPaymentForm supplierPaymentForm = new SupplierPaymentForm();
+                supplierPaymentForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Payment History: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-        // Customer Management Module
-        private void OpenCustomerMasterForm() { MessageBox.Show("Opening Customer Master Form...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerLedgerForm() { MessageBox.Show("Opening Customer Ledger Form...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerReceiptsForm() { MessageBox.Show("Opening Customer Receipts Form...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerCategoriesForm() { MessageBox.Show("Opening Customer Categories Form...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerLedgerReport() { MessageBox.Show("Opening Customer Ledger Report...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerBalanceReport() { MessageBox.Show("Opening Customer Balance Report...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerReceiptsReport() { MessageBox.Show("Opening Customer Receipts Report...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenAgingReport() { MessageBox.Show("Opening Aging Report...", "Customer Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
 
         // Purchase Module
-        private void OpenPurchaseInvoiceForm() { MessageBox.Show("Opening Purchase Invoice Entry Form...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPurchaseReturnForm() { MessageBox.Show("Opening Purchase Return Form...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenGRNForm() { MessageBox.Show("Opening GRN (Goods Receipt) Form...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierDebitNoteForm() { MessageBox.Show("Opening Supplier Debit Note Form...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPurchaseRegister() { MessageBox.Show("Opening Purchase Register...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPurchaseReturnReport() { MessageBox.Show("Opening Purchase Return Report...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPurchaseSummaryReport() { MessageBox.Show("Opening Purchase Summary Report...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSupplierWisePurchaseReport() { MessageBox.Show("Opening Supplier-wise Purchase Report...", "Purchase Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+        private void OpenPurchaseInvoiceForm() 
+        { 
+            try
+            {
+                PurchaseInvoiceForm purchaseInvoiceForm = new PurchaseInvoiceForm();
+                purchaseInvoiceForm.StartPosition = FormStartPosition.CenterParent;
+                purchaseInvoiceForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Purchase Invoice Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-        // Sales & Distribution Module
-        private void OpenSalesInvoiceForm() { MessageBox.Show("Opening Sales Invoice Form...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesReturnForm() { MessageBox.Show("Opening Sales Return Form...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenDeliveryChallanForm() { MessageBox.Show("Opening Delivery Challan Form...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesmanTargetForm() { MessageBox.Show("Opening Salesman Target & Achievement Form...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPricingDiscountForm() { MessageBox.Show("Opening Pricing & Discount Setup Form...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesRegister() { MessageBox.Show("Opening Sales Register...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesReturnReport() { MessageBox.Show("Opening Sales Return Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesSummaryReport() { MessageBox.Show("Opening Sales Summary Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenProductWiseSalesReport() { MessageBox.Show("Opening Product-wise Sales Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCustomerWiseSalesReport() { MessageBox.Show("Opening Customer-wise Sales Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesmanWiseSalesReport() { MessageBox.Show("Opening Salesman-wise Sales Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenInvoiceWiseReport() { MessageBox.Show("Opening Invoice-wise Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenProfitMarginReport() { MessageBox.Show("Opening Profit Margin Report...", "Sales & Distribution", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Delivery & Logistics Module
-        private void OpenVehicleMasterForm() { MessageBox.Show("Opening Vehicle Master Form...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenRouteMasterForm() { MessageBox.Show("Opening Route Master Form...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenDeliverySchedulingForm() { MessageBox.Show("Opening Delivery Scheduling Form...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenDispatchForm() { MessageBox.Show("Opening Dispatch Form...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenDeliveryConfirmationForm() { MessageBox.Show("Opening Delivery Confirmation Form...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenDeliveryScheduleReport() { MessageBox.Show("Opening Delivery Schedule Report...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenDispatchReport() { MessageBox.Show("Opening Dispatch Report...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPendingDeliveryReport() { MessageBox.Show("Opening Pending Delivery Report...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenVehicleUtilizationReport() { MessageBox.Show("Opening Vehicle Utilization Report...", "Delivery & Logistics", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Accounts & Finance Module
-        private void OpenChartOfAccountsForm() { MessageBox.Show("Opening Chart of Accounts Form...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenJournalVoucherForm() { MessageBox.Show("Opening Journal Voucher Form...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPaymentVoucherForm() { MessageBox.Show("Opening Payment Voucher Form...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenReceiptVoucherForm() { MessageBox.Show("Opening Receipt Voucher Form...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenBankReconciliationForm() { MessageBox.Show("Opening Bank Reconciliation Form...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenGeneralLedgerReport() { MessageBox.Show("Opening General Ledger Report...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenTrialBalanceReport() { MessageBox.Show("Opening Trial Balance Report...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenProfitLossReport() { MessageBox.Show("Opening Profit & Loss Report...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenBalanceSheetReport() { MessageBox.Show("Opening Balance Sheet Report...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCashFlowReport() { MessageBox.Show("Opening Cash Flow Report...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenBankReconciliationReport() { MessageBox.Show("Opening Bank Reconciliation Report...", "Accounts & Finance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Expense Management Module
-        private void OpenExpenseEntryForm() { MessageBox.Show("Opening Expense Entry Form...", "Expense Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenExpenseCategoriesForm() { MessageBox.Show("Opening Expense Categories Form...", "Expense Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenExpenseReport() { MessageBox.Show("Opening Expense Report...", "Expense Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenExpenseSummaryReport() { MessageBox.Show("Opening Expense Summary Report...", "Expense Management", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Returns & Refunds Module
-        private void OpenPurchaseReturnEntryForm() { MessageBox.Show("Opening Purchase Return Entry Form...", "Returns & Refunds", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenSalesReturnEntryForm() { MessageBox.Show("Opening Sales Return Entry Form...", "Returns & Refunds", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenCreditDebitNoteForm() { MessageBox.Show("Opening Credit/Debit Note Entry Form...", "Returns & Refunds", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenReturnSummaryReport() { MessageBox.Show("Opening Return Summary Report...", "Returns & Refunds", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenReturnRegisterReport() { MessageBox.Show("Opening Return Register Report...", "Returns & Refunds", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Tax & Compliance Module
-        private void OpenTaxConfigurationForm() { MessageBox.Show("Opening Tax Configuration Form...", "Tax & Compliance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenTaxReturnExport() { MessageBox.Show("Opening Tax Return Filing Export...", "Tax & Compliance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenTaxSummaryReport() { MessageBox.Show("Opening Tax Summary Report...", "Tax & Compliance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenTaxInvoiceReport() { MessageBox.Show("Opening Tax Invoice Report...", "Tax & Compliance", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Reports Dashboard (BI Style)
-        private void OpenSalesTrendCharts() { MessageBox.Show("Opening Sales Trend Charts...", "Reports Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenPurchaseVsSalesAnalysis() { MessageBox.Show("Opening Purchase vs Sales Analysis...", "Reports Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenProfitabilityAnalysis() { MessageBox.Show("Opening Profitability Analysis...", "Reports Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenTop10Analysis() { MessageBox.Show("Opening Top 10 Analysis...", "Reports Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenAgingAnalysisGraphs() { MessageBox.Show("Opening Aging Analysis Graphs...", "Reports Dashboard", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-
-        // Security & Backup Module
-        private void OpenDatabaseBackupForm() { MessageBox.Show("Opening Database Backup & Restore Form...", "Security & Backup", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenUserAccessControlForm() { MessageBox.Show("Opening User Access Control Form...", "Security & Backup", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenAuditTrailViewer() { MessageBox.Show("Opening Audit Trail Viewer...", "Security & Backup", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenAuditTrailReport() { MessageBox.Show("Opening Audit Trail Report...", "Security & Backup", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-        private void OpenBackupHistoryReport() { MessageBox.Show("Opening Backup History Report...", "Security & Backup", MessageBoxButtons.OK, MessageBoxIcon.Information); }
 
         #endregion
     }

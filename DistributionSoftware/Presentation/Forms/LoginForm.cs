@@ -118,19 +118,19 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void SetupPlaceholders()
         {
-            // Simple setup - no placeholder text, just empty fields
-            txtEmail.Text = "";
+            // Hardcode test credentials for easy testing
+            txtEmail.Text = "admin@distributionsoftware.com";
             txtEmail.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
 
-            txtPassword.Text = "";
+            txtPassword.Text = "Admin@123";
             txtPassword.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
             txtPassword.UseSystemPasswordChar = true;
             
             // Add a label to show available test users
             var lblTestUsers = new Label
             {
-                Text = "Test Users:\n" +
-                       "• admin@distributionsoftware.com / Admin@123\n" +
+                Text = "Test Credentials (Pre-filled):\n" +
+                       "• admin@distributionsoftware.com / Admin@123 ✓\n" +
                        "• manager@company.com / Manager@456\n" +
                        "• user1@company.com / User@789\n" +
                        "• sales@company.com / Sales@2024",
