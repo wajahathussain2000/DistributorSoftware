@@ -43,24 +43,24 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var purchaseReturn = new PurchaseReturn
                                 {
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ReturnNumber = reader.GetString("ReturnNumber"),
-                                    Barcode = reader.GetString("Barcode"),
-                                    SupplierId = reader.GetInt32("SupplierId"),
-                                    SupplierName = reader.IsDBNull("SupplierName") ? null : reader.GetString("SupplierName"),
-                                    ReferencePurchaseId = reader.IsDBNull("ReferencePurchaseId") ? (int?)null : reader.GetInt32("ReferencePurchaseId"),
-                                    ReferencePurchaseNumber = reader.IsDBNull("ReferencePurchaseNumber") ? null : reader.GetString("ReferencePurchaseNumber"),
-                                    ReturnDate = reader.GetDateTime("ReturnDate"),
-                                    TaxAdjust = reader.GetDecimal("TaxAdjust"),
-                                    DiscountAdjust = reader.GetDecimal("DiscountAdjust"),
-                                    FreightAdjust = reader.GetDecimal("FreightAdjust"),
-                                    NetReturnAmount = reader.GetDecimal("NetReturnAmount"),
-                                    Reason = reader.IsDBNull("Reason") ? null : reader.GetString("Reason"),
-                                    Status = reader.GetString("Status"),
-                                    CreatedBy = reader.GetInt32("CreatedBy"),
-                                    CreatedDate = reader.GetDateTime("CreatedDate"),
-                                    ModifiedBy = reader.IsDBNull("ModifiedBy") ? (int?)null : reader.GetInt32("ModifiedBy"),
-                                    ModifiedDate = reader.IsDBNull("ModifiedDate") ? (DateTime?)null : reader.GetDateTime("ModifiedDate")
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
+                                    SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
+                                    SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
+                                    ReferencePurchaseId = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReferencePurchaseId")),
+                                    ReferencePurchaseNumber = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseNumber")) ? null : reader.GetString(reader.GetOrdinal("ReferencePurchaseNumber")),
+                                    ReturnDate = reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                                    TaxAdjust = reader.GetDecimal(reader.GetOrdinal("TaxAdjust")),
+                                    DiscountAdjust = reader.GetDecimal(reader.GetOrdinal("DiscountAdjust")),
+                                    FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
+                                    NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
+                                    Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                    ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
+                                    ModifiedDate = reader.IsDBNull(reader.GetOrdinal("ModifiedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ModifiedDate"))
                                 };
                                 
                                 Debug.WriteLine($"PurchaseReturnRepository.GetByIdAsync: Successfully retrieved purchase return {purchaseReturn.ReturnNumber}");
@@ -106,24 +106,24 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var purchaseReturn = new PurchaseReturn
                                 {
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ReturnNumber = reader.GetString("ReturnNumber"),
-                                    Barcode = reader.GetString("Barcode"),
-                                    SupplierId = reader.GetInt32("SupplierId"),
-                                    SupplierName = reader.IsDBNull("SupplierName") ? null : reader.GetString("SupplierName"),
-                                    ReferencePurchaseId = reader.IsDBNull("ReferencePurchaseId") ? (int?)null : reader.GetInt32("ReferencePurchaseId"),
-                                    ReferencePurchaseNumber = reader.IsDBNull("ReferencePurchaseNumber") ? null : reader.GetString("ReferencePurchaseNumber"),
-                                    ReturnDate = reader.GetDateTime("ReturnDate"),
-                                    TaxAdjust = reader.GetDecimal("TaxAdjust"),
-                                    DiscountAdjust = reader.GetDecimal("DiscountAdjust"),
-                                    FreightAdjust = reader.GetDecimal("FreightAdjust"),
-                                    NetReturnAmount = reader.GetDecimal("NetReturnAmount"),
-                                    Reason = reader.IsDBNull("Reason") ? null : reader.GetString("Reason"),
-                                    Status = reader.GetString("Status"),
-                                    CreatedBy = reader.GetInt32("CreatedBy"),
-                                    CreatedDate = reader.GetDateTime("CreatedDate"),
-                                    ModifiedBy = reader.IsDBNull("ModifiedBy") ? (int?)null : reader.GetInt32("ModifiedBy"),
-                                    ModifiedDate = reader.IsDBNull("ModifiedDate") ? (DateTime?)null : reader.GetDateTime("ModifiedDate")
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
+                                    SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
+                                    SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
+                                    ReferencePurchaseId = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReferencePurchaseId")),
+                                    ReferencePurchaseNumber = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseNumber")) ? null : reader.GetString(reader.GetOrdinal("ReferencePurchaseNumber")),
+                                    ReturnDate = reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                                    TaxAdjust = reader.GetDecimal(reader.GetOrdinal("TaxAdjust")),
+                                    DiscountAdjust = reader.GetDecimal(reader.GetOrdinal("DiscountAdjust")),
+                                    FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
+                                    NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
+                                    Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                    ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
+                                    ModifiedDate = reader.IsDBNull(reader.GetOrdinal("ModifiedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ModifiedDate"))
                                 };
                                 
                                 Debug.WriteLine($"PurchaseReturnRepository.GetByReturnNumberAsync: Successfully retrieved purchase return {purchaseReturn.ReturnNumber}");
@@ -168,24 +168,24 @@ namespace DistributionSoftware.DataAccess
                         {
                             var purchaseReturn = new PurchaseReturn
                             {
-                                PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                ReturnNumber = reader.GetString("ReturnNumber"),
-                                Barcode = reader.GetString("Barcode"),
-                                SupplierId = reader.GetInt32("SupplierId"),
-                                SupplierName = reader.IsDBNull("SupplierName") ? null : reader.GetString("SupplierName"),
-                                ReferencePurchaseId = reader.IsDBNull("ReferencePurchaseId") ? (int?)null : reader.GetInt32("ReferencePurchaseId"),
-                                ReferencePurchaseNumber = reader.IsDBNull("ReferencePurchaseNumber") ? null : reader.GetString("ReferencePurchaseNumber"),
-                                ReturnDate = reader.GetDateTime("ReturnDate"),
-                                TaxAdjust = reader.GetDecimal("TaxAdjust"),
-                                DiscountAdjust = reader.GetDecimal("DiscountAdjust"),
-                                FreightAdjust = reader.GetDecimal("FreightAdjust"),
-                                NetReturnAmount = reader.GetDecimal("NetReturnAmount"),
-                                Reason = reader.IsDBNull("Reason") ? null : reader.GetString("Reason"),
-                                Status = reader.GetString("Status"),
-                                CreatedBy = reader.GetInt32("CreatedBy"),
-                                CreatedDate = reader.GetDateTime("CreatedDate"),
-                                ModifiedBy = reader.IsDBNull("ModifiedBy") ? (int?)null : reader.GetInt32("ModifiedBy"),
-                                ModifiedDate = reader.IsDBNull("ModifiedDate") ? (DateTime?)null : reader.GetDateTime("ModifiedDate")
+                                PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
+                                SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
+                                SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
+                                ReferencePurchaseId = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReferencePurchaseId")),
+                                ReferencePurchaseNumber = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseNumber")) ? null : reader.GetString(reader.GetOrdinal("ReferencePurchaseNumber")),
+                                ReturnDate = reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                                TaxAdjust = reader.GetDecimal(reader.GetOrdinal("TaxAdjust")),
+                                DiscountAdjust = reader.GetDecimal(reader.GetOrdinal("DiscountAdjust")),
+                                FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
+                                NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
+                                Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
+                                Status = reader.GetString(reader.GetOrdinal("Status")),
+                                CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
+                                ModifiedDate = reader.IsDBNull(reader.GetOrdinal("ModifiedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ModifiedDate"))
                             };
                             
                             purchaseReturns.Add(purchaseReturn);
@@ -234,24 +234,24 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var purchaseReturn = new PurchaseReturn
                                 {
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ReturnNumber = reader.GetString("ReturnNumber"),
-                                    Barcode = reader.GetString("Barcode"),
-                                    SupplierId = reader.GetInt32("SupplierId"),
-                                    SupplierName = reader.IsDBNull("SupplierName") ? null : reader.GetString("SupplierName"),
-                                    ReferencePurchaseId = reader.IsDBNull("ReferencePurchaseId") ? (int?)null : reader.GetInt32("ReferencePurchaseId"),
-                                    ReferencePurchaseNumber = reader.IsDBNull("ReferencePurchaseNumber") ? null : reader.GetString("ReferencePurchaseNumber"),
-                                    ReturnDate = reader.GetDateTime("ReturnDate"),
-                                    TaxAdjust = reader.GetDecimal("TaxAdjust"),
-                                    DiscountAdjust = reader.GetDecimal("DiscountAdjust"),
-                                    FreightAdjust = reader.GetDecimal("FreightAdjust"),
-                                    NetReturnAmount = reader.GetDecimal("NetReturnAmount"),
-                                    Reason = reader.IsDBNull("Reason") ? null : reader.GetString("Reason"),
-                                    Status = reader.GetString("Status"),
-                                    CreatedBy = reader.GetInt32("CreatedBy"),
-                                    CreatedDate = reader.GetDateTime("CreatedDate"),
-                                    ModifiedBy = reader.IsDBNull("ModifiedBy") ? (int?)null : reader.GetInt32("ModifiedBy"),
-                                    ModifiedDate = reader.IsDBNull("ModifiedDate") ? (DateTime?)null : reader.GetDateTime("ModifiedDate")
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
+                                    SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
+                                    SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
+                                    ReferencePurchaseId = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReferencePurchaseId")),
+                                    ReferencePurchaseNumber = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseNumber")) ? null : reader.GetString(reader.GetOrdinal("ReferencePurchaseNumber")),
+                                    ReturnDate = reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                                    TaxAdjust = reader.GetDecimal(reader.GetOrdinal("TaxAdjust")),
+                                    DiscountAdjust = reader.GetDecimal(reader.GetOrdinal("DiscountAdjust")),
+                                    FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
+                                    NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
+                                    Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                    ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
+                                    ModifiedDate = reader.IsDBNull(reader.GetOrdinal("ModifiedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ModifiedDate"))
                                 };
                                 
                                 purchaseReturns.Add(purchaseReturn);
@@ -302,24 +302,24 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var purchaseReturn = new PurchaseReturn
                                 {
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ReturnNumber = reader.GetString("ReturnNumber"),
-                                    Barcode = reader.GetString("Barcode"),
-                                    SupplierId = reader.GetInt32("SupplierId"),
-                                    SupplierName = reader.IsDBNull("SupplierName") ? null : reader.GetString("SupplierName"),
-                                    ReferencePurchaseId = reader.IsDBNull("ReferencePurchaseId") ? (int?)null : reader.GetInt32("ReferencePurchaseId"),
-                                    ReferencePurchaseNumber = reader.IsDBNull("ReferencePurchaseNumber") ? null : reader.GetString("ReferencePurchaseNumber"),
-                                    ReturnDate = reader.GetDateTime("ReturnDate"),
-                                    TaxAdjust = reader.GetDecimal("TaxAdjust"),
-                                    DiscountAdjust = reader.GetDecimal("DiscountAdjust"),
-                                    FreightAdjust = reader.GetDecimal("FreightAdjust"),
-                                    NetReturnAmount = reader.GetDecimal("NetReturnAmount"),
-                                    Reason = reader.IsDBNull("Reason") ? null : reader.GetString("Reason"),
-                                    Status = reader.GetString("Status"),
-                                    CreatedBy = reader.GetInt32("CreatedBy"),
-                                    CreatedDate = reader.GetDateTime("CreatedDate"),
-                                    ModifiedBy = reader.IsDBNull("ModifiedBy") ? (int?)null : reader.GetInt32("ModifiedBy"),
-                                    ModifiedDate = reader.IsDBNull("ModifiedDate") ? (DateTime?)null : reader.GetDateTime("ModifiedDate")
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
+                                    SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
+                                    SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
+                                    ReferencePurchaseId = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReferencePurchaseId")),
+                                    ReferencePurchaseNumber = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseNumber")) ? null : reader.GetString(reader.GetOrdinal("ReferencePurchaseNumber")),
+                                    ReturnDate = reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                                    TaxAdjust = reader.GetDecimal(reader.GetOrdinal("TaxAdjust")),
+                                    DiscountAdjust = reader.GetDecimal(reader.GetOrdinal("DiscountAdjust")),
+                                    FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
+                                    NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
+                                    Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                    ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
+                                    ModifiedDate = reader.IsDBNull(reader.GetOrdinal("ModifiedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ModifiedDate"))
                                 };
                                 
                                 purchaseReturns.Add(purchaseReturn);
@@ -369,24 +369,24 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var purchaseReturn = new PurchaseReturn
                                 {
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ReturnNumber = reader.GetString("ReturnNumber"),
-                                    Barcode = reader.GetString("Barcode"),
-                                    SupplierId = reader.GetInt32("SupplierId"),
-                                    SupplierName = reader.IsDBNull("SupplierName") ? null : reader.GetString("SupplierName"),
-                                    ReferencePurchaseId = reader.IsDBNull("ReferencePurchaseId") ? (int?)null : reader.GetInt32("ReferencePurchaseId"),
-                                    ReferencePurchaseNumber = reader.IsDBNull("ReferencePurchaseNumber") ? null : reader.GetString("ReferencePurchaseNumber"),
-                                    ReturnDate = reader.GetDateTime("ReturnDate"),
-                                    TaxAdjust = reader.GetDecimal("TaxAdjust"),
-                                    DiscountAdjust = reader.GetDecimal("DiscountAdjust"),
-                                    FreightAdjust = reader.GetDecimal("FreightAdjust"),
-                                    NetReturnAmount = reader.GetDecimal("NetReturnAmount"),
-                                    Reason = reader.IsDBNull("Reason") ? null : reader.GetString("Reason"),
-                                    Status = reader.GetString("Status"),
-                                    CreatedBy = reader.GetInt32("CreatedBy"),
-                                    CreatedDate = reader.GetDateTime("CreatedDate"),
-                                    ModifiedBy = reader.IsDBNull("ModifiedBy") ? (int?)null : reader.GetInt32("ModifiedBy"),
-                                    ModifiedDate = reader.IsDBNull("ModifiedDate") ? (DateTime?)null : reader.GetDateTime("ModifiedDate")
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
+                                    SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
+                                    SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
+                                    ReferencePurchaseId = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ReferencePurchaseId")),
+                                    ReferencePurchaseNumber = reader.IsDBNull(reader.GetOrdinal("ReferencePurchaseNumber")) ? null : reader.GetString(reader.GetOrdinal("ReferencePurchaseNumber")),
+                                    ReturnDate = reader.GetDateTime(reader.GetOrdinal("ReturnDate")),
+                                    TaxAdjust = reader.GetDecimal(reader.GetOrdinal("TaxAdjust")),
+                                    DiscountAdjust = reader.GetDecimal(reader.GetOrdinal("DiscountAdjust")),
+                                    FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
+                                    NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
+                                    Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
+                                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
+                                    ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
+                                    ModifiedDate = reader.IsDBNull(reader.GetOrdinal("ModifiedDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ModifiedDate"))
                                 };
                                 
                                 purchaseReturns.Add(purchaseReturn);

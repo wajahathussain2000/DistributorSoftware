@@ -45,17 +45,17 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var item = new PurchaseReturnItem
                                 {
-                                    PurchaseReturnItemId = reader.GetInt32("PurchaseReturnItemId"),
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ProductId = reader.GetInt32("ProductId"),
-                                    ProductName = reader.GetString("ProductName"),
-                                    ProductCode = reader.GetString("ProductCode"),
-                                    Quantity = reader.GetDecimal("Quantity"),
-                                    UnitPrice = reader.GetDecimal("UnitPrice"),
-                                    LineTotal = reader.GetDecimal("LineTotal"),
-                                    BatchNumber = reader.IsDBNull("BatchNumber") ? null : reader.GetString("BatchNumber"),
-                                    ExpiryDate = reader.IsDBNull("ExpiryDate") ? (DateTime?)null : reader.GetDateTime("ExpiryDate"),
-                                    Notes = reader.IsDBNull("Notes") ? null : reader.GetString("Notes")
+                                    PurchaseReturnItemId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnItemId")),
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                                    ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
+                                    Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
+                                    UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
+                                    LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
+                                    BatchNumber = reader.IsDBNull(reader.GetOrdinal("BatchNumber")) ? null : reader.GetString(reader.GetOrdinal("BatchNumber")),
+                                    ExpiryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate")),
+                                    Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes"))
                                 };
                                 
                                 items.Add(item);
@@ -101,17 +101,17 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var item = new PurchaseReturnItem
                                 {
-                                    PurchaseReturnItemId = reader.GetInt32("PurchaseReturnItemId"),
-                                    PurchaseReturnId = reader.GetInt32("PurchaseReturnId"),
-                                    ProductId = reader.GetInt32("ProductId"),
-                                    ProductName = reader.GetString("ProductName"),
-                                    ProductCode = reader.GetString("ProductCode"),
-                                    Quantity = reader.GetDecimal("Quantity"),
-                                    UnitPrice = reader.GetDecimal("UnitPrice"),
-                                    LineTotal = reader.GetDecimal("LineTotal"),
-                                    BatchNumber = reader.IsDBNull("BatchNumber") ? null : reader.GetString("BatchNumber"),
-                                    ExpiryDate = reader.IsDBNull("ExpiryDate") ? (DateTime?)null : reader.GetDateTime("ExpiryDate"),
-                                    Notes = reader.IsDBNull("Notes") ? null : reader.GetString("Notes")
+                                    PurchaseReturnItemId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnItemId")),
+                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                                    ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
+                                    Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
+                                    UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
+                                    LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
+                                    BatchNumber = reader.IsDBNull(reader.GetOrdinal("BatchNumber")) ? null : reader.GetString(reader.GetOrdinal("BatchNumber")),
+                                    ExpiryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate")),
+                                    Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes"))
                                 };
                                 
                                 Debug.WriteLine($"PurchaseReturnItemRepository.GetByIdAsync: Successfully retrieved item {item.ProductName}");
@@ -278,7 +278,7 @@ namespace DistributionSoftware.DataAccess
             }
         }
 
-        public async Task<decimal> CalculateLineTotalAsync(int productId, decimal quantity, decimal unitPrice)
+        public Task<decimal> CalculateLineTotalAsync(int productId, decimal quantity, decimal unitPrice)
         {
             try
             {
@@ -287,7 +287,7 @@ namespace DistributionSoftware.DataAccess
                 var lineTotal = quantity * unitPrice;
                 
                 Debug.WriteLine($"PurchaseReturnItemRepository.CalculateLineTotalAsync: Calculated line total {lineTotal}");
-                return lineTotal;
+                return Task.FromResult(lineTotal);
             }
             catch (Exception ex)
             {

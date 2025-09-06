@@ -171,16 +171,24 @@
     <Compile Include="Models\RolePermission.cs" />
     <Compile Include="Models\UserActivityLog.cs" />
     <Compile Include="Models\LoginHistory.cs" />
+    <Compile Include="Models\PurchaseReturn.cs" />
+    <Compile Include="Models\PurchaseReturnItem.cs" />
     <Compile Include="DataAccess\IUserRepository.cs" />
     <Compile Include="DataAccess\UserRepository.cs" />
     <Compile Include="DataAccess\IPermissionRepository.cs" />
     <Compile Include="DataAccess\PermissionRepository.cs" />
     <Compile Include="DataAccess\IActivityLogRepository.cs" />
     <Compile Include="DataAccess\ActivityLogRepository.cs" />
+    <Compile Include="DataAccess\IPurchaseReturnRepository.cs" />
+    <Compile Include="DataAccess\PurchaseReturnRepository.cs" />
+    <Compile Include="DataAccess\IPurchaseReturnItemRepository.cs" />
+    <Compile Include="DataAccess\PurchaseReturnItemRepository.cs" />
     <Compile Include="Business\IUserService.cs" />
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Business\IPermissionService.cs" />
     <Compile Include="Business\PermissionService.cs" />
+    <Compile Include="Business\IPurchaseReturnService.cs" />
+    <Compile Include="Business\PurchaseReturnService.cs" />
     <Compile Include="Common\ConfigurationManager.cs" />
     <Compile Include="Common\UserSession.cs" />
     <Compile Include="Presentation\Forms\Form1.cs">
@@ -300,6 +308,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\GRNForm.Designer.cs">
       <DependentUpon>GRNForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\PurchaseReturnForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\PurchaseReturnForm.Designer.cs">
+      <DependentUpon>PurchaseReturnForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\Icons\IconHelper.cs" />
     <Compile Include="Program.cs" />

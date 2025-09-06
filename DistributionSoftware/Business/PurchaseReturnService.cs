@@ -154,22 +154,26 @@ namespace DistributionSoftware.Business
             }
         }
 
-        public async Task<string> GenerateBarcodeAsync(string returnNumber)
+        public Task<string> GenerateBarcodeAsync(string returnNumber)
         {
             try
             {
                 Debug.WriteLine($"PurchaseReturnService.GenerateBarcodeAsync: Generating barcode for {returnNumber}");
                 
-                // Simple barcode generation - in real implementation, you might use a barcode library
-                var barcode = $"BC{returnNumber.Replace("-", "")}";
+                // Generate barcode similar to return number format
+                // Extract the numeric part from return number (e.g., "PR-20250906-00001" -> "2025090600001")
+                var numericPart = returnNumber.Replace("PR-", "").Replace("-", "");
+                var barcode = $"BC-{numericPart.Substring(0, 8)}-{numericPart.Substring(8)}";
                 
                 Debug.WriteLine($"PurchaseReturnService.GenerateBarcodeAsync: Generated barcode {barcode}");
-                return barcode;
+                return Task.FromResult(barcode);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"PurchaseReturnService.GenerateBarcodeAsync: Error - {ex.Message}");
-                throw;
+                // Fallback to simple format
+                var barcode = $"BC-{DateTime.Now:yyyyMMdd}-00001";
+                return Task.FromResult(barcode);
             }
         }
 

@@ -81,7 +81,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -128,7 +128,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -167,7 +167,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -223,7 +223,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -273,7 +273,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -326,7 +326,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -368,7 +368,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -401,7 +401,7 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

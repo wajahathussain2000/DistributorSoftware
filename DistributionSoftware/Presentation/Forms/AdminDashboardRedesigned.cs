@@ -100,6 +100,7 @@ namespace DistributionSoftware.Presentation.Forms
             purchasesDropdown.Font = dropdownFont;
             purchasesDropdown.Items.Add("Purchase Invoice Entry", null, (s, e) => OpenPurchaseInvoiceForm());
             purchasesDropdown.Items.Add("GRN (Goods Receipt Note)", null, (s, e) => OpenGRNForm());
+            purchasesDropdown.Items.Add("Purchase Return", null, (s, e) => OpenPurchaseReturnForm());
 
             // Customers Dropdown (Customer Management Module)
             customersDropdown = new ContextMenuStrip();
@@ -946,6 +947,20 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Purchase Invoice Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenPurchaseReturnForm() 
+        { 
+            try
+            {
+                PurchaseReturnForm purchaseReturnForm = new PurchaseReturnForm();
+                purchaseReturnForm.StartPosition = FormStartPosition.CenterParent;
+                purchaseReturnForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Purchase Return Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

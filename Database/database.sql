@@ -1,10 +1,10 @@
 USE [master]
 GO
-/****** Object:  Database [DistributionDB]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Database [DistributionDB]    Script Date: 9/7/2025 12:44:48 AM ******/
 CREATE DATABASE [DistributionDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'DistributionDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\DistributionDB.mdf' , SIZE = 3264KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+( NAME = N'DistributionDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\DistributionDB.mdf' , SIZE = 4288KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
 ( NAME = N'DistributionDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\DistributionDB_log.ldf' , SIZE = 816KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
@@ -75,7 +75,7 @@ ALTER DATABASE [DistributionDB] SET DELAYED_DURABILITY = DISABLED
 GO
 USE [DistributionDB]
 GO
-/****** Object:  Table [dbo].[Brands]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Brands]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ CREATE TABLE [dbo].[Brands](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Categories]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[Categories](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ChartOfAccounts]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[ChartOfAccounts]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[ChartOfAccounts](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[CustomerCategories]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[CustomerCategories]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,7 +153,7 @@ CREATE TABLE [dbo].[CustomerCategories](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Customers]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Customers]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +180,64 @@ CREATE TABLE [dbo].[Customers](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[JournalVoucherDetails]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[GRN]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GRN](
+	[GRNId] [int] IDENTITY(1,1) NOT NULL,
+	[GRNNo] [nvarchar](50) NOT NULL,
+	[GRNBarcode] [nvarchar](100) NOT NULL,
+	[PurchaseId] [int] NULL,
+	[SupplierId] [int] NOT NULL,
+	[GRNDate] [date] NOT NULL,
+	[Remarks] [nvarchar](max) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NOT NULL DEFAULT (getdate()),
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[GRNId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[GRNNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[GRNBarcode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[GRNItems]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[GRNItems](
+	[GRNItemId] [int] IDENTITY(1,1) NOT NULL,
+	[GRNId] [int] NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[ReceivedQty] [decimal](18, 2) NOT NULL,
+	[AcceptedQty] [decimal](18, 2) NOT NULL,
+	[RejectedQty]  AS ([ReceivedQty]-[AcceptedQty]) PERSISTED,
+	[BatchNo] [nvarchar](50) NULL,
+	[ExpiryDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[GRNItemId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[JournalVoucherDetails]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,7 +256,7 @@ CREATE TABLE [dbo].[JournalVoucherDetails](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[JournalVouchers]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[JournalVouchers]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -223,7 +280,7 @@ CREATE TABLE [dbo].[JournalVouchers](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[LoginHistory]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[LoginHistory]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -245,7 +302,7 @@ CREATE TABLE [dbo].[LoginHistory](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[OrderDetails]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[OrderDetails]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -265,7 +322,7 @@ CREATE TABLE [dbo].[OrderDetails](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Orders]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Orders]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -290,7 +347,7 @@ CREATE TABLE [dbo].[Orders](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Permissions]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Permissions]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -310,7 +367,7 @@ CREATE TABLE [dbo].[Permissions](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -341,7 +398,7 @@ CREATE TABLE [dbo].[Products](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PurchaseInvoiceDetails]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[PurchaseInvoiceDetails]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -353,9 +410,9 @@ CREATE TABLE [dbo].[PurchaseInvoiceDetails](
 	[Quantity] [decimal](18, 2) NOT NULL,
 	[UnitPrice] [decimal](18, 2) NOT NULL,
 	[TaxPercentage] [decimal](5, 2) NULL,
-	[TaxAmount] [decimal](18, 2) NOT NULL,
+	[TaxAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
 	[DiscountPercentage] [decimal](5, 2) NULL,
-	[DiscountAmount] [decimal](18, 2) NOT NULL,
+	[DiscountAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
 	[TotalAmount] [decimal](18, 2) NOT NULL,
 	[BatchNumber] [nvarchar](50) NULL,
 	[ExpiryDate] [date] NULL,
@@ -367,7 +424,7 @@ CREATE TABLE [dbo].[PurchaseInvoiceDetails](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PurchaseInvoices]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[PurchaseInvoices]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -378,19 +435,20 @@ CREATE TABLE [dbo].[PurchaseInvoices](
 	[SupplierId] [int] NOT NULL,
 	[InvoiceDate] [date] NOT NULL,
 	[DueDate] [date] NULL,
-	[SubTotal] [decimal](18, 2) NOT NULL,
-	[TaxAmount] [decimal](18, 2) NOT NULL,
-	[DiscountAmount] [decimal](18, 2) NOT NULL,
-	[FreightAmount] [decimal](18, 2) NOT NULL,
-	[TotalAmount] [decimal](18, 2) NOT NULL,
-	[PaidAmount] [decimal](18, 2) NOT NULL,
-	[BalanceAmount] [decimal](18, 2) NOT NULL,
-	[Status] [nvarchar](20) NOT NULL,
+	[SubTotal] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[TaxAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[DiscountAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[FreightAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[TotalAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[PaidAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[BalanceAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[Status] [nvarchar](20) NOT NULL DEFAULT ('PENDING'),
 	[Remarks] [nvarchar](500) NULL,
-	[CreatedDate] [datetime] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL DEFAULT (getdate()),
 	[CreatedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
+	[BaseAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
  CONSTRAINT [PK_PurchaseInvoices] PRIMARY KEY CLUSTERED 
 (
 	[PurchaseInvoiceId] ASC
@@ -398,7 +456,129 @@ CREATE TABLE [dbo].[PurchaseInvoices](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[RolePermissions]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[PurchaseItems]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[PurchaseItems](
+	[PurchaseItemId] [int] IDENTITY(1,1) NOT NULL,
+	[PurchaseId] [int] NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[Quantity] [decimal](18, 2) NOT NULL,
+	[UnitPrice] [decimal](18, 2) NOT NULL,
+	[LineTotal]  AS ([Quantity]*[UnitPrice]) PERSISTED,
+	[BatchNo] [nvarchar](50) NULL,
+	[ExpiryDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PurchaseItemId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[PurchaseReturnItems]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[PurchaseReturnItems](
+	[ReturnItemId] [int] IDENTITY(1,1) NOT NULL,
+	[ReturnId] [int] NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[Quantity] [decimal](18, 2) NOT NULL,
+	[UnitPrice] [decimal](18, 2) NOT NULL,
+	[LineTotal]  AS ([Quantity]*[UnitPrice]) PERSISTED,
+	[BatchNo] [nvarchar](50) NULL,
+	[ExpiryDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ReturnItemId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[PurchaseReturns]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PurchaseReturns](
+	[ReturnId] [int] IDENTITY(1,1) NOT NULL,
+	[ReturnNo] [nvarchar](50) NOT NULL,
+	[ReturnBarcode] [nvarchar](100) NOT NULL,
+	[SupplierId] [int] NOT NULL,
+	[ReferencePurchaseId] [int] NULL,
+	[ReturnDate] [date] NOT NULL,
+	[TaxAdjust] [decimal](18, 2) NULL,
+	[DiscountAdjust] [decimal](18, 2) NULL,
+	[FreightAdjust] [decimal](18, 2) NULL,
+	[NetReturnAmount] [decimal](18, 2) NOT NULL,
+	[Reason] [nvarchar](max) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ReturnId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[ReturnNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[ReturnBarcode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Purchases]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Purchases](
+	[PurchaseId] [int] IDENTITY(1,1) NOT NULL,
+	[PurchaseNo] [nvarchar](50) NOT NULL,
+	[PurchaseBarcode] [nvarchar](100) NOT NULL,
+	[SupplierId] [int] NOT NULL,
+	[InvoiceNo] [nvarchar](100) NULL,
+	[InvoiceDate] [date] NOT NULL,
+	[TaxAmount] [decimal](18, 2) NULL,
+	[DiscountAmount] [decimal](18, 2) NULL,
+	[FreightCharges] [decimal](18, 2) NULL,
+	[NetAmount] [decimal](18, 2) NOT NULL,
+	[Notes] [nvarchar](max) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PurchaseId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[PurchaseNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[PurchaseBarcode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[RolePermissions]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -416,7 +596,7 @@ CREATE TABLE [dbo].[RolePermissions](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -434,7 +614,7 @@ CREATE TABLE [dbo].[Roles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalesInvoiceDetails]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[SalesInvoiceDetails]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -446,9 +626,9 @@ CREATE TABLE [dbo].[SalesInvoiceDetails](
 	[Quantity] [decimal](18, 2) NOT NULL,
 	[UnitPrice] [decimal](18, 2) NOT NULL,
 	[TaxPercentage] [decimal](5, 2) NULL,
-	[TaxAmount] [decimal](18, 2) NOT NULL,
+	[TaxAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
 	[DiscountPercentage] [decimal](5, 2) NULL,
-	[DiscountAmount] [decimal](18, 2) NOT NULL,
+	[DiscountAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
 	[TotalAmount] [decimal](18, 2) NOT NULL,
 	[Remarks] [nvarchar](255) NULL,
  CONSTRAINT [PK_SalesInvoiceDetails] PRIMARY KEY CLUSTERED 
@@ -458,7 +638,7 @@ CREATE TABLE [dbo].[SalesInvoiceDetails](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SalesInvoices]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[SalesInvoices]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -470,16 +650,16 @@ CREATE TABLE [dbo].[SalesInvoices](
 	[SalesmanId] [int] NULL,
 	[InvoiceDate] [date] NOT NULL,
 	[DueDate] [date] NULL,
-	[SubTotal] [decimal](18, 2) NOT NULL,
-	[TaxAmount] [decimal](18, 2) NOT NULL,
-	[DiscountAmount] [decimal](18, 2) NOT NULL,
-	[TotalAmount] [decimal](18, 2) NOT NULL,
-	[PaidAmount] [decimal](18, 2) NOT NULL,
-	[BalanceAmount] [decimal](18, 2) NOT NULL,
+	[SubTotal] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[TaxAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[DiscountAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[TotalAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[PaidAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
+	[BalanceAmount] [decimal](18, 2) NOT NULL DEFAULT ((0)),
 	[PaymentMode] [nvarchar](20) NULL,
-	[Status] [nvarchar](20) NOT NULL,
+	[Status] [nvarchar](20) NOT NULL DEFAULT ('PENDING'),
 	[Remarks] [nvarchar](500) NULL,
-	[CreatedDate] [datetime] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL DEFAULT (getdate()),
 	[CreatedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
@@ -490,7 +670,7 @@ CREATE TABLE [dbo].[SalesInvoices](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Stock]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Stock]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -499,10 +679,10 @@ CREATE TABLE [dbo].[Stock](
 	[StockId] [int] IDENTITY(1,1) NOT NULL,
 	[ProductId] [int] NOT NULL,
 	[WarehouseId] [int] NOT NULL,
-	[Quantity] [decimal](18, 2) NOT NULL,
+	[Quantity] [decimal](18, 2) NOT NULL DEFAULT ((0)),
 	[BatchNumber] [nvarchar](50) NULL,
 	[ExpiryDate] [date] NULL,
-	[LastUpdated] [datetime] NOT NULL,
+	[LastUpdated] [datetime] NOT NULL DEFAULT (getdate()),
 	[UpdatedBy] [int] NULL,
  CONSTRAINT [PK_Stock] PRIMARY KEY CLUSTERED 
 (
@@ -511,7 +691,7 @@ CREATE TABLE [dbo].[Stock](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[StockAdjustments]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[StockAdjustments]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -533,7 +713,7 @@ CREATE TABLE [dbo].[StockAdjustments](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[StockMovement]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[StockMovement]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -558,7 +738,104 @@ CREATE TABLE [dbo].[StockMovement](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Suppliers]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[SupplierDebitNoteItems]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SupplierDebitNoteItems](
+	[DebitNoteItemId] [int] IDENTITY(1,1) NOT NULL,
+	[DebitNoteId] [int] NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[Quantity] [decimal](18, 2) NOT NULL,
+	[UnitPrice] [decimal](18, 2) NOT NULL,
+	[LineTotal]  AS ([Quantity]*[UnitPrice]) PERSISTED,
+	[BatchNo] [nvarchar](50) NULL,
+	[ExpiryDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DebitNoteItemId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SupplierDebitNotes]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SupplierDebitNotes](
+	[DebitNoteId] [int] IDENTITY(1,1) NOT NULL,
+	[DebitNoteNo] [nvarchar](50) NOT NULL,
+	[DebitNoteBarcode] [nvarchar](100) NOT NULL,
+	[SupplierId] [int] NOT NULL,
+	[ReferencePurchaseId] [int] NULL,
+	[ReferenceGRNId] [int] NULL,
+	[DebitDate] [date] NOT NULL,
+	[Amount] [decimal](18, 2) NOT NULL,
+	[Reason] [nvarchar](max) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedBy] [int] NULL,
+	[ModifiedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DebitNoteId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[DebitNoteNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[DebitNoteBarcode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[SupplierPayments]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SupplierPayments](
+	[PaymentId] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierId] [int] NOT NULL,
+	[PaymentNumber] [nvarchar](50) NOT NULL,
+	[PaymentDate] [datetime] NOT NULL,
+	[PaymentAmount] [decimal](18, 2) NOT NULL,
+	[PaymentMethod] [nvarchar](50) NOT NULL,
+	[BankName] [nvarchar](100) NULL,
+	[AccountNumber] [nvarchar](100) NULL,
+	[CheckNumber] [nvarchar](50) NULL,
+	[CheckDate] [date] NULL,
+	[TransactionReference] [nvarchar](100) NULL,
+	[AllocatedAmount] [decimal](18, 2) NULL,
+	[UnallocatedAmount] [decimal](18, 2) NULL,
+	[Status] [nvarchar](50) NULL,
+	[IsActive] [bit] NULL,
+	[CreatedDate] [datetime] NULL,
+	[CreatedBy] [nvarchar](100) NULL,
+	[ModifiedDate] [datetime] NULL,
+	[ModifiedBy] [nvarchar](100) NULL,
+	[Notes] [nvarchar](1000) NULL,
+	[ReceiptPath] [nvarchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PaymentId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[PaymentNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Suppliers]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -579,19 +856,66 @@ CREATE TABLE [dbo].[Suppliers](
 	[NTNNumber] [nvarchar](20) NULL,
 	[PaymentTerms] [int] NULL,
 	[CreditLimit] [decimal](18, 2) NULL,
-	[IsActive] [bit] NOT NULL,
-	[CreatedDate] [datetime] NOT NULL,
+	[IsActive] [bit] NOT NULL DEFAULT ((1)),
+	[CreatedDate] [datetime] NOT NULL DEFAULT (getdate()),
 	[CreatedBy] [int] NULL,
 	[ModifiedDate] [datetime] NULL,
 	[ModifiedBy] [int] NULL,
+	[ContactNumber] [nvarchar](20) NULL,
+	[GST] [nvarchar](50) NULL,
+	[NTN] [nvarchar](50) NULL,
+	[PaymentTermsDays] [int] NULL DEFAULT ((30)),
+	[Notes] [nvarchar](1000) NULL,
+	[CurrentBalance] [decimal](18, 2) NULL DEFAULT ((0)),
+	[Barcode] [nvarchar](100) NULL,
+	[QRCode] [nvarchar](max) NULL,
+	[BusinessType] [nvarchar](100) NULL,
+	[PaymentTermsDate] [date] NULL,
  CONSTRAINT [PK_Suppliers] PRIMARY KEY CLUSTERED 
 (
 	[SupplierId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[SupplierTransactions]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SupplierTransactions](
+	[TransactionId] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierId] [int] NOT NULL,
+	[TransactionType] [nvarchar](50) NOT NULL,
+	[TransactionDate] [datetime] NOT NULL,
+	[ReferenceNumber] [nvarchar](100) NULL,
+	[Description] [nvarchar](500) NULL,
+	[DebitAmount] [decimal](18, 2) NULL DEFAULT ((0)),
+	[CreditAmount] [decimal](18, 2) NULL DEFAULT ((0)),
+	[Balance] [decimal](18, 2) NULL DEFAULT ((0)),
+	[PaymentMethod] [nvarchar](50) NULL,
+	[BankName] [nvarchar](100) NULL,
+	[CheckNumber] [nvarchar](50) NULL,
+	[TransactionReference] [nvarchar](100) NULL,
+	[PurchaseOrderNumber] [nvarchar](100) NULL,
+	[InvoiceNumber] [nvarchar](100) NULL,
+	[InvoiceDate] [date] NULL,
+	[DueDate] [date] NULL,
+	[IsActive] [bit] NULL DEFAULT ((1)),
+	[CreatedDate] [datetime] NULL DEFAULT (getdate()),
+	[CreatedBy] [nvarchar](100) NULL,
+	[ModifiedDate] [datetime] NULL,
+	[ModifiedBy] [nvarchar](100) NULL,
+	[Notes] [nvarchar](1000) NULL,
+	[AttachmentPath] [nvarchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[TransactionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Units]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Units]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -610,7 +934,7 @@ CREATE TABLE [dbo].[Units](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserActivityLog]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[UserActivityLog]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -632,7 +956,7 @@ CREATE TABLE [dbo].[UserActivityLog](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[UserRoles]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[UserRoles]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -649,7 +973,7 @@ CREATE TABLE [dbo].[UserRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -673,7 +997,7 @@ CREATE TABLE [dbo].[Users](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Warehouses]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Table [dbo].[Warehouses]    Script Date: 9/7/2025 12:44:48 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -694,10 +1018,45 @@ CREATE TABLE [dbo].[Warehouses](
 ) ON [PRIMARY]
 
 GO
+/****** Object:  View [dbo].[vw_SupplierSummary]    Script Date: 9/7/2025 12:44:48 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[vw_SupplierSummary]
+AS
+SELECT 
+    s.SupplierId,
+    s.SupplierCode,
+    s.SupplierName,
+    s.ContactPerson,
+    s.ContactNumber,
+    s.Email,
+    s.City,
+    s.State,
+    s.GST,
+    s.NTN,
+    s.PaymentTermsDays,
+    s.CurrentBalance,
+    s.CreditLimit,
+    s.IsActive,
+    s.CreatedDate,
+    COUNT(st.TransactionId) AS TotalTransactions,
+    SUM(CASE WHEN st.TransactionType = 'Purchase' THEN st.DebitAmount ELSE 0 END) AS TotalPurchases,
+    SUM(CASE WHEN st.TransactionType = 'Payment' THEN st.CreditAmount ELSE 0 END) AS TotalPayments,
+    MAX(st.TransactionDate) AS LastTransactionDate
+FROM Suppliers s
+LEFT JOIN SupplierTransactions st ON s.SupplierId = st.SupplierId AND st.IsActive = 1
+GROUP BY s.SupplierId, s.SupplierCode, s.SupplierName, s.ContactPerson, s.ContactNumber, 
+         s.Email, s.City, s.State, s.GST, s.NTN, s.PaymentTermsDays, s.CurrentBalance, 
+         s.CreditLimit, s.IsActive, s.CreatedDate;
+
+GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_Customers_CustomerCode]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Index [IX_Customers_CustomerCode]    Script Date: 9/7/2025 12:44:48 AM ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Customers_CustomerCode] ON [dbo].[Customers]
 (
 	[CustomerCode] ASC
@@ -706,7 +1065,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_Orders_OrderNumber]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Index [IX_Orders_OrderNumber]    Script Date: 9/7/2025 12:44:48 AM ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Orders_OrderNumber] ON [dbo].[Orders]
 (
 	[OrderNumber] ASC
@@ -715,16 +1074,82 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_Products_ProductCode]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Index [IX_Products_ProductCode]    Script Date: 9/7/2025 12:44:48 AM ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Products_ProductCode] ON [dbo].[Products]
 (
 	[ProductCode] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+/****** Object:  Index [IX_SupplierPayments_PaymentDate]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_SupplierPayments_PaymentDate] ON [dbo].[SupplierPayments]
+(
+	[PaymentDate] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_Users_Email]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Index [IX_SupplierPayments_PaymentNumber]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_SupplierPayments_PaymentNumber] ON [dbo].[SupplierPayments]
+(
+	[PaymentNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_SupplierPayments_SupplierId]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_SupplierPayments_SupplierId] ON [dbo].[SupplierPayments]
+(
+	[SupplierId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_Suppliers_IsActive]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_Suppliers_IsActive] ON [dbo].[Suppliers]
+(
+	[IsActive] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_Suppliers_SupplierCode]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_Suppliers_SupplierCode] ON [dbo].[Suppliers]
+(
+	[SupplierCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_Suppliers_SupplierName]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_Suppliers_SupplierName] ON [dbo].[Suppliers]
+(
+	[SupplierName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_SupplierTransactions_SupplierId]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_SupplierTransactions_SupplierId] ON [dbo].[SupplierTransactions]
+(
+	[SupplierId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_SupplierTransactions_TransactionDate]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_SupplierTransactions_TransactionDate] ON [dbo].[SupplierTransactions]
+(
+	[TransactionDate] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_SupplierTransactions_TransactionType]    Script Date: 9/7/2025 12:44:48 AM ******/
+CREATE NONCLUSTERED INDEX [IX_SupplierTransactions_TransactionType] ON [dbo].[SupplierTransactions]
+(
+	[TransactionType] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [IX_Users_Email]    Script Date: 9/7/2025 12:44:48 AM ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Users_Email] ON [dbo].[Users]
 (
 	[Email] ASC
@@ -733,7 +1158,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_Users_Username]    Script Date: 9/5/2025 9:16:41 AM ******/
+/****** Object:  Index [IX_Users_Username]    Script Date: 9/7/2025 12:44:48 AM ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Users_Username] ON [dbo].[Users]
 (
 	[Username] ASC
@@ -767,57 +1192,35 @@ ALTER TABLE [dbo].[Orders] ADD  DEFAULT ((0)) FOR [TotalAmount]
 GO
 ALTER TABLE [dbo].[Orders] ADD  DEFAULT (getdate()) FOR [CreatedDate]
 GO
-ALTER TABLE [dbo].[PurchaseInvoiceDetails] ADD  DEFAULT ((0)) FOR [TaxAmount]
+ALTER TABLE [dbo].[PurchaseReturns] ADD  DEFAULT ((0)) FOR [TaxAdjust]
 GO
-ALTER TABLE [dbo].[PurchaseInvoiceDetails] ADD  DEFAULT ((0)) FOR [DiscountAmount]
+ALTER TABLE [dbo].[PurchaseReturns] ADD  DEFAULT ((0)) FOR [DiscountAdjust]
 GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [SubTotal]
+ALTER TABLE [dbo].[PurchaseReturns] ADD  DEFAULT ((0)) FOR [FreightAdjust]
 GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [TaxAmount]
+ALTER TABLE [dbo].[PurchaseReturns] ADD  DEFAULT (getdate()) FOR [CreatedDate]
 GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [DiscountAmount]
+ALTER TABLE [dbo].[Purchases] ADD  DEFAULT ((0)) FOR [TaxAmount]
 GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [FreightAmount]
+ALTER TABLE [dbo].[Purchases] ADD  DEFAULT ((0)) FOR [DiscountAmount]
 GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [TotalAmount]
+ALTER TABLE [dbo].[Purchases] ADD  DEFAULT ((0)) FOR [FreightCharges]
 GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [PaidAmount]
-GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ((0)) FOR [BalanceAmount]
-GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT ('PENDING') FOR [Status]
-GO
-ALTER TABLE [dbo].[PurchaseInvoices] ADD  DEFAULT (getdate()) FOR [CreatedDate]
-GO
-ALTER TABLE [dbo].[SalesInvoiceDetails] ADD  DEFAULT ((0)) FOR [TaxAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoiceDetails] ADD  DEFAULT ((0)) FOR [DiscountAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ((0)) FOR [SubTotal]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ((0)) FOR [TaxAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ((0)) FOR [DiscountAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ((0)) FOR [TotalAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ((0)) FOR [PaidAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ((0)) FOR [BalanceAmount]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT ('PENDING') FOR [Status]
-GO
-ALTER TABLE [dbo].[SalesInvoices] ADD  DEFAULT (getdate()) FOR [CreatedDate]
-GO
-ALTER TABLE [dbo].[Stock] ADD  DEFAULT ((0)) FOR [Quantity]
-GO
-ALTER TABLE [dbo].[Stock] ADD  DEFAULT (getdate()) FOR [LastUpdated]
+ALTER TABLE [dbo].[Purchases] ADD  DEFAULT (getdate()) FOR [CreatedDate]
 GO
 ALTER TABLE [dbo].[StockMovement] ADD  DEFAULT (getdate()) FOR [MovementDate]
 GO
-ALTER TABLE [dbo].[Suppliers] ADD  DEFAULT ((1)) FOR [IsActive]
+ALTER TABLE [dbo].[SupplierDebitNotes] ADD  DEFAULT (getdate()) FOR [CreatedDate]
 GO
-ALTER TABLE [dbo].[Suppliers] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+ALTER TABLE [dbo].[SupplierPayments] ADD  DEFAULT ((0)) FOR [AllocatedAmount]
+GO
+ALTER TABLE [dbo].[SupplierPayments] ADD  DEFAULT ((0)) FOR [UnallocatedAmount]
+GO
+ALTER TABLE [dbo].[SupplierPayments] ADD  DEFAULT ('Pending') FOR [Status]
+GO
+ALTER TABLE [dbo].[SupplierPayments] ADD  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[SupplierPayments] ADD  DEFAULT (getdate()) FOR [CreatedDate]
 GO
 ALTER TABLE [dbo].[Brands]  WITH CHECK ADD  CONSTRAINT [FK_Brands_Users] FOREIGN KEY([CreatedBy])
 REFERENCES [dbo].[Users] ([UserId])
@@ -838,6 +1241,21 @@ ALTER TABLE [dbo].[ChartOfAccounts]  WITH CHECK ADD  CONSTRAINT [FK_ChartOfAccou
 REFERENCES [dbo].[Users] ([UserId])
 GO
 ALTER TABLE [dbo].[ChartOfAccounts] CHECK CONSTRAINT [FK_ChartOfAccounts_Users]
+GO
+ALTER TABLE [dbo].[GRN]  WITH CHECK ADD  CONSTRAINT [FK_GRN_Purchase] FOREIGN KEY([PurchaseId])
+REFERENCES [dbo].[Purchases] ([PurchaseId])
+GO
+ALTER TABLE [dbo].[GRN] CHECK CONSTRAINT [FK_GRN_Purchase]
+GO
+ALTER TABLE [dbo].[GRN]  WITH CHECK ADD  CONSTRAINT [FK_GRN_Supplier] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+GO
+ALTER TABLE [dbo].[GRN] CHECK CONSTRAINT [FK_GRN_Supplier]
+GO
+ALTER TABLE [dbo].[GRNItems]  WITH CHECK ADD  CONSTRAINT [FK_GRNItems_GRN] FOREIGN KEY([GRNId])
+REFERENCES [dbo].[GRN] ([GRNId])
+GO
+ALTER TABLE [dbo].[GRNItems] CHECK CONSTRAINT [FK_GRNItems_GRN]
 GO
 ALTER TABLE [dbo].[JournalVoucherDetails]  WITH CHECK ADD  CONSTRAINT [FK_JournalVoucherDetails_ChartOfAccounts] FOREIGN KEY([AccountId])
 REFERENCES [dbo].[ChartOfAccounts] ([AccountId])
@@ -908,6 +1326,31 @@ ALTER TABLE [dbo].[PurchaseInvoices]  WITH CHECK ADD  CONSTRAINT [FK_PurchaseInv
 REFERENCES [dbo].[Users] ([UserId])
 GO
 ALTER TABLE [dbo].[PurchaseInvoices] CHECK CONSTRAINT [FK_PurchaseInvoices_Users_Modified]
+GO
+ALTER TABLE [dbo].[PurchaseItems]  WITH CHECK ADD  CONSTRAINT [FK_PurchaseItems_Purchases] FOREIGN KEY([PurchaseId])
+REFERENCES [dbo].[Purchases] ([PurchaseId])
+GO
+ALTER TABLE [dbo].[PurchaseItems] CHECK CONSTRAINT [FK_PurchaseItems_Purchases]
+GO
+ALTER TABLE [dbo].[PurchaseReturnItems]  WITH CHECK ADD  CONSTRAINT [FK_PurchaseReturnItems_Return] FOREIGN KEY([ReturnId])
+REFERENCES [dbo].[PurchaseReturns] ([ReturnId])
+GO
+ALTER TABLE [dbo].[PurchaseReturnItems] CHECK CONSTRAINT [FK_PurchaseReturnItems_Return]
+GO
+ALTER TABLE [dbo].[PurchaseReturns]  WITH CHECK ADD  CONSTRAINT [FK_PurchaseReturns_Purchases] FOREIGN KEY([ReferencePurchaseId])
+REFERENCES [dbo].[Purchases] ([PurchaseId])
+GO
+ALTER TABLE [dbo].[PurchaseReturns] CHECK CONSTRAINT [FK_PurchaseReturns_Purchases]
+GO
+ALTER TABLE [dbo].[PurchaseReturns]  WITH CHECK ADD  CONSTRAINT [FK_PurchaseReturns_Suppliers] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+GO
+ALTER TABLE [dbo].[PurchaseReturns] CHECK CONSTRAINT [FK_PurchaseReturns_Suppliers]
+GO
+ALTER TABLE [dbo].[Purchases]  WITH CHECK ADD  CONSTRAINT [FK_Purchases_Suppliers] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+GO
+ALTER TABLE [dbo].[Purchases] CHECK CONSTRAINT [FK_Purchases_Suppliers]
 GO
 ALTER TABLE [dbo].[RolePermissions]  WITH CHECK ADD  CONSTRAINT [FK_RolePermissions_Permissions] FOREIGN KEY([PermissionId])
 REFERENCES [dbo].[Permissions] ([PermissionId])
@@ -986,6 +1429,30 @@ REFERENCES [dbo].[Warehouses] ([WarehouseId])
 GO
 ALTER TABLE [dbo].[StockMovement] CHECK CONSTRAINT [FK_StockMovement_Warehouses]
 GO
+ALTER TABLE [dbo].[SupplierDebitNoteItems]  WITH CHECK ADD  CONSTRAINT [FK_DebitNoteItems_DebitNote] FOREIGN KEY([DebitNoteId])
+REFERENCES [dbo].[SupplierDebitNotes] ([DebitNoteId])
+GO
+ALTER TABLE [dbo].[SupplierDebitNoteItems] CHECK CONSTRAINT [FK_DebitNoteItems_DebitNote]
+GO
+ALTER TABLE [dbo].[SupplierDebitNotes]  WITH CHECK ADD  CONSTRAINT [FK_DebitNote_GRN] FOREIGN KEY([ReferenceGRNId])
+REFERENCES [dbo].[GRN] ([GRNId])
+GO
+ALTER TABLE [dbo].[SupplierDebitNotes] CHECK CONSTRAINT [FK_DebitNote_GRN]
+GO
+ALTER TABLE [dbo].[SupplierDebitNotes]  WITH CHECK ADD  CONSTRAINT [FK_DebitNote_Purchase] FOREIGN KEY([ReferencePurchaseId])
+REFERENCES [dbo].[Purchases] ([PurchaseId])
+GO
+ALTER TABLE [dbo].[SupplierDebitNotes] CHECK CONSTRAINT [FK_DebitNote_Purchase]
+GO
+ALTER TABLE [dbo].[SupplierDebitNotes]  WITH CHECK ADD  CONSTRAINT [FK_DebitNote_Supplier] FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+GO
+ALTER TABLE [dbo].[SupplierDebitNotes] CHECK CONSTRAINT [FK_DebitNote_Supplier]
+GO
+ALTER TABLE [dbo].[SupplierPayments]  WITH CHECK ADD FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+ON DELETE CASCADE
+GO
 ALTER TABLE [dbo].[Suppliers]  WITH CHECK ADD  CONSTRAINT [FK_Suppliers_Users_Created] FOREIGN KEY([CreatedBy])
 REFERENCES [dbo].[Users] ([UserId])
 GO
@@ -995,6 +1462,10 @@ ALTER TABLE [dbo].[Suppliers]  WITH CHECK ADD  CONSTRAINT [FK_Suppliers_Users_Mo
 REFERENCES [dbo].[Users] ([UserId])
 GO
 ALTER TABLE [dbo].[Suppliers] CHECK CONSTRAINT [FK_Suppliers_Users_Modified]
+GO
+ALTER TABLE [dbo].[SupplierTransactions]  WITH CHECK ADD FOREIGN KEY([SupplierId])
+REFERENCES [dbo].[Suppliers] ([SupplierId])
+ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[UserActivityLog]  WITH CHECK ADD  CONSTRAINT [FK_UserActivityLog_Users] FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([UserId])
@@ -1018,7 +1489,7 @@ ALTER TABLE [dbo].[Warehouses] CHECK CONSTRAINT [FK_Warehouses_Users]
 GO
 ALTER TABLE [dbo].[StockAdjustments]  WITH CHECK ADD CHECK  (([AdjustmentType]='Decrease' OR [AdjustmentType]='Increase'))
 GO
-/****** Object:  StoredProcedure [dbo].[sp_AuthenticateUser]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_AuthenticateUser]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1053,7 +1524,7 @@ CREATE PROCEDURE [dbo].[sp_AuthenticateUser]
         WHERE [Username] = @Username;
     END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_CheckEmailExists]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CheckEmailExists]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1071,7 +1542,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_CreateSalesInvoice]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CreateSalesInvoice]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1121,7 +1592,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_CreateUser]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CreateUser]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1164,7 +1635,7 @@ CREATE PROCEDURE [dbo].[sp_CreateUser]
         END CATCH
     END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_CustomerLedgerReport]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CustomerLedgerReport]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1209,7 +1680,29 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetLoginHistoryReport]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_GenerateSupplierCode]    Script Date: 9/7/2025 12:44:49 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_GenerateSupplierCode]
+AS
+BEGIN
+    DECLARE @NextCode NVARCHAR(50);
+    DECLARE @MaxNumber INT;
+    
+    SELECT @MaxNumber = ISNULL(MAX(CAST(SUBSTRING(SupplierCode, 4, LEN(SupplierCode)) AS INT)), 0)
+    FROM Suppliers
+    WHERE SupplierCode LIKE 'SUP%' AND ISNUMERIC(SUBSTRING(SupplierCode, 4, LEN(SupplierCode))) = 1;
+    
+    SET @NextCode = 'SUP' + RIGHT('000000' + CAST(@MaxNumber + 1 AS NVARCHAR(10)), 6);
+    
+    SELECT @NextCode AS NextSupplierCode;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetLoginHistoryReport]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1246,7 +1739,7 @@ CREATE PROCEDURE [dbo].[sp_GetLoginHistoryReport]
         ORDER BY lh.[LoginDate] DESC;
     END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetProductStock]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetProductStock]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1282,7 +1775,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetPurchaseInvoice]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetPurchaseInvoice]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1341,7 +1834,44 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetUserActivityReport]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetSupplierLedger]    Script Date: 9/7/2025 12:44:49 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetSupplierLedger]
+    @SupplierId INT,
+    @FromDate DATE = NULL,
+    @ToDate DATE = NULL
+AS
+BEGIN
+    SET @FromDate = ISNULL(@FromDate, '1900-01-01');
+    SET @ToDate = ISNULL(@ToDate, GETDATE());
+    
+    SELECT 
+        st.TransactionId,
+        st.TransactionType,
+        st.TransactionDate,
+        st.ReferenceNumber,
+        st.Description,
+        st.DebitAmount,
+        st.CreditAmount,
+        st.Balance,
+        st.PaymentMethod,
+        st.Notes,
+        s.SupplierName,
+        s.SupplierCode
+    FROM SupplierTransactions st
+    INNER JOIN Suppliers s ON st.SupplierId = s.SupplierId
+    WHERE st.SupplierId = @SupplierId
+        AND st.TransactionDate BETWEEN @FromDate AND @ToDate
+        AND st.IsActive = 1
+    ORDER BY st.TransactionDate DESC, st.TransactionId DESC;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetUserActivityReport]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1382,7 +1912,7 @@ CREATE PROCEDURE [dbo].[sp_GetUserActivityReport]
         ORDER BY ual.[ActivityDate] DESC;
     END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_LogLoginAttempt]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_LogLoginAttempt]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1403,7 +1933,7 @@ CREATE PROCEDURE [dbo].[sp_LogLoginAttempt]
         SELECT SCOPE_IDENTITY() AS LoginId;
     END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_TestConnection]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_TestConnection]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1415,7 +1945,7 @@ CREATE PROCEDURE [dbo].[sp_TestConnection]
         SELECT 'Database connection successful' AS Status, GETDATE() AS CurrentTime;
     END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateLastLogin]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateLastLogin]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1435,7 +1965,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UpdateStock]    Script Date: 9/5/2025 9:16:42 AM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UpdateStock]    Script Date: 9/7/2025 12:44:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -1479,6 +2009,31 @@ BEGIN
         ROLLBACK TRANSACTION;
         SELECT 0 AS Success, ERROR_MESSAGE() AS ErrorMessage;
     END CATCH
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_UpdateSupplierBalance]    Script Date: 9/7/2025 12:44:49 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_UpdateSupplierBalance]
+    @SupplierId INT
+AS
+BEGIN
+    DECLARE @CurrentBalance DECIMAL(18,2);
+    
+    SELECT @CurrentBalance = ISNULL(SUM(DebitAmount - CreditAmount), 0)
+    FROM SupplierTransactions
+    WHERE SupplierId = @SupplierId AND IsActive = 1;
+    
+    UPDATE Suppliers
+    SET CurrentBalance = @CurrentBalance,
+        ModifiedDate = GETDATE()
+    WHERE SupplierId = @SupplierId;
+    
+    SELECT @CurrentBalance AS CurrentBalance;
 END
 
 GO

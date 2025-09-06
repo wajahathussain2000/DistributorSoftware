@@ -91,18 +91,18 @@ namespace DistributionSoftware.Presentation.Forms
                 
                 // Form settings
                 this.Text = "Purchase Return Management";
-                this.Size = new System.Drawing.Size(2400, 1400);
+                this.Size = new System.Drawing.Size(2000, 1200);
                 this.StartPosition = FormStartPosition.CenterScreen;
                 this.WindowState = FormWindowState.Maximized;
                 this.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
-                this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+                this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
                 this.AutoScroll = true;
                 this.AutoScrollMargin = new System.Drawing.Size(0, 20);
 
                 // Header Panel
                 Panel headerPanel = new Panel
                 {
-                    Size = new System.Drawing.Size(2360, 100),
+                    Size = new System.Drawing.Size(1960, 80),
                     Location = new System.Drawing.Point(20, 10),
                     BackColor = System.Drawing.Color.FromArgb(52, 152, 219),
                     Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
@@ -111,9 +111,9 @@ namespace DistributionSoftware.Presentation.Forms
                 Label headerLabel = new Label
                 {
                     Text = "🔄 Purchase Return Management",
-                    Font = new System.Drawing.Font("Segoe UI", 18, System.Drawing.FontStyle.Bold),
+                    Font = new System.Drawing.Font("Segoe UI", 16, System.Drawing.FontStyle.Bold),
                     ForeColor = System.Drawing.Color.White,
-                    Location = new System.Drawing.Point(30, 30),
+                    Location = new System.Drawing.Point(20, 20),
                     AutoSize = true
                 };
 
@@ -122,8 +122,8 @@ namespace DistributionSoftware.Presentation.Forms
                 // Content Panel
                 Panel contentPanel = new Panel
                 {
-                    Size = new System.Drawing.Size(2360, 1100),
-                    Location = new System.Drawing.Point(20, 120),
+                    Size = new System.Drawing.Size(1960, 900),
+                    Location = new System.Drawing.Point(20, 100),
                     BackColor = System.Drawing.Color.White,
                     BorderStyle = BorderStyle.FixedSingle,
                     AutoScroll = true,
@@ -135,65 +135,65 @@ namespace DistributionSoftware.Presentation.Forms
                 GroupBox headerGroup = new GroupBox
                 {
                     Text = "📋 Purchase Return Information",
-                    Font = new System.Drawing.Font("Segoe UI", 14, System.Drawing.FontStyle.Bold),
-                    Size = new System.Drawing.Size(2320, 280),
+                    Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold),
+                    Size = new System.Drawing.Size(1920, 220),
                     Location = new System.Drawing.Point(20, 20),
                     Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
                 };
 
                 // Return Number
-                Label returnNoLabel = new Label { Text = "🔢 Return No:", Location = new System.Drawing.Point(30, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtReturnNumber = new TextBox { Name = "txtReturnNumber", Location = new System.Drawing.Point(30, 65), Size = new System.Drawing.Size(220, 30), Font = new System.Drawing.Font("Segoe UI", 11), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
+                Label returnNoLabel = new Label { Text = "🔢 Return No:", Location = new System.Drawing.Point(20, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtReturnNumber = new TextBox { Name = "txtReturnNumber", Location = new System.Drawing.Point(20, 55), Size = new System.Drawing.Size(200, 25), Font = new System.Drawing.Font("Segoe UI", 10), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
 
                 // Barcode
-                Label barcodeLabel = new Label { Text = "📊 Barcode:", Location = new System.Drawing.Point(300, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtBarcode = new TextBox { Name = "txtBarcode", Location = new System.Drawing.Point(300, 65), Size = new System.Drawing.Size(220, 30), Font = new System.Drawing.Font("Segoe UI", 11), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
+                Label barcodeLabel = new Label { Text = "📊 Barcode:", Location = new System.Drawing.Point(280, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtBarcode = new TextBox { Name = "txtBarcode", Location = new System.Drawing.Point(280, 55), Size = new System.Drawing.Size(200, 25), Font = new System.Drawing.Font("Segoe UI", 10), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
 
                 // Supplier
-                Label supplierLabel = new Label { Text = "🏢 Supplier:", Location = new System.Drawing.Point(570, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                cmbSupplier = new ComboBox { Name = "cmbSupplier", Location = new System.Drawing.Point(570, 65), Size = new System.Drawing.Size(350, 30), Font = new System.Drawing.Font("Segoe UI", 11), DropDownStyle = ComboBoxStyle.DropDownList };
+                Label supplierLabel = new Label { Text = "🏢 Supplier:", Location = new System.Drawing.Point(520, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                cmbSupplier = new ComboBox { Name = "cmbSupplier", Location = new System.Drawing.Point(520, 55), Size = new System.Drawing.Size(300, 25), Font = new System.Drawing.Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
 
                 // Reference Purchase
-                Label refPurchaseLabel = new Label { Text = "📄 Reference Purchase:", Location = new System.Drawing.Point(970, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                cmbReferencePurchase = new ComboBox { Name = "cmbReferencePurchase", Location = new System.Drawing.Point(970, 65), Size = new System.Drawing.Size(250, 30), Font = new System.Drawing.Font("Segoe UI", 11), DropDownStyle = ComboBoxStyle.DropDownList };
+                Label refPurchaseLabel = new Label { Text = "📄 Reference Purchase:", Location = new System.Drawing.Point(860, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                cmbReferencePurchase = new ComboBox { Name = "cmbReferencePurchase", Location = new System.Drawing.Point(860, 55), Size = new System.Drawing.Size(220, 25), Font = new System.Drawing.Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
                 cmbReferencePurchase.SelectedIndexChanged += CmbReferencePurchase_SelectedIndexChanged;
 
                 // Return Date
-                Label returnDateLabel = new Label { Text = "📅 Return Date:", Location = new System.Drawing.Point(1270, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                dtpReturnDate = new DateTimePicker { Name = "dtpReturnDate", Location = new System.Drawing.Point(1270, 65), Size = new System.Drawing.Size(180, 30), Font = new System.Drawing.Font("Segoe UI", 11), Format = DateTimePickerFormat.Short };
+                Label returnDateLabel = new Label { Text = "📅 Return Date:", Location = new System.Drawing.Point(1120, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                dtpReturnDate = new DateTimePicker { Name = "dtpReturnDate", Location = new System.Drawing.Point(1120, 55), Size = new System.Drawing.Size(150, 25), Font = new System.Drawing.Font("Segoe UI", 10), Format = DateTimePickerFormat.Short };
 
                 // Tax Adjust
-                Label taxAdjustLabel = new Label { Text = "💰 Tax Adjust:", Location = new System.Drawing.Point(30, 120), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtTaxAdjust = new TextBox { Name = "txtTaxAdjust", Location = new System.Drawing.Point(30, 145), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label taxAdjustLabel = new Label { Text = "💰 Tax Adjust:", Location = new System.Drawing.Point(20, 90), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtTaxAdjust = new TextBox { Name = "txtTaxAdjust", Location = new System.Drawing.Point(20, 115), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
                 txtTaxAdjust.TextChanged += TxtTaxAdjust_TextChanged;
 
                 // Discount Adjust
-                Label discountAdjustLabel = new Label { Text = "💸 Discount Adjust:", Location = new System.Drawing.Point(220, 120), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtDiscountAdjust = new TextBox { Name = "txtDiscountAdjust", Location = new System.Drawing.Point(220, 145), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label discountAdjustLabel = new Label { Text = "💸 Discount Adjust:", Location = new System.Drawing.Point(200, 90), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtDiscountAdjust = new TextBox { Name = "txtDiscountAdjust", Location = new System.Drawing.Point(200, 115), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
                 txtDiscountAdjust.TextChanged += TxtDiscountAdjust_TextChanged;
 
                 // Freight Adjust
-                Label freightAdjustLabel = new Label { Text = "🚚 Freight Adjust:", Location = new System.Drawing.Point(410, 120), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtFreightAdjust = new TextBox { Name = "txtFreightAdjust", Location = new System.Drawing.Point(410, 145), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label freightAdjustLabel = new Label { Text = "🚚 Freight Adjust:", Location = new System.Drawing.Point(380, 90), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtFreightAdjust = new TextBox { Name = "txtFreightAdjust", Location = new System.Drawing.Point(380, 115), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
                 txtFreightAdjust.TextChanged += TxtFreightAdjust_TextChanged;
 
                 // Net Return Amount
-                Label netAmountLabel = new Label { Text = "💵 Net Return Amount:", Location = new System.Drawing.Point(600, 120), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtNetReturnAmount = new TextBox { Name = "txtNetReturnAmount", Location = new System.Drawing.Point(600, 145), Size = new System.Drawing.Size(180, 30), Font = new System.Drawing.Font("Segoe UI", 11), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
+                Label netAmountLabel = new Label { Text = "💵 Net Return Amount:", Location = new System.Drawing.Point(560, 90), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtNetReturnAmount = new TextBox { Name = "txtNetReturnAmount", Location = new System.Drawing.Point(560, 115), Size = new System.Drawing.Size(160, 25), Font = new System.Drawing.Font("Segoe UI", 10), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
 
                 // Reason
-                Label reasonLabel = new Label { Text = "📝 Reason:", Location = new System.Drawing.Point(810, 120), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtReason = new TextBox { Name = "txtReason", Location = new System.Drawing.Point(810, 145), Size = new System.Drawing.Size(500, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label reasonLabel = new Label { Text = "📝 Reason:", Location = new System.Drawing.Point(760, 90), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtReason = new TextBox { Name = "txtReason", Location = new System.Drawing.Point(760, 115), Size = new System.Drawing.Size(400, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
 
                 // Status
-                Label statusLabel = new Label { Text = "📊 Status:", Location = new System.Drawing.Point(1350, 120), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                cmbStatus = new ComboBox { Name = "cmbStatus", Location = new System.Drawing.Point(1350, 145), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11), DropDownStyle = ComboBoxStyle.DropDownList };
+                Label statusLabel = new Label { Text = "📊 Status:", Location = new System.Drawing.Point(1200, 90), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                cmbStatus = new ComboBox { Name = "cmbStatus", Location = new System.Drawing.Point(1200, 115), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
                 cmbStatus.Items.AddRange(new object[] { "Draft", "Posted", "Cancelled" });
                 cmbStatus.SelectedIndex = 0;
 
                 // Barcode Image
-                Label barcodeImageLabel = new Label { Text = "📊 Barcode Image:", Location = new System.Drawing.Point(30, 200), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                picBarcode = new PictureBox { Name = "picBarcode", Location = new System.Drawing.Point(30, 225), Size = new System.Drawing.Size(350, 100), BorderStyle = BorderStyle.FixedSingle, BackColor = System.Drawing.Color.White };
+                Label barcodeImageLabel = new Label { Text = "📊 Barcode Image:", Location = new System.Drawing.Point(20, 150), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                picBarcode = new PictureBox { Name = "picBarcode", Location = new System.Drawing.Point(20, 170), Size = new System.Drawing.Size(300, 80), BorderStyle = BorderStyle.FixedSingle, BackColor = System.Drawing.Color.White };
 
                 headerGroup.Controls.AddRange(new Control[] {
                     returnNoLabel, txtReturnNumber, barcodeLabel, txtBarcode, supplierLabel, cmbSupplier,
@@ -207,50 +207,49 @@ namespace DistributionSoftware.Presentation.Forms
                 GroupBox itemsGroup = new GroupBox
                 {
                     Text = "📦 Return Items",
-                    Font = new System.Drawing.Font("Segoe UI", 14, System.Drawing.FontStyle.Bold),
-                    Size = new System.Drawing.Size(2320, 300),
-                    Location = new System.Drawing.Point(20, 320),
+                    Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold),
+                    Size = new System.Drawing.Size(1920, 220),
+                    Location = new System.Drawing.Point(20, 260),
                     Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
                 };
 
                 // Product
-                Label productLabel = new Label { Text = "📦 Product:", Location = new System.Drawing.Point(30, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                cmbProduct = new ComboBox { Name = "cmbProduct", Location = new System.Drawing.Point(30, 65), Size = new System.Drawing.Size(250, 30), Font = new System.Drawing.Font("Segoe UI", 11), DropDownStyle = ComboBoxStyle.DropDownList };
+                Label productLabel = new Label { Text = "📦 Product:", Location = new System.Drawing.Point(20, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                cmbProduct = new ComboBox { Name = "cmbProduct", Location = new System.Drawing.Point(20, 55), Size = new System.Drawing.Size(220, 25), Font = new System.Drawing.Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
                 cmbProduct.SelectedIndexChanged += CmbProduct_SelectedIndexChanged;
 
                 // Quantity
-                Label quantityLabel = new Label { Text = "🔢 Quantity:", Location = new System.Drawing.Point(320, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtQuantity = new TextBox { Name = "txtQuantity", Location = new System.Drawing.Point(320, 65), Size = new System.Drawing.Size(140, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label quantityLabel = new Label { Text = "🔢 Quantity:", Location = new System.Drawing.Point(280, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtQuantity = new TextBox { Name = "txtQuantity", Location = new System.Drawing.Point(280, 55), Size = new System.Drawing.Size(120, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
                 txtQuantity.TextChanged += TxtQuantity_TextChanged;
 
                 // Unit Price
-                Label unitPriceLabel = new Label { Text = "💰 Unit Price:", Location = new System.Drawing.Point(500, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtUnitPrice = new TextBox { Name = "txtUnitPrice", Location = new System.Drawing.Point(500, 65), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label unitPriceLabel = new Label { Text = "💰 Unit Price:", Location = new System.Drawing.Point(440, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtUnitPrice = new TextBox { Name = "txtUnitPrice", Location = new System.Drawing.Point(440, 55), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
                 txtUnitPrice.TextChanged += TxtUnitPrice_TextChanged;
 
                 // Line Total
-                Label lineTotalLabel = new Label { Text = "💵 Line Total:", Location = new System.Drawing.Point(700, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtLineTotal = new TextBox { Name = "txtLineTotal", Location = new System.Drawing.Point(700, 65), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
+                Label lineTotalLabel = new Label { Text = "💵 Line Total:", Location = new System.Drawing.Point(620, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtLineTotal = new TextBox { Name = "txtLineTotal", Location = new System.Drawing.Point(620, 55), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10), ReadOnly = true, BackColor = System.Drawing.Color.FromArgb(240, 240, 240) };
 
                 // Batch Number
-                Label batchLabel = new Label { Text = "🏷️ Batch Number:", Location = new System.Drawing.Point(900, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtBatchNumber = new TextBox { Name = "txtBatchNumber", Location = new System.Drawing.Point(900, 65), Size = new System.Drawing.Size(160, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label batchLabel = new Label { Text = "🏷️ Batch/Expiry:", Location = new System.Drawing.Point(800, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtBatchNumber = new TextBox { Name = "txtBatchNumber", Location = new System.Drawing.Point(800, 55), Size = new System.Drawing.Size(140, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
 
                 // Expiry Date
-                Label expiryLabel = new Label { Text = "📅 Expiry Date:", Location = new System.Drawing.Point(1100, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                dtpExpiryDate = new DateTimePicker { Name = "dtpExpiryDate", Location = new System.Drawing.Point(1100, 65), Size = new System.Drawing.Size(180, 30), Font = new System.Drawing.Font("Segoe UI", 11), Format = DateTimePickerFormat.Short };
+                dtpExpiryDate = new DateTimePicker { Name = "dtpExpiryDate", Location = new System.Drawing.Point(980, 55), Size = new System.Drawing.Size(150, 25), Font = new System.Drawing.Font("Segoe UI", 10), Format = DateTimePickerFormat.Short };
 
                 // Item Notes
-                Label itemNotesLabel = new Label { Text = "📝 Notes:", Location = new System.Drawing.Point(1320, 40), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold) };
-                txtItemNotes = new TextBox { Name = "txtItemNotes", Location = new System.Drawing.Point(1320, 65), Size = new System.Drawing.Size(400, 30), Font = new System.Drawing.Font("Segoe UI", 11) };
+                Label itemNotesLabel = new Label { Text = "📝 Notes:", Location = new System.Drawing.Point(1180, 30), AutoSize = true, Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold) };
+                txtItemNotes = new TextBox { Name = "txtItemNotes", Location = new System.Drawing.Point(1180, 55), Size = new System.Drawing.Size(300, 25), Font = new System.Drawing.Font("Segoe UI", 10) };
 
                 // Add Item Button
                 Button btnAddItem = new Button
                 {
                     Text = "➕ Add Item",
-                    Location = new System.Drawing.Point(1750, 40),
-                    Size = new System.Drawing.Size(160, 55),
-                    Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold),
+                    Location = new System.Drawing.Point(1520, 30),
+                    Size = new System.Drawing.Size(140, 50),
+                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
                     BackColor = System.Drawing.Color.FromArgb(46, 204, 113),
                     ForeColor = System.Drawing.Color.White,
                     FlatStyle = FlatStyle.Flat,
@@ -262,9 +261,9 @@ namespace DistributionSoftware.Presentation.Forms
                 Button btnRemoveItem = new Button
                 {
                     Text = "➖ Remove",
-                    Location = new System.Drawing.Point(1930, 40),
-                    Size = new System.Drawing.Size(160, 55),
-                    Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold),
+                    Location = new System.Drawing.Point(1700, 30),
+                    Size = new System.Drawing.Size(140, 50),
+                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
                     BackColor = System.Drawing.Color.FromArgb(231, 76, 60),
                     ForeColor = System.Drawing.Color.White,
                     FlatStyle = FlatStyle.Flat,
@@ -274,7 +273,7 @@ namespace DistributionSoftware.Presentation.Forms
 
                 itemsGroup.Controls.AddRange(new Control[] {
                     productLabel, cmbProduct, quantityLabel, txtQuantity, unitPriceLabel, txtUnitPrice,
-                    lineTotalLabel, txtLineTotal, batchLabel, txtBatchNumber, expiryLabel, dtpExpiryDate,
+                    lineTotalLabel, txtLineTotal, batchLabel, txtBatchNumber, dtpExpiryDate,
                     itemNotesLabel, txtItemNotes, btnAddItem, btnRemoveItem
                 });
 
@@ -282,26 +281,26 @@ namespace DistributionSoftware.Presentation.Forms
                 dgvPurchaseReturnItems = new DataGridView
                 {
                     Name = "dgvPurchaseReturnItems",
-                    Location = new System.Drawing.Point(30, 120),
-                    Size = new System.Drawing.Size(2260, 160),
+                    Location = new System.Drawing.Point(20, 90),
+                    Size = new System.Drawing.Size(1880, 120),
                     AllowUserToAddRows = false,
                     AllowUserToDeleteRows = false,
                     SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                     BackgroundColor = System.Drawing.Color.White,
                     GridColor = System.Drawing.Color.FromArgb(189, 195, 199),
-                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Regular),
-                    ColumnHeadersHeight = 40,
+                    Font = new System.Drawing.Font("Segoe UI", 9, System.Drawing.FontStyle.Regular),
+                    ColumnHeadersHeight = 35,
                     ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
                     {
-                        Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
+                        Font = new System.Drawing.Font("Segoe UI", 8, System.Drawing.FontStyle.Bold),
                         BackColor = System.Drawing.Color.FromArgb(52, 152, 219),
                         ForeColor = System.Drawing.Color.White,
                         Alignment = DataGridViewContentAlignment.MiddleCenter
                     },
                     DefaultCellStyle = new DataGridViewCellStyle
                     {
-                        Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Regular),
+                        Font = new System.Drawing.Font("Segoe UI", 9, System.Drawing.FontStyle.Regular),
                         SelectionBackColor = System.Drawing.Color.FromArgb(52, 152, 219),
                         SelectionForeColor = System.Drawing.Color.White
                     }
@@ -313,16 +312,16 @@ namespace DistributionSoftware.Presentation.Forms
                 GroupBox listGroup = new GroupBox
                 {
                     Text = "📋 Purchase Return List",
-                    Font = new System.Drawing.Font("Segoe UI", 14, System.Drawing.FontStyle.Bold),
-                    Size = new System.Drawing.Size(2320, 220),
-                    Location = new System.Drawing.Point(20, 640)
+                    Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold),
+                    Size = new System.Drawing.Size(1920, 180),
+                    Location = new System.Drawing.Point(20, 500)
                 };
 
                 dgvPurchaseReturnList = new DataGridView
                 {
                     Name = "dgvPurchaseReturnList",
-                    Location = new System.Drawing.Point(30, 40),
-                    Size = new System.Drawing.Size(2260, 170),
+                    Location = new System.Drawing.Point(20, 35),
+                    Size = new System.Drawing.Size(1880, 150),
                     AllowUserToAddRows = false,
                     AllowUserToDeleteRows = false,
                     ReadOnly = true,
@@ -330,18 +329,18 @@ namespace DistributionSoftware.Presentation.Forms
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                     BackgroundColor = System.Drawing.Color.White,
                     GridColor = System.Drawing.Color.FromArgb(189, 195, 199),
-                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Regular),
-                    ColumnHeadersHeight = 40,
+                    Font = new System.Drawing.Font("Segoe UI", 9, System.Drawing.FontStyle.Regular),
+                    ColumnHeadersHeight = 35,
                     ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
                     {
-                        Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
+                        Font = new System.Drawing.Font("Segoe UI", 8, System.Drawing.FontStyle.Bold),
                         BackColor = System.Drawing.Color.FromArgb(52, 152, 219),
                         ForeColor = System.Drawing.Color.White,
                         Alignment = DataGridViewContentAlignment.MiddleCenter
                     },
                     DefaultCellStyle = new DataGridViewCellStyle
                     {
-                        Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Regular),
+                        Font = new System.Drawing.Font("Segoe UI", 9, System.Drawing.FontStyle.Regular),
                         SelectionBackColor = System.Drawing.Color.FromArgb(52, 152, 219),
                         SelectionForeColor = System.Drawing.Color.White
                     }
@@ -353,8 +352,8 @@ namespace DistributionSoftware.Presentation.Forms
                 // Action Panel - Moved outside content panel
                 Panel actionPanel = new Panel
                 {
-                    Size = new System.Drawing.Size(2320, 100),
-                    Location = new System.Drawing.Point(20, 1240),
+                    Size = new System.Drawing.Size(1920, 80),
+                    Location = new System.Drawing.Point(20, 1020),
                     BackColor = System.Drawing.Color.FromArgb(236, 240, 241),
                     BorderStyle = BorderStyle.FixedSingle,
                     Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
@@ -364,9 +363,9 @@ namespace DistributionSoftware.Presentation.Forms
                 Button btnSaveDraft = new Button
                 {
                     Text = "💾 Save Draft",
-                    Location = new System.Drawing.Point(50, 25),
-                    Size = new System.Drawing.Size(160, 50),
-                    Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold),
+                    Location = new System.Drawing.Point(50, 20),
+                    Size = new System.Drawing.Size(140, 40),
+                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
                     BackColor = System.Drawing.Color.FromArgb(52, 152, 219),
                     ForeColor = System.Drawing.Color.White,
                     FlatStyle = FlatStyle.Flat,
@@ -377,9 +376,9 @@ namespace DistributionSoftware.Presentation.Forms
                 Button btnPost = new Button
                 {
                     Text = "📤 Post",
-                    Location = new System.Drawing.Point(240, 25),
-                    Size = new System.Drawing.Size(160, 50),
-                    Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold),
+                    Location = new System.Drawing.Point(220, 20),
+                    Size = new System.Drawing.Size(140, 40),
+                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
                     BackColor = System.Drawing.Color.FromArgb(46, 204, 113),
                     ForeColor = System.Drawing.Color.White,
                     FlatStyle = FlatStyle.Flat,
@@ -390,9 +389,9 @@ namespace DistributionSoftware.Presentation.Forms
                 Button btnPrint = new Button
                 {
                     Text = "🖨️ Print",
-                    Location = new System.Drawing.Point(430, 25),
-                    Size = new System.Drawing.Size(160, 50),
-                    Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold),
+                    Location = new System.Drawing.Point(390, 20),
+                    Size = new System.Drawing.Size(140, 40),
+                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
                     BackColor = System.Drawing.Color.FromArgb(155, 89, 182),
                     ForeColor = System.Drawing.Color.White,
                     FlatStyle = FlatStyle.Flat,
@@ -403,9 +402,9 @@ namespace DistributionSoftware.Presentation.Forms
                 Button btnClear = new Button
                 {
                     Text = "🗑️ Clear",
-                    Location = new System.Drawing.Point(620, 25),
-                    Size = new System.Drawing.Size(160, 50),
-                    Font = new System.Drawing.Font("Segoe UI", 11, System.Drawing.FontStyle.Bold),
+                    Location = new System.Drawing.Point(560, 20),
+                    Size = new System.Drawing.Size(140, 40),
+                    Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
                     BackColor = System.Drawing.Color.FromArgb(231, 76, 60),
                     ForeColor = System.Drawing.Color.White,
                     FlatStyle = FlatStyle.Flat,

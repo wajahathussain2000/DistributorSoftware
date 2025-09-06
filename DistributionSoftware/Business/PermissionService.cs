@@ -431,7 +431,7 @@ namespace DistributionSoftware.Business
                 
                 return basicPermissions;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Return empty collection instead of throwing to prevent app from stopping
                 return Enumerable.Empty<Permission>();

@@ -1,4 +1,5 @@
 using DistributionSoftware.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace DistributionSoftware.Business
         Task<PurchaseReturn> GetPurchaseReturnByNumberAsync(string returnNumber);
         Task<List<PurchaseReturn>> GetAllPurchaseReturnsAsync();
         Task<List<PurchaseReturn>> GetPurchaseReturnsBySupplierAsync(int supplierId);
-        Task<List<PurchaseReturn>> GetPurchaseReturnsByDateRangeAsync(System.DateTime startDate, System.DateTime endDate);
+        Task<List<PurchaseReturn>> GetPurchaseReturnsByDateRangeAsync(DateTime startDate, DateTime endDate);
         Task<List<PurchaseReturn>> GetPurchaseReturnsByStatusAsync(string status);
         Task<string> GenerateNextReturnNumberAsync();
         Task<string> GenerateBarcodeAsync(string returnNumber);

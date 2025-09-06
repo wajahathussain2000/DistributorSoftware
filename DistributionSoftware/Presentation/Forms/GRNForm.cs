@@ -673,7 +673,7 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }
@@ -716,7 +716,7 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             

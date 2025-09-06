@@ -280,7 +280,7 @@ namespace DistributionSoftware.Presentation.Forms
                     userAgent,
                     $"FailureReason: {failureReason}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Don't throw - logging failure shouldn't prevent proper error handling
             }
@@ -399,7 +399,7 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                 }));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 
                 // Fallback: initialize session without permissions
