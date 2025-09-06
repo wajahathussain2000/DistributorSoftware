@@ -20,7 +20,6 @@ namespace DistributionSoftware.DataAccess
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine($"Authenticating user with email: {email}");
                 
                 using (var connection = new SqlConnection(_connectionString))
                 {
@@ -39,15 +38,12 @@ namespace DistributionSoftware.DataAccess
                         command.Parameters.AddWithValue("@Email", email);
                         command.Parameters.AddWithValue("@Password", password);
                         
-                        System.Diagnostics.Debug.WriteLine($"Executing query with email: {email}, password: {password}");
                         
                         using (var reader = await command.ExecuteReaderAsync())
                         {
-                            System.Diagnostics.Debug.WriteLine("Query executed, checking for results...");
                             
                             if (await reader.ReadAsync())
                             {
-                                System.Diagnostics.Debug.WriteLine("User found in database!");
                                 
                                 // Check if user is valid (UserId should not be null)
                                 if (!reader.IsDBNull(0))
@@ -55,7 +51,6 @@ namespace DistributionSoftware.DataAccess
                                     // Determine role name based on IsAdmin field
                                     bool isAdmin = reader.GetBoolean(7); // IsAdmin is at index 7
                                     string roleName = isAdmin ? "Admin" : "Manager"; // Default mapping
-                                    System.Diagnostics.Debug.WriteLine($"User authentication - IsAdmin: {isAdmin}, RoleName: {roleName}");
                                     
                                     return new User
                                     {
@@ -75,7 +70,6 @@ namespace DistributionSoftware.DataAccess
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine("No user found with provided credentials");
                             }
                         }
                     }
@@ -83,7 +77,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("Authentication error: {0}", ex.Message));
             }
             return null;
         }
@@ -129,7 +122,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("GetUserByEmail error: {0}", ex.Message));
             }
             return null;
         }
@@ -157,7 +149,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("UpdateLastLogin error: {0}", ex.Message));
             }
             return false;
         }
@@ -185,7 +176,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("IsEmailExists error: {0}", ex.Message));
             }
             return false;
         }
@@ -197,21 +187,18 @@ namespace DistributionSoftware.DataAccess
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     await connection.OpenAsync();
-                    System.Diagnostics.Debug.WriteLine("Database connection successful");
                     
                     // Test if Users table exists
                     var query = "SELECT COUNT(*) FROM Users";
                     using (var command = new SqlCommand(query, connection))
                     {
                         var count = await command.ExecuteScalarAsync();
-                        System.Diagnostics.Debug.WriteLine($"Users table has {count} records");
                         return true;
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Database connection test failed: {ex.Message}");
                 return false;
             }
         }

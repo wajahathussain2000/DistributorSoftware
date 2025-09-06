@@ -99,6 +99,7 @@ namespace DistributionSoftware.Presentation.Forms
             purchasesDropdown = new ContextMenuStrip();
             purchasesDropdown.Font = dropdownFont;
             purchasesDropdown.Items.Add("Purchase Invoice Entry", null, (s, e) => OpenPurchaseInvoiceForm());
+            purchasesDropdown.Items.Add("GRN (Goods Receipt Note)", null, (s, e) => OpenGRNForm());
 
             // Customers Dropdown (Customer Management Module)
             customersDropdown = new ContextMenuStrip();
@@ -850,6 +851,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Supplier Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenGRNForm() 
+        { 
+            try
+            {
+                GRNForm grnForm = new GRNForm();
+                grnForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening GRN Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         

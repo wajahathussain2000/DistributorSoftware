@@ -64,14 +64,12 @@ namespace DistributionSoftware.Presentation.Forms
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    System.Diagnostics.Debug.WriteLine("Database connection successful");
                     
                     // Test if we have data in key tables
                     string testQuery = "SELECT COUNT(*) FROM Products WHERE IsActive = 1";
                     using (SqlCommand cmd = new SqlCommand(testQuery, conn))
                     {
                         int productCount = (int)cmd.ExecuteScalar();
-                        System.Diagnostics.Debug.WriteLine($"Active products count: {productCount}");
                         
                         if (productCount == 0)
                         {
@@ -84,7 +82,6 @@ namespace DistributionSoftware.Presentation.Forms
                     using (SqlCommand cmd = new SqlCommand(stockQuery, conn))
                     {
                         int stockCount = (int)cmd.ExecuteScalar();
-                        System.Diagnostics.Debug.WriteLine($"Stock records count: {stockCount}");
                     }
                     
                     // Test categories
@@ -92,7 +89,6 @@ namespace DistributionSoftware.Presentation.Forms
                     using (SqlCommand cmd = new SqlCommand(categoryQuery, conn))
                     {
                         int categoryCount = (int)cmd.ExecuteScalar();
-                        System.Diagnostics.Debug.WriteLine($"Active categories count: {categoryCount}");
                     }
                 }
             }
@@ -131,22 +127,18 @@ namespace DistributionSoftware.Presentation.Forms
                 if (!string.IsNullOrEmpty(reportPath))
                 {
                     reportViewer.LocalReport.ReportPath = reportPath;
-                    System.Diagnostics.Debug.WriteLine($"Report path set to: {reportPath}");
                 }
                 else
                 {
                     MessageBox.Show("Could not find the RDLC report file. Please ensure SimpleStockReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    System.Diagnostics.Debug.WriteLine("RDLC report file not found");
                 }
                 
                 this.Controls.Add(reportViewer);
                 
-                System.Diagnostics.Debug.WriteLine("ReportViewer initialized successfully");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error initializing ReportViewer: {ex.Message}", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                System.Diagnostics.Debug.WriteLine($"ReportViewer initialization error: {ex}");
             }
         }
         
@@ -166,20 +158,15 @@ namespace DistributionSoftware.Presentation.Forms
                 Path.Combine(Application.StartupPath, "..", "..", "..", "DistributionSoftware", "Reports", "SimpleStockReport.rdlc")
             };
             
-            System.Diagnostics.Debug.WriteLine($"Application.StartupPath: {Application.StartupPath}");
-            System.Diagnostics.Debug.WriteLine($"Directory.GetCurrentDirectory(): {Directory.GetCurrentDirectory()}");
             
             foreach (string path in possiblePaths)
             {
-                System.Diagnostics.Debug.WriteLine($"Checking path: {path}");
                 if (File.Exists(path))
                 {
-                    System.Diagnostics.Debug.WriteLine($"Found report at: {path}");
                     return path;
                 }
             }
             
-            System.Diagnostics.Debug.WriteLine("Report file not found in any expected location");
             return null;
         }
         
@@ -218,13 +205,11 @@ namespace DistributionSoftware.Presentation.Forms
                 // Ensure report is properly initialized
                 EnsureReportInitialized();
                 
-                System.Diagnostics.Debug.WriteLine("Report setup validation passed");
                 return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error validating report setup: {ex.Message}", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                System.Diagnostics.Debug.WriteLine($"Report setup validation error: {ex}");
                 return false;
             }
         }
@@ -235,11 +220,9 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 // Force the report to initialize by calling GetDefaultPageSettings
                 var pageSettings = reportViewer.LocalReport.GetDefaultPageSettings();
-                System.Diagnostics.Debug.WriteLine("Report initialized successfully");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Report initialization error: {ex.Message}");
                 // Don't throw here, just log the error
             }
         }
@@ -415,13 +398,6 @@ namespace DistributionSoftware.Presentation.Forms
                     reportData = CreateEmptyDataTable();
                 }
 
-                // Debug: Show data info
-                System.Diagnostics.Debug.WriteLine($"Report data rows: {reportData.Rows.Count}");
-                System.Diagnostics.Debug.WriteLine($"Report data columns: {reportData.Columns.Count}");
-                if (reportData.Rows.Count > 0)
-                {
-                    System.Diagnostics.Debug.WriteLine($"First row sample: {string.Join(", ", reportData.Rows[0].ItemArray.Take(3))}");
-                }
                 
                 // Ensure we always have data structure even if empty
                 if (reportData.Rows.Count == 0)
@@ -468,19 +444,12 @@ namespace DistributionSoftware.Presentation.Forms
                 try
                 {
                     reportViewer.LocalReport.SetParameters(parameters);
-                    System.Diagnostics.Debug.WriteLine("Parameters set successfully");
                 }
                 catch (Exception paramEx)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Parameter setting error: {paramEx.Message}");
                     // Continue without parameters if they fail
                 }
                 
-                // Debug information
-                System.Diagnostics.Debug.WriteLine($"Report path: {reportViewer.LocalReport.ReportPath}");
-                System.Diagnostics.Debug.WriteLine($"Data source count: {reportViewer.LocalReport.DataSources.Count}");
-                System.Diagnostics.Debug.WriteLine($"Data rows: {reportData.Rows.Count}");
-                System.Diagnostics.Debug.WriteLine($"Data columns: {reportData.Columns.Count}");
                 
                 // Refresh the report
                 reportViewer.RefreshReport();
@@ -497,7 +466,6 @@ namespace DistributionSoftware.Presentation.Forms
                 
                 this.Text = $"Stock Report - {reportDateStr} | {productFilterStr} | {categoryFilterStr} | {brandFilterStr} | {warehouseFilterStr}";
                 
-                System.Diagnostics.Debug.WriteLine($"Report generated successfully with {reportData.Rows.Count} rows");
                 
                 MessageBox.Show($"Report generated successfully!\n\nFound {reportData.Rows.Count} records matching your criteria.", "Report Generated", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -515,7 +483,6 @@ namespace DistributionSoftware.Presentation.Forms
                                    $"Contact administrator if problem persists.";
                 
                 MessageBox.Show(errorMessage, "Report Generation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                System.Diagnostics.Debug.WriteLine($"Report generation error: {ex}");
             }
         }
 
@@ -587,12 +554,10 @@ namespace DistributionSoftware.Presentation.Forms
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(dt);
                     
-                    System.Diagnostics.Debug.WriteLine($"SQL Query executed successfully. Rows returned: {dt.Rows.Count}");
                     
                     // If no data returned, try a simpler query
                     if (dt.Rows.Count == 0)
                     {
-                        System.Diagnostics.Debug.WriteLine("No data from complex query, trying simple query...");
                         dt = GetSimpleStockData(productId, categoryId, brandId, warehouseId, reportDate);
                     }
                 }
@@ -711,13 +676,11 @@ namespace DistributionSoftware.Presentation.Forms
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         adapter.Fill(dt);
                         
-                        System.Diagnostics.Debug.WriteLine($"Simple query executed successfully. Rows returned: {dt.Rows.Count}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Simple query failed: {ex.Message}");
                 // Return empty table with structure
             }
             
@@ -799,12 +762,10 @@ namespace DistributionSoftware.Presentation.Forms
                     // Ensure the report is properly centered
                     reportViewer.RefreshReport();
                     
-                    System.Diagnostics.Debug.WriteLine("Report positioning improved");
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error improving report positioning: {ex.Message}");
             }
         }
         
@@ -823,11 +784,9 @@ namespace DistributionSoftware.Presentation.Forms
                     using (SqlCommand cmd = new SqlCommand(testQuery, conn))
                     {
                         int count = (int)cmd.ExecuteScalar();
-                        System.Diagnostics.Debug.WriteLine($"Products available for report: {count}");
                         
                         if (count == 0)
                         {
-                            System.Diagnostics.Debug.WriteLine("No products found in database");
                             return false;
                         }
                     }
@@ -840,7 +799,6 @@ namespace DistributionSoftware.Presentation.Forms
                         {
                             if (reader.Read())
                             {
-                                System.Diagnostics.Debug.WriteLine($"Test query successful. Sample product: {reader["ProductName"]}");
                                 return true;
                             }
                         }
@@ -851,7 +809,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Data availability test failed: {ex.Message}");
                 return false;
             }
         }

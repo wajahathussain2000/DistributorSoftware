@@ -32,17 +32,13 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Initializing LoginForm...");
                 InitializeComponent();
-                System.Diagnostics.Debug.WriteLine("InitializeComponent completed");
                 
                 // Initialize 3-tier architecture
                 var connectionString = ConfigurationManager.DistributionConnectionString;
-                System.Diagnostics.Debug.WriteLine($"Connection string retrieved: {!string.IsNullOrEmpty(connectionString)}");
                 
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    System.Diagnostics.Debug.WriteLine("Warning: Connection string is null or empty");
                 }
                 
                 var userRepository = new UserRepository(connectionString);
@@ -51,18 +47,14 @@ namespace DistributionSoftware.Presentation.Forms
                 _userService = new UserService(userRepository);
                 _activityLogRepository = activityLogRepository;
                 
-                System.Diagnostics.Debug.WriteLine("Services initialized successfully");
                 
                 SetupForm();
                 SetupIcons();
                 SetupPlaceholders();
                 
-                System.Diagnostics.Debug.WriteLine("LoginForm initialization completed successfully");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error initializing LoginForm: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 
                 // Show error and create a minimal form
                 MessageBox.Show($"Error initializing application: {ex.Message}\n\nPlease contact administrator.", 
@@ -161,7 +153,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in btnLogin_Click: {ex.Message}");
                 MessageBox.Show($"Login error: {ex.Message}", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -197,7 +188,6 @@ namespace DistributionSoftware.Presentation.Forms
                 // Test database connection first
                 var userRepository = new UserRepository(ConfigurationManager.DistributionConnectionString);
                 var connectionTest = await userRepository.TestDatabaseConnectionAsync();
-                System.Diagnostics.Debug.WriteLine($"Database connection test result: {connectionTest}");
                 
                 // Authenticate user through 3-tier architecture
                 var user = await _userService.AuthenticateUserAsync(email.Trim(), password);
@@ -263,7 +253,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error logging successful login: {ex.Message}");
                 // Don't throw - logging failure shouldn't prevent login
             }
         }
@@ -293,7 +282,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error logging failed login: {ex.Message}");
                 // Don't throw - logging failure shouldn't prevent proper error handling
             }
         }
@@ -353,29 +341,22 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine($"Initializing user session for user: {user.Username}, Role: {user.RoleName}");
                 
                 // Get user permissions from the permission service
                 var permissionService = new PermissionService(
                     new PermissionRepository(ConfigurationManager.GetConnectionString("DistributionConnection")),
                     _activityLogRepository);
                 
-                System.Diagnostics.Debug.WriteLine("Permission service created, getting user permissions");
                 
                 var userPermissions = await permissionService.GetUserPermissionsAsync(user.UserId);
                 
-                System.Diagnostics.Debug.WriteLine($"Retrieved {userPermissions.Count()} permissions for user");
                 
                 // Initialize the user session
                 UserSession.InitializeSession(user, userPermissions.ToList());
                 
-                System.Diagnostics.Debug.WriteLine("User session initialized successfully");
-                System.Diagnostics.Debug.WriteLine($"Session details - IsLoggedIn: {UserSession.IsLoggedIn}, Role: {UserSession.CurrentUserRole}");
-                System.Diagnostics.Debug.WriteLine($"User ID: {UserSession.CurrentUserId}, Display Name: {UserSession.GetDisplayName()}");
                 
                 // Double-check session is still valid after a short delay
                 await Task.Delay(100); // Small delay to simulate async operations
-                System.Diagnostics.Debug.WriteLine($"Session check after delay - IsLoggedIn: {UserSession.IsLoggedIn}, Role: {UserSession.CurrentUserRole}");
                 
                 // Try to log the session initialization, but don't fail if it doesn't work
                 try
@@ -390,24 +371,19 @@ namespace DistributionSoftware.Presentation.Forms
                             GetClientIPAddress(),
                             GetUserAgent());
                         
-                        System.Diagnostics.Debug.WriteLine("Activity logged successfully");
                     }
                 }
                 catch (Exception logEx)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Warning: Could not log activity: {logEx.Message}");
                     // Continue with login even if logging fails
                 }
                 
-                System.Diagnostics.Debug.WriteLine("Success message shown, routing to dashboard");
-                System.Diagnostics.Debug.WriteLine($"Final session check before routing - IsLoggedIn: {UserSession.IsLoggedIn}, Role: {UserSession.CurrentUserRole}");
                 
                 // Route to appropriate dashboard on UI thread
                 this.BeginInvoke(new Action(() => {
                     try
                     {
                         // Check session again in UI thread
-                        System.Diagnostics.Debug.WriteLine($"Session check in UI thread - IsLoggedIn: {UserSession.IsLoggedIn}, Role: {UserSession.CurrentUserRole}");
                         
                         // Show success message
                         MessageBox.Show($"Welcome, {UserSession.GetDisplayName()}!\nRole: {user.RoleName}", 
@@ -418,7 +394,6 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                     catch (Exception routingEx)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Error in dashboard routing: {routingEx.Message}");
                         MessageBox.Show($"Error routing to dashboard: {routingEx.Message}", "Routing Error", 
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -426,15 +401,10 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error initializing user session: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 
                 // Fallback: initialize session without permissions
                 UserSession.InitializeSession(user, new List<Permission>());
                 
-                System.Diagnostics.Debug.WriteLine("Fallback session initialized, routing to dashboard");
-                System.Diagnostics.Debug.WriteLine($"Fallback session details - IsLoggedIn: {UserSession.IsLoggedIn}, Role: {UserSession.CurrentUserRole}");
-                System.Diagnostics.Debug.WriteLine($"Fallback User ID: {UserSession.CurrentUserId}, Display Name: {UserSession.GetDisplayName()}");
                 
                 // Route to dashboard on UI thread
                 this.BeginInvoke(new Action(() => {
@@ -450,7 +420,6 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                     catch (Exception fallbackEx)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Error in fallback dashboard routing: {fallbackEx.Message}");
                         MessageBox.Show($"Error routing to dashboard: {fallbackEx.Message}", "Routing Error", 
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }

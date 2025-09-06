@@ -58,7 +58,7 @@ namespace DistributionSoftware.Presentation.Forms
             dgvPurchaseItems.DataSource = purchaseItemsDataTable;
             dgvPurchaseItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPurchaseItems.RowHeadersVisible = false;
-            dgvPurchaseItems.AllowUserToAddRows = true;
+            dgvPurchaseItems.AllowUserToAddRows = false;
             dgvPurchaseItems.AllowUserToDeleteRows = true;
             dgvPurchaseItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPurchaseItems.MultiSelect = false;
@@ -164,21 +164,32 @@ namespace DistributionSoftware.Presentation.Forms
             try
             {
                 string today = DateTime.Now.ToString("yyyyMMdd");
-                string query = $"SELECT ISNULL(MAX(CAST(SUBSTRING(InvoiceNumber, 12, 5) AS INT)), 0) + 1 FROM PurchaseInvoices WHERE InvoiceNumber LIKE 'PI-{today}-%'";
                 
-                using (SqlCommand cmd = new SqlCommand(query, connection))
+                // Get the next sequential number for today's date
+                string query = $"SELECT ISNULL(MAX(CAST(SUBSTRING(InvoiceNumber, 13, 5) AS INT)), 0) + 1 FROM PurchaseInvoices WHERE InvoiceNumber LIKE 'PI-{today}-%'";
+                
+                // Use a fresh connection to avoid connection state issues
+                using (SqlConnection freshConnection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=DistributionDB;Integrated Security=True"))
+                using (SqlCommand cmd = new SqlCommand(query, freshConnection))
                 {
-                    connection.Open();
+                    freshConnection.Open();
                     int nextNumber = Convert.ToInt32(cmd.ExecuteScalar());
-                    connection.Close();
                     
+                    // Generate sequential number with 5-digit padding
                     txtPurchaseNo.Text = $"PI-{today}-{nextNumber:D5}";
                 }
+                
+                // Update barcode to match purchase number
+                GenerateBarcode();
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Error generating purchase number: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtPurchaseNo.Text = $"PI-{DateTime.Now:yyyyMMdd}-00001";
+                // Fallback to sequential number if database query fails
+                string today = DateTime.Now.ToString("yyyyMMdd");
+                txtPurchaseNo.Text = $"PI-{today}-00001";
+                
+                // Update barcode to match purchase number
+                GenerateBarcode();
             }
         }
 
@@ -210,7 +221,6 @@ namespace DistributionSoftware.Presentation.Forms
                     
                     // Draw barcode lines (no text, just the barcode pattern)
                     Random rand = new Random();
-                    int lineWidth = 2;
                     int startX = 20;
                     int lineSpacing = 3;
                     
@@ -241,7 +251,9 @@ namespace DistributionSoftware.Presentation.Forms
                                 INNER JOIN Suppliers s ON pi.SupplierId = s.SupplierId
                                 ORDER BY pi.CreatedDate DESC";
                 
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                // Use a fresh connection to avoid connection state issues
+                using (SqlConnection freshConnection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=DistributionDB;Integrated Security=True"))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, freshConnection))
                 {
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
@@ -269,8 +281,8 @@ namespace DistributionSoftware.Presentation.Forms
                     object quantityObj = GetCellValue(row, "Quantity");
                     object unitPriceObj = GetCellValue(row, "UnitPrice");
                     
-                    decimal quantity = quantityObj == DBNull.Value ? 0 : Convert.ToDecimal(quantityObj);
-                    decimal unitPrice = unitPriceObj == DBNull.Value ? 0 : Convert.ToDecimal(unitPriceObj);
+                    decimal quantity = quantityObj == null || quantityObj == DBNull.Value ? 0 : Convert.ToDecimal(quantityObj);
+                    decimal unitPrice = unitPriceObj == null || unitPriceObj == DBNull.Value ? 0 : Convert.ToDecimal(unitPriceObj);
                     
                     if (quantity > 0 && unitPrice > 0)
                     {
@@ -302,7 +314,7 @@ namespace DistributionSoftware.Presentation.Forms
                 if (row.IsNewRow) continue;
                 
                 object lineTotalObj = GetCellValue(row, "LineTotal");
-                decimal lineTotal = lineTotalObj == DBNull.Value ? 0 : Convert.ToDecimal(lineTotalObj);
+                decimal lineTotal = lineTotalObj == null || lineTotalObj == DBNull.Value ? 0 : Convert.ToDecimal(lineTotalObj);
                 
                 itemsSubtotal += lineTotal;
             }
@@ -342,8 +354,8 @@ namespace DistributionSoftware.Presentation.Forms
                 return;
             }
             
-            decimal quantity = Convert.ToDecimal(txtQuantity.Text);
-            decimal unitPrice = Convert.ToDecimal(txtUnitPrice.Text);
+            decimal quantity = string.IsNullOrEmpty(txtQuantity.Text) ? 0 : Convert.ToDecimal(txtQuantity.Text);
+            decimal unitPrice = string.IsNullOrEmpty(txtUnitPrice.Text) ? 0 : Convert.ToDecimal(txtUnitPrice.Text);
             decimal lineTotal = quantity * unitPrice;
             
             DataRow newRow = purchaseItemsDataTable.NewRow();
@@ -396,6 +408,7 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
+                
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
                 
@@ -426,7 +439,7 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving purchase: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error saving purchase: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -436,64 +449,117 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void InsertPurchase(SqlTransaction transaction, string status)
         {
-            // Insert Purchase header
-            string purchaseQuery = @"INSERT INTO PurchaseInvoices (InvoiceNumber, SupplierId, InvoiceDate, 
-                                                      BaseAmount, SubTotal, TaxAmount, DiscountAmount, FreightAmount, TotalAmount, 
-                                                      PaidAmount, BalanceAmount, Status, Remarks, CreatedBy, CreatedDate)
-                                                VALUES (@PurchaseNo, @SupplierId, @InvoiceDate, 
-                                                        @BaseAmount, @SubTotal, @TaxAmount, @DiscountAmount, @FreightCharges, @TotalAmount, 
-                                                        0, @TotalAmount, @Status, @Notes, @CreatedBy, @CreatedDate)";
-            
-            SqlCommand purchaseCmd = new SqlCommand(purchaseQuery, connection, transaction);
-            purchaseCmd.Parameters.AddWithValue("@PurchaseNo", txtPurchaseNo.Text);
-            purchaseCmd.Parameters.AddWithValue("@SupplierId", cmbSupplier.SelectedValue == null ? DBNull.Value : cmbSupplier.SelectedValue);
-            purchaseCmd.Parameters.AddWithValue("@InvoiceDate", dtpInvoiceDate.Value);
-            purchaseCmd.Parameters.AddWithValue("@BaseAmount", Convert.ToDecimal(txtNetAmount.Text)); // txtNetAmount is now Base Amount
-            purchaseCmd.Parameters.AddWithValue("@SubTotal", Convert.ToDecimal(txtSubTotal.Text));
-            purchaseCmd.Parameters.AddWithValue("@TaxAmount", Convert.ToDecimal(txtTaxAmount.Text));
-            purchaseCmd.Parameters.AddWithValue("@DiscountAmount", Convert.ToDecimal(txtDiscountAmount.Text));
-            purchaseCmd.Parameters.AddWithValue("@FreightCharges", Convert.ToDecimal(txtFreightCharges.Text));
-            purchaseCmd.Parameters.AddWithValue("@TotalAmount", Convert.ToDecimal(txtSubTotal.Text)); // TotalAmount = SubTotal
-            purchaseCmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
-            purchaseCmd.Parameters.AddWithValue("@CreatedBy", GetCurrentUser());
-            purchaseCmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
-            purchaseCmd.Parameters.AddWithValue("@Status", status);
-            
-            purchaseCmd.ExecuteNonQuery();
-            
-            // Get the inserted PurchaseId
-            string getPurchaseIdQuery = "SELECT SCOPE_IDENTITY()";
-            SqlCommand getIdCmd = new SqlCommand(getPurchaseIdQuery, connection, transaction);
-            int purchaseId = Convert.ToInt32(getIdCmd.ExecuteScalar());
-            
-            // Insert Purchase Items
-            foreach (DataRow row in purchaseItemsDataTable.Rows)
+            try
             {
-                // Skip empty rows (where ProductId is null or 0)
-                if (row["ProductId"] == DBNull.Value || Convert.ToInt32(row["ProductId"]) == 0)
-                    continue;
                 
-                string itemQuery = @"INSERT INTO PurchaseInvoiceDetails (PurchaseInvoiceId, ProductId, Quantity, UnitPrice, TaxAmount, DiscountAmount, TotalAmount, BatchNumber, ExpiryDate)
-                                    VALUES (@PurchaseId, @ProductId, @Quantity, @UnitPrice, @TaxAmount, @DiscountAmount, @TotalAmount, @BatchNo, @ExpiryDate)";
+                // Insert Purchase header
+                string purchaseQuery = @"INSERT INTO PurchaseInvoices (InvoiceNumber, SupplierId, InvoiceDate, 
+                                                          BaseAmount, SubTotal, TaxAmount, DiscountAmount, FreightAmount, TotalAmount, 
+                                                          PaidAmount, BalanceAmount, Status, Remarks, CreatedBy, CreatedDate)
+                                                    VALUES (@PurchaseNo, @SupplierId, @InvoiceDate, 
+                                                            @BaseAmount, @SubTotal, @TaxAmount, @DiscountAmount, @FreightCharges, @TotalAmount, 
+                                                            0, @TotalAmount, @Status, @Notes, @CreatedBy, @CreatedDate)";
                 
-                SqlCommand itemCmd = new SqlCommand(itemQuery, connection, transaction);
-                itemCmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
-                itemCmd.Parameters.AddWithValue("@ProductId", row["ProductId"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@Quantity", row["Quantity"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@UnitPrice", row["UnitPrice"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@TaxAmount", 0); // Default to 0 for line items
-                itemCmd.Parameters.AddWithValue("@DiscountAmount", 0); // Default to 0 for line items
-                itemCmd.Parameters.AddWithValue("@TotalAmount", row["LineTotal"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@BatchNo", row["BatchNo"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@ExpiryDate", row["ExpiryDate"] ?? DBNull.Value);
+                SqlCommand purchaseCmd = new SqlCommand(purchaseQuery, connection, transaction);
                 
-                itemCmd.ExecuteNonQuery();
+                purchaseCmd.Parameters.AddWithValue("@PurchaseNo", txtPurchaseNo.Text);
+                purchaseCmd.Parameters.AddWithValue("@SupplierId", cmbSupplier.SelectedValue == null ? DBNull.Value : cmbSupplier.SelectedValue);
+                purchaseCmd.Parameters.AddWithValue("@InvoiceDate", dtpInvoiceDate.Value);
+                purchaseCmd.Parameters.AddWithValue("@BaseAmount", string.IsNullOrEmpty(txtNetAmount.Text) ? 0 : Convert.ToDecimal(txtNetAmount.Text));
+                purchaseCmd.Parameters.AddWithValue("@SubTotal", string.IsNullOrEmpty(txtSubTotal.Text) ? 0 : Convert.ToDecimal(txtSubTotal.Text));
+                purchaseCmd.Parameters.AddWithValue("@TaxAmount", string.IsNullOrEmpty(txtTaxAmount.Text) ? 0 : Convert.ToDecimal(txtTaxAmount.Text));
+                purchaseCmd.Parameters.AddWithValue("@DiscountAmount", string.IsNullOrEmpty(txtDiscountAmount.Text) ? 0 : Convert.ToDecimal(txtDiscountAmount.Text));
+                purchaseCmd.Parameters.AddWithValue("@FreightCharges", string.IsNullOrEmpty(txtFreightCharges.Text) ? 0 : Convert.ToDecimal(txtFreightCharges.Text));
+                purchaseCmd.Parameters.AddWithValue("@TotalAmount", string.IsNullOrEmpty(txtSubTotal.Text) ? 0 : Convert.ToDecimal(txtSubTotal.Text));
+                purchaseCmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
+                purchaseCmd.Parameters.AddWithValue("@CreatedBy", GetCurrentUser());
+                purchaseCmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                purchaseCmd.Parameters.AddWithValue("@Status", status);
+                
+                int rowsAffected = purchaseCmd.ExecuteNonQuery();
+                
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("No rows were inserted into PurchaseInvoices table");
+                }
+            
+                // Get the inserted PurchaseId
+                string getPurchaseIdQuery = "SELECT @@IDENTITY";
+                SqlCommand getIdCmd = new SqlCommand(getPurchaseIdQuery, connection, transaction);
+                int purchaseId = 0;
+                
+                object result = getIdCmd.ExecuteScalar();
+                
+                if (result == null || result == DBNull.Value)
+                {
+                    // Try alternative approach - get the last inserted ID by querying the table
+                    string altQuery = "SELECT TOP 1 PurchaseInvoiceId FROM PurchaseInvoices WHERE InvoiceNumber = @InvoiceNumber ORDER BY PurchaseInvoiceId DESC";
+                    SqlCommand altCmd = new SqlCommand(altQuery, connection, transaction);
+                    altCmd.Parameters.AddWithValue("@InvoiceNumber", txtPurchaseNo.Text);
+                    object altResult = altCmd.ExecuteScalar();
+                    
+                    if (altResult == null || altResult == DBNull.Value)
+                    {
+                        throw new Exception("Could not retrieve PurchaseId after successful INSERT");
+                    }
+                    
+                    purchaseId = Convert.ToInt32(altResult);
+                }
+                else
+                {
+                    purchaseId = Convert.ToInt32(result);
+                }
+                
+                // Insert Purchase Items
+                int itemCount = 0;
+                
+                foreach (DataRow row in purchaseItemsDataTable.Rows)
+                {
+                    // Skip empty rows (where ProductId is null or 0)
+                    if (row["ProductId"] == DBNull.Value || row["ProductId"] == null || 
+                        (row["ProductId"] != DBNull.Value && Convert.ToInt32(row["ProductId"]) == 0))
+                    {
+                        itemCount++;
+                        continue;
+                    }
+                    
+                    // Additional check: skip if all required fields are empty
+                    if (string.IsNullOrEmpty(row["ProductName"]?.ToString()) && 
+                        (row["Quantity"] == DBNull.Value || Convert.ToDecimal(row["Quantity"]) == 0))
+                    {
+                        itemCount++;
+                        continue;
+                    }
+                    
+                    string itemQuery = @"INSERT INTO PurchaseInvoiceDetails (PurchaseInvoiceId, ProductId, Quantity, UnitPrice, TaxAmount, DiscountAmount, TotalAmount, BatchNumber, ExpiryDate)
+                                        VALUES (@PurchaseId, @ProductId, @Quantity, @UnitPrice, @TaxAmount, @DiscountAmount, @TotalAmount, @BatchNo, @ExpiryDate)";
+                    
+                    SqlCommand itemCmd = new SqlCommand(itemQuery, connection, transaction);
+                    
+                    itemCmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
+                    itemCmd.Parameters.AddWithValue("@ProductId", row["ProductId"] == DBNull.Value ? 0 : row["ProductId"]);
+                    itemCmd.Parameters.AddWithValue("@Quantity", row["Quantity"] == DBNull.Value ? 0 : row["Quantity"]);
+                    itemCmd.Parameters.AddWithValue("@UnitPrice", row["UnitPrice"] == DBNull.Value ? 0 : row["UnitPrice"]);
+                    itemCmd.Parameters.AddWithValue("@TaxAmount", 0);
+                    itemCmd.Parameters.AddWithValue("@DiscountAmount", 0);
+                    itemCmd.Parameters.AddWithValue("@TotalAmount", row["LineTotal"] == DBNull.Value ? 0 : row["LineTotal"]);
+                    itemCmd.Parameters.AddWithValue("@BatchNo", row["BatchNo"] == DBNull.Value ? "" : row["BatchNo"]);
+                    itemCmd.Parameters.AddWithValue("@ExpiryDate", row["ExpiryDate"] == DBNull.Value ? DateTime.Now.AddYears(1) : row["ExpiryDate"]);
+                    
+                    itemCmd.ExecuteNonQuery();
+                    
+                    itemCount++;
+                }
+                
+                // If Posted, add to supplier ledger
+                if (status == "Posted")
+                {
+                    AddToSupplierLedger(transaction, purchaseId, string.IsNullOrEmpty(txtNetAmount.Text) ? 0 : Convert.ToDecimal(txtNetAmount.Text));
+                }
             }
-            
-            // If Posted, add to supplier ledger
-            if (status == "Posted")
+            catch
             {
-                AddToSupplierLedger(transaction, purchaseId, Convert.ToDecimal(txtNetAmount.Text));
+                throw;
             }
         }
 
@@ -511,12 +577,12 @@ namespace DistributionSoftware.Presentation.Forms
             purchaseCmd.Parameters.AddWithValue("@PurchaseId", currentPurchaseId);
             purchaseCmd.Parameters.AddWithValue("@SupplierId", cmbSupplier.SelectedValue == null ? DBNull.Value : cmbSupplier.SelectedValue);
             purchaseCmd.Parameters.AddWithValue("@InvoiceDate", dtpInvoiceDate.Value);
-            purchaseCmd.Parameters.AddWithValue("@BaseAmount", Convert.ToDecimal(txtNetAmount.Text)); // txtNetAmount is now Base Amount
-            purchaseCmd.Parameters.AddWithValue("@SubTotal", Convert.ToDecimal(txtSubTotal.Text));
-            purchaseCmd.Parameters.AddWithValue("@TaxAmount", Convert.ToDecimal(txtTaxAmount.Text));
-            purchaseCmd.Parameters.AddWithValue("@DiscountAmount", Convert.ToDecimal(txtDiscountAmount.Text));
-            purchaseCmd.Parameters.AddWithValue("@FreightCharges", Convert.ToDecimal(txtFreightCharges.Text));
-            purchaseCmd.Parameters.AddWithValue("@TotalAmount", Convert.ToDecimal(txtSubTotal.Text)); // TotalAmount = SubTotal
+            purchaseCmd.Parameters.AddWithValue("@BaseAmount", string.IsNullOrEmpty(txtNetAmount.Text) ? 0 : Convert.ToDecimal(txtNetAmount.Text));
+            purchaseCmd.Parameters.AddWithValue("@SubTotal", string.IsNullOrEmpty(txtSubTotal.Text) ? 0 : Convert.ToDecimal(txtSubTotal.Text));
+            purchaseCmd.Parameters.AddWithValue("@TaxAmount", string.IsNullOrEmpty(txtTaxAmount.Text) ? 0 : Convert.ToDecimal(txtTaxAmount.Text));
+            purchaseCmd.Parameters.AddWithValue("@DiscountAmount", string.IsNullOrEmpty(txtDiscountAmount.Text) ? 0 : Convert.ToDecimal(txtDiscountAmount.Text));
+            purchaseCmd.Parameters.AddWithValue("@FreightCharges", string.IsNullOrEmpty(txtFreightCharges.Text) ? 0 : Convert.ToDecimal(txtFreightCharges.Text));
+            purchaseCmd.Parameters.AddWithValue("@TotalAmount", string.IsNullOrEmpty(txtSubTotal.Text) ? 0 : Convert.ToDecimal(txtSubTotal.Text)); // TotalAmount = SubTotal
             purchaseCmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
             purchaseCmd.Parameters.AddWithValue("@ModifiedBy", GetCurrentUser());
             purchaseCmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
@@ -534,7 +600,13 @@ namespace DistributionSoftware.Presentation.Forms
             foreach (DataRow row in purchaseItemsDataTable.Rows)
             {
                 // Skip empty rows (where ProductId is null or 0)
-                if (row["ProductId"] == DBNull.Value || Convert.ToInt32(row["ProductId"]) == 0)
+                if (row["ProductId"] == DBNull.Value || row["ProductId"] == null || 
+                    (row["ProductId"] != DBNull.Value && Convert.ToInt32(row["ProductId"]) == 0))
+                    continue;
+                
+                // Additional check: skip if all required fields are empty
+                if (string.IsNullOrEmpty(row["ProductName"]?.ToString()) && 
+                    (row["Quantity"] == DBNull.Value || Convert.ToDecimal(row["Quantity"]) == 0))
                     continue;
                 
                 string itemQuery = @"INSERT INTO PurchaseInvoiceDetails (PurchaseInvoiceId, ProductId, Quantity, UnitPrice, TaxAmount, DiscountAmount, TotalAmount, BatchNumber, ExpiryDate)
@@ -542,14 +614,14 @@ namespace DistributionSoftware.Presentation.Forms
                 
                 SqlCommand itemCmd = new SqlCommand(itemQuery, connection, transaction);
                 itemCmd.Parameters.AddWithValue("@PurchaseId", currentPurchaseId);
-                itemCmd.Parameters.AddWithValue("@ProductId", row["ProductId"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@Quantity", row["Quantity"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@UnitPrice", row["UnitPrice"] ?? DBNull.Value);
+                itemCmd.Parameters.AddWithValue("@ProductId", row["ProductId"] == DBNull.Value ? 0 : row["ProductId"]);
+                itemCmd.Parameters.AddWithValue("@Quantity", row["Quantity"] == DBNull.Value ? 0 : row["Quantity"]);
+                itemCmd.Parameters.AddWithValue("@UnitPrice", row["UnitPrice"] == DBNull.Value ? 0 : row["UnitPrice"]);
                 itemCmd.Parameters.AddWithValue("@TaxAmount", 0); // Default to 0 for line items
                 itemCmd.Parameters.AddWithValue("@DiscountAmount", 0); // Default to 0 for line items
-                itemCmd.Parameters.AddWithValue("@TotalAmount", row["LineTotal"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@BatchNo", row["BatchNo"] ?? DBNull.Value);
-                itemCmd.Parameters.AddWithValue("@ExpiryDate", row["ExpiryDate"] ?? DBNull.Value);
+                itemCmd.Parameters.AddWithValue("@TotalAmount", row["LineTotal"] == DBNull.Value ? 0 : row["LineTotal"]);
+                itemCmd.Parameters.AddWithValue("@BatchNo", row["BatchNo"] == DBNull.Value ? "" : row["BatchNo"]);
+                itemCmd.Parameters.AddWithValue("@ExpiryDate", row["ExpiryDate"] == DBNull.Value ? DateTime.Now.AddYears(1) : row["ExpiryDate"]);
                 
                 itemCmd.ExecuteNonQuery();
             }
@@ -557,7 +629,7 @@ namespace DistributionSoftware.Presentation.Forms
             // If Posted, add to supplier ledger
             if (status == "Posted")
             {
-                AddToSupplierLedger(transaction, currentPurchaseId, Convert.ToDecimal(txtNetAmount.Text));
+                AddToSupplierLedger(transaction, currentPurchaseId, string.IsNullOrEmpty(txtNetAmount.Text) ? 0 : Convert.ToDecimal(txtNetAmount.Text));
             }
         }
 
@@ -695,10 +767,20 @@ namespace DistributionSoftware.Presentation.Forms
             var value = row.Cells[columnName].Value;
             if (value == null || value == DBNull.Value || string.IsNullOrWhiteSpace(value.ToString()))
             {
-                return DBNull.Value;  // return as NULL to DB
+                return 0;  // return 0 instead of NULL to DB
             }
             return value;
         }
+
+        private object SafeGetValue(object value, object defaultValue)
+        {
+            if (value == null || value == DBNull.Value)
+            {
+                return defaultValue;
+            }
+            return value;
+        }
+
 
 
         private void DgvPurchases_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -709,8 +791,8 @@ namespace DistributionSoftware.Presentation.Forms
                 object purchaseIdObj = GetCellValue(row, "PurchaseId");
                 object statusObj = GetCellValue(row, "Status");
                 
-                currentPurchaseId = purchaseIdObj == DBNull.Value ? 0 : Convert.ToInt32(purchaseIdObj);
-                currentStatus = statusObj == DBNull.Value ? "" : statusObj.ToString();
+                currentPurchaseId = purchaseIdObj == null || purchaseIdObj == DBNull.Value ? 0 : Convert.ToInt32(purchaseIdObj);
+                currentStatus = statusObj == null || statusObj == DBNull.Value ? "" : statusObj.ToString();
                 
                 // Load purchase details
                 LoadPurchaseDetails(currentPurchaseId);
@@ -724,72 +806,72 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                connection.Open();
-                
-                // Load purchase header
-                string purchaseQuery = @"SELECT pi.*, s.SupplierName FROM PurchaseInvoices pi
-                                        INNER JOIN Suppliers s ON pi.SupplierId = s.SupplierId
-                                        WHERE pi.PurchaseInvoiceId = @PurchaseId";
-                
-                SqlCommand purchaseCmd = new SqlCommand(purchaseQuery, connection);
-                purchaseCmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
-                
-                using (SqlDataReader reader = purchaseCmd.ExecuteReader())
+                // Use a fresh connection to avoid connection state issues
+                using (SqlConnection freshConnection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=DistributionDB;Integrated Security=True"))
                 {
-                    if (reader.Read())
+                    freshConnection.Open();
+                    
+                    // Load purchase header
+                    string purchaseQuery = @"SELECT pi.*, s.SupplierName FROM PurchaseInvoices pi
+                                            INNER JOIN Suppliers s ON pi.SupplierId = s.SupplierId
+                                            WHERE pi.PurchaseInvoiceId = @PurchaseId";
+                    
+                    SqlCommand purchaseCmd = new SqlCommand(purchaseQuery, freshConnection);
+                    purchaseCmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
+                    
+                    using (SqlDataReader reader = purchaseCmd.ExecuteReader())
                     {
-                        txtPurchaseNo.Text = reader["PurchaseNo"].ToString();
-                        txtBarcode.Text = reader["PurchaseBarcode"].ToString();
-                        cmbSupplier.Text = reader["SupplierName"].ToString();
-                        txtInvoiceNo.Text = reader["InvoiceNo"].ToString();
-                        dtpInvoiceDate.Value = Convert.ToDateTime(reader["InvoiceDate"]);
-                        txtTaxAmount.Text = reader["TaxAmount"].ToString();
-                        txtDiscountAmount.Text = reader["DiscountAmount"].ToString();
-                        txtFreightCharges.Text = reader["FreightCharges"].ToString();
-                        txtNetAmount.Text = reader["BaseAmount"].ToString(); // Load BaseAmount into txtNetAmount
-                        txtNotes.Text = reader["Notes"].ToString();
-                        
-                        GenerateBarcodeImage(reader["PurchaseBarcode"].ToString());
+                        if (reader.Read())
+                        {
+                            txtPurchaseNo.Text = SafeGetValue(reader["InvoiceNumber"], "").ToString();
+                            txtBarcode.Text = SafeGetValue(reader["InvoiceNumber"], "").ToString(); // Using InvoiceNumber as barcode
+                            cmbSupplier.Text = SafeGetValue(reader["SupplierName"], "").ToString();
+                            txtInvoiceNo.Text = SafeGetValue(reader["InvoiceNumber"], "").ToString();
+                            dtpInvoiceDate.Value = Convert.ToDateTime(SafeGetValue(reader["InvoiceDate"], DateTime.Now));
+                            txtTaxAmount.Text = SafeGetValue(reader["TaxAmount"], 0).ToString();
+                            txtDiscountAmount.Text = SafeGetValue(reader["DiscountAmount"], 0).ToString();
+                            txtFreightCharges.Text = SafeGetValue(reader["FreightAmount"], 0).ToString();
+                            txtNetAmount.Text = SafeGetValue(reader["BaseAmount"], 0).ToString(); // Load BaseAmount into txtNetAmount
+                            txtNotes.Text = SafeGetValue(reader["Remarks"], "").ToString();
+                            
+                            // Generate barcode image to match the purchase number
+                            GenerateBarcodeImage(SafeGetValue(reader["InvoiceNumber"], "").ToString());
+                        }
                     }
-                }
-                
-                // Load purchase items
-                purchaseItemsDataTable.Clear();
-                string itemsQuery = @"SELECT pid.*, p.ProductName FROM PurchaseInvoiceDetails pid
-                                    INNER JOIN Products p ON pid.ProductId = p.ProductId
-                                    WHERE pid.PurchaseInvoiceId = @PurchaseId";
-                
-                SqlCommand itemsCmd = new SqlCommand(itemsQuery, connection);
-                itemsCmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
-                
-                using (SqlDataReader reader = itemsCmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                    
+                    // Load purchase items
+                    purchaseItemsDataTable.Clear();
+                    string itemsQuery = @"SELECT pid.*, p.ProductName FROM PurchaseInvoiceDetails pid
+                                        INNER JOIN Products p ON pid.ProductId = p.ProductId
+                                        WHERE pid.PurchaseInvoiceId = @PurchaseId";
+                    
+                    SqlCommand itemsCmd = new SqlCommand(itemsQuery, freshConnection);
+                    itemsCmd.Parameters.AddWithValue("@PurchaseId", purchaseId);
+                    
+                    using (SqlDataReader reader = itemsCmd.ExecuteReader())
                     {
-                        DataRow newRow = purchaseItemsDataTable.NewRow();
-                        newRow["ProductId"] = reader["ProductId"] == DBNull.Value ? 0 : reader["ProductId"];
-                        newRow["ProductName"] = reader["ProductName"] == DBNull.Value ? "" : reader["ProductName"].ToString();
-                        newRow["Quantity"] = reader["Quantity"] == DBNull.Value ? 0m : Convert.ToDecimal(reader["Quantity"]);
-                        newRow["UnitPrice"] = reader["UnitPrice"] == DBNull.Value ? 0m : Convert.ToDecimal(reader["UnitPrice"]);
-                        newRow["LineTotal"] = (reader["Quantity"] == DBNull.Value ? 0m : Convert.ToDecimal(reader["Quantity"])) * 
-                                            (reader["UnitPrice"] == DBNull.Value ? 0m : Convert.ToDecimal(reader["UnitPrice"]));
-                        newRow["BatchNo"] = reader["BatchNumber"] == DBNull.Value ? "" : reader["BatchNumber"].ToString();
-                        newRow["ExpiryDate"] = reader["ExpiryDate"] == DBNull.Value ? DateTime.Now.AddYears(1) : Convert.ToDateTime(reader["ExpiryDate"]);
-                        
-                        purchaseItemsDataTable.Rows.Add(newRow);
+                        while (reader.Read())
+                        {
+                            DataRow newRow = purchaseItemsDataTable.NewRow();
+                            newRow["ProductId"] = SafeGetValue(reader["ProductId"], 0);
+                            newRow["ProductName"] = SafeGetValue(reader["ProductName"], "").ToString();
+                            newRow["Quantity"] = Convert.ToDecimal(SafeGetValue(reader["Quantity"], 0));
+                            newRow["UnitPrice"] = Convert.ToDecimal(SafeGetValue(reader["UnitPrice"], 0));
+                            newRow["LineTotal"] = Convert.ToDecimal(SafeGetValue(reader["Quantity"], 0)) * Convert.ToDecimal(SafeGetValue(reader["UnitPrice"], 0));
+                            newRow["BatchNo"] = SafeGetValue(reader["BatchNumber"], "").ToString();
+                            newRow["ExpiryDate"] = Convert.ToDateTime(SafeGetValue(reader["ExpiryDate"], DateTime.Now.AddYears(1)));
+                            
+                            purchaseItemsDataTable.Rows.Add(newRow);
+                        }
                     }
+                    
+                    CalculateTotals();
+                    isEditMode = true;
                 }
-                
-                CalculateTotals();
-                isEditMode = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading purchase details: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                connection.Close();
             }
         }
 

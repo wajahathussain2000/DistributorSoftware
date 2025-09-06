@@ -171,14 +171,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.contentPanel.Location = new System.Drawing.Point(0, 60);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.contentPanel.Size = new System.Drawing.Size(1400, 790);
             this.contentPanel.TabIndex = 1;
             
             // 
             // purchaseInfoGroup
             // 
-            this.purchaseInfoGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.purchaseInfoGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.purchaseInfoGroup.Controls.Add(this.lblPurchaseNo);
             this.purchaseInfoGroup.Controls.Add(this.txtPurchaseNo);
             this.purchaseInfoGroup.Controls.Add(this.lblSupplier);
@@ -202,7 +200,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.purchaseInfoGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.purchaseInfoGroup.Location = new System.Drawing.Point(20, 20);
             this.purchaseInfoGroup.Name = "purchaseInfoGroup";
-            this.purchaseInfoGroup.Size = new System.Drawing.Size(650, 200);
+            this.purchaseInfoGroup.Size = new System.Drawing.Size(1000, 200);
             this.purchaseInfoGroup.TabIndex = 0;
             this.purchaseInfoGroup.TabStop = false;
             this.purchaseInfoGroup.Text = "Purchase Information";
@@ -340,7 +338,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.lblFreightCharges.AutoSize = true;
             this.lblFreightCharges.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFreightCharges.Location = new System.Drawing.Point(20, 150);
+            this.lblFreightCharges.Location = new System.Drawing.Point(20, 148);
             this.lblFreightCharges.Name = "lblFreightCharges";
             this.lblFreightCharges.Size = new System.Drawing.Size(90, 15);
             this.lblFreightCharges.TabIndex = 12;
@@ -350,7 +348,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtFreightCharges
             // 
             this.txtFreightCharges.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtFreightCharges.Location = new System.Drawing.Point(130, 148);
+            this.txtFreightCharges.Location = new System.Drawing.Point(140, 150);
             this.txtFreightCharges.Name = "txtFreightCharges";
             this.txtFreightCharges.Size = new System.Drawing.Size(150, 23);
             this.txtFreightCharges.TabIndex = 13;
@@ -432,14 +430,14 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // barcodeGroup
             // 
-            this.barcodeGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.barcodeGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.barcodeGroup.Controls.Add(this.lblBarcode);
             this.barcodeGroup.Controls.Add(this.txtBarcode);
             this.barcodeGroup.Controls.Add(this.picBarcode);
             this.barcodeGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.barcodeGroup.Location = new System.Drawing.Point(690, 20);
+            this.barcodeGroup.Location = new System.Drawing.Point(1040, 20);
             this.barcodeGroup.Name = "barcodeGroup";
-            this.barcodeGroup.Size = new System.Drawing.Size(300, 200);
+            this.barcodeGroup.Size = new System.Drawing.Size(400, 200);
             this.barcodeGroup.TabIndex = 1;
             this.barcodeGroup.TabStop = false;
             this.barcodeGroup.Text = "Barcode";
@@ -479,8 +477,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // itemsGroup
             // 
-            this.itemsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.itemsGroup.Controls.Add(this.lblProduct);
             this.itemsGroup.Controls.Add(this.cmbProduct);
             this.itemsGroup.Controls.Add(this.lblQuantity);
@@ -497,7 +494,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.itemsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.itemsGroup.Location = new System.Drawing.Point(20, 240);
             this.itemsGroup.Name = "itemsGroup";
-            this.itemsGroup.Size = new System.Drawing.Size(650, 240);
+            this.itemsGroup.Size = new System.Drawing.Size(1000, 240);
             this.itemsGroup.TabIndex = 2;
             this.itemsGroup.TabStop = false;
             this.itemsGroup.Text = "Purchase Items";
@@ -540,7 +537,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtQuantity
             // 
             this.txtQuantity.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtQuantity.Location = new System.Drawing.Point(350, 28);
+            this.txtQuantity.Location = new System.Drawing.Point(350, 30);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(80, 23);
             this.txtQuantity.TabIndex = 3;
@@ -649,7 +646,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.dgvPurchaseItems.RowHeadersVisible = false;
             this.dgvPurchaseItems.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.dgvPurchaseItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPurchaseItems.Size = new System.Drawing.Size(600, 80);
+            this.dgvPurchaseItems.Size = new System.Drawing.Size(450, 80);
             this.dgvPurchaseItems.TabIndex = 12;
             this.dgvPurchaseItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchaseItems_CellClick);
             this.dgvPurchaseItems.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchaseItems_CellValueChanged);
@@ -657,13 +654,13 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // totalsGroup
             // 
-            this.totalsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.totalsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.totalsGroup.Controls.Add(this.lblSubTotal);
             this.totalsGroup.Controls.Add(this.txtSubTotal);
             this.totalsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.totalsGroup.Location = new System.Drawing.Point(690, 240);
+            this.totalsGroup.Location = new System.Drawing.Point(1040, 240);
             this.totalsGroup.Name = "totalsGroup";
-            this.totalsGroup.Size = new System.Drawing.Size(300, 100);
+            this.totalsGroup.Size = new System.Drawing.Size(400, 100);
             this.totalsGroup.TabIndex = 3;
             this.totalsGroup.TabStop = false;
             this.totalsGroup.Text = "Totals";
@@ -702,7 +699,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.actionsGroup.Location = new System.Drawing.Point(20, 500);
             this.actionsGroup.Name = "actionsGroup";
-            this.actionsGroup.Size = new System.Drawing.Size(970, 80);
+            this.actionsGroup.Size = new System.Drawing.Size(650, 80);
             this.actionsGroup.TabIndex = 4;
             this.actionsGroup.TabStop = false;
             this.actionsGroup.Text = "Actions";
@@ -777,7 +774,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.purchaseListGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.purchaseListGroup.Location = new System.Drawing.Point(20, 600);
             this.purchaseListGroup.Name = "purchaseListGroup";
-            this.purchaseListGroup.Size = new System.Drawing.Size(970, 200);
+            this.purchaseListGroup.Size = new System.Drawing.Size(650, 200);
             this.purchaseListGroup.TabIndex = 5;
             this.purchaseListGroup.TabStop = false;
             this.purchaseListGroup.Text = "Purchase List";
@@ -795,7 +792,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.dgvPurchases.RowHeadersVisible = false;
             this.dgvPurchases.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.dgvPurchases.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPurchases.Size = new System.Drawing.Size(930, 150);
+            this.dgvPurchases.Size = new System.Drawing.Size(610, 150);
             this.dgvPurchases.TabIndex = 0;
             this.dgvPurchases.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchases_CellClick);
             
@@ -805,10 +802,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1400, 850);
+            this.ClientSize = new System.Drawing.Size(1000, 850);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
-            this.MinimumSize = new System.Drawing.Size(1200, 800);
+            this.MinimumSize = new System.Drawing.Size(950, 800);
             this.Name = "PurchaseInvoiceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Purchase Invoice Management";

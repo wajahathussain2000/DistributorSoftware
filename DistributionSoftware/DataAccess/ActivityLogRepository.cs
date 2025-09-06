@@ -83,7 +83,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error logging user activity: {ex.Message}");
                 throw;
             }
         }
@@ -131,7 +130,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error logging login attempt: {ex.Message}");
                 throw;
             }
         }
@@ -171,7 +169,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error updating logout time: {ex.Message}");
                 throw;
             }
         }
@@ -228,7 +225,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error retrieving user activity report: {ex.Message}");
                 throw;
             }
             
@@ -279,7 +275,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error retrieving login history report: {ex.Message}");
                 throw;
             }
             
@@ -333,7 +328,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error retrieving activity statistics: {ex.Message}");
                 throw;
             }
             
@@ -376,7 +370,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error archiving old logs: {ex.Message}");
                 throw;
             }
         }
@@ -410,7 +403,6 @@ namespace DistributionSoftware.DataAccess
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error deleting archived logs: {ex.Message}");
                 throw;
             }
         }
@@ -463,6 +455,13 @@ namespace DistributionSoftware.DataAccess
         #endregion
     }
 }
+
+
+
+
+
+
+
 
 
 

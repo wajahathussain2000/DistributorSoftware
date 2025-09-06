@@ -295,6 +295,12 @@
     <Compile Include="Presentation\Forms\PurchaseInvoiceForm.Designer.cs">
       <DependentUpon>PurchaseInvoiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\GRNForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\GRNForm.Designer.cs">
+      <DependentUpon>GRNForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Icons\IconHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

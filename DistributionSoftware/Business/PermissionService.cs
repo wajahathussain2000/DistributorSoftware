@@ -49,7 +49,6 @@ namespace DistributionSoftware.Business
             catch (Exception ex)
             {
                 // Log the error and rethrow for proper error handling
-                System.Diagnostics.Debug.WriteLine($"Error retrieving all active permissions: {ex.Message}");
                 throw;
             }
         }
@@ -70,7 +69,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error retrieving permissions for module {module}: {ex.Message}");
                 throw;
             }
         }
@@ -91,7 +89,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error retrieving permission by code {permissionCode}: {ex.Message}");
                 throw;
             }
         }
@@ -146,7 +143,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error creating permission: {ex.Message}");
                 throw;
             }
         }
@@ -197,7 +193,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error updating permission: {ex.Message}");
                 throw;
             }
         }
@@ -239,7 +234,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error deactivating permission {permissionId}: {ex.Message}");
                 throw;
             }
         }
@@ -264,7 +258,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error retrieving permissions for role {roleId}: {ex.Message}");
                 throw;
             }
         }
@@ -309,7 +302,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error assigning permission {permissionId} to role {roleId}: {ex.Message}");
                 throw;
             }
         }
@@ -352,7 +344,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error removing permission {permissionId} from role {roleId}: {ex.Message}");
                 throw;
             }
         }
@@ -375,7 +366,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error checking if role {roleId} has permission {permissionCode}: {ex.Message}");
                 throw;
             }
         }
@@ -404,7 +394,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error checking if user {userId} has permission {permissionCode}: {ex.Message}");
                 throw;
             }
         }
@@ -444,7 +433,6 @@ namespace DistributionSoftware.Business
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error getting permissions for user {userId}: {ex.Message}");
                 // Return empty collection instead of throwing to prevent app from stopping
                 return Enumerable.Empty<Permission>();
             }
