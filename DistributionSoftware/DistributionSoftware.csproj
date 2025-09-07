@@ -312,6 +312,9 @@
     <Compile Include="Presentation\Forms\PurchaseReturnForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Presentation\Forms\PurchaseReturnForm.Designer.cs">
+      <DependentUpon>PurchaseReturnForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\PurchaseLedgerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -335,6 +338,18 @@
     </Compile>
     <Compile Include="Presentation\Forms\CustomerMasterForm.Designer.cs">
       <DependentUpon>CustomerMasterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserMasterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserMasterForm.Designer.cs">
+      <DependentUpon>UserMasterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserManagementTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserManagementTestForm.Designer.cs">
+      <DependentUpon>UserManagementTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\Icons\IconHelper.cs" />
     <Compile Include="Program.cs" />

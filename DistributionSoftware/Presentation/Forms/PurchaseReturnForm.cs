@@ -38,7 +38,7 @@ namespace DistributionSoftware.Presentation.Forms
             try
             {
                 Debug.WriteLine("PurchaseReturnForm: Initializing form");
-                
+                InitializeComponent();
                 InitializeUI();
                 InitializeConnection();
                 InitializeServices();

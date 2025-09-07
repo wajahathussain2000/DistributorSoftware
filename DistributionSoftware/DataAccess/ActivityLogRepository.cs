@@ -316,8 +316,8 @@ namespace DistributionSoftware.DataAccess
                         {
                             if (await reader.ReadAsync())
                             {
-                                statistics["TotalActiveUsers"] = reader.GetInt32(0);
-                                statistics["TotalActivities"] = reader.GetInt32(1);
+                                statistics["TotalActiveUsers"] = Convert.ToInt32(reader[0]);
+                                statistics["TotalActivities"] = Convert.ToInt32(reader[1]);
                                 statistics["TotalModules"] = reader.GetInt32(2);
                                 statistics["TotalLogins"] = reader.GetInt32(3);
                                 statistics["TotalLogouts"] = reader.GetInt32(4);
@@ -421,14 +421,14 @@ namespace DistributionSoftware.DataAccess
             return new UserActivityLog
             {
                 LogId = reader.GetInt64(0),
-                UserId = reader.GetInt32(1),
-                ActivityType = reader.GetString(2),
-                ActivityDescription = reader.IsDBNull(3) ? null : reader.GetString(3),
-                Module = reader.IsDBNull(4) ? null : reader.GetString(4),
-                IPAddress = reader.IsDBNull(5) ? null : reader.GetString(5),
-                UserAgent = reader.IsDBNull(6) ? null : reader.GetString(6),
+                UserId = Convert.ToInt32(reader[1]),
+                ActivityType = reader[2].ToString(),
+                ActivityDescription = reader.IsDBNull(3) ? null : reader[3].ToString(),
+                Module = reader.IsDBNull(4) ? null : reader[4].ToString(),
+                IPAddress = reader.IsDBNull(5) ? null : reader[5].ToString(),
+                UserAgent = reader.IsDBNull(6) ? null : reader[6].ToString(),
                 ActivityDate = reader.GetDateTime(7),
-                AdditionalData = reader.IsDBNull(8) ? null : reader.GetString(8)
+                AdditionalData = reader.IsDBNull(8) ? null : reader[8].ToString()
             };
         }
         
@@ -442,12 +442,12 @@ namespace DistributionSoftware.DataAccess
             return new LoginHistory
             {
                 LoginId = reader.GetInt64(0),
-                UserId = reader.GetInt32(1),
+                UserId = Convert.ToInt32(reader[1]),
                 LoginDate = reader.GetDateTime(2),
                 LogoutDate = reader.IsDBNull(3) ? null : (DateTime?)reader.GetDateTime(3),
-                IPAddress = reader.IsDBNull(4) ? null : reader.GetString(4),
-                LoginStatus = reader.GetString(5),
-                FailureReason = reader.IsDBNull(6) ? null : reader.GetString(6),
+                IPAddress = reader.IsDBNull(4) ? null : reader[4].ToString(),
+                LoginStatus = reader[5].ToString(),
+                FailureReason = reader.IsDBNull(6) ? null : reader[6].ToString(),
                 SessionDuration = reader.IsDBNull(7) ? null : (int?)reader.GetInt32(7)
             };
         }

@@ -42,11 +42,11 @@ namespace DistributionSoftware.DataAccess
                             {
                                 permissions.Add(new Permission
                                 {
-                                    PermissionId = reader.GetInt32(0),
-                                    PermissionName = reader.GetString(1),
-                                    PermissionCode = reader.GetString(2),
-                                    Description = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-                                    Module = reader.GetString(4),
+                                    PermissionId = Convert.ToInt32(reader[0]),
+                                    PermissionName = reader[1].ToString(),
+                                    PermissionCode = reader[2].ToString(),
+                                    Description = reader.IsDBNull(3) ? string.Empty : reader[3].ToString(),
+                                    Module = reader[4].ToString(),
                                     IsActive = reader.GetBoolean(5),
                                     CreatedDate = reader.GetDateTime(6)
                                 });
@@ -86,11 +86,11 @@ namespace DistributionSoftware.DataAccess
                             {
                                 permissions.Add(new Permission
                                 {
-                                    PermissionId = reader.GetInt32(0),
-                                    PermissionName = reader.GetString(1),
-                                    PermissionCode = reader.GetString(2),
-                                    Description = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-                                    Module = reader.GetString(4),
+                                    PermissionId = Convert.ToInt32(reader[0]),
+                                    PermissionName = reader[1].ToString(),
+                                    PermissionCode = reader[2].ToString(),
+                                    Description = reader.IsDBNull(3) ? string.Empty : reader[3].ToString(),
+                                    Module = reader[4].ToString(),
                                     IsActive = reader.GetBoolean(5),
                                     CreatedDate = reader.GetDateTime(6)
                                 });
@@ -128,11 +128,11 @@ namespace DistributionSoftware.DataAccess
                             {
                                 return new Permission
                                 {
-                                    PermissionId = reader.GetInt32(0),
-                                    PermissionName = reader.GetString(1),
-                                    PermissionCode = reader.GetString(2),
-                                    Description = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-                                    Module = reader.GetString(4),
+                                    PermissionId = Convert.ToInt32(reader[0]),
+                                    PermissionName = reader[1].ToString(),
+                                    PermissionCode = reader[2].ToString(),
+                                    Description = reader.IsDBNull(3) ? string.Empty : reader[3].ToString(),
+                                    Module = reader[4].ToString(),
                                     IsActive = reader.GetBoolean(5),
                                     CreatedDate = reader.GetDateTime(6)
                                 };
@@ -270,11 +270,11 @@ namespace DistributionSoftware.DataAccess
                             {
                                 permissions.Add(new Permission
                                 {
-                                    PermissionId = reader.GetInt32(0),
-                                    PermissionName = reader.GetString(1),
-                                    PermissionCode = reader.GetString(2),
-                                    Description = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-                                    Module = reader.GetString(4),
+                                    PermissionId = Convert.ToInt32(reader[0]),
+                                    PermissionName = reader[1].ToString(),
+                                    PermissionCode = reader[2].ToString(),
+                                    Description = reader.IsDBNull(3) ? string.Empty : reader[3].ToString(),
+                                    Module = reader[4].ToString(),
                                     IsActive = reader.GetBoolean(5),
                                     CreatedDate = reader.GetDateTime(6)
                                 });

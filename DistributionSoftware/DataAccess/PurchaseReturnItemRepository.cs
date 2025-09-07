@@ -45,15 +45,15 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var item = new PurchaseReturnItem
                                 {
-                                    ReturnItemId = reader.GetInt32(reader.GetOrdinal("ReturnItemId")),
-                                    ReturnId = reader.GetInt32(reader.GetOrdinal("ReturnId")),
-                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
-                                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
+                                    ReturnItemId = Convert.ToInt32(reader["ReturnItemId"]),
+                                    ReturnId = Convert.ToInt32(reader["ReturnId"]),
+                                    ProductId = Convert.ToInt32(reader["ProductId"]),
+                                    ProductName = reader["ProductName"].ToString(),
+                                    ProductCode = reader["ProductCode"].ToString(),
                                     Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
                                     UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
                                     LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
-                                    BatchNo = reader.IsDBNull(reader.GetOrdinal("BatchNo")) ? null : reader.GetString(reader.GetOrdinal("BatchNo")),
+                                    BatchNo = reader.IsDBNull(reader.GetOrdinal("BatchNo")) ? null : reader["BatchNo"].ToString(),
                                     ExpiryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate")),
                                 };
                                 
@@ -100,15 +100,15 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var item = new PurchaseReturnItem
                                 {
-                                    ReturnItemId = reader.GetInt32(reader.GetOrdinal("ReturnItemId")),
-                                    ReturnId = reader.GetInt32(reader.GetOrdinal("ReturnId")),
-                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
-                                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
+                                    ReturnItemId = Convert.ToInt32(reader["ReturnItemId"]),
+                                    ReturnId = Convert.ToInt32(reader["ReturnId"]),
+                                    ProductId = Convert.ToInt32(reader["ProductId"]),
+                                    ProductName = reader["ProductName"].ToString(),
+                                    ProductCode = reader["ProductCode"].ToString(),
                                     Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
                                     UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
                                     LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
-                                    BatchNo = reader.IsDBNull(reader.GetOrdinal("BatchNo")) ? null : reader.GetString(reader.GetOrdinal("BatchNo")),
+                                    BatchNo = reader.IsDBNull(reader.GetOrdinal("BatchNo")) ? null : reader["BatchNo"].ToString(),
                                     ExpiryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate")),
                                 };
                                 

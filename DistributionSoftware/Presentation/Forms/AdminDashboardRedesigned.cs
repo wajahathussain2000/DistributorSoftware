@@ -72,6 +72,9 @@ namespace DistributionSoftware.Presentation.Forms
             // Users Dropdown (User Management Module)
             usersDropdown = new ContextMenuStrip();
             usersDropdown.Font = dropdownFont;
+            usersDropdown.Items.Add("User Master", null, (s, e) => OpenUserMasterForm());
+            usersDropdown.Items.Add("-");
+            usersDropdown.Items.Add("Test User Management", null, (s, e) => TestUserManagement());
 
             // Products Dropdown (Product & Inventory Management Module)
             productsDropdown = new ContextMenuStrip();
@@ -995,6 +998,34 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Customer Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenUserMasterForm() 
+        { 
+            try
+            {
+                UserMasterForm userMasterForm = new UserMasterForm();
+                userMasterForm.StartPosition = FormStartPosition.CenterParent;
+                userMasterForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening User Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TestUserManagement()
+        {
+            try
+            {
+                UserManagementTestForm testForm = new UserManagementTestForm();
+                testForm.StartPosition = FormStartPosition.CenterParent;
+                testForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error testing User Management: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -468,12 +468,12 @@ namespace DistributionSoftware.Business
                             {
                                 var product = new PurchaseReturnItem
                                 {
-                                    ProductId = reader.GetInt32(0), // ProductId column
-                                    ProductName = reader.GetString(1), // ProductName column
-                                    ProductCode = reader.GetString(2), // ProductCode column
+                                    ProductId = Convert.ToInt32(reader[0]), // ProductId column
+                                    ProductName = reader[1].ToString(), // ProductName column
+                                    ProductCode = reader[2].ToString(), // ProductCode column
                                     Quantity = reader.GetDecimal(3), // PurchasedQuantity column
                                     UnitPrice = reader.GetDecimal(4), // PurchasedUnitPrice column
-                                    BatchNo = reader.IsDBNull(5) ? null : reader.GetString(5), // BatchNumber column
+                                    BatchNo = reader.IsDBNull(5) ? null : reader[5].ToString(), // BatchNumber column
                                     ExpiryDate = reader.IsDBNull(6) ? (DateTime?)null : reader.GetDateTime(6) // ExpiryDate column
                                 };
                                 

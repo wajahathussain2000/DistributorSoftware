@@ -11,9 +11,12 @@ namespace DistributionSoftware.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }
+        public bool IsAdmin { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }
+        public string FullName => $"{FirstName} {LastName}".Trim();
     }
 }
