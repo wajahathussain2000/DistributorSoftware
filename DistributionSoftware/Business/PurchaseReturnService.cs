@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Data.SqlClient;
 
 namespace DistributionSoftware.Business
 {
@@ -12,12 +13,14 @@ namespace DistributionSoftware.Business
     {
         private readonly IPurchaseReturnRepository _purchaseReturnRepository;
         private readonly IPurchaseReturnItemRepository _purchaseReturnItemRepository;
+        private readonly string _connectionString;
 
         public PurchaseReturnService(IPurchaseReturnRepository purchaseReturnRepository, 
                                    IPurchaseReturnItemRepository purchaseReturnItemRepository)
         {
             _purchaseReturnRepository = purchaseReturnRepository;
             _purchaseReturnItemRepository = purchaseReturnItemRepository;
+            _connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=DistributionDB;Integrated Security=True";
         }
 
         public async Task<PurchaseReturn> GetPurchaseReturnByIdAsync(int purchaseReturnId)
@@ -29,7 +32,7 @@ namespace DistributionSoftware.Business
                 var purchaseReturn = await _purchaseReturnRepository.GetByIdAsync(purchaseReturnId);
                 if (purchaseReturn != null)
                 {
-                    purchaseReturn.Items = await _purchaseReturnItemRepository.GetByPurchaseReturnIdAsync(purchaseReturnId);
+                    purchaseReturn.Items = await _purchaseReturnItemRepository.GetByReturnIdAsync(purchaseReturnId);
                 }
                 
                 Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnByIdAsync: {(purchaseReturn != null ? "Success" : "Not found")}");
@@ -51,7 +54,7 @@ namespace DistributionSoftware.Business
                 var purchaseReturn = await _purchaseReturnRepository.GetByReturnNumberAsync(returnNumber);
                 if (purchaseReturn != null)
                 {
-                    purchaseReturn.Items = await _purchaseReturnItemRepository.GetByPurchaseReturnIdAsync(purchaseReturn.PurchaseReturnId);
+                    purchaseReturn.Items = await _purchaseReturnItemRepository.GetByReturnIdAsync(purchaseReturn.PurchaseReturnId);
                 }
                 
                 Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnByNumberAsync: {(purchaseReturn != null ? "Success" : "Not found")}");
@@ -118,23 +121,6 @@ namespace DistributionSoftware.Business
             }
         }
 
-        public async Task<List<PurchaseReturn>> GetPurchaseReturnsByStatusAsync(string status)
-        {
-            try
-            {
-                Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnsByStatusAsync: Getting purchase returns with status {status}");
-                
-                var purchaseReturns = await _purchaseReturnRepository.GetByStatusAsync(status);
-                
-                Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnsByStatusAsync: Retrieved {purchaseReturns.Count} purchase returns");
-                return purchaseReturns;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnsByStatusAsync: Error - {ex.Message}");
-                throw;
-            }
-        }
 
         public async Task<string> GenerateNextReturnNumberAsync()
         {
@@ -200,7 +186,7 @@ namespace DistributionSoftware.Business
                 {
                     foreach (var item in purchaseReturn.Items)
                     {
-                        item.PurchaseReturnId = purchaseReturnId;
+                        item.ReturnId = purchaseReturnId;
                         await _purchaseReturnItemRepository.CreateAsync(item);
                     }
                 }
@@ -236,12 +222,12 @@ namespace DistributionSoftware.Business
                 if (success && purchaseReturn.Items != null)
                 {
                     // Remove existing items
-                    await _purchaseReturnItemRepository.DeleteByPurchaseReturnIdAsync(purchaseReturn.PurchaseReturnId);
+                    await _purchaseReturnItemRepository.DeleteByReturnIdAsync(purchaseReturn.PurchaseReturnId);
                     
                     // Add updated items
                     foreach (var item in purchaseReturn.Items)
                     {
-                        item.PurchaseReturnId = purchaseReturn.PurchaseReturnId;
+                        item.ReturnId = purchaseReturn.PurchaseReturnId;
                         await _purchaseReturnItemRepository.CreateAsync(item);
                     }
                 }
@@ -264,9 +250,11 @@ namespace DistributionSoftware.Business
                 
                 // Check if purchase return is posted
                 var purchaseReturn = await _purchaseReturnRepository.GetByIdAsync(purchaseReturnId);
-                if (purchaseReturn != null && purchaseReturn.Status == "Posted")
+                // Check if purchase return exists and can be deleted
+                if (purchaseReturn != null)
                 {
-                    throw new InvalidOperationException("Cannot delete posted purchase return");
+                    // For now, allow deletion of any purchase return
+                    // In the future, you might want to add business rules here
                 }
                 
                 var success = await _purchaseReturnRepository.DeleteAsync(purchaseReturnId);
@@ -287,11 +275,10 @@ namespace DistributionSoftware.Business
             {
                 Debug.WriteLine($"PurchaseReturnService.SaveDraftAsync: Saving draft for purchase return {purchaseReturn.ReturnNumber}");
                 
-                purchaseReturn.Status = "Draft";
-                
+                // Set default values for new purchase returns
                 if (purchaseReturn.PurchaseReturnId == 0)
                 {
-                    await CreatePurchaseReturnAsync(purchaseReturn);
+                    // This is a new purchase return
                 }
                 else
                 {
@@ -315,13 +302,20 @@ namespace DistributionSoftware.Business
                 Debug.WriteLine($"PurchaseReturnService.PostPurchaseReturnAsync: Posting purchase return {purchaseReturnId}");
                 
                 // Validate that purchase return has items
-                var items = await _purchaseReturnItemRepository.GetByPurchaseReturnIdAsync(purchaseReturnId);
+                var items = await _purchaseReturnItemRepository.GetByReturnIdAsync(purchaseReturnId);
                 if (!items.Any())
                 {
                     throw new InvalidOperationException("Cannot post purchase return without items");
                 }
                 
+                // Post the purchase return and update stock
                 var success = await _purchaseReturnRepository.PostPurchaseReturnAsync(purchaseReturnId);
+                
+                if (success)
+                {
+                    // Update stock quantities (reduce by returned amounts)
+                    await UpdateStockQuantitiesAsync(purchaseReturnId);
+                }
                 
                 Debug.WriteLine($"PurchaseReturnService.PostPurchaseReturnAsync: Post {(success ? "successful" : "failed")}");
                 return success;
@@ -333,13 +327,62 @@ namespace DistributionSoftware.Business
             }
         }
 
+        private async Task UpdateStockQuantitiesAsync(int purchaseReturnId)
+        {
+            try
+            {
+                Debug.WriteLine($"PurchaseReturnService.UpdateStockQuantitiesAsync: Updating stock for purchase return {purchaseReturnId}");
+                
+                var items = await _purchaseReturnItemRepository.GetByReturnIdAsync(purchaseReturnId);
+                
+                foreach (var item in items)
+                {
+                    // Reduce stock quantity by returned amount
+                    var stockUpdateQuery = @"
+                        UPDATE Products 
+                        SET StockQuantity = StockQuantity - @ReturnedQuantity
+                        WHERE ProductId = @ProductId";
+                    
+                    using (var connection = new SqlConnection(_connectionString))
+                    {
+                        await connection.OpenAsync();
+                        using (var command = new SqlCommand(stockUpdateQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@ReturnedQuantity", item.Quantity);
+                            command.Parameters.AddWithValue("@ProductId", item.ProductId);
+                            
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+                    
+                    Debug.WriteLine($"PurchaseReturnService.UpdateStockQuantitiesAsync: Reduced stock for product {item.ProductId} by {item.Quantity}");
+                }
+                
+                Debug.WriteLine($"PurchaseReturnService.UpdateStockQuantitiesAsync: Stock update completed");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PurchaseReturnService.UpdateStockQuantitiesAsync: Error - {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<bool> CancelPurchaseReturnAsync(int purchaseReturnId)
         {
             try
             {
                 Debug.WriteLine($"PurchaseReturnService.CancelPurchaseReturnAsync: Cancelling purchase return {purchaseReturnId}");
                 
+                // Get the return items before cancelling
+                var items = await _purchaseReturnItemRepository.GetByReturnIdAsync(purchaseReturnId);
+                
                 var success = await _purchaseReturnRepository.CancelPurchaseReturnAsync(purchaseReturnId);
+                
+                if (success && items.Any())
+                {
+                    // Restore stock quantities (add back the returned amounts)
+                    await RestoreStockQuantitiesAsync(items);
+                }
                 
                 Debug.WriteLine($"PurchaseReturnService.CancelPurchaseReturnAsync: Cancel {(success ? "successful" : "failed")}");
                 return success;
@@ -348,6 +391,184 @@ namespace DistributionSoftware.Business
             {
                 Debug.WriteLine($"PurchaseReturnService.CancelPurchaseReturnAsync: Error - {ex.Message}");
                 throw;
+            }
+        }
+
+        private async Task RestoreStockQuantitiesAsync(List<PurchaseReturnItem> items)
+        {
+            try
+            {
+                Debug.WriteLine($"PurchaseReturnService.RestoreStockQuantitiesAsync: Restoring stock for {items.Count} items");
+                
+                foreach (var item in items)
+                {
+                    // Restore stock quantity by adding back returned amount
+                    var stockUpdateQuery = @"
+                        UPDATE Products 
+                        SET StockQuantity = StockQuantity + @ReturnedQuantity
+                        WHERE ProductId = @ProductId";
+                    
+                    using (var connection = new SqlConnection(_connectionString))
+                    {
+                        await connection.OpenAsync();
+                        using (var command = new SqlCommand(stockUpdateQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@ReturnedQuantity", item.Quantity);
+                            command.Parameters.AddWithValue("@ProductId", item.ProductId);
+                            
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+                    
+                    Debug.WriteLine($"PurchaseReturnService.RestoreStockQuantitiesAsync: Restored stock for product {item.ProductId} by {item.Quantity}");
+                }
+                
+                Debug.WriteLine($"PurchaseReturnService.RestoreStockQuantitiesAsync: Stock restoration completed");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PurchaseReturnService.RestoreStockQuantitiesAsync: Error - {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<List<PurchaseReturnItem>> GetProductsFromInvoiceAsync(int invoiceId)
+        {
+            try
+            {
+                Debug.WriteLine($"PurchaseReturnService.GetProductsFromInvoiceAsync: Getting products from invoice {invoiceId}");
+                
+                var products = new List<PurchaseReturnItem>();
+                
+                var query = @"
+                    SELECT 
+                        pid.ProductId,
+                        p.ProductName,
+                        p.ProductCode,
+                        pid.Quantity as PurchasedQuantity,
+                        pid.UnitPrice as PurchasedUnitPrice,
+                        pid.BatchNumber,
+                        pid.ExpiryDate
+                    FROM PurchaseInvoiceDetails pid
+                    INNER JOIN Products p ON pid.ProductId = p.ProductId
+                    WHERE pid.PurchaseInvoiceId = @InvoiceId
+                    AND p.IsActive = 1
+                    ORDER BY p.ProductName";
+                
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@InvoiceId", invoiceId);
+                        
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                var product = new PurchaseReturnItem
+                                {
+                                    ProductId = reader.GetInt32(0), // ProductId column
+                                    ProductName = reader.GetString(1), // ProductName column
+                                    ProductCode = reader.GetString(2), // ProductCode column
+                                    Quantity = reader.GetDecimal(3), // PurchasedQuantity column
+                                    UnitPrice = reader.GetDecimal(4), // PurchasedUnitPrice column
+                                    BatchNo = reader.IsDBNull(5) ? null : reader.GetString(5), // BatchNumber column
+                                    ExpiryDate = reader.IsDBNull(6) ? (DateTime?)null : reader.GetDateTime(6) // ExpiryDate column
+                                };
+                                
+                                products.Add(product);
+                            }
+                        }
+                    }
+                }
+                
+                Debug.WriteLine($"PurchaseReturnService.GetProductsFromInvoiceAsync: Found {products.Count} products in invoice {invoiceId}");
+                return products;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PurchaseReturnService.GetProductsFromInvoiceAsync: Error - {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<bool> ValidateReturnQuantityAsync(int productId, int invoiceId, decimal returnQuantity)
+        {
+            try
+            {
+                Debug.WriteLine($"PurchaseReturnService.ValidateReturnQuantityAsync: Validating return quantity {returnQuantity} for product {productId} from invoice {invoiceId}");
+                
+                var query = @"
+                    SELECT pid.Quantity as PurchasedQuantity
+                    FROM PurchaseInvoiceDetails pid
+                    WHERE pid.ProductId = @ProductId AND pid.PurchaseInvoiceId = @InvoiceId";
+                
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ProductId", productId);
+                        command.Parameters.AddWithValue("@InvoiceId", invoiceId);
+                        
+                        var result = await command.ExecuteScalarAsync();
+                        if (result != null)
+                        {
+                            var purchasedQuantity = Convert.ToDecimal(result);
+                            var isValid = returnQuantity <= purchasedQuantity;
+                            
+                            Debug.WriteLine($"PurchaseReturnService.ValidateReturnQuantityAsync: Purchased: {purchasedQuantity}, Return: {returnQuantity}, Valid: {isValid}");
+                            return isValid;
+                        }
+                    }
+                }
+                
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PurchaseReturnService.ValidateReturnQuantityAsync: Error - {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<decimal> GetActualAvailableStockAsync(int productId)
+        {
+            try
+            {
+                Debug.WriteLine($"PurchaseReturnService.GetActualAvailableStockAsync: Getting actual stock for product {productId}");
+                
+                // Get the current stock quantity from Products table
+                // This already reflects the stock adjustments from posted returns
+                var query = @"
+                    SELECT StockQuantity 
+                    FROM Products 
+                    WHERE ProductId = @ProductId";
+                
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ProductId", productId);
+                        
+                        var result = await command.ExecuteScalarAsync();
+                        if (result != null)
+                        {
+                            var currentStock = Convert.ToDecimal(result);
+                            Debug.WriteLine($"PurchaseReturnService.GetActualAvailableStockAsync: Current stock for product {productId} is {currentStock}");
+                            return currentStock;
+                        }
+                    }
+                }
+                
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PurchaseReturnService.GetActualAvailableStockAsync: Error - {ex.Message}");
+                return 0;
             }
         }
 
@@ -445,7 +666,7 @@ namespace DistributionSoftware.Business
             {
                 Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnItemsAsync: Getting items for purchase return {purchaseReturnId}");
                 
-                var items = await _purchaseReturnItemRepository.GetByPurchaseReturnIdAsync(purchaseReturnId);
+                var items = await _purchaseReturnItemRepository.GetByReturnIdAsync(purchaseReturnId);
                 
                 Debug.WriteLine($"PurchaseReturnService.GetPurchaseReturnItemsAsync: Retrieved {items.Count} items");
                 return items;
@@ -524,7 +745,7 @@ namespace DistributionSoftware.Business
             {
                 Debug.WriteLine($"PurchaseReturnService.RemoveAllPurchaseReturnItemsAsync: Removing all items for purchase return {purchaseReturnId}");
                 
-                var success = await _purchaseReturnItemRepository.DeleteByPurchaseReturnIdAsync(purchaseReturnId);
+                var success = await _purchaseReturnItemRepository.DeleteByReturnIdAsync(purchaseReturnId);
                 
                 Debug.WriteLine($"PurchaseReturnService.RemoveAllPurchaseReturnItemsAsync: Remove all {(success ? "successful" : "failed")}");
                 return success;

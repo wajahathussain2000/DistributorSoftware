@@ -101,10 +101,16 @@ namespace DistributionSoftware.Presentation.Forms
             purchasesDropdown.Items.Add("Purchase Invoice Entry", null, (s, e) => OpenPurchaseInvoiceForm());
             purchasesDropdown.Items.Add("GRN (Goods Receipt Note)", null, (s, e) => OpenGRNForm());
             purchasesDropdown.Items.Add("Purchase Return", null, (s, e) => OpenPurchaseReturnForm());
+            purchasesDropdown.Items.Add("Purchase Ledger", null, (s, e) => OpenPurchaseLedgerForm());
 
             // Customers Dropdown (Customer Management Module)
             customersDropdown = new ContextMenuStrip();
             customersDropdown.Font = dropdownFont;
+            customersDropdown.Items.Add("Customer Master", null, (s, e) => OpenCustomerMasterForm());
+            customersDropdown.Items.Add("Customer Category", null, (s, e) => OpenCustomerCategoryForm());
+            customersDropdown.Items.Add("Customer Ledger", null, (s, e) => OpenCustomerLedgerForm());
+            customersDropdown.Items.Add("-");
+            customersDropdown.Items.Add("Customer Report", null, (s, e) => OpenCustomerReportForm());
 
             // Suppliers Dropdown (Supplier Management Module)
             suppliersDropdown = new ContextMenuStrip();
@@ -963,6 +969,75 @@ namespace DistributionSoftware.Presentation.Forms
                 MessageBox.Show($"Error opening Purchase Return Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void OpenPurchaseLedgerForm() 
+        { 
+            try
+            {
+                PurchaseLedgerForm purchaseLedgerForm = new PurchaseLedgerForm();
+                purchaseLedgerForm.StartPosition = FormStartPosition.CenterParent;
+                purchaseLedgerForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Purchase Ledger Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerMasterForm() 
+        { 
+            try
+            {
+                CustomerMasterForm customerMasterForm = new CustomerMasterForm();
+                customerMasterForm.StartPosition = FormStartPosition.CenterParent;
+                customerMasterForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerCategoryForm()
+        {
+            try
+            {
+                CustomerCategoryForm categoryForm = new CustomerCategoryForm();
+                categoryForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Category Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerLedgerForm() 
+        { 
+            try
+            {
+                CustomerLedgerForm customerLedgerForm = new CustomerLedgerForm();
+                customerLedgerForm.StartPosition = FormStartPosition.CenterParent;
+                customerLedgerForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Ledger Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerReportForm() 
+        { 
+            try
+            {
+                // TODO: Implement Customer Report Form
+                MessageBox.Show("Customer Report Form is not implemented yet.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Report Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
 
         #endregion

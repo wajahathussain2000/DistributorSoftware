@@ -1,6 +1,6 @@
 namespace DistributionSoftware.Presentation.Forms
 {
-    partial class PurchaseReturnForm
+    partial class CustomerLedgerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@ namespace DistributionSoftware.Presentation.Forms
         {
             this.SuspendLayout();
             // 
-            // PurchaseReturnForm
+            // CustomerLedgerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 800);
-            this.Name = "PurchaseReturnForm";
-            this.Text = "Purchase Return - Distribution Software";
+            this.ClientSize = new System.Drawing.Size(1200, 700);
+            this.Name = "CustomerLedgerForm";
+            this.Text = "Customer Ledger - Distribution Software";
             this.ResumeLayout(false);
         }
 

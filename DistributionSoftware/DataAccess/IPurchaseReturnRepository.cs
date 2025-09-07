@@ -12,7 +12,6 @@ namespace DistributionSoftware.DataAccess
         Task<List<PurchaseReturn>> GetAllAsync();
         Task<List<PurchaseReturn>> GetBySupplierIdAsync(int supplierId);
         Task<List<PurchaseReturn>> GetByDateRangeAsync(DateTime startDate, DateTime endDate);
-        Task<List<PurchaseReturn>> GetByStatusAsync(string status);
         Task<string> GetNextReturnNumberAsync();
         Task<int> CreateAsync(PurchaseReturn purchaseReturn);
         Task<bool> UpdateAsync(PurchaseReturn purchaseReturn);

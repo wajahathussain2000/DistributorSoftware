@@ -12,7 +12,6 @@ namespace DistributionSoftware.Business
         Task<List<PurchaseReturn>> GetAllPurchaseReturnsAsync();
         Task<List<PurchaseReturn>> GetPurchaseReturnsBySupplierAsync(int supplierId);
         Task<List<PurchaseReturn>> GetPurchaseReturnsByDateRangeAsync(DateTime startDate, DateTime endDate);
-        Task<List<PurchaseReturn>> GetPurchaseReturnsByStatusAsync(string status);
         Task<string> GenerateNextReturnNumberAsync();
         Task<string> GenerateBarcodeAsync(string returnNumber);
         Task<int> CreatePurchaseReturnAsync(PurchaseReturn purchaseReturn);
@@ -21,6 +20,9 @@ namespace DistributionSoftware.Business
         Task<bool> SaveDraftAsync(PurchaseReturn purchaseReturn);
         Task<bool> PostPurchaseReturnAsync(int purchaseReturnId);
         Task<bool> CancelPurchaseReturnAsync(int purchaseReturnId);
+        Task<List<PurchaseReturnItem>> GetProductsFromInvoiceAsync(int invoiceId);
+        Task<bool> ValidateReturnQuantityAsync(int productId, int invoiceId, decimal returnQuantity);
+        Task<decimal> GetActualAvailableStockAsync(int productId);
         Task<decimal> CalculateNetReturnAmountAsync(PurchaseReturn purchaseReturn);
         Task<bool> ValidatePurchaseReturnAsync(PurchaseReturn purchaseReturn);
         Task<List<PurchaseReturnItem>> GetPurchaseReturnItemsAsync(int purchaseReturnId);

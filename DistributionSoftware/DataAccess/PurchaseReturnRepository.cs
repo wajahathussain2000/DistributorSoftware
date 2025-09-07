@@ -44,7 +44,7 @@ namespace DistributionSoftware.DataAccess
                                 var purchaseReturn = new PurchaseReturn
                                 {
                                     PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
-                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNo")),
                                     Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
                                     SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
                                     SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
@@ -56,7 +56,6 @@ namespace DistributionSoftware.DataAccess
                                     FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
                                     NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
                                     Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
-                                    Status = reader.GetString(reader.GetOrdinal("Status")),
                                     CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
                                     CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
@@ -94,7 +93,7 @@ namespace DistributionSoftware.DataAccess
                         FROM PurchaseReturns pr
                         LEFT JOIN Suppliers s ON pr.SupplierId = s.SupplierId
                         LEFT JOIN PurchaseInvoices pi ON pr.ReferencePurchaseId = pi.PurchaseInvoiceId
-                        WHERE pr.ReturnNumber = @ReturnNumber";
+                        WHERE pr.ReturnNo = @ReturnNumber";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -107,7 +106,7 @@ namespace DistributionSoftware.DataAccess
                                 var purchaseReturn = new PurchaseReturn
                                 {
                                     PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
-                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNo")),
                                     Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
                                     SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
                                     SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
@@ -119,7 +118,6 @@ namespace DistributionSoftware.DataAccess
                                     FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
                                     NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
                                     Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
-                                    Status = reader.GetString(reader.GetOrdinal("Status")),
                                     CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
                                     CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
@@ -169,7 +167,7 @@ namespace DistributionSoftware.DataAccess
                             var purchaseReturn = new PurchaseReturn
                             {
                                 PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
-                                ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNo")),
                                 Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
                                 SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
                                 SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
@@ -181,7 +179,6 @@ namespace DistributionSoftware.DataAccess
                                 FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
                                 NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
                                 Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
-                                Status = reader.GetString(reader.GetOrdinal("Status")),
                                 CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
                                 CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                 ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
@@ -235,7 +232,7 @@ namespace DistributionSoftware.DataAccess
                                 var purchaseReturn = new PurchaseReturn
                                 {
                                     PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
-                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNo")),
                                     Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
                                     SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
                                     SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
@@ -247,7 +244,6 @@ namespace DistributionSoftware.DataAccess
                                     FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
                                     NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
                                     Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
-                                    Status = reader.GetString(reader.GetOrdinal("Status")),
                                     CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
                                     CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
@@ -303,7 +299,7 @@ namespace DistributionSoftware.DataAccess
                                 var purchaseReturn = new PurchaseReturn
                                 {
                                     PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
-                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNo")),
                                     Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
                                     SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
                                     SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
@@ -315,7 +311,6 @@ namespace DistributionSoftware.DataAccess
                                     FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
                                     NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
                                     Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
-                                    Status = reader.GetString(reader.GetOrdinal("Status")),
                                     CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
                                     CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
@@ -356,12 +351,11 @@ namespace DistributionSoftware.DataAccess
                         FROM PurchaseReturns pr
                         LEFT JOIN Suppliers s ON pr.SupplierId = s.SupplierId
                         LEFT JOIN PurchaseInvoices pi ON pr.ReferencePurchaseId = pi.PurchaseInvoiceId
-                        WHERE pr.Status = @Status
+                        WHERE 1=1
                         ORDER BY pr.CreatedDate DESC";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Status", status);
                         
                         using (var reader = await command.ExecuteReaderAsync())
                         {
@@ -370,7 +364,7 @@ namespace DistributionSoftware.DataAccess
                                 var purchaseReturn = new PurchaseReturn
                                 {
                                     PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
-                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNumber")),
+                                    ReturnNumber = reader.GetString(reader.GetOrdinal("ReturnNo")),
                                     Barcode = reader.GetString(reader.GetOrdinal("Barcode")),
                                     SupplierId = reader.GetInt32(reader.GetOrdinal("SupplierId")),
                                     SupplierName = reader.IsDBNull(reader.GetOrdinal("SupplierName")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
@@ -382,7 +376,6 @@ namespace DistributionSoftware.DataAccess
                                     FreightAdjust = reader.GetDecimal(reader.GetOrdinal("FreightAdjust")),
                                     NetReturnAmount = reader.GetDecimal(reader.GetOrdinal("NetReturnAmount")),
                                     Reason = reader.IsDBNull(reader.GetOrdinal("Reason")) ? null : reader.GetString(reader.GetOrdinal("Reason")),
-                                    Status = reader.GetString(reader.GetOrdinal("Status")),
                                     CreatedBy = reader.GetInt32(reader.GetOrdinal("CreatedBy")),
                                     CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                                     ModifiedBy = reader.IsDBNull(reader.GetOrdinal("ModifiedBy")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("ModifiedBy")),
@@ -450,12 +443,12 @@ namespace DistributionSoftware.DataAccess
                     await connection.OpenAsync();
                     
                     var query = @"
-                        INSERT INTO PurchaseReturns (ReturnNumber, Barcode, SupplierId, ReferencePurchaseId, ReturnDate, 
+                        INSERT INTO PurchaseReturns (ReturnNo, ReturnBarcode, SupplierId, ReferencePurchaseId, ReturnDate, 
                                                    TaxAdjust, DiscountAdjust, FreightAdjust, NetReturnAmount, Reason, 
-                                                   Status, CreatedBy, CreatedDate)
+                                                   CreatedBy, CreatedDate)
                         VALUES (@ReturnNumber, @Barcode, @SupplierId, @ReferencePurchaseId, @ReturnDate, 
                                 @TaxAdjust, @DiscountAdjust, @FreightAdjust, @NetReturnAmount, @Reason, 
-                                @Status, @CreatedBy, @CreatedDate);
+                                @CreatedBy, @CreatedDate);
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
                     
                     using (var command = new SqlCommand(query, connection))
@@ -470,7 +463,6 @@ namespace DistributionSoftware.DataAccess
                         command.Parameters.AddWithValue("@FreightAdjust", purchaseReturn.FreightAdjust);
                         command.Parameters.AddWithValue("@NetReturnAmount", purchaseReturn.NetReturnAmount);
                         command.Parameters.AddWithValue("@Reason", purchaseReturn.Reason ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@Status", purchaseReturn.Status);
                         command.Parameters.AddWithValue("@CreatedBy", purchaseReturn.CreatedBy);
                         command.Parameters.AddWithValue("@CreatedDate", purchaseReturn.CreatedDate);
                         
@@ -503,7 +495,7 @@ namespace DistributionSoftware.DataAccess
                         UPDATE PurchaseReturns 
                         SET SupplierId = @SupplierId, ReferencePurchaseId = @ReferencePurchaseId, ReturnDate = @ReturnDate,
                             TaxAdjust = @TaxAdjust, DiscountAdjust = @DiscountAdjust, FreightAdjust = @FreightAdjust,
-                            NetReturnAmount = @NetReturnAmount, Reason = @Reason, Status = @Status,
+                            NetReturnAmount = @NetReturnAmount, Reason = @Reason,
                             ModifiedBy = @ModifiedBy, ModifiedDate = @ModifiedDate
                         WHERE PurchaseReturnId = @PurchaseReturnId";
                     
@@ -518,7 +510,6 @@ namespace DistributionSoftware.DataAccess
                         command.Parameters.AddWithValue("@FreightAdjust", purchaseReturn.FreightAdjust);
                         command.Parameters.AddWithValue("@NetReturnAmount", purchaseReturn.NetReturnAmount);
                         command.Parameters.AddWithValue("@Reason", purchaseReturn.Reason ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@Status", purchaseReturn.Status);
                         command.Parameters.AddWithValue("@ModifiedBy", purchaseReturn.ModifiedBy ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@ModifiedDate", purchaseReturn.ModifiedDate ?? (object)DBNull.Value);
                         
@@ -584,8 +575,8 @@ namespace DistributionSoftware.DataAccess
                             // Update status to Posted
                             var updateQuery = @"
                                 UPDATE PurchaseReturns 
-                                SET Status = 'Posted', ModifiedDate = @ModifiedDate
-                                WHERE PurchaseReturnId = @PurchaseReturnId AND Status = 'Draft'";
+                                SET ModifiedDate = @ModifiedDate
+                                WHERE PurchaseReturnId = @PurchaseReturnId";
                             
                             using (var command = new SqlCommand(updateQuery, connection, transaction))
                             {
@@ -662,8 +653,8 @@ namespace DistributionSoftware.DataAccess
                     
                     var query = @"
                         UPDATE PurchaseReturns 
-                        SET Status = 'Cancelled', ModifiedDate = @ModifiedDate
-                        WHERE PurchaseReturnId = @PurchaseReturnId AND Status = 'Draft'";
+                        SET ModifiedDate = @ModifiedDate
+                        WHERE PurchaseReturnId = @PurchaseReturnId";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -737,7 +728,7 @@ namespace DistributionSoftware.DataAccess
 
         private async Task<string> GetReturnNumberAsync(int purchaseReturnId, SqlConnection connection, SqlTransaction transaction)
         {
-            var query = "SELECT ReturnNumber FROM PurchaseReturns WHERE PurchaseReturnId = @PurchaseReturnId";
+            var query = "SELECT ReturnNo FROM PurchaseReturns WHERE PurchaseReturnId = @PurchaseReturnId";
             using (var command = new SqlCommand(query, connection, transaction))
             {
                 command.Parameters.AddWithValue("@PurchaseReturnId", purchaseReturnId);

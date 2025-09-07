@@ -16,13 +16,13 @@ namespace DistributionSoftware.DataAccess
             _connectionString = connectionString;
         }
 
-        public async Task<List<PurchaseReturnItem>> GetByPurchaseReturnIdAsync(int purchaseReturnId)
+        public async Task<List<PurchaseReturnItem>> GetByReturnIdAsync(int returnId)
         {
             var items = new List<PurchaseReturnItem>();
             
             try
             {
-                Debug.WriteLine($"PurchaseReturnItemRepository.GetByPurchaseReturnIdAsync: Getting items for purchase return {purchaseReturnId}");
+                Debug.WriteLine($"PurchaseReturnItemRepository.GetByReturnIdAsync: Getting items for purchase return {returnId}");
                 
                 using (var connection = new SqlConnection(_connectionString))
                 {
@@ -32,12 +32,12 @@ namespace DistributionSoftware.DataAccess
                         SELECT pri.*, p.ProductName, p.ProductCode
                         FROM PurchaseReturnItems pri
                         INNER JOIN Products p ON pri.ProductId = p.ProductId
-                        WHERE pri.PurchaseReturnId = @PurchaseReturnId
-                        ORDER BY pri.PurchaseReturnItemId";
+                        WHERE pri.ReturnId = @ReturnId
+                        ORDER BY pri.ReturnItemId";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PurchaseReturnId", purchaseReturnId);
+                        command.Parameters.AddWithValue("@ReturnId", returnId);
                         
                         using (var reader = await command.ExecuteReaderAsync())
                         {
@@ -45,17 +45,16 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var item = new PurchaseReturnItem
                                 {
-                                    PurchaseReturnItemId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnItemId")),
-                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnItemId = reader.GetInt32(reader.GetOrdinal("ReturnItemId")),
+                                    ReturnId = reader.GetInt32(reader.GetOrdinal("ReturnId")),
                                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
                                     ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
                                     Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
                                     UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
                                     LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
-                                    BatchNumber = reader.IsDBNull(reader.GetOrdinal("BatchNumber")) ? null : reader.GetString(reader.GetOrdinal("BatchNumber")),
+                                    BatchNo = reader.IsDBNull(reader.GetOrdinal("BatchNo")) ? null : reader.GetString(reader.GetOrdinal("BatchNo")),
                                     ExpiryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate")),
-                                    Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes"))
                                 };
                                 
                                 items.Add(item);
@@ -64,11 +63,11 @@ namespace DistributionSoftware.DataAccess
                     }
                 }
                 
-                Debug.WriteLine($"PurchaseReturnItemRepository.GetByPurchaseReturnIdAsync: Successfully retrieved {items.Count} items");
+                Debug.WriteLine($"PurchaseReturnItemRepository.GetByReturnIdAsync: Successfully retrieved {items.Count} items");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"PurchaseReturnItemRepository.GetByPurchaseReturnIdAsync: Error - {ex.Message}");
+                Debug.WriteLine($"PurchaseReturnItemRepository.GetByReturnIdAsync: Error - {ex.Message}");
                 throw;
             }
             
@@ -89,11 +88,11 @@ namespace DistributionSoftware.DataAccess
                         SELECT pri.*, p.ProductName, p.ProductCode
                         FROM PurchaseReturnItems pri
                         INNER JOIN Products p ON pri.ProductId = p.ProductId
-                        WHERE pri.PurchaseReturnItemId = @PurchaseReturnItemId";
+                        WHERE pri.ReturnItemId = @ReturnItemId";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PurchaseReturnItemId", purchaseReturnItemId);
+                        command.Parameters.AddWithValue("@ReturnItemId", purchaseReturnItemId);
                         
                         using (var reader = await command.ExecuteReaderAsync())
                         {
@@ -101,17 +100,16 @@ namespace DistributionSoftware.DataAccess
                             {
                                 var item = new PurchaseReturnItem
                                 {
-                                    PurchaseReturnItemId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnItemId")),
-                                    PurchaseReturnId = reader.GetInt32(reader.GetOrdinal("PurchaseReturnId")),
+                                    ReturnItemId = reader.GetInt32(reader.GetOrdinal("ReturnItemId")),
+                                    ReturnId = reader.GetInt32(reader.GetOrdinal("ReturnId")),
                                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
                                     ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
                                     Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity")),
                                     UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
                                     LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
-                                    BatchNumber = reader.IsDBNull(reader.GetOrdinal("BatchNumber")) ? null : reader.GetString(reader.GetOrdinal("BatchNumber")),
+                                    BatchNo = reader.IsDBNull(reader.GetOrdinal("BatchNo")) ? null : reader.GetString(reader.GetOrdinal("BatchNo")),
                                     ExpiryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate")),
-                                    Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes"))
                                 };
                                 
                                 Debug.WriteLine($"PurchaseReturnItemRepository.GetByIdAsync: Successfully retrieved item {item.ProductName}");
@@ -141,22 +139,20 @@ namespace DistributionSoftware.DataAccess
                     await connection.OpenAsync();
                     
                     var query = @"
-                        INSERT INTO PurchaseReturnItems (PurchaseReturnId, ProductId, Quantity, UnitPrice, LineTotal, 
-                                                       BatchNumber, ExpiryDate, Notes)
-                        VALUES (@PurchaseReturnId, @ProductId, @Quantity, @UnitPrice, @LineTotal, 
-                                @BatchNumber, @ExpiryDate, @Notes);
+                        INSERT INTO PurchaseReturnItems (ReturnId, ProductId, Quantity, UnitPrice, 
+                                                       BatchNo, ExpiryDate)
+                        VALUES (@ReturnId, @ProductId, @Quantity, @UnitPrice, 
+                                @BatchNo, @ExpiryDate);
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PurchaseReturnId", item.PurchaseReturnId);
+                        command.Parameters.AddWithValue("@ReturnId", item.ReturnId);
                         command.Parameters.AddWithValue("@ProductId", item.ProductId);
                         command.Parameters.AddWithValue("@Quantity", item.Quantity);
                         command.Parameters.AddWithValue("@UnitPrice", item.UnitPrice);
-                        command.Parameters.AddWithValue("@LineTotal", item.LineTotal);
-                        command.Parameters.AddWithValue("@BatchNumber", item.BatchNumber ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@BatchNo", item.BatchNo ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@ExpiryDate", item.ExpiryDate ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@Notes", item.Notes ?? (object)DBNull.Value);
                         
                         var result = await command.ExecuteScalarAsync();
                         var itemId = Convert.ToInt32(result);
@@ -186,20 +182,17 @@ namespace DistributionSoftware.DataAccess
                     var query = @"
                         UPDATE PurchaseReturnItems 
                         SET ProductId = @ProductId, Quantity = @Quantity, UnitPrice = @UnitPrice, 
-                            LineTotal = @LineTotal, BatchNumber = @BatchNumber, ExpiryDate = @ExpiryDate, 
-                            Notes = @Notes
-                        WHERE PurchaseReturnItemId = @PurchaseReturnItemId";
+                            BatchNo = @BatchNo, ExpiryDate = @ExpiryDate
+                        WHERE ReturnItemId = @ReturnItemId";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PurchaseReturnItemId", item.PurchaseReturnItemId);
+                        command.Parameters.AddWithValue("@ReturnItemId", item.ReturnItemId);
                         command.Parameters.AddWithValue("@ProductId", item.ProductId);
                         command.Parameters.AddWithValue("@Quantity", item.Quantity);
                         command.Parameters.AddWithValue("@UnitPrice", item.UnitPrice);
-                        command.Parameters.AddWithValue("@LineTotal", item.LineTotal);
-                        command.Parameters.AddWithValue("@BatchNumber", item.BatchNumber ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@BatchNo", item.BatchNo ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@ExpiryDate", item.ExpiryDate ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@Notes", item.Notes ?? (object)DBNull.Value);
                         
                         var rowsAffected = await command.ExecuteNonQueryAsync();
                         var success = rowsAffected > 0;
@@ -226,11 +219,11 @@ namespace DistributionSoftware.DataAccess
                 {
                     await connection.OpenAsync();
                     
-                    var query = "DELETE FROM PurchaseReturnItems WHERE PurchaseReturnItemId = @PurchaseReturnItemId";
+                    var query = "DELETE FROM PurchaseReturnItems WHERE ReturnItemId = @ReturnItemId";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PurchaseReturnItemId", purchaseReturnItemId);
+                        command.Parameters.AddWithValue("@ReturnItemId", purchaseReturnItemId);
                         
                         var rowsAffected = await command.ExecuteNonQueryAsync();
                         var success = rowsAffected > 0;
@@ -247,33 +240,33 @@ namespace DistributionSoftware.DataAccess
             }
         }
 
-        public async Task<bool> DeleteByPurchaseReturnIdAsync(int purchaseReturnId)
+        public async Task<bool> DeleteByReturnIdAsync(int returnId)
         {
             try
             {
-                Debug.WriteLine($"PurchaseReturnItemRepository.DeleteByPurchaseReturnIdAsync: Deleting all items for purchase return {purchaseReturnId}");
+                Debug.WriteLine($"PurchaseReturnItemRepository.DeleteByReturnIdAsync: Deleting all items for purchase return {returnId}");
                 
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     await connection.OpenAsync();
                     
-                    var query = "DELETE FROM PurchaseReturnItems WHERE PurchaseReturnId = @PurchaseReturnId";
+                    var query = "DELETE FROM PurchaseReturnItems WHERE ReturnId = @ReturnId";
                     
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PurchaseReturnId", purchaseReturnId);
+                        command.Parameters.AddWithValue("@ReturnId", returnId);
                         
                         var rowsAffected = await command.ExecuteNonQueryAsync();
                         var success = rowsAffected >= 0; // Allow 0 rows affected (no items to delete)
                         
-                        Debug.WriteLine($"PurchaseReturnItemRepository.DeleteByPurchaseReturnIdAsync: Delete {(success ? "successful" : "failed")}");
+                        Debug.WriteLine($"PurchaseReturnItemRepository.DeleteByReturnIdAsync: Delete {(success ? "successful" : "failed")}");
                         return success;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"PurchaseReturnItemRepository.DeleteByPurchaseReturnIdAsync: Error - {ex.Message}");
+                Debug.WriteLine($"PurchaseReturnItemRepository.DeleteByReturnIdAsync: Error - {ex.Message}");
                 throw;
             }
         }

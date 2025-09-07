@@ -6,12 +6,12 @@ namespace DistributionSoftware.DataAccess
 {
     public interface IPurchaseReturnItemRepository
     {
-        Task<List<PurchaseReturnItem>> GetByPurchaseReturnIdAsync(int purchaseReturnId);
-        Task<PurchaseReturnItem> GetByIdAsync(int purchaseReturnItemId);
+        Task<List<PurchaseReturnItem>> GetByReturnIdAsync(int returnId);
+        Task<PurchaseReturnItem> GetByIdAsync(int returnItemId);
         Task<int> CreateAsync(PurchaseReturnItem item);
         Task<bool> UpdateAsync(PurchaseReturnItem item);
-        Task<bool> DeleteAsync(int purchaseReturnItemId);
-        Task<bool> DeleteByPurchaseReturnIdAsync(int purchaseReturnId);
+        Task<bool> DeleteAsync(int returnItemId);
+        Task<bool> DeleteByReturnIdAsync(int returnId);
         Task<decimal> CalculateLineTotalAsync(int productId, decimal quantity, decimal unitPrice);
     }
 }
