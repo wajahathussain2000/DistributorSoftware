@@ -290,14 +290,23 @@
     <Compile Include="Presentation\Forms\UnitsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Presentation\Forms\UnitsForm.Designer.cs">
+      <DependentUpon>UnitsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\WarehouseForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\WarehouseForm.Designer.cs">
+      <DependentUpon>WarehouseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\BrandsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\StockAdjustmentForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockAdjustmentForm.Designer.cs">
+      <DependentUpon>StockAdjustmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\ReorderLevelForm.cs">
       <SubType>Form</SubType>
@@ -414,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\SalesInvoiceForm.resx">
+      <DependentUpon>SalesInvoiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

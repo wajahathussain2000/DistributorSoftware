@@ -14,10 +14,11 @@ namespace DistributionSoftware.Presentation.Forms
         private string connectionString;
         private int currentSupplierId = 0;
         private decimal currentBalance = 0;
-
-        // Form Controls
+        
+        // Control declarations
         private ComboBox cmbSupplier;
         private TextBox txtPaymentNumber;
+        private Button btnGeneratePaymentNumber;
         private DateTimePicker dtpPaymentDate;
         private TextBox txtPaymentAmount;
         private ComboBox cmbPaymentMethod;
@@ -27,14 +28,14 @@ namespace DistributionSoftware.Presentation.Forms
         private DateTimePicker dtpCheckDate;
         private TextBox txtTransactionReference;
         private TextBox txtNotes;
+        private Label lblCurrentBalance;
         private DataGridView dgvOutstandingInvoices;
         private DataGridView dgvPaymentAllocations;
-        private Label lblCurrentBalance;
-        private Button btnGeneratePaymentNumber;
         private Button btnSavePayment;
         private Button btnClearPayment;
         private Button btnGenerateReceipt;
         private Button btnClose;
+
 
         public SupplierPaymentForm()
         {
@@ -491,6 +492,8 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
+                ComboBox cmbSupplier = (ComboBox)this.Controls.Find("cmbSupplier", true)[0];
+                
                 string query = "SELECT SupplierId, SupplierCode, SupplierName FROM Suppliers WHERE IsActive = 1 ORDER BY SupplierName";
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                 {
@@ -510,6 +513,8 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void LoadPaymentMethods()
         {
+            ComboBox cmbPaymentMethod = (ComboBox)this.Controls.Find("cmbPaymentMethod", true)[0];
+            
             cmbPaymentMethod.Items.AddRange(new string[] { "Cash", "Bank Transfer", "Check", "Credit Card", "Other" });
             cmbPaymentMethod.SelectedIndex = 0;
         }
@@ -518,6 +523,8 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
+                TextBox txtPaymentNumber = (TextBox)this.Controls.Find("txtPaymentNumber", true)[0];
+                
                 string query = "SELECT ISNULL(MAX(CAST(SUBSTRING(PaymentNumber, 3, LEN(PaymentNumber)) AS INT)), 0) + 1 FROM SupplierPayments WHERE PaymentNumber LIKE 'SP%'";
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
@@ -535,6 +542,8 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void CmbSupplier_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ComboBox cmbSupplier = (ComboBox)sender;
+            
             if (cmbSupplier.SelectedValue != null && cmbSupplier.SelectedIndex >= 0)
             {
                 try
@@ -565,6 +574,8 @@ namespace DistributionSoftware.Presentation.Forms
             try
             {
                 if (currentSupplierId == 0) return;
+
+                Label lblCurrentBalance = (Label)this.Controls.Find("lblCurrentBalance", true)[0];
 
                 string query = @"SELECT ISNULL(SUM(DebitAmount), 0) - ISNULL(SUM(CreditAmount), 0) as CurrentBalance
                                 FROM SupplierTransactions WHERE SupplierId = @SupplierId AND IsActive = 1";
@@ -645,6 +656,7 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void CmbPaymentMethod_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ComboBox cmbPaymentMethod = (ComboBox)sender;
             string selectedMethod = cmbPaymentMethod.SelectedItem.ToString();
             
             // Enable/disable fields based on payment method
@@ -822,6 +834,17 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 return "System";
             }
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+        private void TxtPaymentAmount_TextChanged(object sender, EventArgs e)
+        {
+            // Update payment allocations
         }
     }
 }

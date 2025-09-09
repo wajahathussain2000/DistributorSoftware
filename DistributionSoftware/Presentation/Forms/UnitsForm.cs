@@ -192,7 +192,7 @@ namespace DistributionSoftware.Presentation.Forms
         private void AddUnitBtn_Click(object sender, EventArgs e)
         {
             TextBox txtUnitName = (TextBox)this.Controls.Find("txtUnitName", true)[0];
-            TextBox txtUnitCode = (TextBox)this.Controls.Find("txtUnitCode", true)[0];
+            TextBox txtSymbol = (TextBox)this.Controls.Find("txtSymbol", true)[0];
             TextBox txtDescription = (TextBox)this.Controls.Find("txtDescription", true)[0];
 
             if (string.IsNullOrWhiteSpace(txtUnitName.Text))
@@ -201,11 +201,6 @@ namespace DistributionSoftware.Presentation.Forms
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtUnitCode.Text))
-            {
-                MessageBox.Show("Please enter a unit code.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
             try
             {
@@ -214,13 +209,12 @@ namespace DistributionSoftware.Presentation.Forms
                     conn.Open();
                     string query = @"
                         INSERT INTO Units 
-                        (UnitName, UnitCode, Description, IsActive, CreatedDate)
-                        VALUES (@Name, @Code, @Description, 1, GETDATE())";
+                        (UnitName, UnitSymbol, IsActive, CreatedDate)
+                        VALUES (@Name, @Symbol, 1, GETDATE())";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Name", txtUnitName.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Code", txtUnitCode.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Symbol", txtSymbol.Text.Trim());
 
                     cmd.ExecuteNonQuery();
 
@@ -240,14 +234,44 @@ namespace DistributionSoftware.Presentation.Forms
             // Implementation for editing/deleting units
         }
 
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            AddUnitBtn_Click(sender, e);
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            // Delete functionality
+            DataGridView dgvUnits = (DataGridView)this.Controls.Find("dgvUnits", true)[0];
+            if (dgvUnits.SelectedRows.Count > 0)
+            {
+                var result = MessageBox.Show("Are you sure you want to delete this unit?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    // Implement delete logic here
+                    LoadUnits();
+                }
+            }
+        }
+
         private void ClearForm()
         {
             TextBox txtUnitName = (TextBox)this.Controls.Find("txtUnitName", true)[0];
-            TextBox txtUnitCode = (TextBox)this.Controls.Find("txtUnitCode", true)[0];
+            TextBox txtSymbol = (TextBox)this.Controls.Find("txtSymbol", true)[0];
             TextBox txtDescription = (TextBox)this.Controls.Find("txtDescription", true)[0];
-
+            
             txtUnitName.Clear();
-            txtUnitCode.Clear();
+            txtSymbol.Clear();
             txtDescription.Clear();
         }
     }

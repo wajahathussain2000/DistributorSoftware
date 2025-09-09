@@ -44,7 +44,7 @@ namespace DistributionSoftware.Presentation.Forms
             UpdateButtonState();
             
             // Add event handlers for real-time calculations
-            txtPaidAmount.TextChanged += TxtPaidAmount_TextChanged;
+            //txtPaidAmount.TextChanged += TxtPaidAmount_TextChanged;
         }
 
 
@@ -163,14 +163,14 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void LoadPaymentModes()
         {
-            cmbPaymentMode.Items.Clear();
-            cmbPaymentMode.Items.Add("CASH");
-            cmbPaymentMode.Items.Add("CARD");
-            cmbPaymentMode.Items.Add("EASYPAISA");
-            cmbPaymentMode.Items.Add("JAZZCASH");
-            cmbPaymentMode.Items.Add("BANK_TRANSFER");
-            cmbPaymentMode.Items.Add("CHEQUE");
-            cmbPaymentMode.SelectedIndex = 0; // Default to CASH
+            //cmbPaymentMode.Items.Clear();
+            //cmbPaymentMode.Items.Add("CASH");
+            //cmbPaymentMode.Items.Add("CARD");
+            //cmbPaymentMode.Items.Add("EASYPAISA");
+            //cmbPaymentMode.Items.Add("JAZZCASH");
+            //cmbPaymentMode.Items.Add("BANK_TRANSFER");
+            //cmbPaymentMode.Items.Add("CHEQUE");
+            //cmbPaymentMode.SelectedIndex = 0; // Default to CASH
         }
 
         private void SetDefaultValues()
@@ -405,104 +405,13 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        // Payment functionality removed - payment section was removed from form
+        /*
         private void BtnProcessPayment_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Prevent double-click processing
-                if (btnProcessPayment.Enabled == false)
-                {
-                    return;
-                }
-
-                // Disable button temporarily
-                btnProcessPayment.Enabled = false;
-                btnProcessPayment.Text = "Processing...";
-
-                if (!_isInvoiceSaved || _currentInvoice.SalesInvoiceId <= 0)
-                {
-                    MessageBox.Show("Please save the invoice first before processing payment.", "Save Required", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    btnProcessPayment.Enabled = true;
-                    btnProcessPayment.Text = "Process Payment";
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(txtPaidAmount.Text) || !decimal.TryParse(txtPaidAmount.Text, out decimal paidAmount))
-                {
-                    MessageBox.Show("Please enter a valid paid amount.", "Validation Error", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    btnProcessPayment.Enabled = true;
-                    btnProcessPayment.Text = "Process Payment";
-                    return;
-                }
-
-                var payment = new SalesPayment
-                {
-                    PaymentMode = cmbPaymentMode.Text,
-                    Amount = paidAmount,
-                    PaymentDate = DateTime.Now,
-                    CreatedDate = DateTime.Now,
-                    Status = "COMPLETED",
-                    CreatedBy = _currentInvoice.CreatedBy > 0 ? _currentInvoice.CreatedBy : (UserSession.CurrentUser?.UserId ?? 1)
-                };
-
-                // Ensure CreatedBy is valid (must be > 0 for database constraint)
-                if (payment.CreatedBy <= 0)
-                {
-                    payment.CreatedBy = 1; // Default to admin user
-                }
-
-                // Debug: Show current invoice ID
-                MessageBox.Show($"Debug Info:\nCurrent Invoice ID: {_currentInvoice.SalesInvoiceId}\nInvoice Number: {_currentInvoice.InvoiceNumber}\nPayment Amount: {paidAmount:N2}", 
-                    "Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Use direct payment processing approach
-                if (ProcessPaymentDirect(payment))
-                {
-                    _currentInvoice.PaidAmount += paidAmount;
-                    _currentInvoice.ChangeAmount = _currentInvoice.PaidAmount - _currentInvoice.TotalAmount;
-                    
-                    UpdateTotalsDisplay();
-                    
-                    if (_currentInvoice.PaidAmount >= _currentInvoice.TotalAmount)
-                    {
-                        _currentInvoice.Status = "PAID";
-                        UpdateInvoiceStatusDirect("PAID");
-                        ProcessStockReductionDirect();
-                        
-                        MessageBox.Show($"Payment completed successfully!\nInvoice Status: PAID\nStock Updated\nChange: {_currentInvoice.ChangeAmount:N2}", 
-                            "Payment Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnProcessPayment.Enabled = false; // Disable after full payment
-                        btnProcessPayment.Text = "Payment Complete";
-                    }
-                    else
-                    {
-                        _currentInvoice.Status = "PARTIAL_PAID";
-                        UpdateInvoiceStatusDirect("PARTIAL_PAID");
-                        
-                        MessageBox.Show($"Partial payment received!\nAmount Paid: {paidAmount:N2}\nRemaining: {(_currentInvoice.TotalAmount - _currentInvoice.PaidAmount):N2}", 
-                            "Partial Payment", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnProcessPayment.Enabled = true;
-                        btnProcessPayment.Text = "Process Payment";
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Failed to process payment. Please try again.", "Payment Error", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    btnProcessPayment.Enabled = true;
-                    btnProcessPayment.Text = "Process Payment";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error processing payment: {ex.Message}", "Error", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                btnProcessPayment.Enabled = true;
-                btnProcessPayment.Text = "Process Payment";
-            }
+            // Payment processing code commented out
         }
+        */
 
         private void CmbProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -565,6 +474,8 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        // Payment functionality removed - payment section was removed from form
+        /*
         private void TxtPaidAmount_TextChanged(object sender, EventArgs e)
         {
             // Update change amount in real-time when paid amount changes
@@ -578,6 +489,7 @@ namespace DistributionSoftware.Presentation.Forms
                 txtChangeAmount.Text = "0.00";
             }
         }
+        */
 
         private void UpdateTotalsDisplay()
         {
@@ -586,9 +498,11 @@ namespace DistributionSoftware.Presentation.Forms
             txtTaxableAmount.Text = _currentInvoice.TaxableAmount.ToString("N2");
             txtTaxAmount.Text = _currentInvoice.TaxAmount.ToString("N2");
             txtTotalAmount.Text = _currentInvoice.TotalAmount.ToString("N2");
-            txtPaidAmount.Text = _currentInvoice.PaidAmount.ToString("N2");
+            // Payment controls removed
+            // txtPaidAmount.Text = _currentInvoice.PaidAmount.ToString("N2");
             
-            // Calculate change amount in real-time
+            // Calculate change amount in real-time - commented out
+            /*
             decimal paidAmount = 0;
             if (decimal.TryParse(txtPaidAmount.Text, out paidAmount))
             {
@@ -599,6 +513,7 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 txtChangeAmount.Text = "0.00";
             }
+            */
         }
 
         private void UpdateInvoiceFromForm()
@@ -621,15 +536,18 @@ namespace DistributionSoftware.Presentation.Forms
             }
 
             _currentInvoice.InvoiceDate = dtpInvoiceDate.Value;
-            _currentInvoice.PaymentMode = cmbPaymentMode.Text;
+            // Payment controls removed
+            // _currentInvoice.PaymentMode = cmbPaymentMode.Text;
             _currentInvoice.Remarks = txtRemarks.Text;
             
-            // Update paid amount from form
+            // Update paid amount from form - commented out
+            /*
             if (decimal.TryParse(txtPaidAmount.Text, out decimal paidAmount))
             {
                 _currentInvoice.PaidAmount = paidAmount;
                 _currentInvoice.ChangeAmount = paidAmount - _currentInvoice.TotalAmount;
             }
+            */
         }
 
         private bool ValidateForm()
@@ -662,9 +580,10 @@ namespace DistributionSoftware.Presentation.Forms
             dtpInvoiceDate.Value = DateTime.Now;
             txtCashier.Text = _currentInvoice.CreatedByUser;
             txtTransactionTime.Text = DateTime.Now.ToString("HH:mm:ss");
-            cmbPaymentMode.SelectedIndex = 0;
+            // Payment controls removed
+            // cmbPaymentMode.SelectedIndex = 0;
             txtRemarks.Clear();
-            txtPaidAmount.Clear();
+            // txtPaidAmount.Clear();
             
             // Clear items
             dgvItems.Rows.Clear();
@@ -675,7 +594,7 @@ namespace DistributionSoftware.Presentation.Forms
             txtTaxableAmount.Clear();
             txtTaxAmount.Clear();
             txtTotalAmount.Clear();
-            txtChangeAmount.Clear();
+            // txtChangeAmount.Clear(); // Payment control removed
             
             // Reset flags
             _isInvoiceSaved = false;
@@ -869,5 +788,10 @@ namespace DistributionSoftware.Presentation.Forms
         }
 
         #endregion
+
+        private void dgvItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
