@@ -12,14 +12,11 @@ namespace DistributionSoftware.Presentation.Forms
         private SqlConnection connection;
         private string connectionString;
         private int currentCategoryId = 0;
-        private Button btnSave;
-        private DataGridView dgvCategories;
         private bool isEditMode = false;
 
         public CustomerCategoryForm()
         {
             InitializeComponent();
-            InitializeForm();
             InitializeConnection();
             LoadCategoriesGrid();
             
@@ -40,187 +37,9 @@ namespace DistributionSoftware.Presentation.Forms
             connection = new SqlConnection(connectionString);
         }
 
-        private void InitializeForm()
+        private void CloseBtn_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-
-            // Form properties
-            this.Text = "Customer Category Master - Distribution Software";
-            this.Size = new Size(1200, 700);
-            this.MinimumSize = new Size(1200, 700);
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(248, 249, 250);
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.MaximizeBox = true;
-            this.MinimizeBox = true;
-
-            // Header Panel
-            Panel headerPanel = new Panel
-            {
-                Dock = DockStyle.Top,
-                Height = 80,
-                BackColor = Color.FromArgb(52, 73, 94),
-                Padding = new Padding(20, 0, 20, 0)
-            };
-
-            Label titleLabel = new Label
-            {
-                Text = "🏷️ Customer Category Master",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                ForeColor = Color.White,
-                Location = new Point(20, 20),
-                AutoSize = true
-            };
-
-            Button closeBtn = new Button
-            {
-                Text = "✕",
-                Size = new Size(40, 40),
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Location = new Point(this.Width - 80, 20),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(231, 76, 60),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                Cursor = Cursors.Hand
-            };
-            closeBtn.Click += (s, e) => this.Close();
-
-            headerPanel.Controls.AddRange(new Control[] { titleLabel, closeBtn });
-
-            // Content Panel
-            Panel contentPanel = new Panel
-            {
-                Dock = DockStyle.Fill,
-                Padding = new Padding(20),
-                AutoScroll = true
-            };
-
-            // Category Information Group
-            GroupBox categoryGroup = new GroupBox
-            {
-                Text = "📋 Category Information",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                Size = new Size(750, 200),
-                Location = new Point(20, 100),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left
-            };
-
-            // Category Name
-            Label nameLabel = new Label { Text = "🏷️ Category Name:", Location = new Point(20, 30), AutoSize = true, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-            TextBox txtCategoryName = new TextBox { Name = "txtCategoryName", Location = new Point(200, 28), Size = new Size(300, 25), Font = new Font("Segoe UI", 9, FontStyle.Regular) };
-
-            // Description
-            Label descLabel = new Label { Text = "📝 Description:", Location = new Point(20, 70), AutoSize = true, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-            TextBox txtDescription = new TextBox { Name = "txtDescription", Location = new Point(200, 68), Size = new Size(500, 100), Multiline = true, ScrollBars = ScrollBars.Vertical, Font = new Font("Segoe UI", 9, FontStyle.Regular) };
-
-            categoryGroup.Controls.AddRange(new Control[] {
-                nameLabel, txtCategoryName, descLabel, txtDescription
-            });
-
-            // Categories List Group (Right side)
-            GroupBox categoryListGroup = new GroupBox
-            {
-                Text = "📋 Categories List",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                Size = new Size(400, 400),
-                Location = new Point(790, 100),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left,
-                BackColor = Color.FromArgb(240, 248, 255) // Light blue background
-            };
-
-            dgvCategories = new DataGridView
-            {
-                Name = "dgvCategories",
-                Location = new Point(20, 30),
-                Size = new Size(360, 350),
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                ReadOnly = true,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                MultiSelect = false,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                RowHeadersVisible = false,
-                ScrollBars = ScrollBars.Both,
-                BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle,
-                GridColor = Color.FromArgb(189, 195, 199),
-                Font = new Font("Segoe UI", 9, FontStyle.Regular),
-                ColumnHeadersHeight = 30,
-                ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
-                {
-                    Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                    BackColor = Color.FromArgb(52, 152, 219),
-                    ForeColor = Color.White,
-                    Alignment = DataGridViewContentAlignment.MiddleCenter
-                },
-                DefaultCellStyle = new DataGridViewCellStyle
-                {
-                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
-                    SelectionBackColor = Color.FromArgb(52, 152, 219),
-                    SelectionForeColor = Color.White
-                }
-            };
-            dgvCategories.SelectionChanged += DgvCategories_SelectionChanged;
-
-            categoryListGroup.Controls.Add(dgvCategories);
-
-            // Actions Group
-            GroupBox actionsGroup = new GroupBox
-            {
-                Text = "⚡ Actions",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                Size = new Size(750, 80),
-                Location = new Point(20, 320),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left
-            };
-
-            btnSave = new Button
-            {
-                Text = "💾 Save",
-                Location = new Point(20, 30),
-                Size = new Size(100, 35),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(46, 204, 113),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-            btnSave.Click += BtnSave_Click;
-
-            Button btnClear = new Button
-            {
-                Text = "🗑️ Clear",
-                Location = new Point(140, 30),
-                Size = new Size(100, 35),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(241, 196, 15),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-            btnClear.Click += BtnClear_Click;
-
-            Button btnDelete = new Button
-            {
-                Text = "🗑️ Delete",
-                Location = new Point(260, 30),
-                Size = new Size(100, 35),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(231, 76, 60),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold)
-            };
-            btnDelete.Click += BtnDelete_Click;
-
-            actionsGroup.Controls.AddRange(new Control[] { btnSave, btnClear, btnDelete });
-
-            contentPanel.Controls.AddRange(new Control[] {
-                categoryGroup, categoryListGroup, actionsGroup
-            });
-
-            this.Controls.Add(headerPanel);
-            this.Controls.Add(contentPanel);
-
-            this.ResumeLayout(false);
+            this.Close();
         }
 
         private void LoadCategoriesGrid()

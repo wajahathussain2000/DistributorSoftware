@@ -2,62 +2,15 @@ namespace DistributionSoftware.Presentation.Forms
 {
     partial class PurchaseInvoiceForm
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
-        
-        // Control declarations
-        private System.Windows.Forms.Panel headerPanel;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel contentPanel;
-        private System.Windows.Forms.GroupBox purchaseInfoGroup;
-        private System.Windows.Forms.Label lblPurchaseNo;
-        private System.Windows.Forms.TextBox txtPurchaseNo;
-        private System.Windows.Forms.Label lblSupplier;
-        private System.Windows.Forms.ComboBox cmbSupplier;
-        private System.Windows.Forms.Label lblInvoiceNo;
-        private System.Windows.Forms.TextBox txtInvoiceNo;
-        private System.Windows.Forms.Label lblInvoiceDate;
-        private System.Windows.Forms.DateTimePicker dtpInvoiceDate;
-        private System.Windows.Forms.Label lblTaxAmount;
-        private System.Windows.Forms.TextBox txtTaxAmount;
-        private System.Windows.Forms.Label lblDiscountAmount;
-        private System.Windows.Forms.TextBox txtDiscountAmount;
-        private System.Windows.Forms.Label lblFreightCharges;
-        private System.Windows.Forms.TextBox txtFreightCharges;
-        private System.Windows.Forms.Label lblNetAmount;
-        private System.Windows.Forms.TextBox txtNetAmount;
-        private System.Windows.Forms.Label lblNotes;
-        private System.Windows.Forms.TextBox txtNotes;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.ComboBox cmbStatus;
-        private System.Windows.Forms.GroupBox barcodeGroup;
-        private System.Windows.Forms.Label lblBarcode;
-        private System.Windows.Forms.TextBox txtBarcode;
-        private System.Windows.Forms.PictureBox picBarcode;
-        private System.Windows.Forms.GroupBox itemsGroup;
-        private System.Windows.Forms.Label lblProduct;
-        private System.Windows.Forms.ComboBox cmbProduct;
-        private System.Windows.Forms.Label lblQuantity;
-        private System.Windows.Forms.TextBox txtQuantity;
-        private System.Windows.Forms.Label lblUnitPrice;
-        private System.Windows.Forms.TextBox txtUnitPrice;
-        private System.Windows.Forms.Label lblBatchNo;
-        private System.Windows.Forms.TextBox txtBatchNo;
-        private System.Windows.Forms.Label lblExpiryDate;
-        private System.Windows.Forms.DateTimePicker dtpExpiryDate;
-        private System.Windows.Forms.Button btnAddItem;
-        private System.Windows.Forms.Button btnRemoveItem;
-        private System.Windows.Forms.DataGridView dgvPurchaseItems;
-        private System.Windows.Forms.GroupBox totalsGroup;
-        private System.Windows.Forms.Label lblSubTotal;
-        private System.Windows.Forms.TextBox txtSubTotal;
-        private System.Windows.Forms.GroupBox actionsGroup;
-        private System.Windows.Forms.Button btnSaveDraft;
-        private System.Windows.Forms.Button btnPost;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.GroupBox purchaseListGroup;
-        private System.Windows.Forms.DataGridView dgvPurchases;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -67,37 +20,38 @@ namespace DistributionSoftware.Presentation.Forms
             base.Dispose(disposing);
         }
 
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            this.headerPanel = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.contentPanel = new System.Windows.Forms.Panel();
-            this.purchaseInfoGroup = new System.Windows.Forms.GroupBox();
             this.lblPurchaseNo = new System.Windows.Forms.Label();
             this.txtPurchaseNo = new System.Windows.Forms.TextBox();
+            this.lblBarcode = new System.Windows.Forms.Label();
+            this.txtBarcode = new System.Windows.Forms.TextBox();
+            this.picBarcode = new System.Windows.Forms.PictureBox();
             this.lblSupplier = new System.Windows.Forms.Label();
             this.cmbSupplier = new System.Windows.Forms.ComboBox();
             this.lblInvoiceNo = new System.Windows.Forms.Label();
             this.txtInvoiceNo = new System.Windows.Forms.TextBox();
             this.lblInvoiceDate = new System.Windows.Forms.Label();
             this.dtpInvoiceDate = new System.Windows.Forms.DateTimePicker();
+            this.lblNetAmount = new System.Windows.Forms.Label();
+            this.txtNetAmount = new System.Windows.Forms.TextBox();
             this.lblTaxAmount = new System.Windows.Forms.Label();
             this.txtTaxAmount = new System.Windows.Forms.TextBox();
             this.lblDiscountAmount = new System.Windows.Forms.Label();
             this.txtDiscountAmount = new System.Windows.Forms.TextBox();
             this.lblFreightCharges = new System.Windows.Forms.Label();
             this.txtFreightCharges = new System.Windows.Forms.TextBox();
-            this.lblNetAmount = new System.Windows.Forms.Label();
-            this.txtNetAmount = new System.Windows.Forms.TextBox();
+            this.lblSubTotal = new System.Windows.Forms.Label();
+            this.txtSubTotal = new System.Windows.Forms.TextBox();
             this.lblNotes = new System.Windows.Forms.Label();
             this.txtNotes = new System.Windows.Forms.TextBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.barcodeGroup = new System.Windows.Forms.GroupBox();
-            this.lblBarcode = new System.Windows.Forms.Label();
-            this.txtBarcode = new System.Windows.Forms.TextBox();
-            this.picBarcode = new System.Windows.Forms.PictureBox();
-            this.itemsGroup = new System.Windows.Forms.GroupBox();
+            this.groupBoxItems = new System.Windows.Forms.GroupBox();
             this.lblProduct = new System.Windows.Forms.Label();
             this.cmbProduct = new System.Windows.Forms.ComboBox();
             this.lblQuantity = new System.Windows.Forms.Label();
@@ -111,722 +65,518 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnAddItem = new System.Windows.Forms.Button();
             this.btnRemoveItem = new System.Windows.Forms.Button();
             this.dgvPurchaseItems = new System.Windows.Forms.DataGridView();
-            this.totalsGroup = new System.Windows.Forms.GroupBox();
-            this.lblSubTotal = new System.Windows.Forms.Label();
-            this.txtSubTotal = new System.Windows.Forms.TextBox();
-            this.actionsGroup = new System.Windows.Forms.GroupBox();
+            this.groupBoxActions = new System.Windows.Forms.GroupBox();
             this.btnSaveDraft = new System.Windows.Forms.Button();
             this.btnPost = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
-            this.purchaseListGroup = new System.Windows.Forms.GroupBox();
+            this.groupBoxPurchaseList = new System.Windows.Forms.GroupBox();
             this.dgvPurchases = new System.Windows.Forms.DataGridView();
-            this.headerPanel.SuspendLayout();
-            this.contentPanel.SuspendLayout();
-            this.purchaseInfoGroup.SuspendLayout();
-            this.barcodeGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBarcode)).BeginInit();
-            this.itemsGroup.SuspendLayout();
+            this.groupBoxItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPurchaseItems)).BeginInit();
-            this.totalsGroup.SuspendLayout();
-            this.actionsGroup.SuspendLayout();
-            this.purchaseListGroup.SuspendLayout();
+            this.groupBoxActions.SuspendLayout();
+            this.groupBoxPurchaseList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPurchases)).BeginInit();
             this.SuspendLayout();
-            
-            // 
-            // headerPanel
-            // 
-            this.headerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.headerPanel.Controls.Add(this.lblTitle);
-            this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPanel.Location = new System.Drawing.Point(0, 0);
-            this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(1400, 60);
-            this.headerPanel.TabIndex = 0;
-            
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(300, 30);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Purchase Invoice Management";
-            
-            // 
-            // contentPanel
-            // 
-            this.contentPanel.AutoScroll = true;
-            this.contentPanel.Controls.Add(this.purchaseInfoGroup);
-            this.contentPanel.Controls.Add(this.barcodeGroup);
-            this.contentPanel.Controls.Add(this.itemsGroup);
-            this.contentPanel.Controls.Add(this.totalsGroup);
-            this.contentPanel.Controls.Add(this.actionsGroup);
-            this.contentPanel.Controls.Add(this.purchaseListGroup);
-            this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentPanel.Location = new System.Drawing.Point(0, 60);
-            this.contentPanel.Name = "contentPanel";
-            this.contentPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.contentPanel.TabIndex = 1;
-            
-            // 
-            // purchaseInfoGroup
-            // 
-            this.purchaseInfoGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.purchaseInfoGroup.Controls.Add(this.lblPurchaseNo);
-            this.purchaseInfoGroup.Controls.Add(this.txtPurchaseNo);
-            this.purchaseInfoGroup.Controls.Add(this.lblSupplier);
-            this.purchaseInfoGroup.Controls.Add(this.cmbSupplier);
-            this.purchaseInfoGroup.Controls.Add(this.lblInvoiceNo);
-            this.purchaseInfoGroup.Controls.Add(this.txtInvoiceNo);
-            this.purchaseInfoGroup.Controls.Add(this.lblInvoiceDate);
-            this.purchaseInfoGroup.Controls.Add(this.dtpInvoiceDate);
-            this.purchaseInfoGroup.Controls.Add(this.lblTaxAmount);
-            this.purchaseInfoGroup.Controls.Add(this.txtTaxAmount);
-            this.purchaseInfoGroup.Controls.Add(this.lblDiscountAmount);
-            this.purchaseInfoGroup.Controls.Add(this.txtDiscountAmount);
-            this.purchaseInfoGroup.Controls.Add(this.lblFreightCharges);
-            this.purchaseInfoGroup.Controls.Add(this.txtFreightCharges);
-            this.purchaseInfoGroup.Controls.Add(this.lblNetAmount);
-            this.purchaseInfoGroup.Controls.Add(this.txtNetAmount);
-            this.purchaseInfoGroup.Controls.Add(this.lblNotes);
-            this.purchaseInfoGroup.Controls.Add(this.txtNotes);
-            this.purchaseInfoGroup.Controls.Add(this.lblStatus);
-            this.purchaseInfoGroup.Controls.Add(this.cmbStatus);
-            this.purchaseInfoGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.purchaseInfoGroup.Location = new System.Drawing.Point(20, 20);
-            this.purchaseInfoGroup.Name = "purchaseInfoGroup";
-            this.purchaseInfoGroup.Size = new System.Drawing.Size(1000, 200);
-            this.purchaseInfoGroup.TabIndex = 0;
-            this.purchaseInfoGroup.TabStop = false;
-            this.purchaseInfoGroup.Text = "Purchase Information";
-            
             // 
             // lblPurchaseNo
             // 
             this.lblPurchaseNo.AutoSize = true;
-            this.lblPurchaseNo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPurchaseNo.Location = new System.Drawing.Point(20, 30);
+            this.lblPurchaseNo.Location = new System.Drawing.Point(20, 20);
             this.lblPurchaseNo.Name = "lblPurchaseNo";
-            this.lblPurchaseNo.Size = new System.Drawing.Size(80, 15);
+            this.lblPurchaseNo.Size = new System.Drawing.Size(75, 13);
             this.lblPurchaseNo.TabIndex = 0;
             this.lblPurchaseNo.Text = "Purchase No:";
-            
             // 
             // txtPurchaseNo
             // 
-            this.txtPurchaseNo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtPurchaseNo.Location = new System.Drawing.Point(130, 28);
+            this.txtPurchaseNo.Location = new System.Drawing.Point(100, 17);
             this.txtPurchaseNo.Name = "txtPurchaseNo";
             this.txtPurchaseNo.ReadOnly = true;
-            this.txtPurchaseNo.Size = new System.Drawing.Size(150, 23);
+            this.txtPurchaseNo.Size = new System.Drawing.Size(200, 20);
             this.txtPurchaseNo.TabIndex = 1;
-            
-            // 
-            // lblSupplier
-            // 
-            this.lblSupplier.AutoSize = true;
-            this.lblSupplier.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSupplier.Location = new System.Drawing.Point(300, 30);
-            this.lblSupplier.Name = "lblSupplier";
-            this.lblSupplier.Size = new System.Drawing.Size(50, 15);
-            this.lblSupplier.TabIndex = 2;
-            this.lblSupplier.Text = "Supplier:";
-            
-            // 
-            // cmbSupplier
-            // 
-            this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSupplier.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbSupplier.FormattingEnabled = true;
-            this.cmbSupplier.Location = new System.Drawing.Point(390, 28);
-            this.cmbSupplier.Name = "cmbSupplier";
-            this.cmbSupplier.Size = new System.Drawing.Size(200, 23);
-            this.cmbSupplier.TabIndex = 3;
-            
-            // 
-            // lblInvoiceNo
-            // 
-            this.lblInvoiceNo.AutoSize = true;
-            this.lblInvoiceNo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblInvoiceNo.Location = new System.Drawing.Point(20, 70);
-            this.lblInvoiceNo.Name = "lblInvoiceNo";
-            this.lblInvoiceNo.Size = new System.Drawing.Size(70, 15);
-            this.lblInvoiceNo.TabIndex = 4;
-            this.lblInvoiceNo.Text = "Invoice No:";
-            
-            // 
-            // txtInvoiceNo
-            // 
-            this.txtInvoiceNo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtInvoiceNo.Location = new System.Drawing.Point(130, 68);
-            this.txtInvoiceNo.Name = "txtInvoiceNo";
-            this.txtInvoiceNo.Size = new System.Drawing.Size(150, 23);
-            this.txtInvoiceNo.TabIndex = 5;
-            
-            // 
-            // lblInvoiceDate
-            // 
-            this.lblInvoiceDate.AutoSize = true;
-            this.lblInvoiceDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblInvoiceDate.Location = new System.Drawing.Point(280, 70);
-            this.lblInvoiceDate.Name = "lblInvoiceDate";
-            this.lblInvoiceDate.Size = new System.Drawing.Size(75, 15);
-            this.lblInvoiceDate.TabIndex = 6;
-            this.lblInvoiceDate.Text = "Invoice Date:";
-            
-            // 
-            // dtpInvoiceDate
-            // 
-            this.dtpInvoiceDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtpInvoiceDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpInvoiceDate.Location = new System.Drawing.Point(390, 68);
-            this.dtpInvoiceDate.Name = "dtpInvoiceDate";
-            this.dtpInvoiceDate.Size = new System.Drawing.Size(200, 23);
-            this.dtpInvoiceDate.TabIndex = 7;
-            
-            // 
-            // lblTaxAmount
-            // 
-            this.lblTaxAmount.AutoSize = true;
-            this.lblTaxAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblTaxAmount.Location = new System.Drawing.Point(20, 110);
-            this.lblTaxAmount.Name = "lblTaxAmount";
-            this.lblTaxAmount.Size = new System.Drawing.Size(75, 15);
-            this.lblTaxAmount.TabIndex = 8;
-            this.lblTaxAmount.Text = "Tax Amount:";
-            
-            // 
-            // txtTaxAmount
-            // 
-            this.txtTaxAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtTaxAmount.Location = new System.Drawing.Point(130, 108);
-            this.txtTaxAmount.Name = "txtTaxAmount";
-            this.txtTaxAmount.Size = new System.Drawing.Size(150, 23);
-            this.txtTaxAmount.TabIndex = 9;
-            this.txtTaxAmount.Text = "0.00";
-            this.txtTaxAmount.TextChanged += new System.EventHandler(this.TxtTaxAmount_TextChanged);
-            
-            // 
-            // lblDiscountAmount
-            // 
-            this.lblDiscountAmount.AutoSize = true;
-            this.lblDiscountAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblDiscountAmount.Location = new System.Drawing.Point(280, 110);
-            this.lblDiscountAmount.Name = "lblDiscountAmount";
-            this.lblDiscountAmount.Size = new System.Drawing.Size(100, 15);
-            this.lblDiscountAmount.TabIndex = 10;
-            this.lblDiscountAmount.Text = "Discount Amount:";
-            
-            // 
-            // txtDiscountAmount
-            // 
-            this.txtDiscountAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtDiscountAmount.Location = new System.Drawing.Point(420, 108);
-            this.txtDiscountAmount.Name = "txtDiscountAmount";
-            this.txtDiscountAmount.Size = new System.Drawing.Size(140, 23);
-            this.txtDiscountAmount.TabIndex = 11;
-            this.txtDiscountAmount.Text = "0.00";
-            this.txtDiscountAmount.TextChanged += new System.EventHandler(this.TxtDiscountAmount_TextChanged);
-            
-            // 
-            // lblFreightCharges
-            // 
-            this.lblFreightCharges.AutoSize = true;
-            this.lblFreightCharges.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFreightCharges.Location = new System.Drawing.Point(20, 148);
-            this.lblFreightCharges.Name = "lblFreightCharges";
-            this.lblFreightCharges.Size = new System.Drawing.Size(90, 15);
-            this.lblFreightCharges.TabIndex = 12;
-            this.lblFreightCharges.Text = "Freight Charges:";
-            
-            // 
-            // txtFreightCharges
-            // 
-            this.txtFreightCharges.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtFreightCharges.Location = new System.Drawing.Point(140, 150);
-            this.txtFreightCharges.Name = "txtFreightCharges";
-            this.txtFreightCharges.Size = new System.Drawing.Size(150, 23);
-            this.txtFreightCharges.TabIndex = 13;
-            this.txtFreightCharges.Text = "0.00";
-            this.txtFreightCharges.TextChanged += new System.EventHandler(this.TxtFreightCharges_TextChanged);
-            
-            // 
-            // lblNetAmount
-            // 
-            this.lblNetAmount.AutoSize = true;
-            this.lblNetAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblNetAmount.Location = new System.Drawing.Point(300, 150);
-            this.lblNetAmount.Name = "lblNetAmount";
-            this.lblNetAmount.Size = new System.Drawing.Size(75, 15);
-            this.lblNetAmount.TabIndex = 14;
-            this.lblNetAmount.Text = "Base Amount:";
-            
-            // 
-            // txtNetAmount
-            // 
-            this.txtNetAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtNetAmount.Location = new System.Drawing.Point(420, 148);
-            this.txtNetAmount.Name = "txtNetAmount";
-            this.txtNetAmount.ReadOnly = false;
-            this.txtNetAmount.Size = new System.Drawing.Size(140, 23);
-            this.txtNetAmount.TabIndex = 15;
-            this.txtNetAmount.Text = "0.00";
-            this.txtNetAmount.TextChanged += new System.EventHandler(this.TxtBaseAmount_TextChanged);
-            
-            // 
-            // lblNotes
-            // 
-            this.lblNotes.AutoSize = true;
-            this.lblNotes.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblNotes.Location = new System.Drawing.Point(600, 30);
-            this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(40, 15);
-            this.lblNotes.TabIndex = 16;
-            this.lblNotes.Text = "Notes:";
-            
-            // 
-            // txtNotes
-            // 
-            this.txtNotes.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtNotes.Location = new System.Drawing.Point(650, 28);
-            this.txtNotes.Multiline = true;
-            this.txtNotes.Name = "txtNotes";
-            this.txtNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtNotes.Size = new System.Drawing.Size(280, 60);
-            this.txtNotes.TabIndex = 17;
-            
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblStatus.Location = new System.Drawing.Point(600, 110);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(40, 15);
-            this.lblStatus.TabIndex = 18;
-            this.lblStatus.Text = "Status:";
-            
-            // 
-            // cmbStatus
-            // 
-            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Items.AddRange(new object[] {
-            "Draft",
-            "Posted",
-            "Cancelled"});
-            this.cmbStatus.Location = new System.Drawing.Point(650, 108);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(150, 23);
-            this.cmbStatus.TabIndex = 19;
-            this.cmbStatus.SelectedIndex = 0;
-            
-            // 
-            // barcodeGroup
-            // 
-            this.barcodeGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.barcodeGroup.Controls.Add(this.lblBarcode);
-            this.barcodeGroup.Controls.Add(this.txtBarcode);
-            this.barcodeGroup.Controls.Add(this.picBarcode);
-            this.barcodeGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.barcodeGroup.Location = new System.Drawing.Point(1040, 20);
-            this.barcodeGroup.Name = "barcodeGroup";
-            this.barcodeGroup.Size = new System.Drawing.Size(400, 200);
-            this.barcodeGroup.TabIndex = 1;
-            this.barcodeGroup.TabStop = false;
-            this.barcodeGroup.Text = "Barcode";
-            
             // 
             // lblBarcode
             // 
             this.lblBarcode.AutoSize = true;
-            this.lblBarcode.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblBarcode.Location = new System.Drawing.Point(20, 30);
+            this.lblBarcode.Location = new System.Drawing.Point(320, 20);
             this.lblBarcode.Name = "lblBarcode";
-            this.lblBarcode.Size = new System.Drawing.Size(50, 15);
-            this.lblBarcode.TabIndex = 0;
+            this.lblBarcode.Size = new System.Drawing.Size(50, 13);
+            this.lblBarcode.TabIndex = 2;
             this.lblBarcode.Text = "Barcode:";
-            
             // 
             // txtBarcode
             // 
-            this.txtBarcode.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtBarcode.Location = new System.Drawing.Point(110, 28);
+            this.txtBarcode.Location = new System.Drawing.Point(400, 17);
             this.txtBarcode.Name = "txtBarcode";
             this.txtBarcode.ReadOnly = true;
-            this.txtBarcode.Size = new System.Drawing.Size(150, 23);
-            this.txtBarcode.TabIndex = 1;
-            
+            this.txtBarcode.Size = new System.Drawing.Size(200, 20);
+            this.txtBarcode.TabIndex = 3;
             // 
             // picBarcode
             // 
             this.picBarcode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picBarcode.Location = new System.Drawing.Point(20, 70);
+            this.picBarcode.Location = new System.Drawing.Point(620, 10);
             this.picBarcode.Name = "picBarcode";
-            this.picBarcode.Size = new System.Drawing.Size(300, 100);
-            this.picBarcode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picBarcode.TabIndex = 2;
+            this.picBarcode.Size = new System.Drawing.Size(300, 80);
+            this.picBarcode.TabIndex = 4;
             this.picBarcode.TabStop = false;
-            
             // 
-            // itemsGroup
+            // lblSupplier
             // 
-            this.itemsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.itemsGroup.Controls.Add(this.lblProduct);
-            this.itemsGroup.Controls.Add(this.cmbProduct);
-            this.itemsGroup.Controls.Add(this.lblQuantity);
-            this.itemsGroup.Controls.Add(this.txtQuantity);
-            this.itemsGroup.Controls.Add(this.lblUnitPrice);
-            this.itemsGroup.Controls.Add(this.txtUnitPrice);
-            this.itemsGroup.Controls.Add(this.lblBatchNo);
-            this.itemsGroup.Controls.Add(this.txtBatchNo);
-            this.itemsGroup.Controls.Add(this.lblExpiryDate);
-            this.itemsGroup.Controls.Add(this.dtpExpiryDate);
-            this.itemsGroup.Controls.Add(this.btnAddItem);
-            this.itemsGroup.Controls.Add(this.btnRemoveItem);
-            this.itemsGroup.Controls.Add(this.dgvPurchaseItems);
-            this.itemsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.itemsGroup.Location = new System.Drawing.Point(20, 240);
-            this.itemsGroup.Name = "itemsGroup";
-            this.itemsGroup.Size = new System.Drawing.Size(1000, 240);
-            this.itemsGroup.TabIndex = 2;
-            this.itemsGroup.TabStop = false;
-            this.itemsGroup.Text = "Purchase Items";
-            
+            this.lblSupplier.AutoSize = true;
+            this.lblSupplier.Location = new System.Drawing.Point(20, 60);
+            this.lblSupplier.Name = "lblSupplier";
+            this.lblSupplier.Size = new System.Drawing.Size(48, 13);
+            this.lblSupplier.TabIndex = 5;
+            this.lblSupplier.Text = "Supplier:";
             // 
-            // lblProduct
+            // cmbSupplier
             // 
-            this.lblProduct.AutoSize = true;
-            this.lblProduct.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblProduct.Location = new System.Drawing.Point(20, 30);
-            this.lblProduct.Name = "lblProduct";
-            this.lblProduct.Size = new System.Drawing.Size(50, 15);
-            this.lblProduct.TabIndex = 0;
-            this.lblProduct.Text = "Product:";
-            
+            this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSupplier.FormattingEnabled = true;
+            this.cmbSupplier.Location = new System.Drawing.Point(100, 57);
+            this.cmbSupplier.Name = "cmbSupplier";
+            this.cmbSupplier.Size = new System.Drawing.Size(200, 21);
+            this.cmbSupplier.TabIndex = 6;
             // 
-            // cmbProduct
+            // lblInvoiceNo
             // 
-            this.cmbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbProduct.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cmbProduct.FormattingEnabled = true;
-            this.cmbProduct.Location = new System.Drawing.Point(110, 28);
-            this.cmbProduct.Name = "cmbProduct";
-            this.cmbProduct.Size = new System.Drawing.Size(150, 23);
-            this.cmbProduct.TabIndex = 1;
-            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.CmbProduct_SelectedIndexChanged);
-            
+            this.lblInvoiceNo.AutoSize = true;
+            this.lblInvoiceNo.Location = new System.Drawing.Point(320, 60);
+            this.lblInvoiceNo.Name = "lblInvoiceNo";
+            this.lblInvoiceNo.Size = new System.Drawing.Size(66, 13);
+            this.lblInvoiceNo.TabIndex = 7;
+            this.lblInvoiceNo.Text = "Invoice No:";
             // 
-            // lblQuantity
+            // txtInvoiceNo
             // 
-            this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblQuantity.Location = new System.Drawing.Point(280, 30);
-            this.lblQuantity.Name = "lblQuantity";
-            this.lblQuantity.Size = new System.Drawing.Size(55, 15);
-            this.lblQuantity.TabIndex = 2;
-            this.lblQuantity.Text = "Quantity:";
-            
+            this.txtInvoiceNo.Location = new System.Drawing.Point(400, 57);
+            this.txtInvoiceNo.Name = "txtInvoiceNo";
+            this.txtInvoiceNo.Size = new System.Drawing.Size(200, 20);
+            this.txtInvoiceNo.TabIndex = 8;
             // 
-            // txtQuantity
+            // lblInvoiceDate
             // 
-            this.txtQuantity.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtQuantity.Location = new System.Drawing.Point(350, 30);
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(80, 23);
-            this.txtQuantity.TabIndex = 3;
-            
+            this.lblInvoiceDate.AutoSize = true;
+            this.lblInvoiceDate.Location = new System.Drawing.Point(20, 100);
+            this.lblInvoiceDate.Name = "lblInvoiceDate";
+            this.lblInvoiceDate.Size = new System.Drawing.Size(73, 13);
+            this.lblInvoiceDate.TabIndex = 9;
+            this.lblInvoiceDate.Text = "Invoice Date:";
             // 
-            // lblUnitPrice
+            // dtpInvoiceDate
             // 
-            this.lblUnitPrice.AutoSize = true;
-            this.lblUnitPrice.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblUnitPrice.Location = new System.Drawing.Point(450, 30);
-            this.lblUnitPrice.Name = "lblUnitPrice";
-            this.lblUnitPrice.Size = new System.Drawing.Size(65, 15);
-            this.lblUnitPrice.TabIndex = 4;
-            this.lblUnitPrice.Text = "Unit Price:";
-            
+            this.dtpInvoiceDate.Location = new System.Drawing.Point(100, 97);
+            this.dtpInvoiceDate.Name = "dtpInvoiceDate";
+            this.dtpInvoiceDate.Size = new System.Drawing.Size(200, 20);
+            this.dtpInvoiceDate.TabIndex = 10;
             // 
-            // txtUnitPrice
+            // lblNetAmount
             // 
-            this.txtUnitPrice.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtUnitPrice.Location = new System.Drawing.Point(540, 28);
-            this.txtUnitPrice.Name = "txtUnitPrice";
-            this.txtUnitPrice.Size = new System.Drawing.Size(80, 23);
-            this.txtUnitPrice.TabIndex = 5;
-            
+            this.lblNetAmount.AutoSize = true;
+            this.lblNetAmount.Location = new System.Drawing.Point(320, 100);
+            this.lblNetAmount.Name = "lblNetAmount";
+            this.lblNetAmount.Size = new System.Drawing.Size(70, 13);
+            this.lblNetAmount.TabIndex = 11;
+            this.lblNetAmount.Text = "Base Amount:";
             // 
-            // lblBatchNo
+            // txtNetAmount
             // 
-            this.lblBatchNo.AutoSize = true;
-            this.lblBatchNo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblBatchNo.Location = new System.Drawing.Point(20, 70);
-            this.lblBatchNo.Name = "lblBatchNo";
-            this.lblBatchNo.Size = new System.Drawing.Size(60, 15);
-            this.lblBatchNo.TabIndex = 6;
-            this.lblBatchNo.Text = "Batch No:";
-            
+            this.txtNetAmount.Location = new System.Drawing.Point(400, 97);
+            this.txtNetAmount.Name = "txtNetAmount";
+            this.txtNetAmount.Size = new System.Drawing.Size(100, 20);
+            this.txtNetAmount.TabIndex = 12;
+            this.txtNetAmount.TextChanged += new System.EventHandler(this.TxtBaseAmount_TextChanged);
             // 
-            // txtBatchNo
+            // lblTaxAmount
             // 
-            this.txtBatchNo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtBatchNo.Location = new System.Drawing.Point(110, 68);
-            this.txtBatchNo.Name = "txtBatchNo";
-            this.txtBatchNo.Size = new System.Drawing.Size(150, 23);
-            this.txtBatchNo.TabIndex = 7;
-            
+            this.lblTaxAmount.AutoSize = true;
+            this.lblTaxAmount.Location = new System.Drawing.Point(520, 100);
+            this.lblTaxAmount.Name = "lblTaxAmount";
+            this.lblTaxAmount.Size = new System.Drawing.Size(71, 13);
+            this.lblTaxAmount.TabIndex = 13;
+            this.lblTaxAmount.Text = "Tax Amount:";
             // 
-            // lblExpiryDate
+            // txtTaxAmount
             // 
-            this.lblExpiryDate.AutoSize = true;
-            this.lblExpiryDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblExpiryDate.Location = new System.Drawing.Point(280, 70);
-            this.lblExpiryDate.Name = "lblExpiryDate";
-            this.lblExpiryDate.Size = new System.Drawing.Size(70, 15);
-            this.lblExpiryDate.TabIndex = 8;
-            this.lblExpiryDate.Text = "Expiry Date:";
-            
+            this.txtTaxAmount.Location = new System.Drawing.Point(600, 97);
+            this.txtTaxAmount.Name = "txtTaxAmount";
+            this.txtTaxAmount.Size = new System.Drawing.Size(100, 20);
+            this.txtTaxAmount.TabIndex = 14;
+            this.txtTaxAmount.TextChanged += new System.EventHandler(this.TxtTaxAmount_TextChanged);
             // 
-            // dtpExpiryDate
+            // lblDiscountAmount
             // 
-            this.dtpExpiryDate.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.dtpExpiryDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpiryDate.Location = new System.Drawing.Point(370, 68);
-            this.dtpExpiryDate.Name = "dtpExpiryDate";
-            this.dtpExpiryDate.Size = new System.Drawing.Size(150, 23);
-            this.dtpExpiryDate.TabIndex = 9;
-            
+            this.lblDiscountAmount.AutoSize = true;
+            this.lblDiscountAmount.Location = new System.Drawing.Point(20, 140);
+            this.lblDiscountAmount.Name = "lblDiscountAmount";
+            this.lblDiscountAmount.Size = new System.Drawing.Size(92, 13);
+            this.lblDiscountAmount.TabIndex = 15;
+            this.lblDiscountAmount.Text = "Discount Amount:";
             // 
-            // btnAddItem
+            // txtDiscountAmount
             // 
-            this.btnAddItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnAddItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnAddItem.ForeColor = System.Drawing.Color.White;
-            this.btnAddItem.Location = new System.Drawing.Point(540, 68);
-            this.btnAddItem.Name = "btnAddItem";
-            this.btnAddItem.Size = new System.Drawing.Size(80, 30);
-            this.btnAddItem.TabIndex = 10;
-            this.btnAddItem.Text = "Add Item";
-            this.btnAddItem.UseVisualStyleBackColor = false;
-            this.btnAddItem.Click += new System.EventHandler(this.BtnAddItem_Click);
-            
+            this.txtDiscountAmount.Location = new System.Drawing.Point(120, 137);
+            this.txtDiscountAmount.Name = "txtDiscountAmount";
+            this.txtDiscountAmount.Size = new System.Drawing.Size(100, 20);
+            this.txtDiscountAmount.TabIndex = 16;
+            this.txtDiscountAmount.TextChanged += new System.EventHandler(this.TxtDiscountAmount_TextChanged);
             // 
-            // btnRemoveItem
+            // lblFreightCharges
             // 
-            this.btnRemoveItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.btnRemoveItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnRemoveItem.ForeColor = System.Drawing.Color.White;
-            this.btnRemoveItem.Location = new System.Drawing.Point(540, 110);
-            this.btnRemoveItem.Name = "btnRemoveItem";
-            this.btnRemoveItem.Size = new System.Drawing.Size(80, 30);
-            this.btnRemoveItem.TabIndex = 11;
-            this.btnRemoveItem.Text = "Remove";
-            this.btnRemoveItem.UseVisualStyleBackColor = false;
-            this.btnRemoveItem.Click += new System.EventHandler(this.BtnRemoveItem_Click);
-            
+            this.lblFreightCharges.AutoSize = true;
+            this.lblFreightCharges.Location = new System.Drawing.Point(240, 140);
+            this.lblFreightCharges.Name = "lblFreightCharges";
+            this.lblFreightCharges.Size = new System.Drawing.Size(88, 13);
+            this.lblFreightCharges.TabIndex = 17;
+            this.lblFreightCharges.Text = "Freight Charges:";
             // 
-            // dgvPurchaseItems
+            // txtFreightCharges
             // 
-            this.dgvPurchaseItems.AllowUserToAddRows = true;
-            this.dgvPurchaseItems.AllowUserToDeleteRows = true;
-            this.dgvPurchaseItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPurchaseItems.Location = new System.Drawing.Point(20, 150);
-            this.dgvPurchaseItems.MultiSelect = false;
-            this.dgvPurchaseItems.Name = "dgvPurchaseItems";
-            this.dgvPurchaseItems.ReadOnly = false;
-            this.dgvPurchaseItems.RowHeadersVisible = false;
-            this.dgvPurchaseItems.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.dgvPurchaseItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPurchaseItems.Size = new System.Drawing.Size(450, 80);
-            this.dgvPurchaseItems.TabIndex = 12;
-            this.dgvPurchaseItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchaseItems_CellClick);
-            this.dgvPurchaseItems.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchaseItems_CellValueChanged);
-            
-            // 
-            // totalsGroup
-            // 
-            this.totalsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.totalsGroup.Controls.Add(this.lblSubTotal);
-            this.totalsGroup.Controls.Add(this.txtSubTotal);
-            this.totalsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.totalsGroup.Location = new System.Drawing.Point(1040, 240);
-            this.totalsGroup.Name = "totalsGroup";
-            this.totalsGroup.Size = new System.Drawing.Size(400, 100);
-            this.totalsGroup.TabIndex = 3;
-            this.totalsGroup.TabStop = false;
-            this.totalsGroup.Text = "Totals";
-            
+            this.txtFreightCharges.Location = new System.Drawing.Point(340, 137);
+            this.txtFreightCharges.Name = "txtFreightCharges";
+            this.txtFreightCharges.Size = new System.Drawing.Size(100, 20);
+            this.txtFreightCharges.TabIndex = 18;
+            this.txtFreightCharges.TextChanged += new System.EventHandler(this.TxtFreightCharges_TextChanged);
             // 
             // lblSubTotal
             // 
             this.lblSubTotal.AutoSize = true;
-            this.lblSubTotal.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSubTotal.Location = new System.Drawing.Point(20, 30);
+            this.lblSubTotal.Location = new System.Drawing.Point(460, 140);
             this.lblSubTotal.Name = "lblSubTotal";
-            this.lblSubTotal.Size = new System.Drawing.Size(60, 15);
-            this.lblSubTotal.TabIndex = 0;
+            this.lblSubTotal.Size = new System.Drawing.Size(56, 13);
+            this.lblSubTotal.TabIndex = 19;
             this.lblSubTotal.Text = "Sub Total:";
-            
             // 
             // txtSubTotal
             // 
-            this.txtSubTotal.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSubTotal.Location = new System.Drawing.Point(110, 28);
+            this.txtSubTotal.Location = new System.Drawing.Point(520, 137);
             this.txtSubTotal.Name = "txtSubTotal";
             this.txtSubTotal.ReadOnly = true;
-            this.txtSubTotal.Size = new System.Drawing.Size(150, 23);
-            this.txtSubTotal.TabIndex = 1;
-            this.txtSubTotal.Text = "0.00";
-            
+            this.txtSubTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtSubTotal.TabIndex = 20;
             // 
-            // actionsGroup
+            // lblNotes
             // 
-            this.actionsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.actionsGroup.Controls.Add(this.btnSaveDraft);
-            this.actionsGroup.Controls.Add(this.btnPost);
-            this.actionsGroup.Controls.Add(this.btnPrint);
-            this.actionsGroup.Controls.Add(this.btnClear);
-            this.actionsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.actionsGroup.Location = new System.Drawing.Point(20, 500);
-            this.actionsGroup.Name = "actionsGroup";
-            this.actionsGroup.Size = new System.Drawing.Size(650, 80);
-            this.actionsGroup.TabIndex = 4;
-            this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "Actions";
-            
+            this.lblNotes.AutoSize = true;
+            this.lblNotes.Location = new System.Drawing.Point(640, 140);
+            this.lblNotes.Name = "lblNotes";
+            this.lblNotes.Size = new System.Drawing.Size(35, 13);
+            this.lblNotes.TabIndex = 21;
+            this.lblNotes.Text = "Notes:";
+            // 
+            // txtNotes
+            // 
+            this.txtNotes.Location = new System.Drawing.Point(680, 137);
+            this.txtNotes.Multiline = true;
+            this.txtNotes.Name = "txtNotes";
+            this.txtNotes.Size = new System.Drawing.Size(200, 50);
+            this.txtNotes.TabIndex = 22;
+            // 
+            // groupBoxItems
+            // 
+            this.groupBoxItems.Controls.Add(this.dgvPurchaseItems);
+            this.groupBoxItems.Controls.Add(this.btnRemoveItem);
+            this.groupBoxItems.Controls.Add(this.btnAddItem);
+            this.groupBoxItems.Controls.Add(this.dtpExpiryDate);
+            this.groupBoxItems.Controls.Add(this.lblExpiryDate);
+            this.groupBoxItems.Controls.Add(this.txtBatchNo);
+            this.groupBoxItems.Controls.Add(this.lblBatchNo);
+            this.groupBoxItems.Controls.Add(this.txtUnitPrice);
+            this.groupBoxItems.Controls.Add(this.lblUnitPrice);
+            this.groupBoxItems.Controls.Add(this.txtQuantity);
+            this.groupBoxItems.Controls.Add(this.lblQuantity);
+            this.groupBoxItems.Controls.Add(this.cmbProduct);
+            this.groupBoxItems.Controls.Add(this.lblProduct);
+            this.groupBoxItems.Location = new System.Drawing.Point(20, 200);
+            this.groupBoxItems.Name = "groupBoxItems";
+            this.groupBoxItems.Size = new System.Drawing.Size(900, 300);
+            this.groupBoxItems.TabIndex = 23;
+            this.groupBoxItems.TabStop = false;
+            this.groupBoxItems.Text = "Purchase Items";
+            // 
+            // lblProduct
+            // 
+            this.lblProduct.AutoSize = true;
+            this.lblProduct.Location = new System.Drawing.Point(20, 30);
+            this.lblProduct.Name = "lblProduct";
+            this.lblProduct.Size = new System.Drawing.Size(47, 13);
+            this.lblProduct.TabIndex = 0;
+            this.lblProduct.Text = "Product:";
+            // 
+            // cmbProduct
+            // 
+            this.cmbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbProduct.FormattingEnabled = true;
+            this.cmbProduct.Location = new System.Drawing.Point(100, 27);
+            this.cmbProduct.Name = "cmbProduct";
+            this.cmbProduct.Size = new System.Drawing.Size(200, 21);
+            this.cmbProduct.TabIndex = 1;
+            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.CmbProduct_SelectedIndexChanged);
+            // 
+            // lblQuantity
+            // 
+            this.lblQuantity.AutoSize = true;
+            this.lblQuantity.Location = new System.Drawing.Point(320, 30);
+            this.lblQuantity.Name = "lblQuantity";
+            this.lblQuantity.Size = new System.Drawing.Size(49, 13);
+            this.lblQuantity.TabIndex = 2;
+            this.lblQuantity.Text = "Quantity:";
+            // 
+            // txtQuantity
+            // 
+            this.txtQuantity.Location = new System.Drawing.Point(400, 27);
+            this.txtQuantity.Name = "txtQuantity";
+            this.txtQuantity.Size = new System.Drawing.Size(100, 20);
+            this.txtQuantity.TabIndex = 3;
+            // 
+            // lblUnitPrice
+            // 
+            this.lblUnitPrice.AutoSize = true;
+            this.lblUnitPrice.Location = new System.Drawing.Point(520, 30);
+            this.lblUnitPrice.Name = "lblUnitPrice";
+            this.lblUnitPrice.Size = new System.Drawing.Size(59, 13);
+            this.lblUnitPrice.TabIndex = 4;
+            this.lblUnitPrice.Text = "Unit Price:";
+            // 
+            // txtUnitPrice
+            // 
+            this.txtUnitPrice.Location = new System.Drawing.Point(600, 27);
+            this.txtUnitPrice.Name = "txtUnitPrice";
+            this.txtUnitPrice.Size = new System.Drawing.Size(100, 20);
+            this.txtUnitPrice.TabIndex = 5;
+            // 
+            // lblBatchNo
+            // 
+            this.lblBatchNo.AutoSize = true;
+            this.lblBatchNo.Location = new System.Drawing.Point(20, 60);
+            this.lblBatchNo.Name = "lblBatchNo";
+            this.lblBatchNo.Size = new System.Drawing.Size(58, 13);
+            this.lblBatchNo.TabIndex = 6;
+            this.lblBatchNo.Text = "Batch No:";
+            // 
+            // txtBatchNo
+            // 
+            this.txtBatchNo.Location = new System.Drawing.Point(100, 57);
+            this.txtBatchNo.Name = "txtBatchNo";
+            this.txtBatchNo.Size = new System.Drawing.Size(200, 20);
+            this.txtBatchNo.TabIndex = 7;
+            // 
+            // lblExpiryDate
+            // 
+            this.lblExpiryDate.AutoSize = true;
+            this.lblExpiryDate.Location = new System.Drawing.Point(320, 60);
+            this.lblExpiryDate.Name = "lblExpiryDate";
+            this.lblExpiryDate.Size = new System.Drawing.Size(64, 13);
+            this.lblExpiryDate.TabIndex = 8;
+            this.lblExpiryDate.Text = "Expiry Date:";
+            // 
+            // dtpExpiryDate
+            // 
+            this.dtpExpiryDate.Location = new System.Drawing.Point(400, 57);
+            this.dtpExpiryDate.Name = "dtpExpiryDate";
+            this.dtpExpiryDate.Size = new System.Drawing.Size(200, 20);
+            this.dtpExpiryDate.TabIndex = 9;
+            // 
+            // btnAddItem
+            // 
+            this.btnAddItem.Location = new System.Drawing.Point(620, 25);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(75, 25);
+            this.btnAddItem.TabIndex = 10;
+            this.btnAddItem.Text = "Add Item";
+            this.btnAddItem.UseVisualStyleBackColor = true;
+            this.btnAddItem.Click += new System.EventHandler(this.BtnAddItem_Click);
+            // 
+            // btnRemoveItem
+            // 
+            this.btnRemoveItem.Location = new System.Drawing.Point(710, 25);
+            this.btnRemoveItem.Name = "btnRemoveItem";
+            this.btnRemoveItem.Size = new System.Drawing.Size(75, 25);
+            this.btnRemoveItem.TabIndex = 11;
+            this.btnRemoveItem.Text = "Remove";
+            this.btnRemoveItem.UseVisualStyleBackColor = true;
+            this.btnRemoveItem.Click += new System.EventHandler(this.BtnRemoveItem_Click);
+            // 
+            // dgvPurchaseItems
+            // 
+            this.dgvPurchaseItems.AllowUserToAddRows = false;
+            this.dgvPurchaseItems.AllowUserToDeleteRows = true;
+            this.dgvPurchaseItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPurchaseItems.Location = new System.Drawing.Point(20, 90);
+            this.dgvPurchaseItems.Name = "dgvPurchaseItems";
+            this.dgvPurchaseItems.ReadOnly = false;
+            this.dgvPurchaseItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPurchaseItems.Size = new System.Drawing.Size(860, 200);
+            this.dgvPurchaseItems.TabIndex = 12;
+            this.dgvPurchaseItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchaseItems_CellClick);
+            this.dgvPurchaseItems.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchaseItems_CellValueChanged);
+            // 
+            // groupBoxActions
+            // 
+            this.groupBoxActions.Controls.Add(this.btnClear);
+            this.groupBoxActions.Controls.Add(this.btnPrint);
+            this.groupBoxActions.Controls.Add(this.btnPost);
+            this.groupBoxActions.Controls.Add(this.btnSaveDraft);
+            this.groupBoxActions.Location = new System.Drawing.Point(20, 520);
+            this.groupBoxActions.Name = "groupBoxActions";
+            this.groupBoxActions.Size = new System.Drawing.Size(900, 60);
+            this.groupBoxActions.TabIndex = 24;
+            this.groupBoxActions.TabStop = false;
+            this.groupBoxActions.Text = "Actions";
             // 
             // btnSaveDraft
             // 
-            this.btnSaveDraft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.btnSaveDraft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveDraft.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnSaveDraft.ForeColor = System.Drawing.Color.White;
-            this.btnSaveDraft.Location = new System.Drawing.Point(20, 30);
+            this.btnSaveDraft.Location = new System.Drawing.Point(20, 25);
             this.btnSaveDraft.Name = "btnSaveDraft";
-            this.btnSaveDraft.Size = new System.Drawing.Size(120, 40);
+            this.btnSaveDraft.Size = new System.Drawing.Size(100, 25);
             this.btnSaveDraft.TabIndex = 0;
-            this.btnSaveDraft.Text = "💾 Save Draft";
-            this.btnSaveDraft.UseVisualStyleBackColor = false;
+            this.btnSaveDraft.Text = "Save Draft";
+            this.btnSaveDraft.UseVisualStyleBackColor = true;
             this.btnSaveDraft.Click += new System.EventHandler(this.BtnSaveDraft_Click);
-            
             // 
             // btnPost
             // 
-            this.btnPost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.btnPost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPost.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnPost.ForeColor = System.Drawing.Color.White;
-            this.btnPost.Location = new System.Drawing.Point(160, 30);
+            this.btnPost.Location = new System.Drawing.Point(140, 25);
             this.btnPost.Name = "btnPost";
-            this.btnPost.Size = new System.Drawing.Size(120, 40);
+            this.btnPost.Size = new System.Drawing.Size(100, 25);
             this.btnPost.TabIndex = 1;
-            this.btnPost.Text = "📋 Post";
-            this.btnPost.UseVisualStyleBackColor = false;
+            this.btnPost.Text = "Post";
+            this.btnPost.UseVisualStyleBackColor = true;
             this.btnPost.Click += new System.EventHandler(this.BtnPost_Click);
-            
             // 
             // btnPrint
             // 
-            this.btnPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
-            this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnPrint.ForeColor = System.Drawing.Color.White;
-            this.btnPrint.Location = new System.Drawing.Point(300, 30);
+            this.btnPrint.Location = new System.Drawing.Point(260, 25);
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(120, 40);
+            this.btnPrint.Size = new System.Drawing.Size(100, 25);
             this.btnPrint.TabIndex = 2;
-            this.btnPrint.Text = "🖨️ Print";
-            this.btnPrint.UseVisualStyleBackColor = false;
+            this.btnPrint.Text = "Print";
+            this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.BtnPrint_Click);
-            
             // 
             // btnClear
             // 
-            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(440, 30);
+            this.btnClear.Location = new System.Drawing.Point(380, 25);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(120, 40);
+            this.btnClear.Size = new System.Drawing.Size(100, 25);
             this.btnClear.TabIndex = 3;
-            this.btnClear.Text = "🔄 Clear";
-            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
-            
             // 
-            // purchaseListGroup
+            // groupBoxPurchaseList
             // 
-            this.purchaseListGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.purchaseListGroup.Controls.Add(this.dgvPurchases);
-            this.purchaseListGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.purchaseListGroup.Location = new System.Drawing.Point(20, 600);
-            this.purchaseListGroup.Name = "purchaseListGroup";
-            this.purchaseListGroup.Size = new System.Drawing.Size(650, 200);
-            this.purchaseListGroup.TabIndex = 5;
-            this.purchaseListGroup.TabStop = false;
-            this.purchaseListGroup.Text = "Purchase List";
-            
+            this.groupBoxPurchaseList.Controls.Add(this.dgvPurchases);
+            this.groupBoxPurchaseList.Location = new System.Drawing.Point(20, 600);
+            this.groupBoxPurchaseList.Name = "groupBoxPurchaseList";
+            this.groupBoxPurchaseList.Size = new System.Drawing.Size(900, 200);
+            this.groupBoxPurchaseList.TabIndex = 25;
+            this.groupBoxPurchaseList.TabStop = false;
+            this.groupBoxPurchaseList.Text = "Purchase List";
             // 
             // dgvPurchases
             // 
             this.dgvPurchases.AllowUserToAddRows = false;
             this.dgvPurchases.AllowUserToDeleteRows = false;
-            this.dgvPurchases.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPurchases.Location = new System.Drawing.Point(20, 30);
-            this.dgvPurchases.MultiSelect = false;
+            this.dgvPurchases.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPurchases.Location = new System.Drawing.Point(20, 25);
             this.dgvPurchases.Name = "dgvPurchases";
             this.dgvPurchases.ReadOnly = true;
-            this.dgvPurchases.RowHeadersVisible = false;
-            this.dgvPurchases.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.dgvPurchases.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPurchases.Size = new System.Drawing.Size(610, 150);
+            this.dgvPurchases.Size = new System.Drawing.Size(860, 160);
             this.dgvPurchases.TabIndex = 0;
             this.dgvPurchases.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPurchases_CellClick);
-            
             // 
             // PurchaseInvoiceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1000, 850);
-            this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.headerPanel);
-            this.MinimumSize = new System.Drawing.Size(950, 800);
+            this.ClientSize = new System.Drawing.Size(1425, 1230);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Controls.Add(this.groupBoxPurchaseList);
+            this.Controls.Add(this.groupBoxActions);
+            this.Controls.Add(this.groupBoxItems);
+            this.Controls.Add(this.txtNotes);
+            this.Controls.Add(this.lblNotes);
+            this.Controls.Add(this.txtSubTotal);
+            this.Controls.Add(this.lblSubTotal);
+            this.Controls.Add(this.txtFreightCharges);
+            this.Controls.Add(this.lblFreightCharges);
+            this.Controls.Add(this.txtDiscountAmount);
+            this.Controls.Add(this.lblDiscountAmount);
+            this.Controls.Add(this.txtTaxAmount);
+            this.Controls.Add(this.lblTaxAmount);
+            this.Controls.Add(this.txtNetAmount);
+            this.Controls.Add(this.lblNetAmount);
+            this.Controls.Add(this.dtpInvoiceDate);
+            this.Controls.Add(this.lblInvoiceDate);
+            this.Controls.Add(this.txtInvoiceNo);
+            this.Controls.Add(this.lblInvoiceNo);
+            this.Controls.Add(this.cmbSupplier);
+            this.Controls.Add(this.lblSupplier);
+            this.Controls.Add(this.picBarcode);
+            this.Controls.Add(this.txtBarcode);
+            this.Controls.Add(this.lblBarcode);
+            this.Controls.Add(this.txtPurchaseNo);
+            this.Controls.Add(this.lblPurchaseNo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "PurchaseInvoiceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Purchase Invoice Management";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
-            this.headerPanel.ResumeLayout(false);
-            this.headerPanel.PerformLayout();
-            this.contentPanel.ResumeLayout(false);
-            this.purchaseInfoGroup.ResumeLayout(false);
-            this.purchaseInfoGroup.PerformLayout();
-            this.barcodeGroup.ResumeLayout(false);
-            this.barcodeGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBarcode)).EndInit();
-            this.itemsGroup.ResumeLayout(false);
-            this.itemsGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPurchaseItems)).EndInit();
-            this.totalsGroup.ResumeLayout(false);
-            this.totalsGroup.PerformLayout();
-            this.actionsGroup.ResumeLayout(false);
-            this.purchaseListGroup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPurchases)).EndInit();
+            this.Text = "Purchase Invoice Form";
             this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
+
+        #endregion
+
+        private System.Windows.Forms.Label lblPurchaseNo;
+        private System.Windows.Forms.TextBox txtPurchaseNo;
+        private System.Windows.Forms.Label lblBarcode;
+        private System.Windows.Forms.TextBox txtBarcode;
+        private System.Windows.Forms.PictureBox picBarcode;
+        private System.Windows.Forms.Label lblSupplier;
+        private System.Windows.Forms.ComboBox cmbSupplier;
+        private System.Windows.Forms.Label lblInvoiceNo;
+        private System.Windows.Forms.TextBox txtInvoiceNo;
+        private System.Windows.Forms.Label lblInvoiceDate;
+        private System.Windows.Forms.DateTimePicker dtpInvoiceDate;
+        private System.Windows.Forms.Label lblNetAmount;
+        private System.Windows.Forms.TextBox txtNetAmount;
+        private System.Windows.Forms.Label lblTaxAmount;
+        private System.Windows.Forms.TextBox txtTaxAmount;
+        private System.Windows.Forms.Label lblDiscountAmount;
+        private System.Windows.Forms.TextBox txtDiscountAmount;
+        private System.Windows.Forms.Label lblFreightCharges;
+        private System.Windows.Forms.TextBox txtFreightCharges;
+        private System.Windows.Forms.Label lblSubTotal;
+        private System.Windows.Forms.TextBox txtSubTotal;
+        private System.Windows.Forms.Label lblNotes;
+        private System.Windows.Forms.TextBox txtNotes;
+        private System.Windows.Forms.GroupBox groupBoxItems;
+        private System.Windows.Forms.Label lblProduct;
+        private System.Windows.Forms.ComboBox cmbProduct;
+        private System.Windows.Forms.Label lblQuantity;
+        private System.Windows.Forms.TextBox txtQuantity;
+        private System.Windows.Forms.Label lblUnitPrice;
+        private System.Windows.Forms.TextBox txtUnitPrice;
+        private System.Windows.Forms.Label lblBatchNo;
+        private System.Windows.Forms.TextBox txtBatchNo;
+        private System.Windows.Forms.Label lblExpiryDate;
+        private System.Windows.Forms.DateTimePicker dtpExpiryDate;
+        private System.Windows.Forms.Button btnAddItem;
+        private System.Windows.Forms.Button btnRemoveItem;
+        private System.Windows.Forms.DataGridView dgvPurchaseItems;
+        private System.Windows.Forms.GroupBox groupBoxActions;
+        private System.Windows.Forms.Button btnSaveDraft;
+        private System.Windows.Forms.Button btnPost;
+        private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.GroupBox groupBoxPurchaseList;
+        private System.Windows.Forms.DataGridView dgvPurchases;
     }
 }

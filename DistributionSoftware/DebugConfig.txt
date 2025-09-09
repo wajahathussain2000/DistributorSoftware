@@ -1,0 +1,32 @@
+Visual Studio Debugging Configuration for Distribution Software
+=============================================================
+
+To debug the Sales Invoice creation process:
+
+1. Open the solution in Visual Studio
+2. Set breakpoints at these key locations:
+   - SalesInvoiceService.cs line 87: Before database call
+   - SalesInvoiceRepository.cs line 135: Before ExecuteScalar
+   - SalesInvoiceService.cs line 111: Exception handling
+
+3. Run in Debug mode (F5)
+4. When creating a sales invoice, the debugger will break at these points
+5. Use the Debug Output window to see debug messages
+6. Use the Locals window to inspect variable values
+
+Key Variables to Watch:
+- invoice.CustomerId
+- invoice.BarcodeImage
+- invoice.Items (count and values)
+- command.Parameters (in repository)
+
+Debug Output Window:
+- All debug messages will appear in the Debug Output window
+- Look for "=== CREATE SALES INVOICE DEBUG START ==="
+- Follow the step-by-step process
+- Check for any error messages
+
+Exception Handling:
+- If an exception occurs, the debugger will break at line 111
+- Inspect the exception details in the Locals window
+- Check the Stack Trace for the exact error location

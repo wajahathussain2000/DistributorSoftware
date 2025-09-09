@@ -39,7 +39,6 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 Debug.WriteLine("PurchaseReturnForm: Initializing form");
                 InitializeComponent();
-                InitializeUI();
                 InitializeConnection();
                 InitializeServices();
                 InitializeDataTable();
@@ -57,6 +56,36 @@ namespace DistributionSoftware.Presentation.Forms
                 Debug.WriteLine($"PurchaseReturnForm: Initialization error - {ex.Message}");
                 MessageBox.Show($"Error initializing Purchase Return Form: {ex.Message}", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            // Save functionality
+            MessageBox.Show("Save functionality not implemented yet.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            // Clear form
+            txtReturnNumber.Clear();
+            txtBarcode.Clear();
+            cmbSupplier.SelectedIndex = -1;
+            cmbReferencePurchase.SelectedIndex = -1;
+            dtpReturnDate.Value = DateTime.Now;
+            txtTaxAdjust.Text = "0.00";
+            txtDiscountAdjust.Text = "0.00";
+            txtRemarks.Clear();
+            dgvReturnItems.DataSource = null;
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void StyleTextBox(TextBox textBox, bool isReadOnly = false)
@@ -959,10 +988,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private void BtnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
 
         private void DgvPurchaseReturnList_SelectionChanged(object sender, EventArgs e)
         {

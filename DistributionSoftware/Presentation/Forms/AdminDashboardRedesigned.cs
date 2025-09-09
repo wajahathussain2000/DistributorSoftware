@@ -85,8 +85,11 @@ namespace DistributionSoftware.Presentation.Forms
             productsDropdown.Items.Add("Units Management", null, (s, e) => OpenUnitsForm());
             productsDropdown.Items.Add("Barcode Generator", null, (s, e) => OpenBarcodeGenerator());
             productsDropdown.Items.Add("Stock Adjustment Form", null, (s, e) => OpenStockAdjustmentForm());
+            productsDropdown.Items.Add("Stock Movement Entry", null, (s, e) => OpenStockMovementEntryForm());
             productsDropdown.Items.Add("-");
             productsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
+            productsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
+            productsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
 
 
             // Inventory Dropdown (Additional Inventory Features)
@@ -97,6 +100,7 @@ namespace DistributionSoftware.Presentation.Forms
             // Sales Dropdown (Sales & Distribution Module)
             salesDropdown = new ContextMenuStrip();
             salesDropdown.Font = dropdownFont;
+            salesDropdown.Items.Add("Sales Invoice", null, (s, e) => OpenSalesInvoiceForm());
 
             // Purchases Dropdown (Purchase Module)
             purchasesDropdown = new ContextMenuStrip();
@@ -845,6 +849,66 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenLowStockReportForm()
+        {
+            try
+            {
+                LowStockReportForm lowStockReportForm = new LowStockReportForm();
+                lowStockReportForm.Owner = this;
+                lowStockReportForm.ShowDialog();
+                lowStockReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Low Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSalesInvoiceForm()
+        {
+            try
+            {
+                SalesInvoiceForm salesInvoiceForm = new SalesInvoiceForm();
+                salesInvoiceForm.Owner = this;
+                salesInvoiceForm.ShowDialog();
+                salesInvoiceForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Sales Invoice Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenStockMovementReportForm()
+        {
+            try
+            {
+                StockMovementReportForm stockMovementReportForm = new StockMovementReportForm();
+                stockMovementReportForm.Owner = this;
+                stockMovementReportForm.ShowDialog();
+                stockMovementReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Stock Movement Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenStockMovementEntryForm()
+        {
+            try
+            {
+                StockMovementEntryForm stockMovementEntryForm = new StockMovementEntryForm();
+                stockMovementEntryForm.Owner = this;
+                stockMovementEntryForm.ShowDialog();
+                stockMovementEntryForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Stock Movement Entry Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         

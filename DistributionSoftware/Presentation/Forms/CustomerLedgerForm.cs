@@ -10,158 +10,15 @@ namespace DistributionSoftware.Presentation.Forms
     public partial class CustomerLedgerForm : Form
     {
         private string connectionString;
-        private ComboBox cmbCustomer;
-        private DateTimePicker dtpFromDate;
-        private DateTimePicker dtpToDate;
-        private DataGridView dgvLedger;
-        private Button btnLoad;
-        private Button btnClear;
-        private Button btnClose;
-        private Label lblCustomer;
-        private Label lblFromDate;
-        private Label lblToDate;
-        private GroupBox filterGroup;
-        private GroupBox ledgerGroup;
 
         public CustomerLedgerForm()
         {
             InitializeComponent();
-            InitializeForm();
             InitializeConnection();
             LoadCustomers();
             SetDefaultDates();
         }
 
-        private void InitializeForm()
-        {
-            this.Text = "Customer Ledger - Distribution Software";
-            this.Size = new Size(1200, 700);
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.BackColor = Color.FromArgb(248, 249, 250);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = true;
-            this.ShowInTaskbar = true;
-
-            // Create filter group
-            filterGroup = new GroupBox();
-            filterGroup.Text = "Filter Options";
-            filterGroup.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            filterGroup.ForeColor = Color.FromArgb(52, 73, 94);
-            filterGroup.Location = new Point(20, 20);
-            filterGroup.Size = new Size(1150, 120);
-            filterGroup.BackColor = Color.White;
-
-            // Customer selection
-            lblCustomer = new Label();
-            lblCustomer.Text = "Customer:";
-            lblCustomer.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            lblCustomer.ForeColor = Color.FromArgb(52, 73, 94);
-            lblCustomer.Location = new Point(20, 30);
-            lblCustomer.Size = new Size(80, 25);
-
-            cmbCustomer = new ComboBox();
-            cmbCustomer.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            cmbCustomer.Location = new Point(110, 28);
-            cmbCustomer.Size = new Size(300, 25);
-            cmbCustomer.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            // From Date
-            lblFromDate = new Label();
-            lblFromDate.Text = "From Date:";
-            lblFromDate.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            lblFromDate.ForeColor = Color.FromArgb(52, 73, 94);
-            lblFromDate.Location = new Point(450, 30);
-            lblFromDate.Size = new Size(80, 25);
-
-            dtpFromDate = new DateTimePicker();
-            dtpFromDate.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            dtpFromDate.Location = new Point(540, 28);
-            dtpFromDate.Size = new Size(150, 25);
-            dtpFromDate.Format = DateTimePickerFormat.Short;
-
-            // To Date
-            lblToDate = new Label();
-            lblToDate.Text = "To Date:";
-            lblToDate.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            lblToDate.ForeColor = Color.FromArgb(52, 73, 94);
-            lblToDate.Location = new Point(720, 30);
-            lblToDate.Size = new Size(80, 25);
-
-            dtpToDate = new DateTimePicker();
-            dtpToDate.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            dtpToDate.Location = new Point(810, 28);
-            dtpToDate.Size = new Size(150, 25);
-            dtpToDate.Format = DateTimePickerFormat.Short;
-
-            // Load button
-            btnLoad = new Button();
-            btnLoad.Text = "Load Ledger";
-            btnLoad.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            btnLoad.ForeColor = Color.White;
-            btnLoad.BackColor = Color.FromArgb(52, 152, 219);
-            btnLoad.Location = new Point(1000, 25);
-            btnLoad.Size = new Size(120, 35);
-            btnLoad.FlatStyle = FlatStyle.Flat;
-            btnLoad.Click += BtnLoad_Click;
-
-            // Clear button
-            btnClear = new Button();
-            btnClear.Text = "Clear";
-            btnClear.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            btnClear.ForeColor = Color.White;
-            btnClear.BackColor = Color.FromArgb(241, 196, 15);
-            btnClear.Location = new Point(1000, 70);
-            btnClear.Size = new Size(120, 35);
-            btnClear.FlatStyle = FlatStyle.Flat;
-            btnClear.Click += BtnClear_Click;
-
-            // Close button
-            btnClose = new Button();
-            btnClose.Text = "Close";
-            btnClose.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            btnClose.ForeColor = Color.White;
-            btnClose.BackColor = Color.FromArgb(231, 76, 60);
-            btnClose.Location = new Point(1130, 25);
-            btnClose.Size = new Size(80, 35);
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Click += BtnClose_Click;
-
-            // Add controls to filter group
-            filterGroup.Controls.AddRange(new Control[] {
-                lblCustomer, cmbCustomer, lblFromDate, dtpFromDate,
-                lblToDate, dtpToDate, btnLoad, btnClear, btnClose
-            });
-
-            // Create ledger group
-            ledgerGroup = new GroupBox();
-            ledgerGroup.Text = "Customer Ledger";
-            ledgerGroup.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            ledgerGroup.ForeColor = Color.FromArgb(52, 73, 94);
-            ledgerGroup.Location = new Point(20, 160);
-            ledgerGroup.Size = new Size(1150, 500);
-            ledgerGroup.BackColor = Color.White;
-
-            // DataGridView
-            dgvLedger = new DataGridView();
-            dgvLedger.Font = new Font("Segoe UI", 9, FontStyle.Regular);
-            dgvLedger.Location = new Point(20, 30);
-            dgvLedger.Size = new Size(1110, 450);
-            dgvLedger.BackgroundColor = Color.White;
-            dgvLedger.BorderStyle = BorderStyle.Fixed3D;
-            dgvLedger.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvLedger.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvLedger.ReadOnly = true;
-            dgvLedger.AllowUserToAddRows = false;
-            dgvLedger.RowHeadersVisible = false;
-            dgvLedger.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
-
-            // Add DataGridView to ledger group
-            ledgerGroup.Controls.Add(dgvLedger);
-
-            // Add groups to form
-            this.Controls.AddRange(new Control[] { filterGroup, ledgerGroup });
-        }
 
         private void InitializeConnection()
         {

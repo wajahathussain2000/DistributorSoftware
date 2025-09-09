@@ -6,9 +6,9 @@ using DistributionSoftware.Common;
 
 namespace DistributionSoftware.Test
 {
-    class CompilationTest
+    public class CompilationTest
     {
-        static void Main(string[] args)
+        public static void RunTest()
         {
             try
             {

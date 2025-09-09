@@ -39,6 +39,15 @@
     <Reference Include="HarfBuzzSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\HarfBuzzSharp.7.3.0.3\lib\net462\HarfBuzzSharp.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.WinForms, Version=0.9.7.1, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.WinForms.0.9.7.1\lib\net45\LiveCharts.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="LiveChartsCore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc92a3e13d40c573, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveChartsCore.2.0.0-rc5.4\lib\net462\LiveChartsCore.dll</HintPath>
     </Reference>
@@ -123,6 +132,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -131,12 +141,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>C:\Users\A.M\.nuget\packages\livecharts\0.9.7\lib\net40\LiveCharts.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCharts.WinForms, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>C:\Users\A.M\.nuget\packages\livecharts.winforms\0.9.7\lib\net40\LiveCharts.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsFormsIntegration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\WindowsFormsIntegration.dll</HintPath>
     </Reference>
@@ -173,6 +177,26 @@
     <Compile Include="Models\LoginHistory.cs" />
     <Compile Include="Models\PurchaseReturn.cs" />
     <Compile Include="Models\PurchaseReturnItem.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\StockMovement.cs" />
+    <Compile Include="Models\SalesInvoice.cs" />
+    <Compile Include="Models\SalesInvoiceDetail.cs" />
+    <Compile Include="Models\SalesPayment.cs" />
+    <Compile Include="DataAccess\IProductRepository.cs" />
+    <Compile Include="DataAccess\ProductRepository.cs" />
+    <Compile Include="DataAccess\ICustomerRepository.cs" />
+    <Compile Include="DataAccess\CustomerRepository.cs" />
+    <Compile Include="DataAccess\ISalesInvoiceRepository.cs" />
+    <Compile Include="DataAccess\SalesInvoiceRepository.cs" />
+    <Compile Include="Business\ISalesInvoiceService.cs" />
+    <Compile Include="Business\SalesInvoiceService.cs" />
+    <Compile Include="Presentation\Forms\SalesInvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\SalesInvoiceForm.Designer.cs">
+      <DependentUpon>SalesInvoiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\IUserRepository.cs" />
     <Compile Include="DataAccess\UserRepository.cs" />
     <Compile Include="DataAccess\IPermissionRepository.cs" />
@@ -183,14 +207,19 @@
     <Compile Include="DataAccess\PurchaseReturnRepository.cs" />
     <Compile Include="DataAccess\IPurchaseReturnItemRepository.cs" />
     <Compile Include="DataAccess\PurchaseReturnItemRepository.cs" />
+    <Compile Include="DataAccess\IStockMovementRepository.cs" />
+    <Compile Include="DataAccess\StockMovementRepository.cs" />
     <Compile Include="Business\IUserService.cs" />
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Business\IPermissionService.cs" />
     <Compile Include="Business\PermissionService.cs" />
     <Compile Include="Business\IPurchaseReturnService.cs" />
     <Compile Include="Business\PurchaseReturnService.cs" />
+    <Compile Include="Business\IStockMovementService.cs" />
+    <Compile Include="Business\StockMovementService.cs" />
     <Compile Include="Common\ConfigurationManager.cs" />
     <Compile Include="Common\UserSession.cs" />
+    <Compile Include="Common\DebugHelper.cs" />
     <Compile Include="Presentation\Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,6 +302,24 @@
     <Compile Include="Presentation\Forms\ReorderLevelForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Presentation\Forms\LowStockReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\LowStockReportForm.Designer.cs">
+      <DependentUpon>LowStockReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockMovementReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockMovementReportForm.Designer.cs">
+      <DependentUpon>StockMovementReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockMovementEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockMovementEntryForm.Designer.cs">
+      <DependentUpon>StockMovementEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\StockReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -352,8 +399,22 @@
       <DependentUpon>UserManagementTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\Icons\IconHelper.cs" />
+    <Compile Include="Test\CompilationTest.cs" />
+    <Compile Include="Test\DebugTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Presentation\Forms\AdminDashboardRedesigned.resx">
+      <DependentUpon>AdminDashboardRedesigned.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\CustomerMasterForm.resx">
+      <DependentUpon>CustomerMasterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\GRNForm.resx">
+      <DependentUpon>GRNForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
