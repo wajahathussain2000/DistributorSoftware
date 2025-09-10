@@ -51,7 +51,8 @@ namespace DistributionSoftware.Presentation.Forms
             this.txtCustomerAddress = new System.Windows.Forms.TextBox();
             this.pnlTransportInfo = new System.Windows.Forms.Panel();
             this.lblVehicleNo = new System.Windows.Forms.Label();
-            this.txtVehicleNo = new System.Windows.Forms.TextBox();
+            this.cmbVehicle = new System.Windows.Forms.ComboBox();
+            this.btnAddVehicle = new System.Windows.Forms.Button();
             this.lblDriverName = new System.Windows.Forms.Label();
             this.txtDriverName = new System.Windows.Forms.TextBox();
             this.lblDriverPhone = new System.Windows.Forms.Label();
@@ -300,8 +301,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.pnlTransportInfo.Controls.Add(this.txtDriverPhone);
             this.pnlTransportInfo.Controls.Add(this.lblDriverName);
             this.pnlTransportInfo.Controls.Add(this.txtDriverName);
+            this.pnlTransportInfo.Controls.Add(this.btnAddVehicle);
+            this.pnlTransportInfo.Controls.Add(this.cmbVehicle);
             this.pnlTransportInfo.Controls.Add(this.lblVehicleNo);
-            this.pnlTransportInfo.Controls.Add(this.txtVehicleNo);
             this.pnlTransportInfo.Location = new System.Drawing.Point(640, 240);
             this.pnlTransportInfo.Name = "pnlTransportInfo";
             this.pnlTransportInfo.Size = new System.Drawing.Size(580, 120);
@@ -316,12 +318,30 @@ namespace DistributionSoftware.Presentation.Forms
             this.lblVehicleNo.TabIndex = 0;
             this.lblVehicleNo.Text = "Vehicle No:";
             // 
-            // txtVehicleNo
+            // cmbVehicle
             // 
-            this.txtVehicleNo.Location = new System.Drawing.Point(100, 12);
-            this.txtVehicleNo.Name = "txtVehicleNo";
-            this.txtVehicleNo.Size = new System.Drawing.Size(150, 26);
-            this.txtVehicleNo.TabIndex = 1;
+            this.cmbVehicle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVehicle.FormattingEnabled = true;
+            this.cmbVehicle.Location = new System.Drawing.Point(100, 12);
+            this.cmbVehicle.Name = "cmbVehicle";
+            this.cmbVehicle.Size = new System.Drawing.Size(200, 28);
+            this.cmbVehicle.TabIndex = 1;
+            this.cmbVehicle.SelectedIndexChanged += new System.EventHandler(this.CmbVehicle_SelectedIndexChanged);
+            // 
+            // btnAddVehicle
+            // 
+            this.btnAddVehicle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.btnAddVehicle.FlatAppearance.BorderSize = 0;
+            this.btnAddVehicle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddVehicle.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnAddVehicle.ForeColor = System.Drawing.Color.White;
+            this.btnAddVehicle.Location = new System.Drawing.Point(310, 12);
+            this.btnAddVehicle.Name = "btnAddVehicle";
+            this.btnAddVehicle.Size = new System.Drawing.Size(60, 26);
+            this.btnAddVehicle.TabIndex = 2;
+            this.btnAddVehicle.Text = "Add";
+            this.btnAddVehicle.UseVisualStyleBackColor = false;
+            this.btnAddVehicle.Click += new System.EventHandler(this.BtnAddVehicle_Click);
             // 
             // lblDriverName
             // 
@@ -600,7 +620,8 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.TextBox txtCustomerAddress;
         private System.Windows.Forms.Panel pnlTransportInfo;
         private System.Windows.Forms.Label lblVehicleNo;
-        private System.Windows.Forms.TextBox txtVehicleNo;
+        private System.Windows.Forms.ComboBox cmbVehicle;
+        private System.Windows.Forms.Button btnAddVehicle;
         private System.Windows.Forms.Label lblDriverName;
         private System.Windows.Forms.TextBox txtDriverName;
         private System.Windows.Forms.Label lblDriverPhone;

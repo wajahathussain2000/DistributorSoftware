@@ -187,6 +187,7 @@
     <Compile Include="Models\SalesReturnItem.cs" />
     <Compile Include="Models\DeliveryChallan.cs" />
     <Compile Include="Models\DeliveryChallanItem.cs" />
+    <Compile Include="Models\Vehicle.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -199,12 +200,16 @@
     <Compile Include="DataAccess\DeliveryChallanRepository.cs" />
     <Compile Include="DataAccess\IDeliveryChallanItemRepository.cs" />
     <Compile Include="DataAccess\DeliveryChallanItemRepository.cs" />
+    <Compile Include="DataAccess\IVehicleRepository.cs" />
+    <Compile Include="DataAccess\VehicleRepository.cs" />
     <Compile Include="Business\ISalesInvoiceService.cs" />
     <Compile Include="Business\SalesInvoiceService.cs" />
     <Compile Include="Business\ISalesReturnService.cs" />
     <Compile Include="Business\SalesReturnService.cs" />
     <Compile Include="Business\IDeliveryChallanService.cs" />
     <Compile Include="Business\DeliveryChallanService.cs" />
+    <Compile Include="Business\IVehicleService.cs" />
+    <Compile Include="Business\VehicleService.cs" />
     <Compile Include="Presentation\Forms\SalesInvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +227,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\DeliveryChallanForm.Designer.cs">
       <DependentUpon>DeliveryChallanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\VehicleMasterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\VehicleMasterForm.Designer.cs">
+      <DependentUpon>VehicleMasterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\IUserRepository.cs" />
     <Compile Include="DataAccess\UserRepository.cs" />
@@ -455,6 +466,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\SalesReturnForm.resx">
       <DependentUpon>SalesReturnForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\VehicleMasterForm.resx">
+      <DependentUpon>VehicleMasterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

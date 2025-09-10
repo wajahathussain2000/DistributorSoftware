@@ -14,6 +14,7 @@ namespace DistributionSoftware.Presentation.Forms
     {
         private IDeliveryChallanService _deliveryChallanService;
         private ISalesInvoiceRepository _salesInvoiceRepository;
+        private IVehicleService _vehicleService;
         private DeliveryChallan _currentChallan;
         private SalesInvoice _selectedSalesInvoice;
         private List<DeliveryChallanItem> _challanItems;
@@ -26,6 +27,7 @@ namespace DistributionSoftware.Presentation.Forms
                 InitializeServices();
                 InitializeChallan();
                 LoadSalesInvoices();
+                LoadVehicles();
             }
             catch (Exception ex)
             {
@@ -37,6 +39,7 @@ namespace DistributionSoftware.Presentation.Forms
         {
             _deliveryChallanService = new DeliveryChallanService();
             _salesInvoiceRepository = new SalesInvoiceRepository();
+            _vehicleService = new VehicleService();
         }
 
         private void InitializeChallan()
@@ -234,23 +237,92 @@ namespace DistributionSoftware.Presentation.Forms
             return true;
         }
 
+        private void LoadVehicles()
+        {
+            try
+            {
+                if (_vehicleService == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("VehicleService is null");
+                    return;
+                }
+
+                var vehicles = _vehicleService.GetActiveVehicles();
+                
+                if (cmbVehicle != null)
+                {
+                    cmbVehicle.DataSource = vehicles;
+                    cmbVehicle.DisplayMember = "DisplayText";
+                    cmbVehicle.ValueMember = "VehicleId";
+                    cmbVehicle.SelectedIndex = -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading vehicles: {ex.Message}");
+                MessageBox.Show("Unable to load vehicles. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void UpdateChallanFromForm()
         {
-            _currentChallan.ChallanDate = dtpChallanDate.Value;
-            _currentChallan.CustomerName = txtCustomerName.Text;
-            _currentChallan.CustomerAddress = txtCustomerAddress.Text;
-            _currentChallan.VehicleNo = txtVehicleNo.Text;
-            _currentChallan.DriverName = txtDriverName.Text;
-            _currentChallan.DriverPhone = txtDriverPhone.Text;
-            _currentChallan.Remarks = txtRemarks.Text;
-            _currentChallan.Status = "CONFIRMED";
+            try
+            {
+                _currentChallan.ChallanDate = dtpChallanDate.Value;
+                _currentChallan.CustomerName = txtCustomerName.Text;
+                _currentChallan.CustomerAddress = txtCustomerAddress.Text;
+                
+                // Update vehicle information safely
+                if (cmbVehicle?.SelectedValue != null)
+                {
+                    try
+                    {
+                        int vehicleId = Convert.ToInt32(cmbVehicle.SelectedValue);
+                        _currentChallan.VehicleId = vehicleId;
+                        
+                        if (_vehicleService != null)
+                        {
+                            var selectedVehicle = _vehicleService.GetVehicleById(vehicleId);
+                            if (selectedVehicle != null)
+                            {
+                                _currentChallan.VehicleNo = selectedVehicle.VehicleNo ?? "";
+                                _currentChallan.DriverName = selectedVehicle.DriverName ?? "";
+                                _currentChallan.DriverPhone = selectedVehicle.DriverContact ?? "";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error processing vehicle selection: {ex.Message}");
+                        _currentChallan.VehicleId = null;
+                        _currentChallan.VehicleNo = "";
+                        _currentChallan.DriverName = "";
+                        _currentChallan.DriverPhone = "";
+                    }
+                }
+                else
+                {
+                    _currentChallan.VehicleId = null;
+                    _currentChallan.VehicleNo = "";
+                    _currentChallan.DriverName = "";
+                    _currentChallan.DriverPhone = "";
+                }
+                
+                _currentChallan.Remarks = txtRemarks.Text;
+                _currentChallan.Status = "CONFIRMED";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error updating challan from form: {ex.Message}");
+                MessageBox.Show("Unable to update challan details. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ClearForm()
         {
             txtCustomerName.Clear();
             txtCustomerAddress.Clear();
-            txtVehicleNo.Clear();
+            cmbVehicle.SelectedIndex = -1;
             txtDriverName.Clear();
             txtDriverPhone.Clear();
             txtRemarks.Clear();
@@ -276,6 +348,61 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error printing delivery challan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CmbVehicle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbVehicle?.SelectedValue != null && _vehicleService != null)
+                {
+                    try
+                    {
+                        int vehicleId = Convert.ToInt32(cmbVehicle.SelectedValue);
+                        var selectedVehicle = _vehicleService.GetVehicleById(vehicleId);
+                        if (selectedVehicle != null)
+                        {
+                            txtDriverName.Text = selectedVehicle.DriverName ?? "";
+                            txtDriverPhone.Text = selectedVehicle.DriverContact ?? "";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error processing vehicle selection: {ex.Message}");
+                        txtDriverName.Clear();
+                        txtDriverPhone.Clear();
+                    }
+                }
+                else
+                {
+                    txtDriverName.Clear();
+                    txtDriverPhone.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading vehicle details: {ex.Message}");
+                MessageBox.Show("Unable to load vehicle details. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnAddVehicle_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var vehicleMasterForm = new VehicleMasterForm();
+                var result = vehicleMasterForm.ShowDialog();
+                
+                if (result == DialogResult.OK)
+                {
+                    // Reload vehicles after adding new one
+                    LoadVehicles();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening vehicle master form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -12,6 +12,7 @@ namespace DistributionSoftware.Models
         public string CustomerAddress { get; set; }
         public DateTime ChallanDate { get; set; }
         public string VehicleNo { get; set; }
+        public int? VehicleId { get; set; }
         public string DriverName { get; set; }
         public string DriverPhone { get; set; }
         public string Remarks { get; set; }
@@ -24,6 +25,7 @@ namespace DistributionSoftware.Models
         
         // Navigation properties
         public virtual SalesInvoice SalesInvoice { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
         public virtual ICollection<DeliveryChallanItem> Items { get; set; }
         
         public DeliveryChallan()
