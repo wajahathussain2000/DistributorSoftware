@@ -101,6 +101,8 @@ namespace DistributionSoftware.Presentation.Forms
             salesDropdown = new ContextMenuStrip();
             salesDropdown.Font = dropdownFont;
             salesDropdown.Items.Add("Sales Invoice", null, (s, e) => OpenSalesInvoiceForm());
+            salesDropdown.Items.Add("Sales Return", null, (s, e) => OpenSalesReturnForm());
+            salesDropdown.Items.Add("Delivery Challan", null, (s, e) => OpenDeliveryChallanForm());
 
             // Purchases Dropdown (Purchase Module)
             purchasesDropdown = new ContextMenuStrip();
@@ -879,6 +881,36 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Sales Invoice Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSalesReturnForm()
+        {
+            try
+            {
+                SalesReturnForm salesReturnForm = new SalesReturnForm();
+                salesReturnForm.Owner = this;
+                salesReturnForm.ShowDialog();
+                salesReturnForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Sales Return Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenDeliveryChallanForm()
+        {
+            try
+            {
+                DeliveryChallanForm deliveryChallanForm = new DeliveryChallanForm();
+                deliveryChallanForm.Owner = this;
+                deliveryChallanForm.ShowDialog();
+                deliveryChallanForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Delivery Challan Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

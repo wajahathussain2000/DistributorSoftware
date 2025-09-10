@@ -1,0 +1,323 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using DistributionSoftware.Models;
+using DistributionSoftware.Business;
+using DistributionSoftware.DataAccess;
+
+namespace DistributionSoftware.Presentation.Forms
+{
+    public partial class DeliveryChallanForm : Form
+    {
+        private IDeliveryChallanService _deliveryChallanService;
+        private ISalesInvoiceRepository _salesInvoiceRepository;
+        private DeliveryChallan _currentChallan;
+        private SalesInvoice _selectedSalesInvoice;
+        private List<DeliveryChallanItem> _challanItems;
+
+        public DeliveryChallanForm()
+        {
+            try
+            {
+                InitializeComponent();
+                InitializeServices();
+                InitializeChallan();
+                LoadSalesInvoices();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void InitializeServices()
+        {
+            _deliveryChallanService = new DeliveryChallanService();
+            _salesInvoiceRepository = new SalesInvoiceRepository();
+        }
+
+        private void InitializeChallan()
+        {
+            try
+            {
+                _currentChallan = new DeliveryChallan();
+                _challanItems = new List<DeliveryChallanItem>();
+
+                // Generate challan number and barcode
+                _currentChallan.ChallanNo = _deliveryChallanService.GenerateChallanNumber();
+                _currentChallan.BarcodeImage = _deliveryChallanService.GenerateChallanBarcode();
+
+                // Update UI
+                txtChallanNumber.Text = _currentChallan.ChallanNo;
+                dtpChallanDate.Value = _currentChallan.ChallanDate;
+                txtStatus.Text = _currentChallan.Status;
+
+                // Display barcode
+                DisplayBarcode(_currentChallan.BarcodeImage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing challan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadSalesInvoices()
+        {
+            try
+            {
+                var salesInvoices = _salesInvoiceRepository.GetAllSalesInvoices();
+                cmbSalesInvoice.DataSource = salesInvoices;
+                cmbSalesInvoice.DisplayMember = "InvoiceNumber";
+                cmbSalesInvoice.ValueMember = "SalesInvoiceId";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading sales invoices: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DisplayBarcode(string barcodeImageBase64)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(barcodeImageBase64))
+                {
+                    var imageBytes = Convert.FromBase64String(barcodeImageBase64);
+                    using (var memoryStream = new MemoryStream(imageBytes))
+                    {
+                        picBarcode.Image = Image.FromStream(memoryStream);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error displaying barcode: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnLoadSalesInvoice_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbSalesInvoice.SelectedValue == null)
+                {
+                    MessageBox.Show("Please select a sales invoice.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var salesInvoiceId = (int)cmbSalesInvoice.SelectedValue;
+                _selectedSalesInvoice = _salesInvoiceRepository.GetSalesInvoiceById(salesInvoiceId);
+
+                if (_selectedSalesInvoice != null)
+                {
+                    // Load invoice details (items)
+                    _selectedSalesInvoice.Items = _salesInvoiceRepository.GetSalesInvoiceDetails(salesInvoiceId);
+                    
+                    // Create delivery challan from sales invoice
+                    _currentChallan = _deliveryChallanService.CreateFromSalesInvoice(salesInvoiceId);
+                    
+                    // Update UI with sales invoice data
+                    txtCustomerName.Text = _currentChallan.CustomerName;
+                    txtCustomerAddress.Text = _currentChallan.CustomerAddress;
+                    
+                    // Load items
+                    LoadChallanItems();
+                    CalculateTotals();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading sales invoice: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadChallanItems()
+        {
+            try
+            {
+                if (_currentChallan?.Items != null)
+                {
+                    _challanItems = _currentChallan.Items.ToList();
+                    RefreshItemsGrid();
+                }
+                else
+                {
+                    _challanItems = new List<DeliveryChallanItem>();
+                    RefreshItemsGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading challan items: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RefreshItemsGrid()
+        {
+            try
+            {
+                dgvItems.Rows.Clear();
+
+                foreach (var item in _challanItems)
+                {
+                    dgvItems.Rows.Add(
+                        item.ProductCode,
+                        item.ProductName,
+                        item.Quantity,
+                        item.Unit,
+                        item.UnitPrice.ToString("N2"),
+                        item.TotalAmount.ToString("N2")
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error refreshing items grid: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CalculateTotals()
+        {
+            try
+            {
+                var totalAmount = _challanItems.Sum(item => item.TotalAmount);
+                txtTotalAmount.Text = totalAmount.ToString("N2");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error calculating totals: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ValidateForm())
+                {
+                    // Update challan with form data
+                    UpdateChallanFromForm();
+
+                    // Save challan
+                    var challanId = _deliveryChallanService.CreateDeliveryChallan(_currentChallan);
+                    
+                    MessageBox.Show($"Delivery Challan saved successfully with ID: {challanId}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Reset form for new challan
+                    InitializeChallan();
+                    ClearForm();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving delivery challan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool ValidateForm()
+        {
+            if (string.IsNullOrEmpty(txtCustomerName.Text))
+            {
+                MessageBox.Show("Customer name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (_challanItems == null || _challanItems.Count == 0)
+            {
+                MessageBox.Show("At least one item is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void UpdateChallanFromForm()
+        {
+            _currentChallan.ChallanDate = dtpChallanDate.Value;
+            _currentChallan.CustomerName = txtCustomerName.Text;
+            _currentChallan.CustomerAddress = txtCustomerAddress.Text;
+            _currentChallan.VehicleNo = txtVehicleNo.Text;
+            _currentChallan.DriverName = txtDriverName.Text;
+            _currentChallan.DriverPhone = txtDriverPhone.Text;
+            _currentChallan.Remarks = txtRemarks.Text;
+            _currentChallan.Status = "CONFIRMED";
+        }
+
+        private void ClearForm()
+        {
+            txtCustomerName.Clear();
+            txtCustomerAddress.Clear();
+            txtVehicleNo.Clear();
+            txtDriverName.Clear();
+            txtDriverPhone.Clear();
+            txtRemarks.Clear();
+            txtTotalAmount.Clear();
+            dgvItems.Rows.Clear();
+            cmbSalesInvoice.SelectedIndex = -1;
+            _challanItems.Clear();
+        }
+
+        private void BtnPrint_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentChallan.ChallanId == 0)
+                {
+                    MessageBox.Show("Please save the delivery challan before printing.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // TODO: Implement print functionality
+                MessageBox.Show("Print functionality will be implemented here.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error printing delivery challan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure you want to cancel? All unsaved changes will be lost.", "Confirm Cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                
+                if (result == DialogResult.Yes)
+                {
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error canceling form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DeliveryChallanForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                // Additional initialization if needed
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DeliveryChallanForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                // Clean up resources if needed
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error closing form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}
