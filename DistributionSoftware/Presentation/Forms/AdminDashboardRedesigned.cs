@@ -143,9 +143,22 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
 
 
-            // Settings Dropdown (Security & Backup Module)
+            // Settings Dropdown (Master Data & Configuration Module)
             settingsDropdown = new ContextMenuStrip();
             settingsDropdown.Font = dropdownFont;
+            settingsDropdown.Items.Add("Master Data Management", null, (s, e) => OpenMasterDataManagement());
+            settingsDropdown.Items.Add("-");
+            settingsDropdown.Items.Add("Expense Category Master", null, (s, e) => OpenExpenseCategoryMasterForm());
+            settingsDropdown.Items.Add("Expense Entry", null, (s, e) => OpenExpenseEntryForm());
+            settingsDropdown.Items.Add("Customer Category Master", null, (s, e) => OpenCustomerCategoryForm());
+            settingsDropdown.Items.Add("Vehicle Master", null, (s, e) => OpenVehicleMasterForm());
+            settingsDropdown.Items.Add("Route Master", null, (s, e) => OpenRouteMasterForm());
+            settingsDropdown.Items.Add("-");
+            settingsDropdown.Items.Add("User Management", null, (s, e) => OpenUserMasterForm());
+            settingsDropdown.Items.Add("System Configuration", null, (s, e) => OpenSystemConfiguration());
+            settingsDropdown.Items.Add("-");
+            settingsDropdown.Items.Add("Database Backup", null, (s, e) => OpenDatabaseBackup());
+            settingsDropdown.Items.Add("System Logs", null, (s, e) => OpenSystemLogs());
         }
 
         private void InitializeCharts()
@@ -1201,6 +1214,35 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        private void OpenExpenseCategoryMasterForm()
+        {
+            try
+            {
+                ExpenseCategoryMasterForm expenseCategoryForm = new ExpenseCategoryMasterForm();
+                expenseCategoryForm.StartPosition = FormStartPosition.CenterParent;
+                expenseCategoryForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Expense Category Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenExpenseEntryForm()
+        {
+            try
+            {
+                // Now try the actual ExpenseEntryForm
+                ExpenseEntryForm expenseEntryForm = new ExpenseEntryForm();
+                expenseEntryForm.StartPosition = FormStartPosition.CenterParent;
+                expenseEntryForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Expense Entry Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void OpenCustomerLedgerForm() 
         { 
             try
@@ -1228,7 +1270,83 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        // Settings Dropdown Methods
+        private void OpenMasterDataManagement()
+        {
+            try
+            {
+                MessageBox.Show("Master Data Management - Central hub for all master data forms.\n\n" +
+                    "Available Forms:\n" +
+                    "• Expense Category Master\n" +
+                    "• Customer Category Master\n" +
+                    "• Vehicle Master\n" +
+                    "• Route Master\n" +
+                    "• User Management\n\n" +
+                    "Use the individual menu items to access specific forms.", 
+                    "Master Data Management", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Master Data Management: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
+        private void OpenSystemConfiguration()
+        {
+            try
+            {
+                MessageBox.Show("System Configuration - Configure system settings, preferences, and parameters.\n\n" +
+                    "This feature will include:\n" +
+                    "• Company Information\n" +
+                    "• System Preferences\n" +
+                    "• Email Settings\n" +
+                    "• Backup Configuration\n" +
+                    "• Security Settings", 
+                    "System Configuration", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening System Configuration: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenDatabaseBackup()
+        {
+            try
+            {
+                MessageBox.Show("Database Backup - Create and manage database backups.\n\n" +
+                    "This feature will include:\n" +
+                    "• Full Database Backup\n" +
+                    "• Incremental Backup\n" +
+                    "• Backup Scheduling\n" +
+                    "• Restore Operations\n" +
+                    "• Backup History", 
+                    "Database Backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Database Backup: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSystemLogs()
+        {
+            try
+            {
+                MessageBox.Show("System Logs - View and manage system logs and audit trails.\n\n" +
+                    "This feature will include:\n" +
+                    "• Application Logs\n" +
+                    "• Error Logs\n" +
+                    "• User Activity Logs\n" +
+                    "• System Events\n" +
+                    "• Log Filtering and Search", 
+                    "System Logs", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening System Logs: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         #endregion
     }

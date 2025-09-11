@@ -192,6 +192,8 @@
     <Compile Include="Models\DeliveryScheduleFilterDto.cs" />
     <Compile Include="Models\DeliveryScheduleAttachment.cs" />
     <Compile Include="Models\DeliveryScheduleHistory.cs" />
+    <Compile Include="Models\ExpenseCategory.cs" />
+    <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
@@ -224,6 +226,10 @@
     <Compile Include="Business\VehicleService.cs" />
     <Compile Include="Business\IRouteService.cs" />
     <Compile Include="Business\RouteService.cs" />
+    <Compile Include="Business\IExpenseCategoryService.cs" />
+    <Compile Include="Business\ExpenseCategoryService.cs" />
+    <Compile Include="Business\IExpenseService.cs" />
+    <Compile Include="Business\ExpenseService.cs" />
     <Compile Include="Presentation\Forms\SalesInvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,6 +275,10 @@
     <Compile Include="DataAccess\IUserRepository.cs" />
     <Compile Include="DataAccess\UserRepository.cs" />
     <Compile Include="DataAccess\IPermissionRepository.cs" />
+    <Compile Include="DataAccess\IExpenseCategoryRepository.cs" />
+    <Compile Include="DataAccess\ExpenseCategoryRepository.cs" />
+    <Compile Include="DataAccess\IExpenseRepository.cs" />
+    <Compile Include="DataAccess\ExpenseRepository.cs" />
     <Compile Include="DataAccess\PermissionRepository.cs" />
     <Compile Include="DataAccess\IActivityLogRepository.cs" />
     <Compile Include="DataAccess\ActivityLogRepository.cs" />
@@ -451,6 +461,18 @@
     </Compile>
     <Compile Include="Presentation\Forms\CustomerCategoryForm.Designer.cs">
       <DependentUpon>CustomerCategoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseCategoryMasterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseCategoryMasterForm.Designer.cs">
+      <DependentUpon>ExpenseCategoryMasterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseEntryForm.Designer.cs">
+      <DependentUpon>ExpenseEntryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\CustomerLedgerForm.cs">
       <SubType>Form</SubType>
