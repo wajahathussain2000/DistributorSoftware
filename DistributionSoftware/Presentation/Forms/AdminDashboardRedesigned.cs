@@ -104,6 +104,7 @@ namespace DistributionSoftware.Presentation.Forms
             salesDropdown.Items.Add("Sales Return", null, (s, e) => OpenSalesReturnForm());
             salesDropdown.Items.Add("Delivery Challan", null, (s, e) => OpenDeliveryChallanForm());
             salesDropdown.Items.Add("Delivery Planning & Dispatch", null, (s, e) => OpenDeliveryPlanningAndDispatchForm());
+            salesDropdown.Items.Add("Delivery Confirmation", null, (s, e) => OpenDeliveryConfirmationForm());
             salesDropdown.Items.Add("-");
             salesDropdown.Items.Add("Vehicle Master", null, (s, e) => OpenVehicleMasterForm());
             salesDropdown.Items.Add("Route Master", null, (s, e) => OpenRouteMasterForm());
@@ -930,6 +931,21 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Delivery Planning & Dispatch Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenDeliveryConfirmationForm()
+        {
+            try
+            {
+                DeliveryConfirmationForm deliveryConfirmationForm = new DeliveryConfirmationForm();
+                deliveryConfirmationForm.Owner = this;
+                deliveryConfirmationForm.ShowDialog();
+                deliveryConfirmationForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Delivery Confirmation Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -189,6 +189,7 @@
     <Compile Include="Models\DeliveryChallanItem.cs" />
     <Compile Include="Models\DeliverySchedule.cs" />
     <Compile Include="Models\DeliveryScheduleItem.cs" />
+    <Compile Include="Models\DeliveryScheduleFilterDto.cs" />
     <Compile Include="Models\DeliveryScheduleAttachment.cs" />
     <Compile Include="Models\DeliveryScheduleHistory.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -246,6 +247,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\DeliveryPlanningAndDispatchForm.Designer.cs">
       <DependentUpon>DeliveryPlanningAndDispatchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\DeliveryConfirmationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\DeliveryConfirmationForm.Designer.cs">
+      <DependentUpon>DeliveryConfirmationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\VehicleMasterForm.cs">
       <SubType>Form</SubType>
