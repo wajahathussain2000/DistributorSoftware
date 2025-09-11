@@ -57,6 +57,8 @@ namespace DistributionSoftware.Presentation.Forms
             this.txtDriverName = new System.Windows.Forms.TextBox();
             this.lblDriverPhone = new System.Windows.Forms.Label();
             this.txtDriverPhone = new System.Windows.Forms.TextBox();
+            this.lblRoute = new System.Windows.Forms.Label();
+            this.cmbRoute = new System.Windows.Forms.ComboBox();
             this.pnlItems = new System.Windows.Forms.Panel();
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.colProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -297,6 +299,8 @@ namespace DistributionSoftware.Presentation.Forms
             // pnlTransportInfo
             // 
             this.pnlTransportInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTransportInfo.Controls.Add(this.lblRoute);
+            this.pnlTransportInfo.Controls.Add(this.cmbRoute);
             this.pnlTransportInfo.Controls.Add(this.lblDriverPhone);
             this.pnlTransportInfo.Controls.Add(this.txtDriverPhone);
             this.pnlTransportInfo.Controls.Add(this.lblDriverName);
@@ -306,7 +310,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.pnlTransportInfo.Controls.Add(this.lblVehicleNo);
             this.pnlTransportInfo.Location = new System.Drawing.Point(640, 240);
             this.pnlTransportInfo.Name = "pnlTransportInfo";
-            this.pnlTransportInfo.Size = new System.Drawing.Size(580, 120);
+            this.pnlTransportInfo.Size = new System.Drawing.Size(580, 150);
             this.pnlTransportInfo.TabIndex = 5;
             // 
             // lblVehicleNo
@@ -374,6 +378,24 @@ namespace DistributionSoftware.Presentation.Forms
             this.txtDriverPhone.Name = "txtDriverPhone";
             this.txtDriverPhone.Size = new System.Drawing.Size(150, 26);
             this.txtDriverPhone.TabIndex = 5;
+            // 
+            // lblRoute
+            // 
+            this.lblRoute.AutoSize = true;
+            this.lblRoute.Location = new System.Drawing.Point(10, 80);
+            this.lblRoute.Name = "lblRoute";
+            this.lblRoute.Size = new System.Drawing.Size(50, 20);
+            this.lblRoute.TabIndex = 6;
+            this.lblRoute.Text = "Route:";
+            // 
+            // cmbRoute
+            // 
+            this.cmbRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRoute.FormattingEnabled = true;
+            this.cmbRoute.Location = new System.Drawing.Point(100, 77);
+            this.cmbRoute.Name = "cmbRoute";
+            this.cmbRoute.Size = new System.Drawing.Size(200, 28);
+            this.cmbRoute.TabIndex = 7;
             // 
             // pnlItems
             // 
@@ -626,6 +648,8 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.TextBox txtDriverName;
         private System.Windows.Forms.Label lblDriverPhone;
         private System.Windows.Forms.TextBox txtDriverPhone;
+        private System.Windows.Forms.Label lblRoute;
+        private System.Windows.Forms.ComboBox cmbRoute;
         private System.Windows.Forms.Panel pnlItems;
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.DataGridViewTextBoxColumn colProductCode;

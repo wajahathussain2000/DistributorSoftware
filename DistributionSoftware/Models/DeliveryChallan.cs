@@ -15,6 +15,7 @@ namespace DistributionSoftware.Models
         public int? VehicleId { get; set; }
         public string DriverName { get; set; }
         public string DriverPhone { get; set; }
+        public int? RouteId { get; set; }
         public string Remarks { get; set; }
         public string BarcodeImage { get; set; }
         public string Status { get; set; }
@@ -26,6 +27,7 @@ namespace DistributionSoftware.Models
         // Navigation properties
         public virtual SalesInvoice SalesInvoice { get; set; }
         public virtual Vehicle Vehicle { get; set; }
+        public virtual Route Route { get; set; }
         public virtual ICollection<DeliveryChallanItem> Items { get; set; }
         
         public DeliveryChallan()

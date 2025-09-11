@@ -188,6 +188,7 @@
     <Compile Include="Models\DeliveryChallan.cs" />
     <Compile Include="Models\DeliveryChallanItem.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\Route.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -202,6 +203,8 @@
     <Compile Include="DataAccess\DeliveryChallanItemRepository.cs" />
     <Compile Include="DataAccess\IVehicleRepository.cs" />
     <Compile Include="DataAccess\VehicleRepository.cs" />
+    <Compile Include="DataAccess\IRouteRepository.cs" />
+    <Compile Include="DataAccess\RouteRepository.cs" />
     <Compile Include="Business\ISalesInvoiceService.cs" />
     <Compile Include="Business\SalesInvoiceService.cs" />
     <Compile Include="Business\ISalesReturnService.cs" />
@@ -210,6 +213,8 @@
     <Compile Include="Business\DeliveryChallanService.cs" />
     <Compile Include="Business\IVehicleService.cs" />
     <Compile Include="Business\VehicleService.cs" />
+    <Compile Include="Business\IRouteService.cs" />
+    <Compile Include="Business\RouteService.cs" />
     <Compile Include="Presentation\Forms\SalesInvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +238,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\VehicleMasterForm.Designer.cs">
       <DependentUpon>VehicleMasterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\RouteMasterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\RouteMasterForm.Designer.cs">
+      <DependentUpon>RouteMasterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\IUserRepository.cs" />
     <Compile Include="DataAccess\UserRepository.cs" />
@@ -469,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\VehicleMasterForm.resx">
       <DependentUpon>VehicleMasterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\RouteMasterForm.resx">
+      <DependentUpon>RouteMasterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

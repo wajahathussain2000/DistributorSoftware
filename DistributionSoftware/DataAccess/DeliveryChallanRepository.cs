@@ -25,7 +25,7 @@ namespace DistributionSoftware.DataAccess
                     connection.Open();
                     var query = @"
                         SELECT ChallanId, ChallanNo, SalesInvoiceId, CustomerName, CustomerAddress, 
-                               ChallanDate, VehicleNo, DriverName, DriverPhone, Remarks, 
+                               ChallanDate, VehicleNo, DriverName, DriverPhone, RouteId, Remarks, 
                                BarcodeImage, Status, CreatedDate, CreatedBy, UpdatedDate, UpdatedBy
                         FROM DeliveryChallans 
                         WHERE ChallanId = @ChallanId";
@@ -172,11 +172,11 @@ namespace DistributionSoftware.DataAccess
                     var query = @"
                         INSERT INTO DeliveryChallans 
                         (ChallanNo, SalesInvoiceId, CustomerName, CustomerAddress, ChallanDate, 
-                         VehicleNo, DriverName, DriverPhone, Remarks, BarcodeImage, Status, 
+                         VehicleNo, DriverName, DriverPhone, RouteId, Remarks, BarcodeImage, Status, 
                          CreatedDate, CreatedBy)
                         VALUES 
                         (@ChallanNo, @SalesInvoiceId, @CustomerName, @CustomerAddress, @ChallanDate, 
-                         @VehicleNo, @DriverName, @DriverPhone, @Remarks, @BarcodeImage, @Status, 
+                         @VehicleNo, @DriverName, @DriverPhone, @RouteId, @Remarks, @BarcodeImage, @Status, 
                          @CreatedDate, @CreatedBy);
                         SELECT SCOPE_IDENTITY();";
 
@@ -190,6 +190,7 @@ namespace DistributionSoftware.DataAccess
                         command.Parameters.AddWithValue("@VehicleNo", challan.VehicleNo ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@DriverName", challan.DriverName ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@DriverPhone", challan.DriverPhone ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@RouteId", challan.RouteId ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@Remarks", challan.Remarks ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@BarcodeImage", challan.BarcodeImage ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@Status", challan.Status ?? "DRAFT");
@@ -220,7 +221,7 @@ namespace DistributionSoftware.DataAccess
                             CustomerName = @CustomerName, CustomerAddress = @CustomerAddress, 
                             ChallanDate = @ChallanDate, VehicleNo = @VehicleNo, 
                             DriverName = @DriverName, DriverPhone = @DriverPhone, 
-                            Remarks = @Remarks, BarcodeImage = @BarcodeImage, 
+                            RouteId = @RouteId, Remarks = @Remarks, BarcodeImage = @BarcodeImage, 
                             Status = @Status, UpdatedDate = @UpdatedDate, UpdatedBy = @UpdatedBy
                         WHERE ChallanId = @ChallanId";
 
@@ -235,6 +236,7 @@ namespace DistributionSoftware.DataAccess
                         command.Parameters.AddWithValue("@VehicleNo", challan.VehicleNo ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@DriverName", challan.DriverName ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@DriverPhone", challan.DriverPhone ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@RouteId", challan.RouteId ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@Remarks", challan.Remarks ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@BarcodeImage", challan.BarcodeImage ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@Status", challan.Status ?? "DRAFT");
@@ -340,6 +342,7 @@ namespace DistributionSoftware.DataAccess
                 VehicleNo = reader["VehicleNo"]?.ToString(),
                 DriverName = reader["DriverName"]?.ToString(),
                 DriverPhone = reader["DriverPhone"]?.ToString(),
+                RouteId = reader["RouteId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["RouteId"]),
                 Remarks = reader["Remarks"]?.ToString(),
                 BarcodeImage = reader["BarcodeImage"]?.ToString(),
                 Status = reader["Status"]?.ToString(),

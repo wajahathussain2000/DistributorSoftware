@@ -105,6 +105,7 @@ namespace DistributionSoftware.Presentation.Forms
             salesDropdown.Items.Add("Delivery Challan", null, (s, e) => OpenDeliveryChallanForm());
             salesDropdown.Items.Add("-");
             salesDropdown.Items.Add("Vehicle Master", null, (s, e) => OpenVehicleMasterForm());
+            salesDropdown.Items.Add("Route Master", null, (s, e) => OpenRouteMasterForm());
 
             // Purchases Dropdown (Purchase Module)
             purchasesDropdown = new ContextMenuStrip();
@@ -1110,6 +1111,20 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Vehicle Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenRouteMasterForm() 
+        { 
+            try
+            {
+                RouteMasterForm routeMasterForm = new RouteMasterForm();
+                routeMasterForm.StartPosition = FormStartPosition.CenterParent;
+                routeMasterForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Route Master Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

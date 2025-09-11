@@ -15,6 +15,7 @@ namespace DistributionSoftware.Presentation.Forms
         private IDeliveryChallanService _deliveryChallanService;
         private ISalesInvoiceRepository _salesInvoiceRepository;
         private IVehicleService _vehicleService;
+        private IRouteService _routeService;
         private DeliveryChallan _currentChallan;
         private SalesInvoice _selectedSalesInvoice;
         private List<DeliveryChallanItem> _challanItems;
@@ -28,6 +29,7 @@ namespace DistributionSoftware.Presentation.Forms
                 InitializeChallan();
                 LoadSalesInvoices();
                 LoadVehicles();
+                LoadRoutes();
             }
             catch (Exception ex)
             {
@@ -40,6 +42,7 @@ namespace DistributionSoftware.Presentation.Forms
             _deliveryChallanService = new DeliveryChallanService();
             _salesInvoiceRepository = new SalesInvoiceRepository();
             _vehicleService = new VehicleService();
+            _routeService = new RouteService();
         }
 
         private void InitializeChallan()
@@ -264,6 +267,33 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        private void LoadRoutes()
+        {
+            try
+            {
+                if (_routeService == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("RouteService is null");
+                    return;
+                }
+
+                var routes = _routeService.GetActiveRoutes();
+                
+                if (cmbRoute != null)
+                {
+                    cmbRoute.DataSource = routes;
+                    cmbRoute.DisplayMember = "DisplayText";
+                    cmbRoute.ValueMember = "RouteId";
+                    cmbRoute.SelectedIndex = -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading routes: {ex.Message}");
+                MessageBox.Show("Unable to load routes. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void UpdateChallanFromForm()
         {
             try
@@ -271,6 +301,25 @@ namespace DistributionSoftware.Presentation.Forms
                 _currentChallan.ChallanDate = dtpChallanDate.Value;
                 _currentChallan.CustomerName = txtCustomerName.Text;
                 _currentChallan.CustomerAddress = txtCustomerAddress.Text;
+                
+                // Update route information safely
+                if (cmbRoute?.SelectedValue != null)
+                {
+                    try
+                    {
+                        int routeId = Convert.ToInt32(cmbRoute.SelectedValue);
+                        _currentChallan.RouteId = routeId;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error setting route: {ex.Message}");
+                        _currentChallan.RouteId = null;
+                    }
+                }
+                else
+                {
+                    _currentChallan.RouteId = null;
+                }
                 
                 // Update vehicle information safely
                 if (cmbVehicle?.SelectedValue != null)
