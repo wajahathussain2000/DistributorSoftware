@@ -61,7 +61,7 @@ namespace DistributionSoftware.Business
         public async Task<IEnumerable<Permission>> GetPermissionsByModuleAsync(string module)
         {
             if (string.IsNullOrWhiteSpace(module))
-                return Enumerable.Empty<Permission>();
+                return await Task.FromResult(Enumerable.Empty<Permission>());
                 
             try
             {
@@ -81,7 +81,7 @@ namespace DistributionSoftware.Business
         public async Task<Permission> GetPermissionByCodeAsync(string permissionCode)
         {
             if (string.IsNullOrWhiteSpace(permissionCode))
-                return null;
+                return await Task.FromResult<Permission>(null);
                 
             try
             {
@@ -102,14 +102,14 @@ namespace DistributionSoftware.Business
         public async Task<bool> CreatePermissionAsync(Permission permission, int createdByUserId)
         {
             if (permission == null || createdByUserId <= 0)
-                return false;
+                return await Task.FromResult(false);
                 
             // Validate permission data
             if (string.IsNullOrWhiteSpace(permission.PermissionName) || 
                 string.IsNullOrWhiteSpace(permission.PermissionCode) ||
                 string.IsNullOrWhiteSpace(permission.Module))
             {
-                return false;
+                return await Task.FromResult(false);
             }
             
             try
@@ -118,7 +118,7 @@ namespace DistributionSoftware.Business
                 var existingPermission = await _permissionRepository.GetPermissionByCodeAsync(permission.PermissionCode);
                 if (existingPermission != null)
                 {
-                    return false; // Permission code already exists
+                    return await Task.FromResult(false); // Permission code already exists
                 }
                 
                 // Set creation date
@@ -156,14 +156,14 @@ namespace DistributionSoftware.Business
         public async Task<bool> UpdatePermissionAsync(Permission permission, int updatedByUserId)
         {
             if (permission == null || permission.PermissionId <= 0 || updatedByUserId <= 0)
-                return false;
+                return await Task.FromResult(false);
                 
             // Validate permission data
             if (string.IsNullOrWhiteSpace(permission.PermissionName) || 
                 string.IsNullOrWhiteSpace(permission.PermissionCode) ||
                 string.IsNullOrWhiteSpace(permission.Module))
             {
-                return false;
+                return await Task.FromResult(false);
             }
             
             try
@@ -172,7 +172,7 @@ namespace DistributionSoftware.Business
                 var existingPermission = await _permissionRepository.GetPermissionByCodeAsync(permission.PermissionCode);
                 if (existingPermission != null && existingPermission.PermissionId != permission.PermissionId)
                 {
-                    return false; // Permission code already exists for another permission
+                    return await Task.FromResult(false); // Permission code already exists for another permission
                 }
                 
                 // Update the permission
@@ -206,7 +206,7 @@ namespace DistributionSoftware.Business
         public async Task<bool> DeactivatePermissionAsync(int permissionId, int deactivatedByUserId)
         {
             if (permissionId <= 0 || deactivatedByUserId <= 0)
-                return false;
+                return await Task.FromResult(false);
                 
             try
             {
@@ -250,7 +250,7 @@ namespace DistributionSoftware.Business
         public async Task<IEnumerable<Permission>> GetPermissionsByRoleAsync(int roleId)
         {
             if (roleId <= 0)
-                return Enumerable.Empty<Permission>();
+                return await Task.FromResult(Enumerable.Empty<Permission>());
                 
             try
             {
@@ -273,7 +273,7 @@ namespace DistributionSoftware.Business
         public async Task<bool> AssignPermissionToRoleAsync(int roleId, int permissionId, bool isGranted, int assignedByUserId)
         {
             if (roleId <= 0 || permissionId <= 0 || assignedByUserId <= 0)
-                return false;
+                return await Task.FromResult(false);
                 
             try
             {
@@ -316,7 +316,7 @@ namespace DistributionSoftware.Business
         public async Task<bool> RemovePermissionFromRoleAsync(int roleId, int permissionId, int removedByUserId)
         {
             if (roleId <= 0 || permissionId <= 0 || removedByUserId <= 0)
-                return false;
+                return await Task.FromResult(false);
                 
             try
             {
@@ -357,7 +357,7 @@ namespace DistributionSoftware.Business
         public async Task<bool> RoleHasPermissionAsync(int roleId, string permissionCode)
         {
             if (roleId <= 0 || string.IsNullOrWhiteSpace(permissionCode))
-                return false;
+                return await Task.FromResult(false);
                 
             try
             {
@@ -383,14 +383,14 @@ namespace DistributionSoftware.Business
         public async Task<bool> UserHasPermissionAsync(int userId, string permissionCode)
         {
             if (userId <= 0 || string.IsNullOrWhiteSpace(permissionCode))
-                return false;
+                return await Task.FromResult(false);
                 
             try
             {
                 // This is a simplified implementation - in a real system, you would need to
                 // get the user's role first, then check if that role has the permission
                 // For now, we'll return false as this requires additional user-role relationship data
-                return false;
+                return await Task.FromResult(false);
             }
             catch (Exception ex)
             {

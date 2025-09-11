@@ -187,6 +187,10 @@
     <Compile Include="Models\SalesReturnItem.cs" />
     <Compile Include="Models\DeliveryChallan.cs" />
     <Compile Include="Models\DeliveryChallanItem.cs" />
+    <Compile Include="Models\DeliverySchedule.cs" />
+    <Compile Include="Models\DeliveryScheduleItem.cs" />
+    <Compile Include="Models\DeliveryScheduleAttachment.cs" />
+    <Compile Include="Models\DeliveryScheduleHistory.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
@@ -201,6 +205,8 @@
     <Compile Include="DataAccess\DeliveryChallanRepository.cs" />
     <Compile Include="DataAccess\IDeliveryChallanItemRepository.cs" />
     <Compile Include="DataAccess\DeliveryChallanItemRepository.cs" />
+    <Compile Include="DataAccess\IDeliveryScheduleRepository.cs" />
+    <Compile Include="DataAccess\DeliveryScheduleRepository.cs" />
     <Compile Include="DataAccess\IVehicleRepository.cs" />
     <Compile Include="DataAccess\VehicleRepository.cs" />
     <Compile Include="DataAccess\IRouteRepository.cs" />
@@ -211,6 +217,8 @@
     <Compile Include="Business\SalesReturnService.cs" />
     <Compile Include="Business\IDeliveryChallanService.cs" />
     <Compile Include="Business\DeliveryChallanService.cs" />
+    <Compile Include="Business\IDeliveryScheduleService.cs" />
+    <Compile Include="Business\DeliveryScheduleService.cs" />
     <Compile Include="Business\IVehicleService.cs" />
     <Compile Include="Business\VehicleService.cs" />
     <Compile Include="Business\IRouteService.cs" />
@@ -232,6 +240,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\DeliveryChallanForm.Designer.cs">
       <DependentUpon>DeliveryChallanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\DeliveryPlanningAndDispatchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\DeliveryPlanningAndDispatchForm.Designer.cs">
+      <DependentUpon>DeliveryPlanningAndDispatchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\VehicleMasterForm.cs">
       <SubType>Form</SubType>
