@@ -106,6 +106,8 @@ namespace DistributionSoftware.Presentation.Forms
             salesDropdown.Items.Add("Delivery Planning & Dispatch", null, (s, e) => OpenDeliveryPlanningAndDispatchForm());
             salesDropdown.Items.Add("Delivery Confirmation", null, (s, e) => OpenDeliveryConfirmationForm());
             salesDropdown.Items.Add("-");
+            salesDropdown.Items.Add("Salesman Target & Achievement", null, (s, e) => OpenSalesmanTargetForm());
+            salesDropdown.Items.Add("-");
             salesDropdown.Items.Add("Vehicle Master", null, (s, e) => OpenVehicleMasterForm());
             salesDropdown.Items.Add("Route Master", null, (s, e) => OpenRouteMasterForm());
 
@@ -1060,6 +1062,22 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Supplier Debit Note Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSalesmanTargetForm() 
+        { 
+            try
+            {
+                SalesmanTargetForm salesmanTargetForm = new SalesmanTargetForm();
+                salesmanTargetForm.StartPosition = FormStartPosition.CenterScreen;
+                salesmanTargetForm.Show();
+                salesmanTargetForm.BringToFront();
+                salesmanTargetForm.Activate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Salesman Target Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         
