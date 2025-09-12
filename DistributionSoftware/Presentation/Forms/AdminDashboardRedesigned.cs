@@ -132,6 +132,7 @@ namespace DistributionSoftware.Presentation.Forms
             suppliersDropdown.Items.Add("Supplier Master", null, (s, e) => OpenSupplierMasterForm());
             suppliersDropdown.Items.Add("Supplier Ledger", null, (s, e) => OpenSupplierLedgerForm());
             suppliersDropdown.Items.Add("Supplier Payment Form", null, (s, e) => OpenSupplierPaymentForm());
+            suppliersDropdown.Items.Add("Supplier Debit Note", null, (s, e) => OpenSupplierDebitNoteForm());
             suppliersDropdown.Items.Add("-");
             suppliersDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReport());
             suppliersDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReport());
@@ -1045,6 +1046,20 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Supplier Payment Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void OpenSupplierDebitNoteForm() 
+        { 
+            try
+            {
+                SupplierDebitNoteForm supplierDebitNoteForm = new SupplierDebitNoteForm();
+                supplierDebitNoteForm.StartPosition = FormStartPosition.CenterParent;
+                supplierDebitNoteForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Debit Note Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         

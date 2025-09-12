@@ -177,6 +177,8 @@
     <Compile Include="Models\LoginHistory.cs" />
     <Compile Include="Models\PurchaseReturn.cs" />
     <Compile Include="Models\PurchaseReturnItem.cs" />
+    <Compile Include="Models\SupplierDebitNote.cs" />
+    <Compile Include="Models\SupplierDebitNoteItem.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\StockMovement.cs" />
@@ -286,6 +288,8 @@
     <Compile Include="DataAccess\PurchaseReturnRepository.cs" />
     <Compile Include="DataAccess\IPurchaseReturnItemRepository.cs" />
     <Compile Include="DataAccess\PurchaseReturnItemRepository.cs" />
+    <Compile Include="DataAccess\ISupplierDebitNoteRepository.cs" />
+    <Compile Include="DataAccess\SupplierDebitNoteRepository.cs" />
     <Compile Include="DataAccess\IStockMovementRepository.cs" />
     <Compile Include="DataAccess\StockMovementRepository.cs" />
     <Compile Include="Business\IUserService.cs" />
@@ -294,6 +298,8 @@
     <Compile Include="Business\PermissionService.cs" />
     <Compile Include="Business\IPurchaseReturnService.cs" />
     <Compile Include="Business\PurchaseReturnService.cs" />
+    <Compile Include="Business\ISupplierDebitNoteService.cs" />
+    <Compile Include="Business\SupplierDebitNoteService.cs" />
     <Compile Include="Business\IStockMovementService.cs" />
     <Compile Include="Business\StockMovementService.cs" />
     <Compile Include="Common\ConfigurationManager.cs" />
@@ -431,6 +437,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\SupplierPaymentForm.Designer.cs">
       <DependentUpon>SupplierPaymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\SupplierDebitNoteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\SupplierDebitNoteForm.Designer.cs">
+      <DependentUpon>SupplierDebitNoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\PurchaseInvoiceForm.cs">
       <SubType>Form</SubType>
