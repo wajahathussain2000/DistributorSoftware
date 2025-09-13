@@ -26,6 +26,7 @@ namespace DistributionSoftware.Models
         
         // Additional fields for enhanced functionality
         public string BankName { get; set; }
+        public string AccountNumber { get; set; }
         public string ChequeNumber { get; set; }
         public DateTime? ChequeDate { get; set; }
         public string TransactionId { get; set; }

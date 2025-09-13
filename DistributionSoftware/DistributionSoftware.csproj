@@ -550,6 +550,9 @@
     <EmbeddedResource Include="Presentation\Forms\CustomerMasterForm.resx">
       <DependentUpon>CustomerMasterForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\CustomerReceiptsForm.resx">
+      <DependentUpon>CustomerReceiptsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\GRNForm.resx">
       <DependentUpon>GRNForm.cs</DependentUpon>
     </EmbeddedResource>

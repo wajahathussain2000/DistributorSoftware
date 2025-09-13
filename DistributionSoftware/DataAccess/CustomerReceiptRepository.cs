@@ -30,12 +30,12 @@ namespace DistributionSoftware.DataAccess
                             INSERT INTO CustomerReceipts (
                                 ReceiptNumber, ReceiptDate, CustomerId, CustomerName, CustomerPhone, CustomerAddress,
                                 Amount, PaymentMethod, InvoiceReference, Description, ReceivedBy, Status, Remarks,
-                                BankName, ChequeNumber, ChequeDate, TransactionId, CardNumber, CardType,
+                                BankName, AccountNumber, ChequeNumber, ChequeDate, TransactionId, CardNumber, CardType,
                                 MobileNumber, PaymentReference, CreatedBy, CreatedDate
                             ) VALUES (
                                 @ReceiptNumber, @ReceiptDate, @CustomerId, @CustomerName, @CustomerPhone, @CustomerAddress,
                                 @Amount, @PaymentMethod, @InvoiceReference, @Description, @ReceivedBy, @Status, @Remarks,
-                                @BankName, @ChequeNumber, @ChequeDate, @TransactionId, @CardNumber, @CardType,
+                                @BankName, @AccountNumber, @ChequeNumber, @ChequeDate, @TransactionId, @CardNumber, @CardType,
                                 @MobileNumber, @PaymentReference, @CreatedBy, @CreatedDate
                             );
                             SELECT SCOPE_IDENTITY();";
@@ -57,6 +57,7 @@ namespace DistributionSoftware.DataAccess
                             command.Parameters.AddWithValue("@Status", receipt.Status);
                             command.Parameters.AddWithValue("@Remarks", receipt.Remarks ?? (object)DBNull.Value);
                             command.Parameters.AddWithValue("@BankName", receipt.BankName ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@AccountNumber", receipt.AccountNumber ?? (object)DBNull.Value);
                             command.Parameters.AddWithValue("@ChequeNumber", receipt.ChequeNumber ?? (object)DBNull.Value);
                             command.Parameters.AddWithValue("@ChequeDate", receipt.ChequeDate.HasValue ? receipt.ChequeDate.Value : (object)DBNull.Value);
                             command.Parameters.AddWithValue("@TransactionId", receipt.TransactionId ?? (object)DBNull.Value);
@@ -101,6 +102,7 @@ namespace DistributionSoftware.DataAccess
                         Status = @Status,
                         Remarks = @Remarks,
                         BankName = @BankName,
+                        AccountNumber = @AccountNumber,
                         ChequeNumber = @ChequeNumber,
                         ChequeDate = @ChequeDate,
                         TransactionId = @TransactionId,
@@ -128,6 +130,7 @@ namespace DistributionSoftware.DataAccess
                     command.Parameters.AddWithValue("@Status", receipt.Status);
                     command.Parameters.AddWithValue("@Remarks", receipt.Remarks ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@BankName", receipt.BankName ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@AccountNumber", receipt.AccountNumber ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@ChequeNumber", receipt.ChequeNumber ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@ChequeDate", receipt.ChequeDate.HasValue ? receipt.ChequeDate.Value : (object)DBNull.Value);
                     command.Parameters.AddWithValue("@TransactionId", receipt.TransactionId ?? (object)DBNull.Value);
@@ -452,6 +455,7 @@ namespace DistributionSoftware.DataAccess
                 Status = reader["Status"].ToString(),
                 Remarks = reader["Remarks"]?.ToString(),
                 BankName = reader["BankName"]?.ToString(),
+                AccountNumber = reader["AccountNumber"]?.ToString(),
                 ChequeNumber = reader["ChequeNumber"]?.ToString(),
                 ChequeDate = reader["ChequeDate"] != DBNull.Value ? Convert.ToDateTime(reader["ChequeDate"]) : (DateTime?)null,
                 TransactionId = reader["TransactionId"]?.ToString(),
