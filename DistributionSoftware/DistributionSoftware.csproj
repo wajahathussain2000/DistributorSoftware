@@ -182,6 +182,7 @@
     <Compile Include="Models\SalesmanTarget.cs" />
     <Compile Include="Models\SalesmanTargetAchievement.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerReceipt.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\StockMovement.cs" />
     <Compile Include="Models\SalesInvoice.cs" />
@@ -204,6 +205,8 @@
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
     <Compile Include="DataAccess\CustomerRepository.cs" />
+    <Compile Include="DataAccess\ICustomerReceiptRepository.cs" />
+    <Compile Include="DataAccess\CustomerReceiptRepository.cs" />
     <Compile Include="DataAccess\ISalesInvoiceRepository.cs" />
     <Compile Include="DataAccess\SalesInvoiceRepository.cs" />
     <Compile Include="DataAccess\ISalesReturnRepository.cs" />
@@ -298,6 +301,8 @@
     <Compile Include="DataAccess\StockMovementRepository.cs" />
     <Compile Include="Business\IUserService.cs" />
     <Compile Include="Business\UserService.cs" />
+    <Compile Include="Business\ICustomerReceiptService.cs" />
+    <Compile Include="Business\CustomerReceiptService.cs" />
     <Compile Include="Business\IPermissionService.cs" />
     <Compile Include="Business\PermissionService.cs" />
     <Compile Include="Business\IPurchaseReturnService.cs" />
@@ -513,8 +518,14 @@
     <Compile Include="Presentation\Forms\CustomerMasterForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Presentation\Forms\CustomerReceiptsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Presentation\Forms\CustomerMasterForm.Designer.cs">
       <DependentUpon>CustomerMasterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\CustomerReceiptsForm.Designer.cs">
+      <DependentUpon>CustomerReceiptsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\UserMasterForm.cs">
       <SubType>Form</SubType>

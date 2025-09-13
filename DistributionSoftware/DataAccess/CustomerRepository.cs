@@ -210,12 +210,12 @@ namespace DistributionSoftware.DataAccess
                 var query = @"
                     INSERT INTO Customers (
                         CustomerCode, CustomerName, ContactName, Phone, Mobile, Email,
-                        Address, City, State, PostalCode, Country, CustomerCategoryId,
+                        Address, City, State, PostalCode, Country, CategoryId,
                         CreditLimit, OutstandingBalance, PaymentTerms, TaxNumber, GSTNumber,
                         IsActive, Remarks, CreatedBy, CreatedDate
                     ) VALUES (
                         @CustomerCode, @CustomerName, @ContactName, @Phone, @Mobile, @Email,
-                        @Address, @City, @State, @PostalCode, @Country, @CustomerCategoryId,
+                        @Address, @City, @State, @PostalCode, @Country, @CategoryId,
                         @CreditLimit, @OutstandingBalance, @PaymentTerms, @TaxNumber, @GSTNumber,
                         @IsActive, @Remarks, @CreatedBy, @CreatedDate
                     )";
@@ -233,7 +233,7 @@ namespace DistributionSoftware.DataAccess
                     command.Parameters.AddWithValue("@State", customer.State ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@PostalCode", customer.PostalCode ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Country", customer.Country ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@CustomerCategoryId", customer.CustomerCategoryId);
+                    command.Parameters.AddWithValue("@CategoryId", customer.CustomerCategoryId);
                     command.Parameters.AddWithValue("@CreditLimit", customer.CreditLimit);
                     command.Parameters.AddWithValue("@OutstandingBalance", customer.OutstandingBalance);
                     command.Parameters.AddWithValue("@PaymentTerms", customer.PaymentTerms ?? (object)DBNull.Value);
@@ -267,7 +267,7 @@ namespace DistributionSoftware.DataAccess
                         State = @State,
                         PostalCode = @PostalCode,
                         Country = @Country,
-                        CustomerCategoryId = @CustomerCategoryId,
+                        CategoryId = @CategoryId,
                         CreditLimit = @CreditLimit,
                         OutstandingBalance = @OutstandingBalance,
                         PaymentTerms = @PaymentTerms,
@@ -293,7 +293,7 @@ namespace DistributionSoftware.DataAccess
                     command.Parameters.AddWithValue("@State", customer.State ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@PostalCode", customer.PostalCode ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Country", customer.Country ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@CustomerCategoryId", customer.CustomerCategoryId);
+                    command.Parameters.AddWithValue("@CategoryId", customer.CustomerCategoryId);
                     command.Parameters.AddWithValue("@CreditLimit", customer.CreditLimit);
                     command.Parameters.AddWithValue("@OutstandingBalance", customer.OutstandingBalance);
                     command.Parameters.AddWithValue("@PaymentTerms", customer.PaymentTerms ?? (object)DBNull.Value);

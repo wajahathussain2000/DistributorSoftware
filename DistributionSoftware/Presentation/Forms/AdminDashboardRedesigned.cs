@@ -125,6 +125,7 @@ namespace DistributionSoftware.Presentation.Forms
             customersDropdown.Items.Add("Customer Master", null, (s, e) => OpenCustomerMasterForm());
             customersDropdown.Items.Add("Customer Category", null, (s, e) => OpenCustomerCategoryForm());
             customersDropdown.Items.Add("Customer Ledger", null, (s, e) => OpenCustomerLedgerForm());
+            customersDropdown.Items.Add("Customer Receipts", null, (s, e) => OpenCustomerReceiptsForm());
             customersDropdown.Items.Add("-");
             customersDropdown.Items.Add("Customer Report", null, (s, e) => OpenCustomerReportForm());
 
@@ -1287,6 +1288,20 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Customer Ledger Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerReceiptsForm() 
+        { 
+            try
+            {
+                CustomerReceiptsForm customerReceiptsForm = new CustomerReceiptsForm();
+                customerReceiptsForm.StartPosition = FormStartPosition.CenterParent;
+                customerReceiptsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Receipts Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
