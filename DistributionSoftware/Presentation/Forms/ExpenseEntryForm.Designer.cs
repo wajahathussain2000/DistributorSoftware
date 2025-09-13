@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class ExpenseEntryForm
     {
@@ -99,7 +99,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(200, 30);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "💰 Expense Entry";
+            this.headerLabel.Text = "ðŸ’° Expense Entry";
             // 
             // closeBtn
             // 
@@ -112,7 +112,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 30);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -139,7 +139,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.expenseListGroup.Size = new System.Drawing.Size(570, 400);
             this.expenseListGroup.TabIndex = 2;
             this.expenseListGroup.TabStop = false;
-            this.expenseListGroup.Text = "📋 Expense List";
+            this.expenseListGroup.Text = "ðŸ“‹ Expense List";
             // 
             // dgvExpenses
             // 
@@ -187,7 +187,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbStatusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatusFilter.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbStatusFilter.FormattingEnabled = true;
-            this.cmbStatusFilter.Location = new System.Drawing.Point(450, 9);
+            this.cmbStatusFilter.Location = new System.Drawing.Point(450, 12);
             this.cmbStatusFilter.Name = "cmbStatusFilter";
             this.cmbStatusFilter.Size = new System.Drawing.Size(100, 23);
             this.cmbStatusFilter.TabIndex = 2;
@@ -206,7 +206,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtSearch
             // 
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSearch.Location = new System.Drawing.Point(60, 9);
+            this.txtSearch.Location = new System.Drawing.Point(60, 12);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(200, 23);
             this.txtSearch.TabIndex = 0;
@@ -226,7 +226,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Size = new System.Drawing.Size(1180, 80);
             this.actionsGroup.TabIndex = 1;
             this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             // 
             // btnClear
             // 
@@ -239,7 +239,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 40);
             this.btnClear.TabIndex = 2;
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -254,7 +254,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(140, 40);
             this.btnSubmit.TabIndex = 1;
-            this.btnSubmit.Text = "📤 Submit";
+            this.btnSubmit.Text = "ðŸ“¤ Submit";
             this.btnSubmit.UseVisualStyleBackColor = false;
             this.btnSubmit.Click += new System.EventHandler(this.BtnSubmit_Click);
             // 
@@ -269,7 +269,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSaveDraft.Name = "btnSaveDraft";
             this.btnSaveDraft.Size = new System.Drawing.Size(120, 40);
             this.btnSaveDraft.TabIndex = 0;
-            this.btnSaveDraft.Text = "💾 Save Draft";
+            this.btnSaveDraft.Text = "ðŸ’¾ Save Draft";
             this.btnSaveDraft.UseVisualStyleBackColor = false;
             this.btnSaveDraft.Click += new System.EventHandler(this.BtnSaveDraft_Click);
             // 
@@ -301,7 +301,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.expenseGroup.Size = new System.Drawing.Size(600, 400);
             this.expenseGroup.TabIndex = 0;
             this.expenseGroup.TabStop = false;
-            this.expenseGroup.Text = "💰 Expense Details";
+            this.expenseGroup.Text = "ðŸ’° Expense Details";
             // 
             // imagePanel
             // 
@@ -367,7 +367,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtRemarks
             // 
             this.txtRemarks.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtRemarks.Location = new System.Drawing.Point(20, 360);
+            this.txtRemarks.Location = new System.Drawing.Point(20, 362);
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -387,7 +387,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtReferenceNumber
             // 
             this.txtReferenceNumber.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtReferenceNumber.Location = new System.Drawing.Point(20, 310);
+            this.txtReferenceNumber.Location = new System.Drawing.Point(20, 312);
             this.txtReferenceNumber.Name = "txtReferenceNumber";
             this.txtReferenceNumber.Size = new System.Drawing.Size(260, 23);
             this.txtReferenceNumber.TabIndex = 15;
@@ -407,7 +407,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPaymentMethod.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbPaymentMethod.FormattingEnabled = true;
-            this.cmbPaymentMethod.Location = new System.Drawing.Point(20, 260);
+            this.cmbPaymentMethod.Location = new System.Drawing.Point(20, 262);
             this.cmbPaymentMethod.Name = "cmbPaymentMethod";
             this.cmbPaymentMethod.Size = new System.Drawing.Size(260, 23);
             this.cmbPaymentMethod.TabIndex = 13;
@@ -425,7 +425,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtAmount
             // 
             this.txtAmount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtAmount.Location = new System.Drawing.Point(20, 210);
+            this.txtAmount.Location = new System.Drawing.Point(20, 212);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Size = new System.Drawing.Size(260, 23);
             this.txtAmount.TabIndex = 11;
@@ -445,7 +445,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpExpenseDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.dtpExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpenseDate.Location = new System.Drawing.Point(20, 160);
+            this.dtpExpenseDate.Location = new System.Drawing.Point(20, 162);
             this.dtpExpenseDate.Name = "dtpExpenseDate";
             this.dtpExpenseDate.Size = new System.Drawing.Size(260, 23);
             this.dtpExpenseDate.TabIndex = 9;
@@ -463,7 +463,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtDescription
             // 
             this.txtDescription.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtDescription.Location = new System.Drawing.Point(20, 110);
+            this.txtDescription.Location = new System.Drawing.Point(20, 112);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -485,7 +485,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(20, 60);
+            this.cmbCategory.Location = new System.Drawing.Point(20, 62);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(260, 23);
             this.cmbCategory.TabIndex = 5;
@@ -504,7 +504,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.txtBarcode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.txtBarcode.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtBarcode.Location = new System.Drawing.Point(300, 60);
+            this.txtBarcode.Location = new System.Drawing.Point(300, 62);
             this.txtBarcode.Name = "txtBarcode";
             this.txtBarcode.ReadOnly = true;
             this.txtBarcode.Size = new System.Drawing.Size(280, 23);
@@ -550,6 +550,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -557,7 +558,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "ExpenseEntryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Expense Entry Form";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.headerPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.expenseListGroup.ResumeLayout(false);
@@ -618,3 +619,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
+

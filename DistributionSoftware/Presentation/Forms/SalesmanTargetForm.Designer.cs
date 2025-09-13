@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class SalesmanTargetForm
     {
@@ -197,7 +197,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtMarketConditions
             // 
-            this.txtMarketConditions.Location = new System.Drawing.Point(120, 185);
+            this.txtMarketConditions.Location = new System.Drawing.Point(120, 188);
             this.txtMarketConditions.Multiline = true;
             this.txtMarketConditions.Name = "txtMarketConditions";
             this.txtMarketConditions.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -215,7 +215,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtSalesmanComments
             // 
-            this.txtSalesmanComments.Location = new System.Drawing.Point(120, 145);
+            this.txtSalesmanComments.Location = new System.Drawing.Point(120, 148);
             this.txtSalesmanComments.Multiline = true;
             this.txtSalesmanComments.Name = "txtSalesmanComments";
             this.txtSalesmanComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -233,7 +233,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtManagerComments
             // 
-            this.txtManagerComments.Location = new System.Drawing.Point(120, 105);
+            this.txtManagerComments.Location = new System.Drawing.Point(120, 108);
             this.txtManagerComments.Multiline = true;
             this.txtManagerComments.Name = "txtManagerComments";
             this.txtManagerComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -253,7 +253,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbRating.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRating.FormattingEnabled = true;
-            this.cmbRating.Location = new System.Drawing.Point(320, 70);
+            this.cmbRating.Location = new System.Drawing.Point(320, 73);
             this.cmbRating.Name = "cmbRating";
             this.cmbRating.Size = new System.Drawing.Size(120, 23);
             this.cmbRating.TabIndex = 5;
@@ -271,7 +271,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(60, 70);
+            this.cmbStatus.Location = new System.Drawing.Point(60, 73);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(120, 23);
             this.cmbStatus.TabIndex = 3;
@@ -307,7 +307,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtBonusAmount
             // 
-            this.txtBonusAmount.Location = new System.Drawing.Point(100, 45);
+            this.txtBonusAmount.Location = new System.Drawing.Point(100, 48);
             this.txtBonusAmount.Name = "txtBonusAmount";
             this.txtBonusAmount.Size = new System.Drawing.Size(100, 23);
             this.txtBonusAmount.TabIndex = 2;
@@ -323,7 +323,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCommissionAmount
             // 
-            this.txtCommissionAmount.Location = new System.Drawing.Point(320, 45);
+            this.txtCommissionAmount.Location = new System.Drawing.Point(320, 48);
             this.txtCommissionAmount.Name = "txtCommissionAmount";
             this.txtCommissionAmount.Size = new System.Drawing.Size(100, 23);
             this.txtCommissionAmount.TabIndex = 4;
@@ -711,7 +711,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "SalesmanTargetForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Salesman Target & Achievement Management";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.Load += new System.EventHandler(this.SalesmanTargetForm_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.Load += new System.EventHandler(this.SalesmanTargetForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
@@ -793,3 +793,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnNew;
     }
 }
+

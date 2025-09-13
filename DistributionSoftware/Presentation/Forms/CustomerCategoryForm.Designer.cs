@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -77,7 +77,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(350, 32);
             this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "🏷️ Customer Category Master";
+            this.titleLabel.Text = "ðŸ·ï¸ Customer Category Master";
             // 
             // closeBtn
             // 
@@ -91,7 +91,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -122,7 +122,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.categoryGroup.Size = new System.Drawing.Size(750, 200);
             this.categoryGroup.TabIndex = 0;
             this.categoryGroup.TabStop = false;
-            this.categoryGroup.Text = "📋 Category Information";
+            this.categoryGroup.Text = "ðŸ“‹ Category Information";
             // 
             // nameLabel
             // 
@@ -132,7 +132,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(120, 19);
             this.nameLabel.TabIndex = 0;
-            this.nameLabel.Text = "🏷️ Category Name:";
+            this.nameLabel.Text = "ðŸ·ï¸ Category Name:";
             // 
             // txtCategoryName
             // 
@@ -150,7 +150,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.descLabel.Name = "descLabel";
             this.descLabel.Size = new System.Drawing.Size(85, 19);
             this.descLabel.TabIndex = 2;
-            this.descLabel.Text = "📝 Description:";
+            this.descLabel.Text = "ðŸ“ Description:";
             // 
             // txtDescription
             // 
@@ -173,7 +173,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.categoryListGroup.Size = new System.Drawing.Size(400, 400);
             this.categoryListGroup.TabIndex = 1;
             this.categoryListGroup.TabStop = false;
-            this.categoryListGroup.Text = "📋 Categories List";
+            this.categoryListGroup.Text = "ðŸ“‹ Categories List";
             // 
             // dgvCategories
             // 
@@ -211,7 +211,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Size = new System.Drawing.Size(750, 80);
             this.actionsGroup.TabIndex = 2;
             this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             // 
             // btnSave
             // 
@@ -223,7 +223,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 35);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "ðŸ’¾ Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -237,7 +237,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 35);
             this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -251,7 +251,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 35);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "🗑️ Delete";
+            this.btnDelete.Text = "ðŸ—‘ï¸ Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
@@ -260,6 +260,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -270,7 +271,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "CustomerCategoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Customer Category Master - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.headerPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.categoryGroup.ResumeLayout(false);
@@ -300,3 +301,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnDelete;
     }
 }
+

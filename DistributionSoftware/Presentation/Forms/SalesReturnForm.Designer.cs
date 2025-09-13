@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class SalesReturnForm
     {
@@ -172,7 +172,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtTransactionTime
             // 
-            this.txtTransactionTime.Location = new System.Drawing.Point(740, 12);
+            this.txtTransactionTime.Location = new System.Drawing.Point(740, 15);
             this.txtTransactionTime.Name = "txtTransactionTime";
             this.txtTransactionTime.ReadOnly = true;
             this.txtTransactionTime.Size = new System.Drawing.Size(100, 26);
@@ -189,7 +189,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCashier
             // 
-            this.txtCashier.Location = new System.Drawing.Point(80, 47);
+            this.txtCashier.Location = new System.Drawing.Point(80, 50);
             this.txtCashier.Name = "txtCashier";
             this.txtCashier.ReadOnly = true;
             this.txtCashier.Size = new System.Drawing.Size(120, 26);
@@ -208,7 +208,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpReturnDate.CustomFormat = "dddd, MMMM dd, yyyy";
             this.dtpReturnDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpReturnDate.Location = new System.Drawing.Point(710, 47);
+            this.dtpReturnDate.Location = new System.Drawing.Point(710, 50);
             this.dtpReturnDate.Name = "dtpReturnDate";
             this.dtpReturnDate.Size = new System.Drawing.Size(200, 26);
             this.dtpReturnDate.TabIndex = 3;
@@ -224,7 +224,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtReturnNumber
             // 
-            this.txtReturnNumber.Location = new System.Drawing.Point(100, 12);
+            this.txtReturnNumber.Location = new System.Drawing.Point(100, 15);
             this.txtReturnNumber.Name = "txtReturnNumber";
             this.txtReturnNumber.ReadOnly = true;
             this.txtReturnNumber.Size = new System.Drawing.Size(120, 26);
@@ -242,7 +242,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtReturnBarcode
             // 
-            this.txtReturnBarcode.Location = new System.Drawing.Point(320, 12);
+            this.txtReturnBarcode.Location = new System.Drawing.Point(320, 15);
             this.txtReturnBarcode.Name = "txtReturnBarcode";
             this.txtReturnBarcode.ReadOnly = true;
             this.txtReturnBarcode.Size = new System.Drawing.Size(150, 26);
@@ -340,7 +340,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbInvoiceNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbInvoiceNumber.FormattingEnabled = true;
-            this.cmbInvoiceNumber.Location = new System.Drawing.Point(140, 17);
+            this.cmbInvoiceNumber.Location = new System.Drawing.Point(140, 20);
             this.cmbInvoiceNumber.Name = "cmbInvoiceNumber";
             this.cmbInvoiceNumber.Size = new System.Drawing.Size(350, 28);
             this.cmbInvoiceNumber.TabIndex = 0;
@@ -386,7 +386,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtOriginalInvoiceNumber
             // 
-            this.txtOriginalInvoiceNumber.Location = new System.Drawing.Point(100, 37);
+            this.txtOriginalInvoiceNumber.Location = new System.Drawing.Point(100, 40);
             this.txtOriginalInvoiceNumber.Name = "txtOriginalInvoiceNumber";
             this.txtOriginalInvoiceNumber.ReadOnly = true;
             this.txtOriginalInvoiceNumber.Size = new System.Drawing.Size(120, 26);
@@ -404,7 +404,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtOriginalInvoiceDate
             // 
-            this.txtOriginalInvoiceDate.Location = new System.Drawing.Point(300, 37);
+            this.txtOriginalInvoiceDate.Location = new System.Drawing.Point(300, 40);
             this.txtOriginalInvoiceDate.Name = "txtOriginalInvoiceDate";
             this.txtOriginalInvoiceDate.ReadOnly = true;
             this.txtOriginalInvoiceDate.Size = new System.Drawing.Size(100, 26);
@@ -422,7 +422,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtOriginalInvoiceTotal
             // 
-            this.txtOriginalInvoiceTotal.Location = new System.Drawing.Point(480, 37);
+            this.txtOriginalInvoiceTotal.Location = new System.Drawing.Point(480, 40);
             this.txtOriginalInvoiceTotal.Name = "txtOriginalInvoiceTotal";
             this.txtOriginalInvoiceTotal.ReadOnly = true;
             this.txtOriginalInvoiceTotal.Size = new System.Drawing.Size(100, 26);
@@ -440,7 +440,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtOriginalInvoiceStatus
             // 
-            this.txtOriginalInvoiceStatus.Location = new System.Drawing.Point(80, 67);
+            this.txtOriginalInvoiceStatus.Location = new System.Drawing.Point(80, 70);
             this.txtOriginalInvoiceStatus.Name = "txtOriginalInvoiceStatus";
             this.txtOriginalInvoiceStatus.ReadOnly = true;
             this.txtOriginalInvoiceStatus.Size = new System.Drawing.Size(100, 26);
@@ -473,7 +473,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerAddress
             // 
-            this.txtCustomerAddress.Location = new System.Drawing.Point(333, 47);
+            this.txtCustomerAddress.Location = new System.Drawing.Point(333, 50);
             this.txtCustomerAddress.Name = "txtCustomerAddress";
             this.txtCustomerAddress.ReadOnly = true;
             this.txtCustomerAddress.Size = new System.Drawing.Size(228, 26);
@@ -490,7 +490,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerPhone
             // 
-            this.txtCustomerPhone.Location = new System.Drawing.Point(70, 50);
+            this.txtCustomerPhone.Location = new System.Drawing.Point(70, 52);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.ReadOnly = true;
             this.txtCustomerPhone.Size = new System.Drawing.Size(120, 26);
@@ -507,7 +507,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Location = new System.Drawing.Point(385, 12);
+            this.txtCustomerName.Location = new System.Drawing.Point(385, 15);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
             this.txtCustomerName.Size = new System.Drawing.Size(176, 26);
@@ -526,7 +526,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCustomer.FormattingEnabled = true;
-            this.cmbCustomer.Location = new System.Drawing.Point(88, 12);
+            this.cmbCustomer.Location = new System.Drawing.Point(88, 15);
             this.cmbCustomer.Name = "cmbCustomer";
             this.cmbCustomer.Size = new System.Drawing.Size(200, 28);
             this.cmbCustomer.TabIndex = 1;
@@ -581,7 +581,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtUnitPrice
             // 
-            this.txtUnitPrice.Location = new System.Drawing.Point(92, 42);
+            this.txtUnitPrice.Location = new System.Drawing.Point(92, 45);
             this.txtUnitPrice.Name = "txtUnitPrice";
             this.txtUnitPrice.Size = new System.Drawing.Size(100, 26);
             this.txtUnitPrice.TabIndex = 5;
@@ -597,7 +597,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(369, 12);
+            this.txtQuantity.Location = new System.Drawing.Point(369, 15);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(80, 26);
             this.txtQuantity.TabIndex = 3;
@@ -934,7 +934,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.MinimumSize = new System.Drawing.Size(1300, 600);
             this.Name = "SalesReturnForm";
             this.Text = "Sales Return - POS System";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SalesReturnForm_FormClosing);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SalesReturnForm_FormClosing);
             this.Load += new System.EventHandler(this.SalesReturnForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
@@ -1044,5 +1044,6 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.TextBox txtOriginalInvoiceStatus;
     }
 }
+
 
 

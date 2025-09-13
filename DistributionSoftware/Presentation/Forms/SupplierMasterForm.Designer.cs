@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -92,13 +92,13 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerPanel.Controls.Add(this.headerLabel);
             this.headerPanel.Controls.Add(this.closeBtn);
             
-            this.headerLabel.Text = "🏢 Supplier Master";
+            this.headerLabel.Text = "ðŸ¢ Supplier Master";
             this.headerLabel.Font = new Font("Segoe UI", 20, FontStyle.Bold);
             this.headerLabel.ForeColor = Color.White;
             this.headerLabel.Location = new Point(20, 20);
             this.headerLabel.AutoSize = true;
             
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.Size = new Size(40, 40);
             this.closeBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             this.closeBtn.Location = new Point(this.Width - 80, 20);
@@ -117,7 +117,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.contentPanel.Controls.Add(this.actionsGroup);
             
             // Supplier Group
-            this.supplierGroup.Text = "📝 Supplier Information";
+            this.supplierGroup.Text = "ðŸ“ Supplier Information";
             this.supplierGroup.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             this.supplierGroup.Location = new Point(20, 20);
             this.supplierGroup.Size = new Size(1160, 300);
@@ -322,7 +322,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.picQRCode.Size = new Size(100, 50);
             
             // Suppliers Group
-            this.suppliersGroup.Text = "📋 Suppliers List";
+            this.suppliersGroup.Text = "ðŸ“‹ Suppliers List";
             this.suppliersGroup.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             this.suppliersGroup.Location = new Point(20, 340);
             this.suppliersGroup.Size = new Size(1160, 300);
@@ -343,7 +343,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.dgvSuppliers.CellClick += new DataGridViewCellEventHandler(this.SuppliersGrid_CellClick);
             
             // Actions Group
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             this.actionsGroup.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             this.actionsGroup.Location = new Point(20, 660);
             this.actionsGroup.Size = new Size(1160, 80);
@@ -351,7 +351,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Controls.Add(this.btnClear);
             this.actionsGroup.Controls.Add(this.btnDelete);
             
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "ðŸ’¾ Save";
             this.btnSave.BackColor = Color.FromArgb(46, 204, 113);
             this.btnSave.FlatStyle = FlatStyle.Flat;
             this.btnSave.Font = new Font("Segoe UI", 10, FontStyle.Bold);
@@ -360,7 +360,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Size = new Size(100, 35);
             this.btnSave.Click += new EventHandler(this.BtnSave_Click);
             
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.BackColor = Color.FromArgb(241, 196, 15);
             this.btnClear.FlatStyle = FlatStyle.Flat;
             this.btnClear.Font = new Font("Segoe UI", 10, FontStyle.Bold);
@@ -369,7 +369,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Size = new Size(100, 35);
             this.btnClear.Click += new EventHandler(this.BtnClear_Click);
             
-            this.btnDelete.Text = "🗑️ Delete";
+            this.btnDelete.Text = "ðŸ—‘ï¸ Delete";
             this.btnDelete.BackColor = Color.FromArgb(231, 76, 60);
             this.btnDelete.FlatStyle = FlatStyle.Flat;
             this.btnDelete.Font = new Font("Segoe UI", 10, FontStyle.Bold);
@@ -433,3 +433,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnDelete;
     }
 }
+

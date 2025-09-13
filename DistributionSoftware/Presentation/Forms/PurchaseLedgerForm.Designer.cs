@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -85,7 +85,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSupplier.Location = new System.Drawing.Point(110, 28);
+            this.cmbSupplier.Location = new System.Drawing.Point(110, 31);
             this.cmbSupplier.Name = "cmbSupplier";
             this.cmbSupplier.Size = new System.Drawing.Size(300, 25);
             this.cmbSupplier.TabIndex = 1;
@@ -104,7 +104,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpFromDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(540, 28);
+            this.dtpFromDate.Location = new System.Drawing.Point(540, 31);
             this.dtpFromDate.Name = "dtpFromDate";
             this.dtpFromDate.Size = new System.Drawing.Size(150, 25);
             this.dtpFromDate.TabIndex = 3;
@@ -123,7 +123,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpToDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(810, 28);
+            this.dtpToDate.Location = new System.Drawing.Point(810, 31);
             this.dtpToDate.Name = "dtpToDate";
             this.dtpToDate.Size = new System.Drawing.Size(150, 25);
             this.dtpToDate.TabIndex = 5;
@@ -205,6 +205,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.ledgerGroup);
             this.Controls.Add(this.filterGroup);
@@ -217,7 +218,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.ShowInTaskbar = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Purchase Ledger - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.filterGroup.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.filterGroup.ResumeLayout(false);
             this.ledgerGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLedger)).EndInit();
             this.ResumeLayout(false);
@@ -239,3 +240,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvLedger;
     }
 }
+

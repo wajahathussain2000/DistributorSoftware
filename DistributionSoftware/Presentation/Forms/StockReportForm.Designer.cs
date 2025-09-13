@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class StockReportForm
     {
@@ -59,7 +59,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProduct.FormattingEnabled = true;
-            this.cmbProduct.Location = new System.Drawing.Point(150, 42);
+            this.cmbProduct.Location = new System.Drawing.Point(150, 45);
             this.cmbProduct.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(298, 28);
@@ -79,7 +79,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(600, 42);
+            this.cmbCategory.Location = new System.Drawing.Point(600, 45);
             this.cmbCategory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(298, 28);
@@ -98,7 +98,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbBrand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBrand.FormattingEnabled = true;
-            this.cmbBrand.Location = new System.Drawing.Point(100, 57);
+            this.cmbBrand.Location = new System.Drawing.Point(100, 60);
             this.cmbBrand.Name = "cmbBrand";
             this.cmbBrand.Size = new System.Drawing.Size(200, 21);
             this.cmbBrand.TabIndex = 5;
@@ -116,7 +116,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbWarehouse.FormattingEnabled = true;
-            this.cmbWarehouse.Location = new System.Drawing.Point(400, 57);
+            this.cmbWarehouse.Location = new System.Drawing.Point(400, 60);
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(200, 21);
             this.cmbWarehouse.TabIndex = 7;
@@ -132,7 +132,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // dtpReportDate
             // 
-            this.dtpReportDate.Location = new System.Drawing.Point(700, 27);
+            this.dtpReportDate.Location = new System.Drawing.Point(700, 30);
             this.dtpReportDate.Name = "dtpReportDate";
             this.dtpReportDate.Size = new System.Drawing.Size(200, 20);
             this.dtpReportDate.TabIndex = 9;
@@ -211,6 +211,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1425, 900);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Controls.Add(this.groupBoxFilters);
@@ -219,7 +220,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stock Report";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.groupBoxFilters.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.groupBoxFilters.ResumeLayout(false);
             this.groupBoxFilters.PerformLayout();
             this.ResumeLayout(false);
 
@@ -243,3 +244,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.GroupBox groupBoxFilters;
     }
 }
+

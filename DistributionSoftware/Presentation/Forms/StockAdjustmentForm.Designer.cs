@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -86,7 +86,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(300, 37);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "📦 Stock Adjustment";
+            this.headerLabel.Text = "ðŸ“¦ Stock Adjustment";
             // 
             // closeBtn
             // 
@@ -99,7 +99,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -138,7 +138,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.adjustmentGroup.Size = new System.Drawing.Size(1160, 200);
             this.adjustmentGroup.TabIndex = 0;
             this.adjustmentGroup.TabStop = false;
-            this.adjustmentGroup.Text = "📝 Adjustment Information";
+            this.adjustmentGroup.Text = "ðŸ“ Adjustment Information";
             // 
             // lblProduct
             // 
@@ -155,7 +155,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProduct.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbProduct.FormattingEnabled = true;
-            this.cmbProduct.Location = new System.Drawing.Point(20, 55);
+            this.cmbProduct.Location = new System.Drawing.Point(20, 58);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(300, 25);
             this.cmbProduct.TabIndex = 1;
@@ -175,7 +175,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbAdjustmentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAdjustmentType.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAdjustmentType.FormattingEnabled = true;
-            this.cmbAdjustmentType.Location = new System.Drawing.Point(350, 55);
+            this.cmbAdjustmentType.Location = new System.Drawing.Point(350, 58);
             this.cmbAdjustmentType.Name = "cmbAdjustmentType";
             this.cmbAdjustmentType.Size = new System.Drawing.Size(200, 25);
             this.cmbAdjustmentType.TabIndex = 3;
@@ -193,7 +193,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtQuantity
             // 
             this.txtQuantity.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtQuantity.Location = new System.Drawing.Point(580, 55);
+            this.txtQuantity.Location = new System.Drawing.Point(580, 58);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(150, 26);
             this.txtQuantity.TabIndex = 5;
@@ -211,7 +211,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtPhysicalStock
             // 
             this.txtPhysicalStock.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhysicalStock.Location = new System.Drawing.Point(20, 125);
+            this.txtPhysicalStock.Location = new System.Drawing.Point(20, 128);
             this.txtPhysicalStock.Name = "txtPhysicalStock";
             this.txtPhysicalStock.Size = new System.Drawing.Size(150, 26);
             this.txtPhysicalStock.TabIndex = 11;
@@ -230,7 +230,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtNotes
             // 
             this.txtNotes.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNotes.Location = new System.Drawing.Point(200, 125);
+            this.txtNotes.Location = new System.Drawing.Point(200, 128);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -250,7 +250,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtReason
             // 
             this.txtReason.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtReason.Location = new System.Drawing.Point(20, 125);
+            this.txtReason.Location = new System.Drawing.Point(20, 128);
             this.txtReason.Multiline = true;
             this.txtReason.Name = "txtReason";
             this.txtReason.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -271,7 +271,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpAdjustmentDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpAdjustmentDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpAdjustmentDate.Location = new System.Drawing.Point(650, 125);
+            this.dtpAdjustmentDate.Location = new System.Drawing.Point(650, 128);
             this.dtpAdjustmentDate.Name = "dtpAdjustmentDate";
             this.dtpAdjustmentDate.Size = new System.Drawing.Size(150, 26);
             this.dtpAdjustmentDate.TabIndex = 9;
@@ -287,7 +287,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Size = new System.Drawing.Size(1160, 80);
             this.actionsGroup.TabIndex = 1;
             this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             // 
             // btnSave
             // 
@@ -299,7 +299,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 35);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "ðŸ’¾ Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -313,7 +313,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 35);
             this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -327,7 +327,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 35);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "🗑️ Delete";
+            this.btnDelete.Text = "ðŸ—‘ï¸ Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
@@ -340,7 +340,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.adjustmentsGroup.Size = new System.Drawing.Size(1160, 350);
             this.adjustmentsGroup.TabIndex = 2;
             this.adjustmentsGroup.TabStop = false;
-            this.adjustmentsGroup.Text = "📋 Stock Adjustments";
+            this.adjustmentsGroup.Text = "ðŸ“‹ Stock Adjustments";
             // 
             // dgvAdjustments
             // 
@@ -366,6 +366,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -376,7 +377,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockAdjustmentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stock Adjustment - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -417,3 +418,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvAdjustments;
     }
 }
+

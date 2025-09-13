@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -110,7 +110,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 30);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "×";
+            this.closeBtn.Text = "Ã—";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -158,7 +158,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtSearch
             // 
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtSearch.Location = new System.Drawing.Point(80, 22);
+            this.txtSearch.Location = new System.Drawing.Point(80, 25);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(350, 23);
             this.txtSearch.TabIndex = 1;
@@ -334,7 +334,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.routeGroup.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.routeGroup.Location = new System.Drawing.Point(610, 10);
             this.routeGroup.Name = "routeGroup";
-            this.routeGroup.Size = new System.Drawing.Size(580, 440);
+            this.routeGroup.Size = new System.Drawing.Size(700, 450);
             this.routeGroup.TabIndex = 3;
             this.routeGroup.TabStop = false;
             this.routeGroup.Text = "Route Information";
@@ -447,6 +447,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -455,7 +456,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "RouteMasterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Route Master";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -508,4 +509,5 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Label lblRouteName;
     }
 }
+
 

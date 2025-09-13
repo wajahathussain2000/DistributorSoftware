@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class SupplierPaymentForm
     {
@@ -31,3 +31,4 @@ namespace DistributionSoftware.Presentation.Forms
         #endregion
     }
 }
+

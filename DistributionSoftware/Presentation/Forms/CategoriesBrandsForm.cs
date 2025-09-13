@@ -42,7 +42,7 @@ namespace DistributionSoftware.Presentation.Forms
             Panel headerPanel = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 100,
+                Height = 80,
                 BackColor = Color.FromArgb(52, 73, 94)
             };
 
@@ -82,8 +82,8 @@ namespace DistributionSoftware.Presentation.Forms
              {
                  Text = "📝 Add New Category",
                  Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                 Size = new Size(580, 250),
-                 Location = new Point(20, 40)
+                 Size = new Size(580, 280),
+                 Location = new Point(20, 20)
              };
 
              Label categoryNameLabel = new Label { Text = "🏷️ Category Name:", Location = new Point(20, 30), AutoSize = true, Font = new Font("Segoe UI", 10, FontStyle.Bold) };

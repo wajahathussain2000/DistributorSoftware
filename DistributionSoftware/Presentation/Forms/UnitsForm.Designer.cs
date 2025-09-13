@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class UnitsForm
     {
@@ -37,3 +37,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvUnits;
     }
 }
+

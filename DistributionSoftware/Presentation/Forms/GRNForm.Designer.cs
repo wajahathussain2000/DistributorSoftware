@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class GRNForm
     {
@@ -82,7 +82,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtGRNNo
             // 
-            this.txtGRNNo.Location = new System.Drawing.Point(150, 26);
+            this.txtGRNNo.Location = new System.Drawing.Point(150, 30);
             this.txtGRNNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtGRNNo.Name = "txtGRNNo";
             this.txtGRNNo.ReadOnly = true;
@@ -101,7 +101,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtBarcode
             // 
-            this.txtBarcode.Location = new System.Drawing.Point(600, 26);
+            this.txtBarcode.Location = new System.Drawing.Point(600, 30);
             this.txtBarcode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBarcode.Name = "txtBarcode";
             this.txtBarcode.ReadOnly = true;
@@ -132,7 +132,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbPurchase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPurchase.FormattingEnabled = true;
-            this.cmbPurchase.Location = new System.Drawing.Point(150, 88);
+            this.cmbPurchase.Location = new System.Drawing.Point(150, 90);
             this.cmbPurchase.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbPurchase.Name = "cmbPurchase";
             this.cmbPurchase.Size = new System.Drawing.Size(298, 28);
@@ -151,7 +151,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtSupplier
             // 
-            this.txtSupplier.Location = new System.Drawing.Point(600, 88);
+            this.txtSupplier.Location = new System.Drawing.Point(600, 90);
             this.txtSupplier.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSupplier.Name = "txtSupplier";
             this.txtSupplier.ReadOnly = true;
@@ -170,7 +170,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // dtpGRNDate
             // 
-            this.dtpGRNDate.Location = new System.Drawing.Point(150, 149);
+            this.dtpGRNDate.Location = new System.Drawing.Point(150, 150);
             this.dtpGRNDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpGRNDate.Name = "dtpGRNDate";
             this.dtpGRNDate.Size = new System.Drawing.Size(298, 26);
@@ -188,7 +188,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtRemarks
             // 
-            this.txtRemarks.Location = new System.Drawing.Point(600, 149);
+            this.txtRemarks.Location = new System.Drawing.Point(600, 150);
             this.txtRemarks.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
@@ -257,7 +257,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // dtpExpiryDate
             // 
-            this.dtpExpiryDate.Location = new System.Drawing.Point(600, 88);
+            this.dtpExpiryDate.Location = new System.Drawing.Point(600, 90);
             this.dtpExpiryDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpExpiryDate.Name = "dtpExpiryDate";
             this.dtpExpiryDate.Size = new System.Drawing.Size(298, 26);
@@ -275,7 +275,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtBatchNo
             // 
-            this.txtBatchNo.Location = new System.Drawing.Point(150, 88);
+            this.txtBatchNo.Location = new System.Drawing.Point(150, 90);
             this.txtBatchNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBatchNo.Name = "txtBatchNo";
             this.txtBatchNo.Size = new System.Drawing.Size(298, 26);
@@ -293,7 +293,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtAcceptedQty
             // 
-            this.txtAcceptedQty.Location = new System.Drawing.Point(900, 42);
+            this.txtAcceptedQty.Location = new System.Drawing.Point(900, 45);
             this.txtAcceptedQty.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtAcceptedQty.Name = "txtAcceptedQty";
             this.txtAcceptedQty.Size = new System.Drawing.Size(148, 26);
@@ -311,7 +311,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtReceivedQty
             // 
-            this.txtReceivedQty.Location = new System.Drawing.Point(600, 42);
+            this.txtReceivedQty.Location = new System.Drawing.Point(600, 45);
             this.txtReceivedQty.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtReceivedQty.Name = "txtReceivedQty";
             this.txtReceivedQty.Size = new System.Drawing.Size(148, 26);
@@ -461,7 +461,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "GRNForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GRN (Goods Receipt Note) Form";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;((System.ComponentModel.ISupportInitialize)(this.picBarcode)).EndInit();
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;((System.ComponentModel.ISupportInitialize)(this.picBarcode)).EndInit();
             this.groupBoxItems.ResumeLayout(false);
             this.groupBoxItems.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGRNItems)).EndInit();
@@ -511,4 +511,5 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvGRNList;
     }
 }
+
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -76,7 +76,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(250, 37);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "⚠️ Low Stock Report";
+            this.headerLabel.Text = "âš ï¸ Low Stock Report";
             // 
             // closeBtn
             // 
@@ -89,7 +89,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -126,7 +126,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.filtersGroup.Size = new System.Drawing.Size(1160, 120);
             this.filtersGroup.TabIndex = 0;
             this.filtersGroup.TabStop = false;
-            this.filtersGroup.Text = "🔍 Filters";
+            this.filtersGroup.Text = "ðŸ” Filters";
             // 
             // productLabel
             // 
@@ -140,7 +140,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtProductFilter
             // 
-            this.txtProductFilter.Location = new System.Drawing.Point(120, 28);
+            this.txtProductFilter.Location = new System.Drawing.Point(120, 31);
             this.txtProductFilter.Name = "txtProductFilter";
             this.txtProductFilter.Size = new System.Drawing.Size(200, 25);
             this.txtProductFilter.TabIndex = 1;
@@ -158,7 +158,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbCategory
             // 
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCategory.Location = new System.Drawing.Point(430, 28);
+            this.cmbCategory.Location = new System.Drawing.Point(430, 31);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(150, 25);
             this.cmbCategory.TabIndex = 3;
@@ -176,7 +176,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbWarehouse
             // 
             this.cmbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWarehouse.Location = new System.Drawing.Point(700, 28);
+            this.cmbWarehouse.Location = new System.Drawing.Point(700, 31);
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(150, 25);
             this.cmbWarehouse.TabIndex = 5;
@@ -194,7 +194,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbReorderLevel
             // 
             this.cmbReorderLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbReorderLevel.Location = new System.Drawing.Point(980, 28);
+            this.cmbReorderLevel.Location = new System.Drawing.Point(980, 31);
             this.cmbReorderLevel.Name = "cmbReorderLevel";
             this.cmbReorderLevel.Size = new System.Drawing.Size(120, 25);
             this.cmbReorderLevel.TabIndex = 7;
@@ -209,7 +209,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(100, 30);
             this.btnFilter.TabIndex = 8;
-            this.btnFilter.Text = "🔍 Filter";
+            this.btnFilter.Text = "ðŸ” Filter";
             this.btnFilter.UseVisualStyleBackColor = false;
             this.btnFilter.Click += new System.EventHandler(this.BtnFilter_Click);
             // 
@@ -223,7 +223,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(100, 30);
             this.btnExport.TabIndex = 9;
-            this.btnExport.Text = "📊 Export";
+            this.btnExport.Text = "ðŸ“Š Export";
             this.btnExport.UseVisualStyleBackColor = false;
             this.btnExport.Click += new System.EventHandler(this.BtnExport_Click);
             // 
@@ -237,7 +237,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(100, 30);
             this.btnClose.TabIndex = 10;
-            this.btnClose.Text = "❌ Close";
+            this.btnClose.Text = "âŒ Close";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
@@ -263,6 +263,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -273,7 +274,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "LowStockReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Low Stock Report - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -304,3 +305,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvLowStock;
     }
 }
+

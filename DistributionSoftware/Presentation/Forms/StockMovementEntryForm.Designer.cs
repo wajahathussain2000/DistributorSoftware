@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -118,7 +118,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbMovementType
             // 
             this.cmbMovementType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMovementType.Location = new System.Drawing.Point(180, 67);
+            this.cmbMovementType.Location = new System.Drawing.Point(180, 70);
             this.cmbMovementType.Name = "cmbMovementType";
             this.cmbMovementType.Size = new System.Drawing.Size(200, 23);
             this.cmbMovementType.TabIndex = 2;
@@ -136,7 +136,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbProduct
             // 
             this.cmbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbProduct.Location = new System.Drawing.Point(180, 107);
+            this.cmbProduct.Location = new System.Drawing.Point(180, 110);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(200, 23);
             this.cmbProduct.TabIndex = 4;
@@ -154,7 +154,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbWarehouse
             // 
             this.cmbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWarehouse.Location = new System.Drawing.Point(180, 147);
+            this.cmbWarehouse.Location = new System.Drawing.Point(180, 150);
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(200, 23);
             this.cmbWarehouse.TabIndex = 6;
@@ -171,7 +171,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(180, 187);
+            this.txtQuantity.Location = new System.Drawing.Point(180, 190);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(200, 23);
             this.txtQuantity.TabIndex = 8;
@@ -189,7 +189,7 @@ namespace DistributionSoftware.Presentation.Forms
             // dtpMovementDate
             // 
             this.dtpMovementDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpMovementDate.Location = new System.Drawing.Point(180, 227);
+            this.dtpMovementDate.Location = new System.Drawing.Point(180, 230);
             this.dtpMovementDate.Name = "dtpMovementDate";
             this.dtpMovementDate.Size = new System.Drawing.Size(200, 23);
             this.dtpMovementDate.TabIndex = 10;
@@ -208,7 +208,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbReferenceType
             // 
             this.cmbReferenceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbReferenceType.Location = new System.Drawing.Point(180, 267);
+            this.cmbReferenceType.Location = new System.Drawing.Point(180, 270);
             this.cmbReferenceType.Name = "cmbReferenceType";
             this.cmbReferenceType.Size = new System.Drawing.Size(200, 23);
             this.cmbReferenceType.TabIndex = 12;
@@ -225,7 +225,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtReferenceNumber
             // 
-            this.txtReferenceNumber.Location = new System.Drawing.Point(180, 307);
+            this.txtReferenceNumber.Location = new System.Drawing.Point(180, 310);
             this.txtReferenceNumber.Name = "txtReferenceNumber";
             this.txtReferenceNumber.Size = new System.Drawing.Size(200, 23);
             this.txtReferenceNumber.TabIndex = 14;
@@ -242,7 +242,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtBatchNumber
             // 
-            this.txtBatchNumber.Location = new System.Drawing.Point(180, 347);
+            this.txtBatchNumber.Location = new System.Drawing.Point(180, 350);
             this.txtBatchNumber.Name = "txtBatchNumber";
             this.txtBatchNumber.Size = new System.Drawing.Size(200, 23);
             this.txtBatchNumber.TabIndex = 16;
@@ -260,7 +260,7 @@ namespace DistributionSoftware.Presentation.Forms
             // dtpExpiryDate
             // 
             this.dtpExpiryDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpiryDate.Location = new System.Drawing.Point(180, 387);
+            this.dtpExpiryDate.Location = new System.Drawing.Point(180, 390);
             this.dtpExpiryDate.Name = "dtpExpiryDate";
             this.dtpExpiryDate.Size = new System.Drawing.Size(200, 23);
             this.dtpExpiryDate.TabIndex = 18;
@@ -277,7 +277,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtRemarks
             // 
-            this.txtRemarks.Location = new System.Drawing.Point(180, 427);
+            this.txtRemarks.Location = new System.Drawing.Point(180, 430);
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -341,6 +341,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 600);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.buttonPanel);
@@ -348,7 +349,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockMovementEntryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stock Movement Entry";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.mainPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -385,3 +386,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnClose;
     }
 }
+

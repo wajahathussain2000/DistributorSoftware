@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class SalesInvoiceForm
     {
@@ -130,7 +130,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.pnlInvoiceInfo.Controls.Add(this.txtInvoiceNumber);
             this.pnlInvoiceInfo.Location = new System.Drawing.Point(20, 80);
             this.pnlInvoiceInfo.Name = "pnlInvoiceInfo";
-            this.pnlInvoiceInfo.Size = new System.Drawing.Size(600, 80);
+            this.pnlInvoiceInfo.Size = new System.Drawing.Size(800, 100);
             this.pnlInvoiceInfo.TabIndex = 1;
             // 
             // lblTransactionTime
@@ -144,7 +144,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtTransactionTime
             // 
-            this.txtTransactionTime.Location = new System.Drawing.Point(383, 45);
+            this.txtTransactionTime.Location = new System.Drawing.Point(383, 47);
             this.txtTransactionTime.Name = "txtTransactionTime";
             this.txtTransactionTime.ReadOnly = true;
             this.txtTransactionTime.Size = new System.Drawing.Size(100, 26);
@@ -161,7 +161,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCashier
             // 
-            this.txtCashier.Location = new System.Drawing.Point(100, 42);
+            this.txtCashier.Location = new System.Drawing.Point(100, 45);
             this.txtCashier.Name = "txtCashier";
             this.txtCashier.ReadOnly = true;
             this.txtCashier.Size = new System.Drawing.Size(120, 26);
@@ -180,7 +180,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpInvoiceDate.CustomFormat = "dddd, MMMM dd, yyyy";
             this.dtpInvoiceDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpInvoiceDate.Location = new System.Drawing.Point(350, 12);
+            this.dtpInvoiceDate.Location = new System.Drawing.Point(350, 15);
             this.dtpInvoiceDate.Name = "dtpInvoiceDate";
             this.dtpInvoiceDate.Size = new System.Drawing.Size(200, 26);
             this.dtpInvoiceDate.TabIndex = 3;
@@ -196,7 +196,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtInvoiceNumber
             // 
-            this.txtInvoiceNumber.Location = new System.Drawing.Point(100, 12);
+            this.txtInvoiceNumber.Location = new System.Drawing.Point(100, 15);
             this.txtInvoiceNumber.Name = "txtInvoiceNumber";
             this.txtInvoiceNumber.ReadOnly = true;
             this.txtInvoiceNumber.Size = new System.Drawing.Size(120, 26);
@@ -213,9 +213,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.pnlCustomerInfo.Controls.Add(this.txtCustomerName);
             this.pnlCustomerInfo.Controls.Add(this.lblCustomer);
             this.pnlCustomerInfo.Controls.Add(this.cmbCustomer);
-            this.pnlCustomerInfo.Location = new System.Drawing.Point(640, 80);
+            this.pnlCustomerInfo.Location = new System.Drawing.Point(840, 80);
             this.pnlCustomerInfo.Name = "pnlCustomerInfo";
-            this.pnlCustomerInfo.Size = new System.Drawing.Size(626, 94);
+            this.pnlCustomerInfo.Size = new System.Drawing.Size(800, 100);
             this.pnlCustomerInfo.TabIndex = 2;
             // 
             // lblCustomerAddress
@@ -229,7 +229,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerAddress
             // 
-            this.txtCustomerAddress.Location = new System.Drawing.Point(338, 47);
+            this.txtCustomerAddress.Location = new System.Drawing.Point(338, 50);
             this.txtCustomerAddress.Name = "txtCustomerAddress";
             this.txtCustomerAddress.ReadOnly = true;
             this.txtCustomerAddress.Size = new System.Drawing.Size(270, 26);
@@ -246,7 +246,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerPhone
             // 
-            this.txtCustomerPhone.Location = new System.Drawing.Point(70, 50);
+            this.txtCustomerPhone.Location = new System.Drawing.Point(70, 52);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.ReadOnly = true;
             this.txtCustomerPhone.Size = new System.Drawing.Size(120, 26);
@@ -263,7 +263,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Location = new System.Drawing.Point(404, 12);
+            this.txtCustomerName.Location = new System.Drawing.Point(404, 15);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
             this.txtCustomerName.Size = new System.Drawing.Size(200, 26);
@@ -282,7 +282,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCustomer.FormattingEnabled = true;
-            this.cmbCustomer.Location = new System.Drawing.Point(88, 12);
+            this.cmbCustomer.Location = new System.Drawing.Point(88, 15);
             this.cmbCustomer.Name = "cmbCustomer";
             this.cmbCustomer.Size = new System.Drawing.Size(200, 28);
             this.cmbCustomer.TabIndex = 1;
@@ -299,9 +299,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.pnlProductInfo.Controls.Add(this.txtQuantity);
             this.pnlProductInfo.Controls.Add(this.lblProduct);
             this.pnlProductInfo.Controls.Add(this.cmbProduct);
-            this.pnlProductInfo.Location = new System.Drawing.Point(20, 180);
+            this.pnlProductInfo.Location = new System.Drawing.Point(20, 200);
             this.pnlProductInfo.Name = "pnlProductInfo";
-            this.pnlProductInfo.Size = new System.Drawing.Size(600, 80);
+            this.pnlProductInfo.Size = new System.Drawing.Size(1000, 100);
             this.pnlProductInfo.TabIndex = 3;
             // 
             // btnAddItem
@@ -663,6 +663,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1800, 900);
             this.Controls.Add(this.picBarcode);
             this.Controls.Add(this.lblBarcode);
@@ -760,3 +761,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.TextBox txtRemarks;
     }
 }
+

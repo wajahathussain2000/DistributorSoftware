@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -110,7 +110,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(283, 37);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "👥 Customer Master";
+            this.headerLabel.Text = "ðŸ‘¥ Customer Master";
             // 
             // closeBtn
             // 
@@ -123,7 +123,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             // 
             // contentPanel
@@ -179,7 +179,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.customerGroup.Size = new System.Drawing.Size(787, 430);
             this.customerGroup.TabIndex = 0;
             this.customerGroup.TabStop = false;
-            this.customerGroup.Text = "📋 Customer Information";
+            this.customerGroup.Text = "ðŸ“‹ Customer Information";
             // 
             // barcodeLabel
             // 
@@ -189,7 +189,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.barcodeLabel.Name = "barcodeLabel";
             this.barcodeLabel.Size = new System.Drawing.Size(93, 19);
             this.barcodeLabel.TabIndex = 26;
-            this.barcodeLabel.Text = "📊 Barcode:";
+            this.barcodeLabel.Text = "ðŸ“Š Barcode:";
             // 
             // barcodePanel
             // 
@@ -219,7 +219,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.qrLabel.Name = "qrLabel";
             this.qrLabel.Size = new System.Drawing.Size(96, 19);
             this.qrLabel.TabIndex = 28;
-            this.qrLabel.Text = "🔲 QR Code:";
+            this.qrLabel.Text = "ðŸ”² QR Code:";
             // 
             // qrPanel
             // 
@@ -249,13 +249,13 @@ namespace DistributionSoftware.Presentation.Forms
             this.creditLabel.Name = "creditLabel";
             this.creditLabel.Size = new System.Drawing.Size(115, 19);
             this.creditLabel.TabIndex = 24;
-            this.creditLabel.Text = "💳 Credit Limit:";
+            this.creditLabel.Text = "ðŸ’³ Credit Limit:";
             // 
             // nudCreditLimit
             // 
             this.nudCreditLimit.DecimalPlaces = 2;
             this.nudCreditLimit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nudCreditLimit.Location = new System.Drawing.Point(670, 388);
+            this.nudCreditLimit.Location = new System.Drawing.Point(670, 390);
             this.nudCreditLimit.Maximum = new decimal(new int[] {
             999999999,
             0,
@@ -273,13 +273,13 @@ namespace DistributionSoftware.Presentation.Forms
             this.discountLabel.Name = "discountLabel";
             this.discountLabel.Size = new System.Drawing.Size(110, 19);
             this.discountLabel.TabIndex = 22;
-            this.discountLabel.Text = "💰 Discount %:";
+            this.discountLabel.Text = "ðŸ’° Discount %:";
             // 
             // nudDiscount
             // 
             this.nudDiscount.DecimalPlaces = 2;
             this.nudDiscount.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nudDiscount.Location = new System.Drawing.Point(470, 388);
+            this.nudDiscount.Location = new System.Drawing.Point(470, 390);
             this.nudDiscount.Name = "nudDiscount";
             this.nudDiscount.Size = new System.Drawing.Size(80, 23);
             this.nudDiscount.TabIndex = 23;
@@ -292,14 +292,14 @@ namespace DistributionSoftware.Presentation.Forms
             this.categoryLabel.Name = "categoryLabel";
             this.categoryLabel.Size = new System.Drawing.Size(100, 19);
             this.categoryLabel.TabIndex = 20;
-            this.categoryLabel.Text = "🏷️ Category:";
+            this.categoryLabel.Text = "ðŸ·ï¸ Category:";
             // 
             // cmbCategory
             // 
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(150, 388);
+            this.cmbCategory.Location = new System.Drawing.Point(150, 390);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(150, 23);
             this.cmbCategory.TabIndex = 21;
@@ -312,12 +312,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.postalLabel.Name = "postalLabel";
             this.postalLabel.Size = new System.Drawing.Size(117, 19);
             this.postalLabel.TabIndex = 18;
-            this.postalLabel.Text = "📮 Postal Code:";
+            this.postalLabel.Text = "ðŸ“® Postal Code:";
             // 
             // txtPostalCode
             // 
             this.txtPostalCode.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtPostalCode.Location = new System.Drawing.Point(450, 348);
+            this.txtPostalCode.Location = new System.Drawing.Point(450, 350);
             this.txtPostalCode.Name = "txtPostalCode";
             this.txtPostalCode.Size = new System.Drawing.Size(100, 23);
             this.txtPostalCode.TabIndex = 19;
@@ -330,12 +330,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(91, 19);
             this.countryLabel.TabIndex = 16;
-            this.countryLabel.Text = "🌍 Country:";
+            this.countryLabel.Text = "ðŸŒ Country:";
             // 
             // txtCountry
             // 
             this.txtCountry.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtCountry.Location = new System.Drawing.Point(150, 348);
+            this.txtCountry.Location = new System.Drawing.Point(150, 350);
             this.txtCountry.Name = "txtCountry";
             this.txtCountry.Size = new System.Drawing.Size(120, 23);
             this.txtCountry.TabIndex = 17;
@@ -348,12 +348,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.stateLabel.Name = "stateLabel";
             this.stateLabel.Size = new System.Drawing.Size(71, 19);
             this.stateLabel.TabIndex = 14;
-            this.stateLabel.Text = "🗺️ State:";
+            this.stateLabel.Text = "ðŸ—ºï¸ State:";
             // 
             // txtState
             // 
             this.txtState.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtState.Location = new System.Drawing.Point(400, 308);
+            this.txtState.Location = new System.Drawing.Point(400, 310);
             this.txtState.Name = "txtState";
             this.txtState.Size = new System.Drawing.Size(120, 23);
             this.txtState.TabIndex = 15;
@@ -366,12 +366,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(63, 19);
             this.cityLabel.TabIndex = 12;
-            this.cityLabel.Text = "🏙️ City:";
+            this.cityLabel.Text = "ðŸ™ï¸ City:";
             // 
             // txtCity
             // 
             this.txtCity.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtCity.Location = new System.Drawing.Point(150, 308);
+            this.txtCity.Location = new System.Drawing.Point(150, 310);
             this.txtCity.Name = "txtCity";
             this.txtCity.Size = new System.Drawing.Size(120, 23);
             this.txtCity.TabIndex = 13;
@@ -384,12 +384,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.addressLabel.Name = "addressLabel";
             this.addressLabel.Size = new System.Drawing.Size(91, 19);
             this.addressLabel.TabIndex = 10;
-            this.addressLabel.Text = "🏠 Address:";
+            this.addressLabel.Text = "ðŸ  Address:";
             // 
             // txtAddress
             // 
             this.txtAddress.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtAddress.Location = new System.Drawing.Point(150, 228);
+            this.txtAddress.Location = new System.Drawing.Point(150, 230);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -404,12 +404,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.Size = new System.Drawing.Size(73, 19);
             this.emailLabel.TabIndex = 8;
-            this.emailLabel.Text = "📧 Email:";
+            this.emailLabel.Text = "ðŸ“§ Email:";
             // 
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtEmail.Location = new System.Drawing.Point(150, 188);
+            this.txtEmail.Location = new System.Drawing.Point(150, 190);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(200, 23);
             this.txtEmail.TabIndex = 9;
@@ -422,12 +422,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(79, 19);
             this.phoneLabel.TabIndex = 6;
-            this.phoneLabel.Text = "📱 Phone:";
+            this.phoneLabel.Text = "ðŸ“± Phone:";
             // 
             // txtPhone
             // 
             this.txtPhone.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtPhone.Location = new System.Drawing.Point(150, 148);
+            this.txtPhone.Location = new System.Drawing.Point(150, 150);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(150, 23);
             this.txtPhone.TabIndex = 7;
@@ -440,12 +440,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.contactLabel.Name = "contactLabel";
             this.contactLabel.Size = new System.Drawing.Size(138, 19);
             this.contactLabel.TabIndex = 4;
-            this.contactLabel.Text = "📞 Contact Person:";
+            this.contactLabel.Text = "ðŸ“ž Contact Person:";
             // 
             // txtContactPerson
             // 
             this.txtContactPerson.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtContactPerson.Location = new System.Drawing.Point(200, 108);
+            this.txtContactPerson.Location = new System.Drawing.Point(200, 110);
             this.txtContactPerson.Name = "txtContactPerson";
             this.txtContactPerson.Size = new System.Drawing.Size(200, 23);
             this.txtContactPerson.TabIndex = 5;
@@ -458,12 +458,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(145, 19);
             this.nameLabel.TabIndex = 2;
-            this.nameLabel.Text = "👤 Customer Name:";
+            this.nameLabel.Text = "ðŸ‘¤ Customer Name:";
             // 
             // txtCustomerName
             // 
             this.txtCustomerName.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtCustomerName.Location = new System.Drawing.Point(200, 68);
+            this.txtCustomerName.Location = new System.Drawing.Point(200, 70);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(200, 23);
             this.txtCustomerName.TabIndex = 3;
@@ -476,13 +476,13 @@ namespace DistributionSoftware.Presentation.Forms
             this.codeLabel.Name = "codeLabel";
             this.codeLabel.Size = new System.Drawing.Size(140, 19);
             this.codeLabel.TabIndex = 0;
-            this.codeLabel.Text = "🔢 Customer Code:";
+            this.codeLabel.Text = "ðŸ”¢ Customer Code:";
             // 
             // txtCustomerCode
             // 
             this.txtCustomerCode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
             this.txtCustomerCode.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtCustomerCode.Location = new System.Drawing.Point(200, 28);
+            this.txtCustomerCode.Location = new System.Drawing.Point(200, 30);
             this.txtCustomerCode.Name = "txtCustomerCode";
             this.txtCustomerCode.ReadOnly = true;
             this.txtCustomerCode.Size = new System.Drawing.Size(150, 23);
@@ -500,7 +500,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.customerListGroup.Size = new System.Drawing.Size(0, 450);
             this.customerListGroup.TabIndex = 1;
             this.customerListGroup.TabStop = false;
-            this.customerListGroup.Text = "📋 Customers List";
+            this.customerListGroup.Text = "ðŸ“‹ Customers List";
             // 
             // dgvCustomers
             // 
@@ -533,7 +533,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Size = new System.Drawing.Size(371, 80);
             this.actionsGroup.TabIndex = 2;
             this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             // 
             // btnSave
             // 
@@ -545,7 +545,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 35);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "ðŸ’¾ Save";
             this.btnSave.UseVisualStyleBackColor = false;
             // 
             // btnClear
@@ -558,7 +558,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 35);
             this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             // 
             // btnDelete
@@ -571,7 +571,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 35);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "🗑️ Delete";
+            this.btnDelete.Text = "ðŸ—‘ï¸ Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // CustomerMasterForm
@@ -579,6 +579,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1284, 701);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -587,7 +588,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "CustomerMasterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Customer Master - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -653,3 +654,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnDelete;
     }
 }
+

@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class SupplierDebitNoteForm
     {
@@ -165,7 +165,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtDebitNoteNo
             // 
-            this.txtDebitNoteNo.Location = new System.Drawing.Point(120, 27);
+            this.txtDebitNoteNo.Location = new System.Drawing.Point(120, 30);
             this.txtDebitNoteNo.Name = "txtDebitNoteNo";
             this.txtDebitNoteNo.ReadOnly = true;
             this.txtDebitNoteNo.Size = new System.Drawing.Size(150, 20);
@@ -182,7 +182,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtDebitNoteBarcode
             // 
-            this.txtDebitNoteBarcode.Location = new System.Drawing.Point(360, 27);
+            this.txtDebitNoteBarcode.Location = new System.Drawing.Point(360, 30);
             this.txtDebitNoteBarcode.Name = "txtDebitNoteBarcode";
             this.txtDebitNoteBarcode.ReadOnly = true;
             this.txtDebitNoteBarcode.Size = new System.Drawing.Size(150, 20);
@@ -201,7 +201,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.FormattingEnabled = true;
-            this.cmbSupplier.Location = new System.Drawing.Point(120, 57);
+            this.cmbSupplier.Location = new System.Drawing.Point(120, 60);
             this.cmbSupplier.Name = "cmbSupplier";
             this.cmbSupplier.Size = new System.Drawing.Size(200, 21);
             this.cmbSupplier.TabIndex = 5;
@@ -218,7 +218,7 @@ namespace DistributionSoftware.Presentation.Forms
             // dtpDebitDate
             // 
             this.dtpDebitDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDebitDate.Location = new System.Drawing.Point(390, 57);
+            this.dtpDebitDate.Location = new System.Drawing.Point(390, 60);
             this.dtpDebitDate.Name = "dtpDebitDate";
             this.dtpDebitDate.Size = new System.Drawing.Size(120, 20);
             this.dtpDebitDate.TabIndex = 7;
@@ -236,7 +236,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbReason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbReason.FormattingEnabled = true;
-            this.cmbReason.Location = new System.Drawing.Point(120, 87);
+            this.cmbReason.Location = new System.Drawing.Point(120, 90);
             this.cmbReason.Name = "cmbReason";
             this.cmbReason.Size = new System.Drawing.Size(200, 21);
             this.cmbReason.TabIndex = 9;
@@ -254,7 +254,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(390, 87);
+            this.cmbStatus.Location = new System.Drawing.Point(390, 90);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(120, 21);
             this.cmbStatus.TabIndex = 11;
@@ -270,7 +270,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtRemarks
             // 
-            this.txtRemarks.Location = new System.Drawing.Point(120, 117);
+            this.txtRemarks.Location = new System.Drawing.Point(120, 120);
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.Size = new System.Drawing.Size(390, 50);
@@ -306,7 +306,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbOriginalInvoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOriginalInvoice.FormattingEnabled = true;
-            this.cmbOriginalInvoice.Location = new System.Drawing.Point(120, 27);
+            this.cmbOriginalInvoice.Location = new System.Drawing.Point(120, 30);
             this.cmbOriginalInvoice.Name = "cmbOriginalInvoice";
             this.cmbOriginalInvoice.Size = new System.Drawing.Size(200, 21);
             this.cmbOriginalInvoice.TabIndex = 1;
@@ -323,7 +323,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtOriginalInvoiceAmount
             // 
-            this.txtOriginalInvoiceAmount.Location = new System.Drawing.Point(400, 27);
+            this.txtOriginalInvoiceAmount.Location = new System.Drawing.Point(400, 30);
             this.txtOriginalInvoiceAmount.Name = "txtOriginalInvoiceAmount";
             this.txtOriginalInvoiceAmount.ReadOnly = true;
             this.txtOriginalInvoiceAmount.Size = new System.Drawing.Size(100, 20);
@@ -573,7 +573,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "SupplierDebitNoteForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Supplier Debit Note";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.pnlHeader.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);
@@ -643,3 +643,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnCancel;
     }
 }
+

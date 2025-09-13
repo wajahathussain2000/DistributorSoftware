@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class PurchaseInvoiceForm
     {
@@ -91,7 +91,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtPurchaseNo
             // 
-            this.txtPurchaseNo.Location = new System.Drawing.Point(100, 17);
+            this.txtPurchaseNo.Location = new System.Drawing.Point(100, 20);
             this.txtPurchaseNo.Name = "txtPurchaseNo";
             this.txtPurchaseNo.ReadOnly = true;
             this.txtPurchaseNo.Size = new System.Drawing.Size(200, 20);
@@ -108,7 +108,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtBarcode
             // 
-            this.txtBarcode.Location = new System.Drawing.Point(400, 17);
+            this.txtBarcode.Location = new System.Drawing.Point(400, 20);
             this.txtBarcode.Name = "txtBarcode";
             this.txtBarcode.ReadOnly = true;
             this.txtBarcode.Size = new System.Drawing.Size(200, 20);
@@ -136,7 +136,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.FormattingEnabled = true;
-            this.cmbSupplier.Location = new System.Drawing.Point(100, 57);
+            this.cmbSupplier.Location = new System.Drawing.Point(100, 60);
             this.cmbSupplier.Name = "cmbSupplier";
             this.cmbSupplier.Size = new System.Drawing.Size(200, 21);
             this.cmbSupplier.TabIndex = 6;
@@ -152,7 +152,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtInvoiceNo
             // 
-            this.txtInvoiceNo.Location = new System.Drawing.Point(400, 57);
+            this.txtInvoiceNo.Location = new System.Drawing.Point(400, 60);
             this.txtInvoiceNo.Name = "txtInvoiceNo";
             this.txtInvoiceNo.Size = new System.Drawing.Size(200, 20);
             this.txtInvoiceNo.TabIndex = 8;
@@ -168,7 +168,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // dtpInvoiceDate
             // 
-            this.dtpInvoiceDate.Location = new System.Drawing.Point(100, 97);
+            this.dtpInvoiceDate.Location = new System.Drawing.Point(100, 100);
             this.dtpInvoiceDate.Name = "dtpInvoiceDate";
             this.dtpInvoiceDate.Size = new System.Drawing.Size(200, 20);
             this.dtpInvoiceDate.TabIndex = 10;
@@ -184,7 +184,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtNetAmount
             // 
-            this.txtNetAmount.Location = new System.Drawing.Point(400, 97);
+            this.txtNetAmount.Location = new System.Drawing.Point(400, 100);
             this.txtNetAmount.Name = "txtNetAmount";
             this.txtNetAmount.Size = new System.Drawing.Size(100, 20);
             this.txtNetAmount.TabIndex = 12;
@@ -201,7 +201,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtTaxAmount
             // 
-            this.txtTaxAmount.Location = new System.Drawing.Point(600, 97);
+            this.txtTaxAmount.Location = new System.Drawing.Point(600, 100);
             this.txtTaxAmount.Name = "txtTaxAmount";
             this.txtTaxAmount.Size = new System.Drawing.Size(100, 20);
             this.txtTaxAmount.TabIndex = 14;
@@ -218,7 +218,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtDiscountAmount
             // 
-            this.txtDiscountAmount.Location = new System.Drawing.Point(120, 137);
+            this.txtDiscountAmount.Location = new System.Drawing.Point(120, 140);
             this.txtDiscountAmount.Name = "txtDiscountAmount";
             this.txtDiscountAmount.Size = new System.Drawing.Size(100, 20);
             this.txtDiscountAmount.TabIndex = 16;
@@ -235,7 +235,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtFreightCharges
             // 
-            this.txtFreightCharges.Location = new System.Drawing.Point(340, 137);
+            this.txtFreightCharges.Location = new System.Drawing.Point(340, 140);
             this.txtFreightCharges.Name = "txtFreightCharges";
             this.txtFreightCharges.Size = new System.Drawing.Size(100, 20);
             this.txtFreightCharges.TabIndex = 18;
@@ -252,7 +252,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtSubTotal
             // 
-            this.txtSubTotal.Location = new System.Drawing.Point(520, 137);
+            this.txtSubTotal.Location = new System.Drawing.Point(520, 140);
             this.txtSubTotal.Name = "txtSubTotal";
             this.txtSubTotal.ReadOnly = true;
             this.txtSubTotal.Size = new System.Drawing.Size(100, 20);
@@ -269,7 +269,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(680, 137);
+            this.txtNotes.Location = new System.Drawing.Point(680, 140);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(200, 50);
@@ -527,7 +527,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "PurchaseInvoiceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Purchase Invoice Form";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.ResumeLayout(false);
             this.PerformLayout();
 
         }
@@ -580,3 +580,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvPurchases;
     }
 }
+

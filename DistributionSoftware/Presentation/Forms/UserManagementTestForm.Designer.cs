@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class UserManagementTestForm
     {
@@ -38,9 +38,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "UserManagementTestForm";
             this.Text = "User Management Test";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.ResumeLayout(false);
         }
 
         #endregion
     }
 }
+

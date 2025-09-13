@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -89,7 +89,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(180, 37);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "👤 User Master";
+            this.headerLabel.Text = "ðŸ‘¤ User Master";
             // 
             // closeBtn
             // 
@@ -102,7 +102,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             // 
             // contentPanel
@@ -166,7 +166,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtUsername
             // 
             this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtUsername.Location = new System.Drawing.Point(130, 40);
+            this.txtUsername.Location = new System.Drawing.Point(130, 43);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(200, 25);
             this.txtUsername.TabIndex = 1;
@@ -184,7 +184,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtEmail.Location = new System.Drawing.Point(130, 80);
+            this.txtEmail.Location = new System.Drawing.Point(130, 83);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(200, 25);
             this.txtEmail.TabIndex = 3;
@@ -202,7 +202,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtFirstName
             // 
             this.txtFirstName.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtFirstName.Location = new System.Drawing.Point(130, 120);
+            this.txtFirstName.Location = new System.Drawing.Point(130, 123);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(200, 25);
             this.txtFirstName.TabIndex = 5;
@@ -220,7 +220,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtLastName
             // 
             this.txtLastName.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtLastName.Location = new System.Drawing.Point(130, 160);
+            this.txtLastName.Location = new System.Drawing.Point(130, 163);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(200, 25);
             this.txtLastName.TabIndex = 7;
@@ -384,6 +384,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1800, 1200);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -395,7 +396,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "UserMasterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User Master - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -441,3 +442,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvUsers;
     }
 }
+

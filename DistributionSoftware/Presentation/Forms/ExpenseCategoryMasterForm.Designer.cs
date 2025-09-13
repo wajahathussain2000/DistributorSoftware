@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -99,7 +99,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 30);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -322,7 +322,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 30);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "ðŸ’¾ Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -337,7 +337,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(80, 30);
             this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "🔄 Clear";
+            this.btnClear.Text = "ðŸ”„ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -352,7 +352,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(80, 30);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "🗑️ Delete";
+            this.btnDelete.Text = "ðŸ—‘ï¸ Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
@@ -361,6 +361,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1000, 700);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -369,7 +370,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "ExpenseCategoryMasterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Expense Category Master";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.headerPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.categoryGroup.ResumeLayout(false);
@@ -410,3 +411,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnDelete;
     }
 }
+

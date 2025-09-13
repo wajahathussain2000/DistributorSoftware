@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -112,7 +112,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 30);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "×";
+            this.closeBtn.Text = "Ã—";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -168,7 +168,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtRemarks
             // 
             this.txtRemarks.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtRemarks.Location = new System.Drawing.Point(120, 200);
+            this.txtRemarks.Location = new System.Drawing.Point(120, 203);
             this.txtRemarks.MaxLength = 500;
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
@@ -189,7 +189,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtTransporterName
             // 
             this.txtTransporterName.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtTransporterName.Location = new System.Drawing.Point(120, 160);
+            this.txtTransporterName.Location = new System.Drawing.Point(120, 163);
             this.txtTransporterName.MaxLength = 100;
             this.txtTransporterName.Name = "txtTransporterName";
             this.txtTransporterName.Size = new System.Drawing.Size(340, 25);
@@ -208,7 +208,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtDriverContact
             // 
             this.txtDriverContact.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtDriverContact.Location = new System.Drawing.Point(120, 120);
+            this.txtDriverContact.Location = new System.Drawing.Point(120, 123);
             this.txtDriverContact.MaxLength = 20;
             this.txtDriverContact.Name = "txtDriverContact";
             this.txtDriverContact.Size = new System.Drawing.Size(340, 25);
@@ -227,7 +227,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtDriverName
             // 
             this.txtDriverName.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtDriverName.Location = new System.Drawing.Point(120, 80);
+            this.txtDriverName.Location = new System.Drawing.Point(120, 83);
             this.txtDriverName.MaxLength = 100;
             this.txtDriverName.Name = "txtDriverName";
             this.txtDriverName.Size = new System.Drawing.Size(340, 25);
@@ -255,7 +255,7 @@ namespace DistributionSoftware.Presentation.Forms
             "Car",
             "Bus",
             "Other"});
-            this.cmbVehicleType.Location = new System.Drawing.Point(120, 40);
+            this.cmbVehicleType.Location = new System.Drawing.Point(120, 43);
             this.cmbVehicleType.Name = "cmbVehicleType";
             this.cmbVehicleType.Size = new System.Drawing.Size(200, 25);
             this.cmbVehicleType.TabIndex = 3;
@@ -273,7 +273,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtVehicleNo
             // 
             this.txtVehicleNo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtVehicleNo.Location = new System.Drawing.Point(120, 0);
+            this.txtVehicleNo.Location = new System.Drawing.Point(120, 3);
             this.txtVehicleNo.MaxLength = 50;
             this.txtVehicleNo.Name = "txtVehicleNo";
             this.txtVehicleNo.Size = new System.Drawing.Size(200, 25);
@@ -494,6 +494,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -501,7 +502,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "VehicleMasterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vehicle Master";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.headerPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.vehicleGroup.ResumeLayout(false);
@@ -555,3 +556,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Label lblSearch;
     }
 }
+

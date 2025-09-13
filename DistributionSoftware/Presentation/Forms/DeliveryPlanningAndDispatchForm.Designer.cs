@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -94,7 +94,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(40, 30);
             this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "×";
+            this.btnClose.Text = "Ã—";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
@@ -103,6 +103,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.pnlMain);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F);
@@ -110,7 +111,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "DeliveryPlanningAndDispatchForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Delivery Planning & Dispatch";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.pnlMain.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
             this.ResumeLayout(false);
 
@@ -125,3 +126,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnClose;
     }
 }
+

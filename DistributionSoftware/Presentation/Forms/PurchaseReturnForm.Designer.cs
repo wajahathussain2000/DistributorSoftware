@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -88,7 +88,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(250, 37);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "🔄 Purchase Return";
+            this.headerLabel.Text = "ðŸ”„ Purchase Return";
             // 
             // closeBtn
             // 
@@ -101,7 +101,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "✕";
+            this.closeBtn.Text = "âœ•";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
@@ -142,7 +142,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerGroup.Size = new System.Drawing.Size(900, 200);
             this.headerGroup.TabIndex = 0;
             this.headerGroup.TabStop = false;
-            this.headerGroup.Text = "📋 Purchase Return Header";
+            this.headerGroup.Text = "ðŸ“‹ Purchase Return Header";
             // 
             // returnNoLabel
             // 
@@ -157,7 +157,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtReturnNumber
             // 
             this.txtReturnNumber.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtReturnNumber.Location = new System.Drawing.Point(120, 28);
+            this.txtReturnNumber.Location = new System.Drawing.Point(120, 31);
             this.txtReturnNumber.Name = "txtReturnNumber";
             this.txtReturnNumber.ReadOnly = true;
             this.txtReturnNumber.Size = new System.Drawing.Size(150, 25);
@@ -176,7 +176,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtBarcode
             // 
             this.txtBarcode.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBarcode.Location = new System.Drawing.Point(380, 28);
+            this.txtBarcode.Location = new System.Drawing.Point(380, 31);
             this.txtBarcode.Name = "txtBarcode";
             this.txtBarcode.ReadOnly = true;
             this.txtBarcode.Size = new System.Drawing.Size(150, 25);
@@ -196,7 +196,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSupplier.Location = new System.Drawing.Point(120, 68);
+            this.cmbSupplier.Location = new System.Drawing.Point(120, 71);
             this.cmbSupplier.Name = "cmbSupplier";
             this.cmbSupplier.Size = new System.Drawing.Size(200, 25);
             this.cmbSupplier.TabIndex = 5;
@@ -215,7 +215,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbReferencePurchase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbReferencePurchase.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbReferencePurchase.Location = new System.Drawing.Point(500, 68);
+            this.cmbReferencePurchase.Location = new System.Drawing.Point(500, 71);
             this.cmbReferencePurchase.Name = "cmbReferencePurchase";
             this.cmbReferencePurchase.Size = new System.Drawing.Size(200, 25);
             this.cmbReferencePurchase.TabIndex = 7;
@@ -234,7 +234,7 @@ namespace DistributionSoftware.Presentation.Forms
             // dtpReturnDate
             // 
             this.dtpReturnDate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpReturnDate.Location = new System.Drawing.Point(120, 108);
+            this.dtpReturnDate.Location = new System.Drawing.Point(120, 111);
             this.dtpReturnDate.Name = "dtpReturnDate";
             this.dtpReturnDate.Size = new System.Drawing.Size(150, 25);
             this.dtpReturnDate.TabIndex = 9;
@@ -252,7 +252,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtTaxAdjust
             // 
             this.txtTaxAdjust.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTaxAdjust.Location = new System.Drawing.Point(380, 108);
+            this.txtTaxAdjust.Location = new System.Drawing.Point(380, 111);
             this.txtTaxAdjust.Name = "txtTaxAdjust";
             this.txtTaxAdjust.Size = new System.Drawing.Size(100, 25);
             this.txtTaxAdjust.TabIndex = 11;
@@ -271,7 +271,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtDiscountAdjust
             // 
             this.txtDiscountAdjust.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDiscountAdjust.Location = new System.Drawing.Point(650, 108);
+            this.txtDiscountAdjust.Location = new System.Drawing.Point(650, 111);
             this.txtDiscountAdjust.Name = "txtDiscountAdjust";
             this.txtDiscountAdjust.Size = new System.Drawing.Size(100, 25);
             this.txtDiscountAdjust.TabIndex = 13;
@@ -304,7 +304,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.itemsGroup.Size = new System.Drawing.Size(900, 300);
             this.itemsGroup.TabIndex = 1;
             this.itemsGroup.TabStop = false;
-            this.itemsGroup.Text = "📦 Return Items";
+            this.itemsGroup.Text = "ðŸ“¦ Return Items";
             // 
             // dgvReturnItems
             // 
@@ -334,7 +334,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Size = new System.Drawing.Size(900, 80);
             this.actionsGroup.TabIndex = 2;
             this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             // 
             // btnSave
             // 
@@ -346,7 +346,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 35);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "💾 Save";
+            this.btnSave.Text = "ðŸ’¾ Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -360,7 +360,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 35);
             this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -374,7 +374,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(100, 35);
             this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "❌ Close";
+            this.btnClose.Text = "âŒ Close";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
@@ -383,6 +383,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.headerPanel);
@@ -393,7 +394,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "PurchaseReturnForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Purchase Return - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -436,3 +437,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnClose;
     }
 }
+

@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class DeliveryChallanForm
     {
@@ -135,7 +135,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtChallanNumber
             // 
-            this.txtChallanNumber.Location = new System.Drawing.Point(140, 12);
+            this.txtChallanNumber.Location = new System.Drawing.Point(140, 15);
             this.txtChallanNumber.Name = "txtChallanNumber";
             this.txtChallanNumber.ReadOnly = true;
             this.txtChallanNumber.Size = new System.Drawing.Size(150, 26);
@@ -154,7 +154,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dtpChallanDate.CustomFormat = "dddd, MMMM dd, yyyy";
             this.dtpChallanDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpChallanDate.Location = new System.Drawing.Point(120, 47);
+            this.dtpChallanDate.Location = new System.Drawing.Point(120, 50);
             this.dtpChallanDate.Name = "dtpChallanDate";
             this.dtpChallanDate.Size = new System.Drawing.Size(200, 26);
             this.dtpChallanDate.TabIndex = 3;
@@ -170,7 +170,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(420, 12);
+            this.txtStatus.Location = new System.Drawing.Point(420, 15);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
             this.txtStatus.Size = new System.Drawing.Size(100, 26);
@@ -245,7 +245,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbSalesInvoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSalesInvoice.FormattingEnabled = true;
-            this.cmbSalesInvoice.Location = new System.Drawing.Point(140, 17);
+            this.cmbSalesInvoice.Location = new System.Drawing.Point(140, 20);
             this.cmbSalesInvoice.Name = "cmbSalesInvoice";
             this.cmbSalesInvoice.Size = new System.Drawing.Size(350, 28);
             this.cmbSalesInvoice.TabIndex = 0;
@@ -273,7 +273,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Location = new System.Drawing.Point(140, 12);
+            this.txtCustomerName.Location = new System.Drawing.Point(140, 15);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
             this.txtCustomerName.Size = new System.Drawing.Size(200, 26);
@@ -290,7 +290,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtCustomerAddress
             // 
-            this.txtCustomerAddress.Location = new System.Drawing.Point(90, 47);
+            this.txtCustomerAddress.Location = new System.Drawing.Point(90, 50);
             this.txtCustomerAddress.Name = "txtCustomerAddress";
             this.txtCustomerAddress.ReadOnly = true;
             this.txtCustomerAddress.Size = new System.Drawing.Size(500, 26);
@@ -326,7 +326,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbVehicle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVehicle.FormattingEnabled = true;
-            this.cmbVehicle.Location = new System.Drawing.Point(100, 12);
+            this.cmbVehicle.Location = new System.Drawing.Point(100, 15);
             this.cmbVehicle.Name = "cmbVehicle";
             this.cmbVehicle.Size = new System.Drawing.Size(200, 28);
             this.cmbVehicle.TabIndex = 1;
@@ -592,7 +592,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.MinimumSize = new System.Drawing.Size(1300, 600);
             this.Name = "DeliveryChallanForm";
             this.Text = "Delivery Challan - POS System";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeliveryChallanForm_FormClosing);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeliveryChallanForm_FormClosing);
             this.Load += new System.EventHandler(this.DeliveryChallanForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
@@ -669,3 +669,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnSave;
     }
 }
+

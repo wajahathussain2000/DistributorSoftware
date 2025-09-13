@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -131,7 +131,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(40, 30);
             this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "✕";
+            this.btnClose.Text = "âœ•";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
@@ -473,7 +473,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "DeliveryConfirmationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Delivery Confirmation";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.pnlMain.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
             this.pnlLeft.ResumeLayout(false);
             this.pnlRight.ResumeLayout(false);
@@ -522,3 +522,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnCancel;
     }
 }
+

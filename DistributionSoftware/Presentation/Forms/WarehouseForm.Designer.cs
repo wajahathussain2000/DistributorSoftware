@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class WarehouseForm
     {
@@ -83,7 +83,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Controls.Add(this.txtWarehouseName);
             this.Name = "WarehouseForm";
             this.Text = "Warehouse Management - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;((System.ComponentModel.ISupportInitialize)(this.dgvWarehouses)).EndInit();
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;((System.ComponentModel.ISupportInitialize)(this.dgvWarehouses)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -97,3 +97,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvWarehouses;
     }
 }
+

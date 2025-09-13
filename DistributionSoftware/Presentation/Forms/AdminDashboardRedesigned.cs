@@ -47,6 +47,7 @@ namespace DistributionSoftware.Presentation.Forms
             InitializeComponent();
             connectionString = ConfigurationManager.GetConnectionString("DistributionConnection");
             InitializeDashboard();
+            SetupResponsiveLayout();
         }
 
         private void InitializeDashboard()
@@ -1421,6 +1422,133 @@ namespace DistributionSoftware.Presentation.Forms
         }
 
         #endregion
+
+        private void SetupResponsiveLayout()
+        {
+            // Set up responsive layout
+            this.Resize += AdminDashboardRedesigned_Resize;
+            AdjustLayoutForScreenSize();
+        }
+
+        private void AdminDashboardRedesigned_Resize(object sender, EventArgs e)
+        {
+            AdjustLayoutForScreenSize();
+        }
+
+        private void AdjustLayoutForScreenSize()
+        {
+            try
+            {
+                int screenWidth = this.ClientSize.Width;
+                int screenHeight = this.ClientSize.Height;
+
+                // Calculate optimal spacing and sizes
+                int buttonWidth = Math.Max(80, screenWidth / 15); // Responsive button width
+                int buttonSpacing = Math.Max(5, (screenWidth - (12 * buttonWidth)) / 13); // Responsive spacing
+                int chartWidth = (screenWidth - 20) / 3; // 3 columns with margins
+                int chartHeight = Math.Max(200, (screenHeight - 150) / 2); // 2 rows with margins
+
+                // Adjust button positions and sizes
+                AdjustButtonLayout(buttonWidth, buttonSpacing);
+
+                // Adjust chart panel positions and sizes
+                AdjustChartLayout(chartWidth, chartHeight);
+
+                // Refresh the form
+                this.Refresh();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error adjusting layout: {ex.Message}");
+            }
+        }
+
+        private void AdjustButtonLayout(int buttonWidth, int buttonSpacing)
+        {
+            int startX = 5;
+            int y = 65;
+
+            // Adjust all navigation buttons
+            dashboardBtn.Location = new Point(startX, y);
+            dashboardBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            usersBtn.Location = new Point(startX, y);
+            usersBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            productsBtn.Location = new Point(startX, y);
+            productsBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            inventoryBtn.Location = new Point(startX, y);
+            inventoryBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            salesBtn.Location = new Point(startX, y);
+            salesBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            purchasesBtn.Location = new Point(startX, y);
+            purchasesBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            customersBtn.Location = new Point(startX, y);
+            customersBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            suppliersBtn.Location = new Point(startX, y);
+            suppliersBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            reportsBtn.Location = new Point(startX, y);
+            reportsBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            expenseBtn.Location = new Point(startX, y);
+            expenseBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            settingsBtn.Location = new Point(startX, y);
+            settingsBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            logoutBtn.Location = new Point(startX, y);
+            logoutBtn.Size = new Size(buttonWidth, 30);
+        }
+
+        private void AdjustChartLayout(int chartWidth, int chartHeight)
+        {
+            int startX = 5;
+            int startY = 104;
+            int spacing = 10;
+
+            // Top row charts
+            salesChartPanel.Location = new Point(startX, startY);
+            salesChartPanel.Size = new Size(chartWidth, chartHeight);
+
+            startX += chartWidth + spacing;
+            inventoryChartPanel.Location = new Point(startX, startY);
+            inventoryChartPanel.Size = new Size(chartWidth, chartHeight);
+
+            startX += chartWidth + spacing;
+            revenueChartPanel.Location = new Point(startX, startY);
+            revenueChartPanel.Size = new Size(chartWidth, chartHeight);
+
+            // Bottom row charts
+            startX = 5;
+            startY += chartHeight + spacing;
+            customerChartPanel.Location = new Point(startX, startY);
+            customerChartPanel.Size = new Size(chartWidth, chartHeight);
+
+            startX += chartWidth + spacing;
+            topProductsChartPanel.Location = new Point(startX, startY);
+            topProductsChartPanel.Size = new Size(chartWidth, chartHeight);
+
+            startX += chartWidth + spacing;
+            purchaseVsSalesChartPanel.Location = new Point(startX, startY);
+            purchaseVsSalesChartPanel.Size = new Size(chartWidth, chartHeight);
+        }
     }
 
     // Data classes

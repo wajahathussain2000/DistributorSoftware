@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -101,7 +101,7 @@ namespace DistributionSoftware.Presentation.Forms
             // dtpFromDate
             // 
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(100, 12);
+            this.dtpFromDate.Location = new System.Drawing.Point(100, 15);
             this.dtpFromDate.Name = "dtpFromDate";
             this.dtpFromDate.Size = new System.Drawing.Size(120, 25);
             this.dtpFromDate.TabIndex = 1;
@@ -118,7 +118,7 @@ namespace DistributionSoftware.Presentation.Forms
             // dtpToDate
             // 
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(330, 12);
+            this.dtpToDate.Location = new System.Drawing.Point(330, 15);
             this.dtpToDate.Name = "dtpToDate";
             this.dtpToDate.Size = new System.Drawing.Size(120, 25);
             this.dtpToDate.TabIndex = 3;
@@ -135,7 +135,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbProduct
             // 
             this.cmbProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbProduct.Location = new System.Drawing.Point(100, 47);
+            this.cmbProduct.Location = new System.Drawing.Point(100, 50);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(200, 25);
             this.cmbProduct.TabIndex = 5;
@@ -152,7 +152,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbWarehouse
             // 
             this.cmbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbWarehouse.Location = new System.Drawing.Point(410, 47);
+            this.cmbWarehouse.Location = new System.Drawing.Point(410, 50);
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(150, 25);
             this.cmbWarehouse.TabIndex = 7;
@@ -169,7 +169,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbMovementType
             // 
             this.cmbMovementType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMovementType.Location = new System.Drawing.Point(120, 82);
+            this.cmbMovementType.Location = new System.Drawing.Point(120, 85);
             this.cmbMovementType.Name = "cmbMovementType";
             this.cmbMovementType.Size = new System.Drawing.Size(150, 25);
             this.cmbMovementType.TabIndex = 9;
@@ -228,7 +228,7 @@ namespace DistributionSoftware.Presentation.Forms
             // cmbReferenceType
             // 
             this.cmbReferenceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbReferenceType.Location = new System.Drawing.Point(430, 82);
+            this.cmbReferenceType.Location = new System.Drawing.Point(430, 85);
             this.cmbReferenceType.Name = "cmbReferenceType";
             this.cmbReferenceType.Size = new System.Drawing.Size(150, 25);
             this.cmbReferenceType.TabIndex = 14;
@@ -244,7 +244,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtBatchNumber
             // 
-            this.txtBatchNumber.Location = new System.Drawing.Point(710, 82);
+            this.txtBatchNumber.Location = new System.Drawing.Point(710, 85);
             this.txtBatchNumber.Name = "txtBatchNumber";
             this.txtBatchNumber.Size = new System.Drawing.Size(150, 25);
             this.txtBatchNumber.TabIndex = 16;
@@ -259,7 +259,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(100, 35);
             this.btnSearch.TabIndex = 17;
-            this.btnSearch.Text = "🔍 Search";
+            this.btnSearch.Text = "ðŸ” Search";
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
@@ -273,7 +273,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 35);
             this.btnClear.TabIndex = 18;
-            this.btnClear.Text = "🗑️ Clear";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -287,7 +287,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(100, 35);
             this.btnPrint.TabIndex = 19;
-            this.btnPrint.Text = "🖨️ Print";
+            this.btnPrint.Text = "ðŸ–¨ï¸ Print";
             this.btnPrint.UseVisualStyleBackColor = false;
             this.btnPrint.Click += new System.EventHandler(this.BtnPrint_Click);
             // 
@@ -314,6 +314,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.Controls.Add(this.dgvMovements);
             this.Controls.Add(this.filterPanel);
@@ -322,7 +323,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockMovementReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stock Movement Report";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.filterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovements)).EndInit();
             this.ResumeLayout(false);
@@ -354,3 +355,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvMovements;
     }
 }
+

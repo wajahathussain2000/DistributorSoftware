@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -205,6 +205,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.Add(this.ledgerGroup);
             this.Controls.Add(this.filterGroup);
@@ -217,7 +218,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.ShowInTaskbar = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Customer Ledger - Distribution Software";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.filterGroup.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.filterGroup.ResumeLayout(false);
             this.ledgerGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLedger)).EndInit();
             this.ResumeLayout(false);
@@ -239,3 +240,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.DataGridView dgvLedger;
     }
 }
+

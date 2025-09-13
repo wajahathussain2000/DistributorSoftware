@@ -1,4 +1,4 @@
-namespace DistributionSoftware.Presentation.Forms
+﻿namespace DistributionSoftware.Presentation.Forms
 {
     partial class SalesmanAchievementForm
     {
@@ -452,7 +452,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "SalesmanAchievementForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Salesman Achievement Tracking";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.Load += new System.EventHandler(this.SalesmanAchievementForm_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;this.Load += new System.EventHandler(this.SalesmanAchievementForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
@@ -507,3 +507,4 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnSave;
     }
 }
+

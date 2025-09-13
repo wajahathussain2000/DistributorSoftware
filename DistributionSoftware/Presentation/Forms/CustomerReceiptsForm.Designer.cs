@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -112,7 +112,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(267, 32);
             this.headerLabel.TabIndex = 0;
-            this.headerLabel.Text = "💳 Customer Receipts";
+            this.headerLabel.Text = "ðŸ’³ Customer Receipts";
             // 
             // closeBtn
             // 
@@ -126,7 +126,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(40, 40);
             this.closeBtn.TabIndex = 1;
-            this.closeBtn.Text = "×";
+            this.closeBtn.Text = "Ã—";
             this.closeBtn.UseVisualStyleBackColor = false;
             this.closeBtn.Click += new System.EventHandler(this.BtnClose_Click);
             // 
@@ -146,12 +146,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.receiptsListGroup.Controls.Add(this.dgvReceipts);
             this.receiptsListGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.receiptsListGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.receiptsListGroup.Location = new System.Drawing.Point(102, 440);
+            this.receiptsListGroup.Location = new System.Drawing.Point(102, 510);
             this.receiptsListGroup.Name = "receiptsListGroup";
             this.receiptsListGroup.Size = new System.Drawing.Size(1027, 200);
             this.receiptsListGroup.TabIndex = 1;
             this.receiptsListGroup.TabStop = false;
-            this.receiptsListGroup.Text = "📋 Receipts List";
+            this.receiptsListGroup.Text = "ðŸ“‹ Receipts List";
             // 
             // dgvReceipts
             // 
@@ -186,7 +186,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.leftPanel.Location = new System.Drawing.Point(20, 20);
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.leftPanel.Size = new System.Drawing.Size(1273, 400);
+            this.leftPanel.Size = new System.Drawing.Size(1273, 470);
             this.leftPanel.TabIndex = 0;
             // 
             // actionsGroup
@@ -198,12 +198,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Controls.Add(this.btnSave);
             this.actionsGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.actionsGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.actionsGroup.Location = new System.Drawing.Point(20, 280);
+            this.actionsGroup.Location = new System.Drawing.Point(20, 350);
             this.actionsGroup.Name = "actionsGroup";
             this.actionsGroup.Size = new System.Drawing.Size(987, 100);
             this.actionsGroup.TabIndex = 2;
             this.actionsGroup.TabStop = false;
-            this.actionsGroup.Text = "⚡ Actions";
+            this.actionsGroup.Text = "âš¡ Actions";
             // 
             // btnPrint
             // 
@@ -217,7 +217,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(120, 40);
             this.btnPrint.TabIndex = 4;
-            this.btnPrint.Text = "🖨️ Print Receipt";
+            this.btnPrint.Text = "ðŸ–¨ï¸ Print Receipt";
             this.btnPrint.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnPrint.UseVisualStyleBackColor = false;
             this.btnPrint.Click += new System.EventHandler(this.BtnPrint_Click);
@@ -234,7 +234,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 40);
             this.btnClose.TabIndex = 3;
-            this.btnClose.Text = "❌ Close";
+            this.btnClose.Text = "âŒ Close";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
@@ -250,7 +250,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(120, 40);
             this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "🗑️ Delete";
+            this.btnDelete.Text = "ðŸ—‘ï¸ Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
@@ -266,7 +266,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(120, 40);
             this.btnClear.TabIndex = 1;
-            this.btnClear.Text = "🗑️ Clear Form";
+            this.btnClear.Text = "ðŸ—‘ï¸ Clear Form";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -282,7 +282,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 40);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "💾 Save Receipt";
+            this.btnSave.Text = "ðŸ’¾ Save Receipt";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -309,16 +309,16 @@ namespace DistributionSoftware.Presentation.Forms
             this.receiptGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.receiptGroup.Location = new System.Drawing.Point(20, 20);
             this.receiptGroup.Name = "receiptGroup";
-            this.receiptGroup.Size = new System.Drawing.Size(1230, 250);
+            this.receiptGroup.Size = new System.Drawing.Size(1230, 320);
             this.receiptGroup.TabIndex = 0;
             this.receiptGroup.TabStop = false;
-            this.receiptGroup.Text = "📝 Receipt Information";
+            this.receiptGroup.Text = "ðŸ“ Receipt Information";
             // 
             // receivedByLabel
             // 
             this.receivedByLabel.AutoSize = true;
             this.receivedByLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.receivedByLabel.Location = new System.Drawing.Point(40, 218);
+            this.receivedByLabel.Location = new System.Drawing.Point(40, 270);
             this.receivedByLabel.Name = "receivedByLabel";
             this.receivedByLabel.Size = new System.Drawing.Size(73, 15);
             this.receivedByLabel.TabIndex = 15;
@@ -327,7 +327,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtReceivedBy
             // 
             this.txtReceivedBy.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtReceivedBy.Location = new System.Drawing.Point(120, 215);
+            this.txtReceivedBy.Location = new System.Drawing.Point(120, 267);
             this.txtReceivedBy.Name = "txtReceivedBy";
             this.txtReceivedBy.Size = new System.Drawing.Size(200, 23);
             this.txtReceivedBy.TabIndex = 14;
@@ -336,7 +336,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.descriptionLabel.Location = new System.Drawing.Point(20, 150);
+            this.descriptionLabel.Location = new System.Drawing.Point(20, 190);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(70, 15);
             this.descriptionLabel.TabIndex = 13;
@@ -345,7 +345,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtDescription
             // 
             this.txtDescription.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtDescription.Location = new System.Drawing.Point(100, 147);
+            this.txtDescription.Location = new System.Drawing.Point(100, 187);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(250, 23);
             this.txtDescription.TabIndex = 12;
@@ -354,7 +354,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.invoiceRefLabel.AutoSize = true;
             this.invoiceRefLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.invoiceRefLabel.Location = new System.Drawing.Point(31, 189);
+            this.invoiceRefLabel.Location = new System.Drawing.Point(31, 230);
             this.invoiceRefLabel.Name = "invoiceRefLabel";
             this.invoiceRefLabel.Size = new System.Drawing.Size(103, 15);
             this.invoiceRefLabel.TabIndex = 11;
@@ -365,7 +365,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbInvoiceReference.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbInvoiceReference.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbInvoiceReference.FormattingEnabled = true;
-            this.cmbInvoiceReference.Location = new System.Drawing.Point(140, 186);
+            this.cmbInvoiceReference.Location = new System.Drawing.Point(140, 227);
             this.cmbInvoiceReference.Name = "cmbInvoiceReference";
             this.cmbInvoiceReference.Size = new System.Drawing.Size(200, 23);
             this.cmbInvoiceReference.TabIndex = 10;
@@ -374,7 +374,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.paymentMethodLabel.AutoSize = true;
             this.paymentMethodLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.paymentMethodLabel.Location = new System.Drawing.Point(14, 110);
+            this.paymentMethodLabel.Location = new System.Drawing.Point(14, 150);
             this.paymentMethodLabel.Name = "paymentMethodLabel";
             this.paymentMethodLabel.Size = new System.Drawing.Size(102, 15);
             this.paymentMethodLabel.TabIndex = 9;
@@ -385,7 +385,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPaymentMethod.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbPaymentMethod.FormattingEnabled = true;
-            this.cmbPaymentMethod.Location = new System.Drawing.Point(120, 107);
+            this.cmbPaymentMethod.Location = new System.Drawing.Point(120, 147);
             this.cmbPaymentMethod.Name = "cmbPaymentMethod";
             this.cmbPaymentMethod.Size = new System.Drawing.Size(150, 23);
             this.cmbPaymentMethod.TabIndex = 8;
@@ -412,12 +412,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.paymentDetailsGroup.Controls.Add(this.txtPaymentReference);
             this.paymentDetailsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.paymentDetailsGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.paymentDetailsGroup.Location = new System.Drawing.Point(356, 110);
+            this.paymentDetailsGroup.Location = new System.Drawing.Point(356, 150);
             this.paymentDetailsGroup.Name = "paymentDetailsGroup";
             this.paymentDetailsGroup.Size = new System.Drawing.Size(720, 157);
             this.paymentDetailsGroup.TabIndex = 10;
             this.paymentDetailsGroup.TabStop = false;
-            this.paymentDetailsGroup.Text = "💳 Payment Details";
+            this.paymentDetailsGroup.Text = "ðŸ’³ Payment Details";
             this.paymentDetailsGroup.Visible = false;
             // 
             // lblBankName
