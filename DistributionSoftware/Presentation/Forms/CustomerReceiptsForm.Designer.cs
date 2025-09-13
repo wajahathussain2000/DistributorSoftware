@@ -150,7 +150,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.leftPanel.Location = new System.Drawing.Point(0, 0);
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.leftPanel.Size = new System.Drawing.Size(800, 641);
+            this.leftPanel.Size = new System.Drawing.Size(766, 641);
             this.leftPanel.TabIndex = 0;
             // 
             // actionsGroup
@@ -163,9 +163,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.actionsGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.actionsGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.actionsGroup.Location = new System.Drawing.Point(20, 260);
+            this.actionsGroup.Location = new System.Drawing.Point(20, 463);
             this.actionsGroup.Name = "actionsGroup";
-            this.actionsGroup.Size = new System.Drawing.Size(760, 361);
+            this.actionsGroup.Size = new System.Drawing.Size(726, 158);
             this.actionsGroup.TabIndex = 2;
             this.actionsGroup.TabStop = false;
             this.actionsGroup.Text = "⚡ Actions";
@@ -274,7 +274,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.receiptGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.receiptGroup.Location = new System.Drawing.Point(20, 20);
             this.receiptGroup.Name = "receiptGroup";
-            this.receiptGroup.Size = new System.Drawing.Size(760, 363);
+            this.receiptGroup.Size = new System.Drawing.Size(726, 351);
             this.receiptGroup.TabIndex = 0;
             this.receiptGroup.TabStop = false;
             this.receiptGroup.Text = "📝 Receipt Information";
@@ -319,7 +319,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.invoiceRefLabel.AutoSize = true;
             this.invoiceRefLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.invoiceRefLabel.Location = new System.Drawing.Point(400, 110);
+            this.invoiceRefLabel.Location = new System.Drawing.Point(391, 110);
             this.invoiceRefLabel.Name = "invoiceRefLabel";
             this.invoiceRefLabel.Size = new System.Drawing.Size(103, 15);
             this.invoiceRefLabel.TabIndex = 11;
@@ -339,7 +339,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.paymentMethodLabel.AutoSize = true;
             this.paymentMethodLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.paymentMethodLabel.Location = new System.Drawing.Point(20, 110);
+            this.paymentMethodLabel.Location = new System.Drawing.Point(14, 110);
             this.paymentMethodLabel.Name = "paymentMethodLabel";
             this.paymentMethodLabel.Size = new System.Drawing.Size(102, 15);
             this.paymentMethodLabel.TabIndex = 9;
@@ -673,7 +673,6 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.dgvReceipts.AllowUserToAddRows = false;
             this.dgvReceipts.AllowUserToDeleteRows = false;
-            this.dgvReceipts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvReceipts.BackgroundColor = System.Drawing.Color.White;
             this.dgvReceipts.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvReceipts.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -693,7 +692,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.dgvReceipts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvReceipts.Size = new System.Drawing.Size(1238, 573);
             this.dgvReceipts.TabIndex = 0;
+            this.dgvReceipts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReceipts_CellContentClick);
             this.dgvReceipts.SelectionChanged += new System.EventHandler(this.DgvReceipts_SelectionChanged);
+            this.dgvReceipts.Resize += new System.EventHandler(this.DgvReceipts_Resize);
             // 
             // CustomerReceiptsForm
             // 

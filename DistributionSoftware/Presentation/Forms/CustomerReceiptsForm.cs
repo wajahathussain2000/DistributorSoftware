@@ -78,6 +78,9 @@ namespace DistributionSoftware.Presentation.Forms
             
             // Ensure action buttons are visible (they're now always visible in new layout)
             EnsureActionButtonsVisible();
+            
+            // Ensure DataGridView is properly sized
+            EnsureDataGridViewProperSizing();
         }
         
         private void SetDefaultValues()
@@ -108,6 +111,32 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 // If bringing to front fails, just continue
                 System.Diagnostics.Debug.WriteLine($"Bring to front failed: {ex.Message}");
+            }
+        }
+        
+        private void EnsureDataGridViewProperSizing()
+        {
+            try
+            {
+                // Wait a moment for the DataGridView to be fully initialized
+                System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+                timer.Interval = 500; // 500ms delay
+                timer.Tick += (s, e) =>
+                {
+                    timer.Stop();
+                    timer.Dispose();
+                    
+                    // Force column configuration
+                    ConfigureReceiptsGridColumns();
+                    
+                    // Ensure horizontal scrolling is enabled
+                    EnableHorizontalScrolling();
+                };
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error ensuring DataGridView proper sizing: {ex.Message}");
             }
         }
         
@@ -266,6 +295,7 @@ namespace DistributionSoftware.Presentation.Forms
                     {
                         dgvReceipts.Columns[1].HeaderText = "Receipt No.";
                         dgvReceipts.Columns[1].Width = 100;
+                        dgvReceipts.Columns[1].MinimumWidth = 80;
                         dgvReceipts.Columns[1].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -274,6 +304,7 @@ namespace DistributionSoftware.Presentation.Forms
                     {
                         dgvReceipts.Columns[2].HeaderText = "Date";
                         dgvReceipts.Columns[2].Width = 80;
+                        dgvReceipts.Columns[2].MinimumWidth = 70;
                         dgvReceipts.Columns[2].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -282,6 +313,7 @@ namespace DistributionSoftware.Presentation.Forms
                     {
                         dgvReceipts.Columns[3].HeaderText = "Customer";
                         dgvReceipts.Columns[3].Width = 150;
+                        dgvReceipts.Columns[3].MinimumWidth = 120;
                         dgvReceipts.Columns[3].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -290,6 +322,7 @@ namespace DistributionSoftware.Presentation.Forms
                     {
                         dgvReceipts.Columns[4].HeaderText = "Amount";
                         dgvReceipts.Columns[4].Width = 100;
+                        dgvReceipts.Columns[4].MinimumWidth = 80;
                         dgvReceipts.Columns[4].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                         dgvReceipts.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     }
@@ -298,7 +331,8 @@ namespace DistributionSoftware.Presentation.Forms
                     if (dgvReceipts.Columns[5] != null)
                     {
                         dgvReceipts.Columns[5].HeaderText = "Payment Method";
-                        dgvReceipts.Columns[5].Width = 150;
+                        dgvReceipts.Columns[5].Width = 130;
+                        dgvReceipts.Columns[5].MinimumWidth = 110;
                         dgvReceipts.Columns[5].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -307,6 +341,7 @@ namespace DistributionSoftware.Presentation.Forms
                     {
                         dgvReceipts.Columns[6].HeaderText = "Invoice Ref.";
                         dgvReceipts.Columns[6].Width = 120;
+                        dgvReceipts.Columns[6].MinimumWidth = 100;
                         dgvReceipts.Columns[6].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -314,7 +349,8 @@ namespace DistributionSoftware.Presentation.Forms
                     if (dgvReceipts.Columns[7] != null)
                     {
                         dgvReceipts.Columns[7].HeaderText = "Description";
-                        dgvReceipts.Columns[7].Width = 180;
+                        dgvReceipts.Columns[7].Width = 200;
+                        dgvReceipts.Columns[7].MinimumWidth = 150;
                         dgvReceipts.Columns[7].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -322,7 +358,8 @@ namespace DistributionSoftware.Presentation.Forms
                     if (dgvReceipts.Columns[8] != null)
                     {
                         dgvReceipts.Columns[8].HeaderText = "Received By";
-                        dgvReceipts.Columns[8].Width = 100;
+                        dgvReceipts.Columns[8].Width = 120;
+                        dgvReceipts.Columns[8].MinimumWidth = 100;
                         dgvReceipts.Columns[8].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                     
@@ -331,12 +368,16 @@ namespace DistributionSoftware.Presentation.Forms
                     {
                         dgvReceipts.Columns[9].HeaderText = "Status";
                         dgvReceipts.Columns[9].Width = 80;
+                        dgvReceipts.Columns[9].MinimumWidth = 70;
                         dgvReceipts.Columns[9].DefaultCellStyle.Font = new Font("Segoe UI", 9F);
                     }
                 }
                 
                 // Apply styling to the DataGridView
                 ApplyDataGridViewStyling();
+                
+                // Ensure horizontal scrolling is enabled
+                EnableHorizontalScrolling();
             }
             catch (Exception ex)
             {
@@ -374,6 +415,53 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error applying DataGridView styling: {ex.Message}");
+            }
+        }
+        
+        private void EnableHorizontalScrolling()
+        {
+            try
+            {
+                // Force horizontal scrolling to be always enabled
+                dgvReceipts.ScrollBars = ScrollBars.Both;
+                
+                // Ensure columns don't auto-resize to fill the space
+                dgvReceipts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+                
+                // Calculate total width of all columns
+                int totalColumnWidth = 0;
+                foreach (DataGridViewColumn column in dgvReceipts.Columns)
+                {
+                    if (column.Visible)
+                    {
+                        totalColumnWidth += column.Width;
+                    }
+                }
+                
+                // Set minimum total width to ensure horizontal scrolling
+                int minimumTotalWidth = 1000; // Ensure we have enough width for scrolling
+                if (totalColumnWidth < minimumTotalWidth)
+                {
+                    // Adjust the Description column to make total width larger
+                    if (dgvReceipts.Columns.Count > 7)
+                    {
+                        dgvReceipts.Columns[7].Width = Math.Max(dgvReceipts.Columns[7].Width, 300);
+                    }
+                }
+                
+                // Allow column resizing
+                foreach (DataGridViewColumn column in dgvReceipts.Columns)
+                {
+                    column.Resizable = DataGridViewTriState.True;
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                }
+                
+                // Force refresh to ensure scrolling is visible
+                dgvReceipts.Refresh();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error enabling horizontal scrolling: {ex.Message}");
             }
         }
         
@@ -586,6 +674,19 @@ namespace DistributionSoftware.Presentation.Forms
                     _currentReceiptId = Convert.ToInt32(selectedRow.Cells["ReceiptId"].Value);
                     LoadReceiptForEdit(_currentReceiptId);
                 }
+            }
+        }
+        
+        private void DgvReceipts_Resize(object sender, EventArgs e)
+        {
+            try
+            {
+                // Re-enable horizontal scrolling when DataGridView is resized
+                EnableHorizontalScrolling();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in DataGridView resize: {ex.Message}");
             }
         }
         
@@ -1269,7 +1370,31 @@ namespace DistributionSoftware.Presentation.Forms
             lblPaymentReference.Visible = true;
             txtPaymentReference.Visible = true;
         }
+
+        #endregion
+        
+        #region DataGridView Event Handlers
+        
+        private void dgvReceipts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // Handle cell content click events (like button clicks in cells)
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // You can add specific logic here for cell content clicks
+                    // For example, if you have buttons or links in cells
+                    System.Diagnostics.Debug.WriteLine($"Cell clicked: Row {e.RowIndex}, Column {e.ColumnIndex}");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in dgvReceipts_CellContentClick: {ex.Message}");
+            }
+        }
         
         #endregion
+
+       
     }
 }
