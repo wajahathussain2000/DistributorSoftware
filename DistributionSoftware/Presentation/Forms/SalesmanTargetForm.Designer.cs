@@ -47,6 +47,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.lblStatus = new System.Windows.Forms.Label();
             this.chkCommissionEligible = new System.Windows.Forms.CheckBox();
             this.chkBonusEligible = new System.Windows.Forms.CheckBox();
+            this.txtBonusAmount = new System.Windows.Forms.TextBox();
+            this.lblBonusAmount = new System.Windows.Forms.Label();
+            this.txtCommissionAmount = new System.Windows.Forms.TextBox();
+            this.lblCommissionAmount = new System.Windows.Forms.Label();
             this.grpTargetValues = new System.Windows.Forms.GroupBox();
             this.txtCategoryUnit = new System.Windows.Forms.TextBox();
             this.lblCategoryUnit = new System.Windows.Forms.Label();
@@ -152,6 +156,8 @@ namespace DistributionSoftware.Presentation.Forms
             this.dgvTargets.Size = new System.Drawing.Size(900, 720);
             this.dgvTargets.TabIndex = 0;
             this.dgvTargets.SelectionChanged += new System.EventHandler(this.dgvTargets_SelectionChanged);
+            this.dgvTargets.DoubleClick += new System.EventHandler(this.dgvTargets_DoubleClick);
+            this.dgvTargets.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTargets_CellClick);
             // 
             // pnlRight
             // 
@@ -177,17 +183,21 @@ namespace DistributionSoftware.Presentation.Forms
             this.grpStatusComments.Controls.Add(this.lblStatus);
             this.grpStatusComments.Controls.Add(this.chkCommissionEligible);
             this.grpStatusComments.Controls.Add(this.chkBonusEligible);
+            this.grpStatusComments.Controls.Add(this.txtBonusAmount);
+            this.grpStatusComments.Controls.Add(this.lblBonusAmount);
+            this.grpStatusComments.Controls.Add(this.txtCommissionAmount);
+            this.grpStatusComments.Controls.Add(this.lblCommissionAmount);
             this.grpStatusComments.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpStatusComments.Location = new System.Drawing.Point(10, 10);
             this.grpStatusComments.Name = "grpStatusComments";
-            this.grpStatusComments.Size = new System.Drawing.Size(450, 200);
+            this.grpStatusComments.Size = new System.Drawing.Size(450, 230);
             this.grpStatusComments.TabIndex = 0;
             this.grpStatusComments.TabStop = false;
             this.grpStatusComments.Text = "Status Comments";
             // 
             // txtMarketConditions
             // 
-            this.txtMarketConditions.Location = new System.Drawing.Point(120, 160);
+            this.txtMarketConditions.Location = new System.Drawing.Point(120, 185);
             this.txtMarketConditions.Multiline = true;
             this.txtMarketConditions.Name = "txtMarketConditions";
             this.txtMarketConditions.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -197,7 +207,7 @@ namespace DistributionSoftware.Presentation.Forms
             // lblMarketConditions
             // 
             this.lblMarketConditions.AutoSize = true;
-            this.lblMarketConditions.Location = new System.Drawing.Point(10, 163);
+            this.lblMarketConditions.Location = new System.Drawing.Point(10, 188);
             this.lblMarketConditions.Name = "lblMarketConditions";
             this.lblMarketConditions.Size = new System.Drawing.Size(110, 15);
             this.lblMarketConditions.TabIndex = 10;
@@ -205,7 +215,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtSalesmanComments
             // 
-            this.txtSalesmanComments.Location = new System.Drawing.Point(120, 120);
+            this.txtSalesmanComments.Location = new System.Drawing.Point(120, 145);
             this.txtSalesmanComments.Multiline = true;
             this.txtSalesmanComments.Name = "txtSalesmanComments";
             this.txtSalesmanComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -215,7 +225,7 @@ namespace DistributionSoftware.Presentation.Forms
             // lblSalesmanComments
             // 
             this.lblSalesmanComments.AutoSize = true;
-            this.lblSalesmanComments.Location = new System.Drawing.Point(10, 123);
+            this.lblSalesmanComments.Location = new System.Drawing.Point(10, 148);
             this.lblSalesmanComments.Name = "lblSalesmanComments";
             this.lblSalesmanComments.Size = new System.Drawing.Size(120, 15);
             this.lblSalesmanComments.TabIndex = 8;
@@ -223,7 +233,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // txtManagerComments
             // 
-            this.txtManagerComments.Location = new System.Drawing.Point(120, 80);
+            this.txtManagerComments.Location = new System.Drawing.Point(120, 105);
             this.txtManagerComments.Multiline = true;
             this.txtManagerComments.Name = "txtManagerComments";
             this.txtManagerComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -233,7 +243,7 @@ namespace DistributionSoftware.Presentation.Forms
             // lblManagerComments
             // 
             this.lblManagerComments.AutoSize = true;
-            this.lblManagerComments.Location = new System.Drawing.Point(10, 83);
+            this.lblManagerComments.Location = new System.Drawing.Point(10, 108);
             this.lblManagerComments.Name = "lblManagerComments";
             this.lblManagerComments.Size = new System.Drawing.Size(110, 15);
             this.lblManagerComments.TabIndex = 6;
@@ -243,7 +253,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbRating.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRating.FormattingEnabled = true;
-            this.cmbRating.Location = new System.Drawing.Point(320, 45);
+            this.cmbRating.Location = new System.Drawing.Point(320, 70);
             this.cmbRating.Name = "cmbRating";
             this.cmbRating.Size = new System.Drawing.Size(120, 23);
             this.cmbRating.TabIndex = 5;
@@ -251,7 +261,7 @@ namespace DistributionSoftware.Presentation.Forms
             // lblRating
             // 
             this.lblRating.AutoSize = true;
-            this.lblRating.Location = new System.Drawing.Point(270, 48);
+            this.lblRating.Location = new System.Drawing.Point(270, 73);
             this.lblRating.Name = "lblRating";
             this.lblRating.Size = new System.Drawing.Size(44, 15);
             this.lblRating.TabIndex = 4;
@@ -261,7 +271,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(60, 45);
+            this.cmbStatus.Location = new System.Drawing.Point(60, 70);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(120, 23);
             this.cmbStatus.TabIndex = 3;
@@ -269,7 +279,7 @@ namespace DistributionSoftware.Presentation.Forms
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(10, 48);
+            this.lblStatus.Location = new System.Drawing.Point(10, 73);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(44, 15);
             this.lblStatus.TabIndex = 2;
@@ -295,6 +305,38 @@ namespace DistributionSoftware.Presentation.Forms
             this.chkBonusEligible.Text = "Bonus Eligible";
             this.chkBonusEligible.UseVisualStyleBackColor = true;
             // 
+            // txtBonusAmount
+            // 
+            this.txtBonusAmount.Location = new System.Drawing.Point(100, 45);
+            this.txtBonusAmount.Name = "txtBonusAmount";
+            this.txtBonusAmount.Size = new System.Drawing.Size(100, 23);
+            this.txtBonusAmount.TabIndex = 2;
+            // 
+            // lblBonusAmount
+            // 
+            this.lblBonusAmount.AutoSize = true;
+            this.lblBonusAmount.Location = new System.Drawing.Point(10, 48);
+            this.lblBonusAmount.Name = "lblBonusAmount";
+            this.lblBonusAmount.Size = new System.Drawing.Size(84, 15);
+            this.lblBonusAmount.TabIndex = 3;
+            this.lblBonusAmount.Text = "Bonus Amount:";
+            // 
+            // txtCommissionAmount
+            // 
+            this.txtCommissionAmount.Location = new System.Drawing.Point(320, 45);
+            this.txtCommissionAmount.Name = "txtCommissionAmount";
+            this.txtCommissionAmount.Size = new System.Drawing.Size(100, 23);
+            this.txtCommissionAmount.TabIndex = 4;
+            // 
+            // lblCommissionAmount
+            // 
+            this.lblCommissionAmount.AutoSize = true;
+            this.lblCommissionAmount.Location = new System.Drawing.Point(220, 48);
+            this.lblCommissionAmount.Name = "lblCommissionAmount";
+            this.lblCommissionAmount.Size = new System.Drawing.Size(110, 15);
+            this.lblCommissionAmount.TabIndex = 5;
+            this.lblCommissionAmount.Text = "Commission Amount:";
+            // 
             // grpTargetValues
             // 
             this.grpTargetValues.Controls.Add(this.txtCategoryUnit);
@@ -312,7 +354,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.grpTargetValues.Controls.Add(this.txtRevenueTarget);
             this.grpTargetValues.Controls.Add(this.lblRevenueTarget);
             this.grpTargetValues.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpTargetValues.Location = new System.Drawing.Point(10, 220);
+            this.grpTargetValues.Location = new System.Drawing.Point(10, 250);
             this.grpTargetValues.Name = "grpTargetValues";
             this.grpTargetValues.Size = new System.Drawing.Size(450, 200);
             this.grpTargetValues.TabIndex = 1;
@@ -446,7 +488,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.grpTargetInformation.Controls.Add(this.cmbSalesman);
             this.grpTargetInformation.Controls.Add(this.lblSalesman);
             this.grpTargetInformation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpTargetInformation.Location = new System.Drawing.Point(10, 430);
+            this.grpTargetInformation.Location = new System.Drawing.Point(10, 460);
             this.grpTargetInformation.Name = "grpTargetInformation";
             this.grpTargetInformation.Size = new System.Drawing.Size(450, 280);
             this.grpTargetInformation.TabIndex = 2;
@@ -607,7 +649,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(1000, 15);
+            this.btnCancel.Location = new System.Drawing.Point(420, 15);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(80, 30);
             this.btnCancel.TabIndex = 4;
@@ -617,7 +659,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(900, 15);
+            this.btnSave.Location = new System.Drawing.Point(320, 15);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(80, 30);
             this.btnSave.TabIndex = 3;
@@ -627,7 +669,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(800, 15);
+            this.btnDelete.Location = new System.Drawing.Point(220, 15);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(80, 30);
             this.btnDelete.TabIndex = 2;
@@ -637,7 +679,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(700, 15);
+            this.btnEdit.Location = new System.Drawing.Point(120, 15);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(80, 30);
             this.btnEdit.TabIndex = 1;
@@ -647,7 +689,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(600, 15);
+            this.btnNew.Location = new System.Drawing.Point(20, 15);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(80, 30);
             this.btnNew.TabIndex = 0;
@@ -708,6 +750,10 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.CheckBox chkCommissionEligible;
         private System.Windows.Forms.CheckBox chkBonusEligible;
+        private System.Windows.Forms.TextBox txtBonusAmount;
+        private System.Windows.Forms.Label lblBonusAmount;
+        private System.Windows.Forms.TextBox txtCommissionAmount;
+        private System.Windows.Forms.Label lblCommissionAmount;
         private System.Windows.Forms.GroupBox grpTargetValues;
         private System.Windows.Forms.TextBox txtCategoryUnit;
         private System.Windows.Forms.Label lblCategoryUnit;

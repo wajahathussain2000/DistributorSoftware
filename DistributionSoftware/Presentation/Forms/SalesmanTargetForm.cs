@@ -30,6 +30,8 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
+                Console.WriteLine("SalesmanTargetForm_Load: Starting form initialization");
+                
                 // Ensure form is properly enabled and focused
                 this.Enabled = true;
                 this.Visible = true;
@@ -41,11 +43,30 @@ namespace DistributionSoftware.Presentation.Forms
                 // Initialize form asynchronously to prevent UI blocking
                 this.BeginInvoke(new Action(() =>
                 {
+                    Console.WriteLine("BeginInvoke: Starting InitializeForm");
                     InitializeForm();
+                    Console.WriteLine("BeginInvoke: InitializeForm completed");
+                    
+                    // Test if DataGridView is properly initialized
+                    Console.WriteLine($"DataGridView initialized: {dgvTargets != null}");
+                    Console.WriteLine($"DataGridView enabled: {dgvTargets?.Enabled}");
+                    Console.WriteLine($"DataGridView visible: {dgvTargets?.Visible}");
+                    Console.WriteLine($"DataGridView row count: {dgvTargets?.Rows?.Count ?? 0}");
+                    
+                    // Test if DataGridView is ready
+                    Console.WriteLine($"DataGridView ready for events: {dgvTargets != null}");
+                    
+                    // Force a test click event
+                    if (dgvTargets?.Rows?.Count > 0)
+                    {
+                        Console.WriteLine("Testing manual event trigger...");
+                        dgvTargets_CellClick(dgvTargets, new DataGridViewCellEventArgs(0, 0));
+                    }
                 }));
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in SalesmanTargetForm_Load: {ex.Message}");
                 MessageBox.Show($"Error loading form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -63,9 +84,10 @@ namespace DistributionSoftware.Presentation.Forms
                     LoadTargets();
                 }));
 
-                // Set initial form mode - start in new mode for immediate data entry
-                _isNewMode = true;
-                SetFormMode(true);
+                // Set initial form mode - start in view mode to allow DataGridView interaction
+                _isNewMode = false;
+                _isEditMode = false;
+                SetFormMode(false);
                 
                 // Set default values for new targets
                 SetDefaultValues();
@@ -342,7 +364,7 @@ namespace DistributionSoftware.Presentation.Forms
                         target.TargetPeriodName,
                         target.RevenueTarget,
                         target.ActualRevenue,
-                        target.RevenueAchievementPercentage,
+                        target.OverallAchievementPercentage, // Use OverallAchievementPercentage from our query
                         target.BonusAmount,
                         target.CommissionAmount,
                         target.StatusText
@@ -389,6 +411,8 @@ namespace DistributionSoftware.Presentation.Forms
                 cmbRating.Enabled = enableControls;
                 chkBonusEligible.Enabled = enableControls;
                 chkCommissionEligible.Enabled = enableControls;
+                txtBonusAmount.Enabled = enableControls;
+                txtCommissionAmount.Enabled = enableControls;
                 txtManagerComments.Enabled = enableControls;
                 txtSalesmanComments.Enabled = enableControls;
                 txtMarketConditions.Enabled = enableControls;
@@ -463,6 +487,8 @@ namespace DistributionSoftware.Presentation.Forms
                 if (cmbRating != null) cmbRating.SelectedIndex = -1;
                 if (chkBonusEligible != null) chkBonusEligible.Checked = false;
                 if (chkCommissionEligible != null) chkCommissionEligible.Checked = false;
+                if (txtBonusAmount != null) txtBonusAmount.Clear();
+                if (txtCommissionAmount != null) txtCommissionAmount.Clear();
                 if (txtManagerComments != null) txtManagerComments.Clear();
                 if (txtSalesmanComments != null) txtSalesmanComments.Clear();
                 if (txtMarketConditions != null) txtMarketConditions.Clear();
@@ -479,8 +505,13 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                if (target == null) return;
+                if (target == null) 
+                {
+                    Console.WriteLine("PopulateForm: target is null");
+                    return;
+                }
 
+                Console.WriteLine($"PopulateForm: TargetId={target.TargetId}, RevenueTarget={target.RevenueTarget}");
                 _currentTarget = target;
 
                 // Target Information
@@ -501,7 +532,17 @@ namespace DistributionSoftware.Presentation.Forms
                 }
 
                 // Target Values
-                if (txtRevenueTarget != null) txtRevenueTarget.Text = target.RevenueTarget.ToString();
+                Console.WriteLine($"Setting RevenueTarget: {target.RevenueTarget}");
+                if (txtRevenueTarget != null) 
+                {
+                    txtRevenueTarget.Text = target.RevenueTarget.ToString();
+                    Console.WriteLine($"txtRevenueTarget set to: {txtRevenueTarget.Text}");
+                }
+                else
+                {
+                    Console.WriteLine("txtRevenueTarget is null!");
+                }
+                
                 if (txtUnitTarget != null) txtUnitTarget.Text = target.UnitTarget.ToString();
                 if (txtCustomerTarget != null) txtCustomerTarget.Text = target.CustomerTarget.ToString();
                 if (txtInvoiceTarget != null) txtInvoiceTarget.Text = target.InvoiceTarget.ToString();
@@ -514,6 +555,8 @@ namespace DistributionSoftware.Presentation.Forms
                 if (cmbRating != null) cmbRating.SelectedValue = target.PerformanceRating;
                 if (chkBonusEligible != null) chkBonusEligible.Checked = target.IsBonusEligible;
                 if (chkCommissionEligible != null) chkCommissionEligible.Checked = target.IsCommissionEligible;
+                if (txtBonusAmount != null) txtBonusAmount.Text = target.BonusAmount.ToString();
+                if (txtCommissionAmount != null) txtCommissionAmount.Text = target.CommissionAmount.ToString();
                 if (txtManagerComments != null) txtManagerComments.Text = target.ManagerComments ?? "";
                 if (txtSalesmanComments != null) txtSalesmanComments.Text = target.SalesmanComments ?? "";
                 if (txtMarketConditions != null) txtMarketConditions.Text = target.MarketConditions ?? "";
@@ -627,6 +670,10 @@ namespace DistributionSoftware.Presentation.Forms
                     target.PerformanceRating = cmbRating.SelectedValue.ToString();
                 target.IsBonusEligible = chkBonusEligible.Checked;
                 target.IsCommissionEligible = chkCommissionEligible.Checked;
+                if (decimal.TryParse(txtBonusAmount.Text, out decimal bonusAmount))
+                    target.BonusAmount = bonusAmount;
+                if (decimal.TryParse(txtCommissionAmount.Text, out decimal commissionAmount))
+                    target.CommissionAmount = commissionAmount;
                 target.ManagerComments = txtManagerComments.Text;
                 target.SalesmanComments = txtSalesmanComments.Text;
                 target.MarketConditions = txtMarketConditions.Text;
@@ -658,11 +705,78 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
+                Console.WriteLine($"SelectionChanged: SelectedRows={dgvTargets.SelectedRows.Count}, EditMode={_isEditMode}, NewMode={_isNewMode}");
+                
                 if (dgvTargets.SelectedRows.Count > 0 && !_isEditMode && !_isNewMode)
                 {
                     var selectedRow = dgvTargets.SelectedRows[0];
                     var targetId = Convert.ToInt32(selectedRow.Cells["TargetId"].Value);
                     var target = _targets.FirstOrDefault(t => t.TargetId == targetId);
+                    
+                    Console.WriteLine($"Found target: {target != null}, TargetId: {targetId}");
+                    
+                    if (target != null)
+                    {
+                        PopulateForm(target);
+                        Console.WriteLine("Form populated successfully");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in SelectionChanged: {ex.Message}");
+                MessageBox.Show($"Error handling selection change: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvTargets_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvTargets.SelectedRows.Count > 0)
+                {
+                    var selectedRow = dgvTargets.SelectedRows[0];
+                    if (selectedRow.Cells["TargetId"].Value != null)
+                    {
+                        int targetId = Convert.ToInt32(selectedRow.Cells["TargetId"].Value);
+                        var target = _targets.FirstOrDefault(t => t.TargetId == targetId);
+                        
+                        if (target != null)
+                        {
+                            PopulateForm(target);
+                            SetFormMode(true); // Enable edit mode
+                            MessageBox.Show("Target loaded for editing. Make your changes and click Save.", "Edit Mode", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a target to edit.", "No Selection", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading target for editing: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvTargets_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                Console.WriteLine($"Cell clicked: Row={e.RowIndex}, Column={e.ColumnIndex}");
+                
+                // Only handle clicks on rows (not headers)
+                if (e.RowIndex >= 0 && !_isEditMode && !_isNewMode)
+                {
+                    var selectedRow = dgvTargets.Rows[e.RowIndex];
+                    var targetId = Convert.ToInt32(selectedRow.Cells["TargetId"].Value);
+                    var target = _targets.FirstOrDefault(t => t.TargetId == targetId);
+                    
+                    Console.WriteLine($"Selected TargetId: {targetId}, Target found: {target != null}");
                     
                     if (target != null)
                     {
@@ -672,7 +786,8 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error handling selection change: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"Error in cell click: {ex.Message}");
+                MessageBox.Show($"Error handling cell click: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -832,12 +947,43 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                // This could be used for adding achievement records
-                MessageBox.Show("Add achievement functionality will be implemented.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Check if a target is selected
+                if (dgvTargets.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a target to add achievement.", "No Selection", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Get the selected target
+                var selectedRow = dgvTargets.SelectedRows[0];
+                var targetId = Convert.ToInt32(selectedRow.Cells["TargetId"].Value);
+                
+                // Find the target object
+                var target = _targets.FirstOrDefault(t => t.TargetId == targetId);
+                if (target == null)
+                {
+                    MessageBox.Show("Selected target not found.", "Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Open achievement form
+                using (var achievementForm = new SalesmanAchievementForm(target, _salesmanTargetService))
+                {
+                    if (achievementForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh the targets list to show updated achievement data
+                        LoadTargets();
+                        MessageBox.Show("Achievement added successfully!", "Success", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error adding achievement: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error adding achievement: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

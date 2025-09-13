@@ -14,10 +14,16 @@ namespace DistributionSoftware.Models
         public string AchievementPeriod { get; set; } // Daily, Weekly, Monthly
         
         // Sales Achievement
-        public decimal RevenueAchieved { get; set; }
-        public int UnitsSold { get; set; }
-        public int CustomersServed { get; set; }
-        public int InvoicesGenerated { get; set; }
+        public decimal ActualRevenue { get; set; }
+        public int ActualUnits { get; set; }
+        public int ActualCustomers { get; set; }
+        public int ActualInvoices { get; set; }
+        
+        // Legacy properties for backward compatibility
+        public decimal RevenueAchieved { get { return ActualRevenue; } set { ActualRevenue = value; } }
+        public int UnitsSold { get { return ActualUnits; } set { ActualUnits = value; } }
+        public int CustomersServed { get { return ActualCustomers; } set { ActualCustomers = value; } }
+        public int InvoicesGenerated { get { return ActualInvoices; } set { ActualInvoices = value; } }
         
         // Product Category Achievement
         public string ProductCategory { get; set; }
@@ -91,26 +97,9 @@ namespace DistributionSoftware.Models
             }
         }
         
-        public decimal OverallAchievementPercentage
-        {
-            get
-            {
-                if (RevenueAchievementPercentage > 0)
-                    return RevenueAchievementPercentage;
-                else if (UnitAchievementPercentage > 0)
-                    return UnitAchievementPercentage;
-                else
-                    return 0;
-            }
-        }
+        public decimal OverallAchievementPercentage { get; set; }
         
-        public bool IsAchievementMet
-        {
-            get
-            {
-                return OverallAchievementPercentage >= 100;
-            }
-        }
+        public bool IsAchievementMet { get; set; }
         
         public string AchievementStatus
         {

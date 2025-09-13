@@ -136,18 +136,7 @@ namespace DistributionSoftware.Models
             }
         }
         
-        public decimal OverallAchievementPercentage
-        {
-            get
-            {
-                if (RevenueTarget > 0)
-                    return RevenueAchievementPercentage;
-                else if (UnitTarget > 0)
-                    return UnitAchievementPercentage;
-                else
-                    return 0;
-            }
-        }
+        public decimal OverallAchievementPercentage { get; set; }
         
         public bool IsTargetMet
         {
