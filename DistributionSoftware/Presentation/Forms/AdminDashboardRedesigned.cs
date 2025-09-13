@@ -26,7 +26,7 @@ namespace DistributionSoftware.Presentation.Forms
         private CartesianChart revenueChart;
         
         // New charts
-        private PieChart customerChart;
+        private CartesianChart customerChart;
         private CartesianChart topProductsChart;
         private CartesianChart purchaseVsSalesChart;
 
@@ -46,6 +46,10 @@ namespace DistributionSoftware.Presentation.Forms
         {
             InitializeComponent();
             connectionString = ConfigurationManager.GetConnectionString("DistributionConnection");
+            
+            // Test database connection
+            TestDatabaseConnection();
+            
             InitializeDashboard();
             SetupResponsiveLayout();
         }
@@ -198,7 +202,7 @@ namespace DistributionSoftware.Presentation.Forms
             revenueChartPanel.Controls.Add(revenueChart);
             
             // Initialize new charts
-            customerChart = new PieChart
+            customerChart = new CartesianChart
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.White
@@ -226,6 +230,65 @@ namespace DistributionSoftware.Presentation.Forms
             LoadCustomerChart();
             LoadTopProductsChart();
             LoadPurchaseVsSalesChart();
+            
+            // Add refresh button
+            AddRefreshButton();
+        }
+
+        private void AddRefreshButton()
+        {
+            var refreshBtn = new Button
+            {
+                Text = "🔄 Refresh Data",
+                BackColor = Color.FromArgb(52, 152, 219),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Size = new Size(120, 35),
+                Location = new Point(this.ClientSize.Width - 140, 20),
+                Cursor = Cursors.Hand
+            };
+            
+            refreshBtn.FlatAppearance.BorderSize = 0;
+            refreshBtn.Click += RefreshBtn_Click;
+            
+            this.Controls.Add(refreshBtn);
+            refreshBtn.BringToFront();
+        }
+
+        private void RefreshBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Show loading message
+                var refreshBtn = sender as Button;
+                refreshBtn.Text = "⏳ Loading...";
+                refreshBtn.Enabled = false;
+                
+                // Refresh all charts
+                LoadSalesChart();
+                LoadInventoryChart();
+                LoadRevenueChart();
+                LoadCustomerChart();
+                LoadTopProductsChart();
+                LoadPurchaseVsSalesChart();
+                
+                // Reset button
+                refreshBtn.Text = "🔄 Refresh Data";
+                refreshBtn.Enabled = true;
+                
+                MessageBox.Show("Dashboard data refreshed successfully!", "Refresh Complete", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                var refreshBtn = sender as Button;
+                refreshBtn.Text = "🔄 Refresh Data";
+                refreshBtn.Enabled = true;
+                
+                MessageBox.Show($"Error refreshing data: {ex.Message}", "Refresh Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AddChartPlaceholder(Panel panel, string title, string message)
@@ -281,8 +344,8 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 new Axis
                 {
-                    Labeler = value => $"${value:N0}",
-                    Name = "Revenue ($)"
+                    Labeler = value => $"{value:N0}",
+                    Name = "Revenue"
                 }
             };
         }
@@ -291,13 +354,20 @@ namespace DistributionSoftware.Presentation.Forms
         {
             var inventoryData = GetInventoryDataFromDB();
             
+            if (inventoryData.Count == 0)
+            {
+                AddChartPlaceholder(inventoryChartPanel, "Inventory Distribution", "No inventory data available");
+                return;
+            }
+            
             var series = new PieSeries<double>
             {
                 Name = "Inventory Distribution",
                 Values = inventoryData.Select(x => (double)x.StockQuantity).ToArray(),
-                DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                DataLabelsPaint = new SolidColorPaint(SKColors.White),
                 DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-                DataLabelsFormatter = point => $"{point.Coordinate.PrimaryValue:N0}"
+                DataLabelsFormatter = point => $"{point.Coordinate.PrimaryValue:N0}",
+                Fill = new SolidColorPaint(SKColors.SteelBlue)
             };
 
             inventoryChart.Series = new ISeries[] { series };
@@ -331,36 +401,66 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 new Axis
                 {
-                    Labeler = value => $"${value:N0}",
-                    Name = "Revenue ($)"
+                    Labeler = value => $"{value:N0}",
+                    Name = "Revenue"
                 }
             };
         }
 
         private void LoadCustomerChart()
         {
-            var customerData = GetCustomerDataFromDB();
+            var salesReturnsData = GetSalesReturnsDataFromDB();
             
-            var series = new PieSeries<double>
+            if (salesReturnsData.Count == 0)
             {
-                Name = "Customer Distribution",
-                Values = customerData.Select(x => (double)x.CustomerCount).ToArray(),
-                DataLabelsPaint = new SolidColorPaint(SKColors.Black),
-                DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-                DataLabelsFormatter = point => $"{point.Coordinate.PrimaryValue:N0}"
+                AddChartPlaceholder(customerChartPanel, "Sales Returns", "No returns data available");
+                return;
+            }
+            
+            var series = new ColumnSeries<double>
+            {
+                Name = "Sales Returns",
+                Values = salesReturnsData.Select(x => (double)x.ReturnAmount).ToArray(),
+                Fill = new SolidColorPaint(SKColors.Red),
+                Stroke = new SolidColorPaint(SKColors.DarkRed) { StrokeThickness = 2 }
             };
 
             customerChart.Series = new ISeries[] { series };
+            
+            // Configure axes
+            customerChart.XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labels = salesReturnsData.Select(x => x.Date.ToString("MM/dd")).ToArray(),
+                    Name = "Date"
+                }
+            };
+            
+            customerChart.YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Labeler = value => $"{value:N0}",
+                    Name = "Return Amount"
+                }
+            };
         }
 
         private void LoadTopProductsChart()
         {
-            var productData = GetTopProductsDataFromDB();
+            var lowStockData = GetLowStockDataFromDB();
+            
+            if (lowStockData.Count == 0)
+            {
+                AddChartPlaceholder(topProductsChartPanel, "Stock Levels", "No stock data available");
+                return;
+            }
             
             var series = new ColumnSeries<double>
             {
-                Name = "Top Products",
-                Values = productData.Select(x => (double)x.SalesQuantity).ToArray(),
+                Name = "Current Stock Levels",
+                Values = lowStockData.Select(x => (double)x.CurrentStock).ToArray(),
                 Fill = new SolidColorPaint(SKColors.Orange),
                 Stroke = new SolidColorPaint(SKColors.DarkOrange) { StrokeThickness = 2 }
             };
@@ -372,7 +472,7 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 new Axis
                 {
-                    Labels = productData.Select(x => x.ProductName.Length > 15 ? x.ProductName.Substring(0, 15) + "..." : x.ProductName).ToArray(),
+                    Labels = lowStockData.Select(x => x.ProductName.Length > 12 ? x.ProductName.Substring(0, 12) + "..." : x.ProductName).ToArray(),
                     Name = "Product"
                 }
             };
@@ -382,42 +482,39 @@ namespace DistributionSoftware.Presentation.Forms
                 new Axis
                 {
                     Labeler = value => $"{value:N0}",
-                    Name = "Quantity Sold"
+                    Name = "Stock Quantity"
                 }
             };
         }
 
         private void LoadPurchaseVsSalesChart()
         {
-            var comparisonData = GetPurchaseVsSalesDataFromDB();
+            var trendingData = GetTrendingProductsDataFromDB();
             
-            var salesSeries = new LineSeries<double>
+            if (trendingData.Count == 0)
             {
-                Name = "Sales",
-                Values = comparisonData.Select(x => (double)x.SalesAmount).ToArray(),
+                AddChartPlaceholder(purchaseVsSalesChartPanel, "Trending Products", "No trending data available");
+                return;
+            }
+            
+            var series = new LineSeries<double>
+            {
+                Name = "Trending Products",
+                Values = trendingData.Select(x => (double)x.SalesCount).ToArray(),
                 Stroke = new SolidColorPaint(SKColors.Green) { StrokeThickness = 3 },
-                Fill = null,
+                Fill = new SolidColorPaint(SKColors.LightGreen),
                 GeometrySize = 8
             };
 
-            var purchaseSeries = new LineSeries<double>
-            {
-                Name = "Purchases",
-                Values = comparisonData.Select(x => (double)x.PurchaseAmount).ToArray(),
-                Stroke = new SolidColorPaint(SKColors.Red) { StrokeThickness = 3 },
-                Fill = null,
-                GeometrySize = 8
-            };
-
-            purchaseVsSalesChart.Series = new ISeries[] { salesSeries, purchaseSeries };
+            purchaseVsSalesChart.Series = new ISeries[] { series };
             
             // Configure axes
             purchaseVsSalesChart.XAxes = new Axis[]
             {
                 new Axis
                 {
-                    Labels = comparisonData.Select(x => x.Month).ToArray(),
-                    Name = "Month"
+                    Labels = trendingData.Select(x => x.ProductName.Length > 10 ? x.ProductName.Substring(0, 10) + "..." : x.ProductName).ToArray(),
+                    Name = "Product"
                 }
             };
             
@@ -425,13 +522,142 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 new Axis
                 {
-                    Labeler = value => $"${value:N0}",
-                    Name = "Amount ($)"
+                    Labeler = value => $"{value:N0}",
+                    Name = "Sales Count"
                 }
             };
         }
 
         // Database data methods
+        private List<SalesReturnsData> GetSalesReturnsDataFromDB()
+        {
+            var data = new List<SalesReturnsData>();
+            
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var query = @"
+                        SELECT TOP 7 
+                            CAST(sr.ReturnDate AS DATE) as Date,
+                            SUM(sr.TotalAmount) as ReturnAmount
+                        FROM SalesReturns sr
+                        WHERE sr.ReturnDate >= DATEADD(day, -7, GETDATE())
+                        GROUP BY CAST(sr.ReturnDate AS DATE)
+                        ORDER BY Date DESC";
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            data.Add(new SalesReturnsData
+                            {
+                                Date = reader.IsDBNull(0) ? DateTime.Now : reader.GetDateTime(0),
+                                ReturnAmount = decimal.TryParse(reader["ReturnAmount"].ToString(), out decimal amount) ? amount : 0m
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading sales returns data: {ex.Message}");
+                // Fallback to mock data
+                data = MockDataGenerator.GetSalesReturnsData();
+            }
+            
+            return data;
+        }
+
+        private List<LowStockData> GetLowStockDataFromDB()
+        {
+            var data = new List<LowStockData>();
+            
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var query = @"
+                        SELECT TOP 6
+                            p.ProductName,
+                            s.Quantity as CurrentStock,
+                            p.ReorderLevel
+                        FROM Stock s
+                        INNER JOIN Products p ON s.ProductId = p.ProductId
+                        ORDER BY s.Quantity ASC";
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            data.Add(new LowStockData
+                            {
+                                ProductName = reader["ProductName"].ToString(),
+                                CurrentStock = int.TryParse(reader["CurrentStock"].ToString(), out int stock) ? stock : 0,
+                                ReorderLevel = int.TryParse(reader["ReorderLevel"].ToString(), out int reorder) ? reorder : 0
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading low stock data: {ex.Message}");
+                // Fallback to mock data
+                data = MockDataGenerator.GetLowStockData();
+            }
+            
+            return data;
+        }
+
+        private List<TrendingProductsData> GetTrendingProductsDataFromDB()
+        {
+            var data = new List<TrendingProductsData>();
+            
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var query = @"
+                        SELECT TOP 6
+                            p.ProductName,
+                            COUNT(sid.SalesInvoiceDetailId) as SalesCount
+                        FROM SalesInvoiceDetails sid
+                        INNER JOIN SalesInvoices si ON sid.SalesInvoiceId = si.SalesInvoiceId
+                        INNER JOIN Products p ON sid.ProductId = p.ProductId
+                        WHERE si.InvoiceDate >= DATEADD(day, -30, GETDATE())
+                        GROUP BY p.ProductName
+                        ORDER BY SalesCount DESC";
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            data.Add(new TrendingProductsData
+                            {
+                                ProductName = reader["ProductName"].ToString(),
+                                SalesCount = int.TryParse(reader["SalesCount"].ToString(), out int count) ? count : 0
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading trending products data: {ex.Message}");
+                // Fallback to mock data
+                data = MockDataGenerator.GetTrendingProductsData();
+            }
+            
+            return data;
+        }
+
         private List<SalesData> GetSalesDataFromDB()
         {
             var data = new List<SalesData>();
@@ -464,9 +690,10 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // Fallback to mock data if database error
+                System.Diagnostics.Debug.WriteLine($"Error loading sales data: {ex.Message}");
                 data = GetSalesData();
             }
             
@@ -506,9 +733,10 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // Fallback to mock data if database error
+                System.Diagnostics.Debug.WriteLine($"Error loading inventory data: {ex.Message}");
                 data = GetInventoryData();
             }
             
@@ -547,9 +775,10 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // Fallback to mock data if database error
+                System.Diagnostics.Debug.WriteLine($"Error loading revenue data: {ex.Message}");
                 data = GetRevenueData();
             }
             
@@ -1423,6 +1652,69 @@ namespace DistributionSoftware.Presentation.Forms
 
         #endregion
 
+        private void TestDatabaseConnection()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    System.Diagnostics.Debug.WriteLine("Connection string is null or empty!");
+                    MessageBox.Show("Database connection string is not configured properly. Charts will show sample data.", 
+                        "Database Connection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    System.Diagnostics.Debug.WriteLine("Database connection successful!");
+                    
+                    // Test if required tables exist
+                    TestRequiredTables(connection);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Database connection failed: {ex.Message}");
+                MessageBox.Show($"Database connection failed: {ex.Message}\n\nCharts will show sample data.", 
+                    "Database Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void TestRequiredTables(SqlConnection connection)
+        {
+            try
+            {
+                var requiredTables = new[] { "SalesInvoices", "SalesInvoiceDetails", "Products", "Categories", "Stock", "Customers", "PurchaseInvoices" };
+                var existingTables = new List<string>();
+
+                foreach (var table in requiredTables)
+                {
+                    var query = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{table}'";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        var count = (int)command.ExecuteScalar();
+                        if (count > 0)
+                        {
+                            existingTables.Add(table);
+                        }
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Existing tables: {string.Join(", ", existingTables)}");
+                
+                if (existingTables.Count < requiredTables.Length)
+                {
+                    var missingTables = requiredTables.Except(existingTables).ToArray();
+                    System.Diagnostics.Debug.WriteLine($"Missing tables: {string.Join(", ", missingTables)}");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error testing tables: {ex.Message}");
+            }
+        }
+
         private void SetupResponsiveLayout()
         {
             // Set up responsive layout
@@ -1587,5 +1879,71 @@ namespace DistributionSoftware.Presentation.Forms
         public string Month { get; set; }
         public decimal SalesAmount { get; set; }
         public decimal PurchaseAmount { get; set; }
+    }
+
+    public class SalesReturnsData
+    {
+        public DateTime Date { get; set; }
+        public decimal ReturnAmount { get; set; }
+    }
+
+    public class LowStockData
+    {
+        public string ProductName { get; set; }
+        public int CurrentStock { get; set; }
+        public int ReorderLevel { get; set; }
+    }
+
+    public class TrendingProductsData
+    {
+        public string ProductName { get; set; }
+        public int SalesCount { get; set; }
+    }
+
+    // Mock data methods for fallback
+    public static class MockDataGenerator
+    {
+        public static List<SalesReturnsData> GetSalesReturnsData()
+        {
+            var data = new List<SalesReturnsData>();
+            var random = new Random();
+            
+            for (int i = 0; i < 7; i++)
+            {
+                data.Add(new SalesReturnsData
+                {
+                    Date = DateTime.Now.AddDays(-6 + i),
+                    ReturnAmount = (decimal)random.Next(500, 3000)
+                });
+            }
+            
+            return data;
+        }
+
+        public static List<LowStockData> GetLowStockData()
+        {
+            return new List<LowStockData>
+            {
+                new LowStockData { ProductName = "Laptop", CurrentStock = 5, ReorderLevel = 10 },
+                new LowStockData { ProductName = "Mouse", CurrentStock = 8, ReorderLevel = 15 },
+                new LowStockData { ProductName = "Keyboard", CurrentStock = 3, ReorderLevel = 12 },
+                new LowStockData { ProductName = "Monitor", CurrentStock = 2, ReorderLevel = 8 },
+                new LowStockData { ProductName = "Headphones", CurrentStock = 7, ReorderLevel = 20 },
+                new LowStockData { ProductName = "Webcam", CurrentStock = 4, ReorderLevel = 10 }
+            };
+        }
+
+        public static List<TrendingProductsData> GetTrendingProductsData()
+        {
+            return new List<TrendingProductsData>
+            {
+                new TrendingProductsData { ProductName = "Smartphone", SalesCount = 45 },
+                new TrendingProductsData { ProductName = "Laptop", SalesCount = 38 },
+                new TrendingProductsData { ProductName = "Tablet", SalesCount = 32 },
+                new TrendingProductsData { ProductName = "Headphones", SalesCount = 28 },
+                new TrendingProductsData { ProductName = "Mouse", SalesCount = 25 },
+                new TrendingProductsData { ProductName = "Keyboard", SalesCount = 22 }
+            };
+        }
     }
 }
