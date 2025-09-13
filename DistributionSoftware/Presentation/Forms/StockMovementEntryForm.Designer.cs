@@ -348,7 +348,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockMovementEntryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stock Movement Entry";
-            this.mainPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);

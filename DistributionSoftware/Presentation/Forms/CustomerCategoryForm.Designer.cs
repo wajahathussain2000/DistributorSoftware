@@ -270,7 +270,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "CustomerCategoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Customer Category Master - Distribution Software";
-            this.headerPanel.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.categoryGroup.ResumeLayout(false);

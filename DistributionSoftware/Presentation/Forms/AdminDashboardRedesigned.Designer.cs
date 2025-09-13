@@ -41,6 +41,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.customersBtn = new System.Windows.Forms.Button();
             this.suppliersBtn = new System.Windows.Forms.Button();
             this.reportsBtn = new System.Windows.Forms.Button();
+            this.expenseBtn = new System.Windows.Forms.Button();
             this.settingsBtn = new System.Windows.Forms.Button();
             this.logoutBtn = new System.Windows.Forms.Button();
             this.salesChartPanel = new System.Windows.Forms.Panel();
@@ -61,10 +62,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.userInfoLabel.AutoSize = true;
             this.userInfoLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userInfoLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.userInfoLabel.Location = new System.Drawing.Point(30, 30);
-            this.userInfoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.userInfoLabel.Location = new System.Drawing.Point(20, 20);
             this.userInfoLabel.Name = "userInfoLabel";
-            this.userInfoLabel.Size = new System.Drawing.Size(293, 32);
+            this.userInfoLabel.Size = new System.Drawing.Size(196, 21);
             this.userInfoLabel.TabIndex = 0;
             this.userInfoLabel.Text = "Welcome, Administrator";
             // 
@@ -73,9 +73,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.greetingLabel.AutoSize = true;
             this.greetingLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.greetingLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(140)))), ((int)(((byte)(141)))));
-            this.greetingLabel.Location = new System.Drawing.Point(20, 50);
+            this.greetingLabel.Location = new System.Drawing.Point(221, 22);
+            this.greetingLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.greetingLabel.Name = "greetingLabel";
-            this.greetingLabel.Size = new System.Drawing.Size(148, 28);
+            this.greetingLabel.Size = new System.Drawing.Size(103, 19);
             this.greetingLabel.TabIndex = 1;
             this.greetingLabel.Text = "Good morning!";
             // 
@@ -86,9 +87,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.dashboardBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.dashboardBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dashboardBtn.ForeColor = System.Drawing.Color.White;
-            this.dashboardBtn.Location = new System.Drawing.Point(20, 100);
+            this.dashboardBtn.Location = new System.Drawing.Point(13, 65);
+            this.dashboardBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dashboardBtn.Name = "dashboardBtn";
-            this.dashboardBtn.Size = new System.Drawing.Size(100, 35);
+            this.dashboardBtn.Size = new System.Drawing.Size(67, 23);
             this.dashboardBtn.TabIndex = 2;
             this.dashboardBtn.Text = "Dashboard";
             this.dashboardBtn.UseVisualStyleBackColor = false;
@@ -101,9 +103,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.usersBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.usersBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usersBtn.ForeColor = System.Drawing.Color.White;
-            this.usersBtn.Location = new System.Drawing.Point(130, 100);
+            this.usersBtn.Location = new System.Drawing.Point(87, 65);
+            this.usersBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.usersBtn.Name = "usersBtn";
-            this.usersBtn.Size = new System.Drawing.Size(100, 35);
+            this.usersBtn.Size = new System.Drawing.Size(67, 23);
             this.usersBtn.TabIndex = 3;
             this.usersBtn.Text = "Users";
             this.usersBtn.UseVisualStyleBackColor = false;
@@ -116,9 +119,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.productsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.productsBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.productsBtn.ForeColor = System.Drawing.Color.White;
-            this.productsBtn.Location = new System.Drawing.Point(240, 100);
+            this.productsBtn.Location = new System.Drawing.Point(160, 65);
+            this.productsBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.productsBtn.Name = "productsBtn";
-            this.productsBtn.Size = new System.Drawing.Size(100, 35);
+            this.productsBtn.Size = new System.Drawing.Size(67, 23);
             this.productsBtn.TabIndex = 4;
             this.productsBtn.Text = "Products";
             this.productsBtn.UseVisualStyleBackColor = false;
@@ -131,9 +135,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.inventoryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.inventoryBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inventoryBtn.ForeColor = System.Drawing.Color.White;
-            this.inventoryBtn.Location = new System.Drawing.Point(350, 100);
+            this.inventoryBtn.Location = new System.Drawing.Point(233, 65);
+            this.inventoryBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.inventoryBtn.Name = "inventoryBtn";
-            this.inventoryBtn.Size = new System.Drawing.Size(100, 35);
+            this.inventoryBtn.Size = new System.Drawing.Size(67, 23);
             this.inventoryBtn.TabIndex = 5;
             this.inventoryBtn.Text = "Inventory";
             this.inventoryBtn.UseVisualStyleBackColor = false;
@@ -146,9 +151,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.salesBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.salesBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.salesBtn.ForeColor = System.Drawing.Color.White;
-            this.salesBtn.Location = new System.Drawing.Point(460, 100);
+            this.salesBtn.Location = new System.Drawing.Point(307, 65);
+            this.salesBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.salesBtn.Name = "salesBtn";
-            this.salesBtn.Size = new System.Drawing.Size(100, 35);
+            this.salesBtn.Size = new System.Drawing.Size(67, 23);
             this.salesBtn.TabIndex = 6;
             this.salesBtn.Text = "Sales";
             this.salesBtn.UseVisualStyleBackColor = false;
@@ -161,9 +167,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.purchasesBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.purchasesBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.purchasesBtn.ForeColor = System.Drawing.Color.White;
-            this.purchasesBtn.Location = new System.Drawing.Point(570, 100);
+            this.purchasesBtn.Location = new System.Drawing.Point(380, 65);
+            this.purchasesBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.purchasesBtn.Name = "purchasesBtn";
-            this.purchasesBtn.Size = new System.Drawing.Size(100, 35);
+            this.purchasesBtn.Size = new System.Drawing.Size(67, 23);
             this.purchasesBtn.TabIndex = 7;
             this.purchasesBtn.Text = "Purchases";
             this.purchasesBtn.UseVisualStyleBackColor = false;
@@ -176,9 +183,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.customersBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customersBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customersBtn.ForeColor = System.Drawing.Color.White;
-            this.customersBtn.Location = new System.Drawing.Point(680, 100);
+            this.customersBtn.Location = new System.Drawing.Point(453, 65);
+            this.customersBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.customersBtn.Name = "customersBtn";
-            this.customersBtn.Size = new System.Drawing.Size(100, 35);
+            this.customersBtn.Size = new System.Drawing.Size(67, 23);
             this.customersBtn.TabIndex = 8;
             this.customersBtn.Text = "Customers";
             this.customersBtn.UseVisualStyleBackColor = false;
@@ -191,9 +199,10 @@ namespace DistributionSoftware.Presentation.Forms
             this.suppliersBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.suppliersBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.suppliersBtn.ForeColor = System.Drawing.Color.White;
-            this.suppliersBtn.Location = new System.Drawing.Point(790, 100);
+            this.suppliersBtn.Location = new System.Drawing.Point(527, 65);
+            this.suppliersBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.suppliersBtn.Name = "suppliersBtn";
-            this.suppliersBtn.Size = new System.Drawing.Size(100, 35);
+            this.suppliersBtn.Size = new System.Drawing.Size(67, 23);
             this.suppliersBtn.TabIndex = 9;
             this.suppliersBtn.Text = "Suppliers";
             this.suppliersBtn.UseVisualStyleBackColor = false;
@@ -206,13 +215,30 @@ namespace DistributionSoftware.Presentation.Forms
             this.reportsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reportsBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.reportsBtn.ForeColor = System.Drawing.Color.White;
-            this.reportsBtn.Location = new System.Drawing.Point(900, 100);
+            this.reportsBtn.Location = new System.Drawing.Point(600, 65);
+            this.reportsBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.reportsBtn.Name = "reportsBtn";
-            this.reportsBtn.Size = new System.Drawing.Size(100, 35);
+            this.reportsBtn.Size = new System.Drawing.Size(67, 23);
             this.reportsBtn.TabIndex = 10;
             this.reportsBtn.Text = "Reports";
             this.reportsBtn.UseVisualStyleBackColor = false;
             this.reportsBtn.Click += new System.EventHandler(this.ReportsBtn_Click);
+            // 
+            // expenseBtn
+            // 
+            this.expenseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
+            this.expenseBtn.FlatAppearance.BorderSize = 0;
+            this.expenseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.expenseBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.expenseBtn.ForeColor = System.Drawing.Color.White;
+            this.expenseBtn.Location = new System.Drawing.Point(673, 65);
+            this.expenseBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.expenseBtn.Name = "expenseBtn";
+            this.expenseBtn.Size = new System.Drawing.Size(67, 23);
+            this.expenseBtn.TabIndex = 11;
+            this.expenseBtn.Text = "Expense";
+            this.expenseBtn.UseVisualStyleBackColor = false;
+            this.expenseBtn.Click += new System.EventHandler(this.ExpenseBtn_Click);
             // 
             // settingsBtn
             // 
@@ -221,10 +247,11 @@ namespace DistributionSoftware.Presentation.Forms
             this.settingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsBtn.ForeColor = System.Drawing.Color.White;
-            this.settingsBtn.Location = new System.Drawing.Point(1010, 100);
+            this.settingsBtn.Location = new System.Drawing.Point(747, 65);
+            this.settingsBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.settingsBtn.Name = "settingsBtn";
-            this.settingsBtn.Size = new System.Drawing.Size(100, 35);
-            this.settingsBtn.TabIndex = 11;
+            this.settingsBtn.Size = new System.Drawing.Size(67, 23);
+            this.settingsBtn.TabIndex = 12;
             this.settingsBtn.Text = "Settings";
             this.settingsBtn.UseVisualStyleBackColor = false;
             this.settingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
@@ -236,10 +263,11 @@ namespace DistributionSoftware.Presentation.Forms
             this.logoutBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.logoutBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.logoutBtn.ForeColor = System.Drawing.Color.White;
-            this.logoutBtn.Location = new System.Drawing.Point(1120, 100);
+            this.logoutBtn.Location = new System.Drawing.Point(820, 65);
+            this.logoutBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.logoutBtn.Name = "logoutBtn";
-            this.logoutBtn.Size = new System.Drawing.Size(100, 35);
-            this.logoutBtn.TabIndex = 12;
+            this.logoutBtn.Size = new System.Drawing.Size(67, 23);
+            this.logoutBtn.TabIndex = 13;
             this.logoutBtn.Text = "Logout";
             this.logoutBtn.UseVisualStyleBackColor = false;
             this.logoutBtn.Click += new System.EventHandler(this.LogoutBtn_Click);
@@ -248,62 +276,68 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.salesChartPanel.BackColor = System.Drawing.Color.White;
             this.salesChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.salesChartPanel.Location = new System.Drawing.Point(20, 160);
+            this.salesChartPanel.Location = new System.Drawing.Point(13, 104);
+            this.salesChartPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.salesChartPanel.Name = "salesChartPanel";
-            this.salesChartPanel.Size = new System.Drawing.Size(400, 300);
+            this.salesChartPanel.Size = new System.Drawing.Size(267, 196);
             this.salesChartPanel.TabIndex = 13;
             // 
             // inventoryChartPanel
             // 
             this.inventoryChartPanel.BackColor = System.Drawing.Color.White;
             this.inventoryChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inventoryChartPanel.Location = new System.Drawing.Point(440, 160);
+            this.inventoryChartPanel.Location = new System.Drawing.Point(293, 104);
+            this.inventoryChartPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.inventoryChartPanel.Name = "inventoryChartPanel";
-            this.inventoryChartPanel.Size = new System.Drawing.Size(300, 300);
+            this.inventoryChartPanel.Size = new System.Drawing.Size(201, 196);
             this.inventoryChartPanel.TabIndex = 14;
             // 
             // revenueChartPanel
             // 
             this.revenueChartPanel.BackColor = System.Drawing.Color.White;
             this.revenueChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.revenueChartPanel.Location = new System.Drawing.Point(760, 160);
+            this.revenueChartPanel.Location = new System.Drawing.Point(507, 104);
+            this.revenueChartPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.revenueChartPanel.Name = "revenueChartPanel";
-            this.revenueChartPanel.Size = new System.Drawing.Size(400, 300);
+            this.revenueChartPanel.Size = new System.Drawing.Size(380, 196);
             this.revenueChartPanel.TabIndex = 15;
             // 
             // customerChartPanel
             // 
             this.customerChartPanel.BackColor = System.Drawing.Color.White;
             this.customerChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.customerChartPanel.Location = new System.Drawing.Point(20, 480);
+            this.customerChartPanel.Location = new System.Drawing.Point(13, 312);
+            this.customerChartPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.customerChartPanel.Name = "customerChartPanel";
-            this.customerChartPanel.Size = new System.Drawing.Size(300, 300);
+            this.customerChartPanel.Size = new System.Drawing.Size(201, 196);
             this.customerChartPanel.TabIndex = 16;
             // 
             // topProductsChartPanel
             // 
             this.topProductsChartPanel.BackColor = System.Drawing.Color.White;
             this.topProductsChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.topProductsChartPanel.Location = new System.Drawing.Point(340, 480);
+            this.topProductsChartPanel.Location = new System.Drawing.Point(227, 312);
+            this.topProductsChartPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.topProductsChartPanel.Name = "topProductsChartPanel";
-            this.topProductsChartPanel.Size = new System.Drawing.Size(400, 300);
+            this.topProductsChartPanel.Size = new System.Drawing.Size(267, 196);
             this.topProductsChartPanel.TabIndex = 17;
             // 
             // purchaseVsSalesChartPanel
             // 
             this.purchaseVsSalesChartPanel.BackColor = System.Drawing.Color.White;
             this.purchaseVsSalesChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.purchaseVsSalesChartPanel.Location = new System.Drawing.Point(760, 480);
+            this.purchaseVsSalesChartPanel.Location = new System.Drawing.Point(507, 312);
+            this.purchaseVsSalesChartPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.purchaseVsSalesChartPanel.Name = "purchaseVsSalesChartPanel";
-            this.purchaseVsSalesChartPanel.Size = new System.Drawing.Size(400, 300);
+            this.purchaseVsSalesChartPanel.Size = new System.Drawing.Size(380, 196);
             this.purchaseVsSalesChartPanel.TabIndex = 18;
             // 
             // AdminDashboardRedesigned
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
-            this.ClientSize = new System.Drawing.Size(1800, 1050);
+            this.ClientSize = new System.Drawing.Size(952, 456);
             this.Controls.Add(this.purchaseVsSalesChartPanel);
             this.Controls.Add(this.topProductsChartPanel);
             this.Controls.Add(this.customerChartPanel);
@@ -312,6 +346,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Controls.Add(this.salesChartPanel);
             this.Controls.Add(this.logoutBtn);
             this.Controls.Add(this.settingsBtn);
+            this.Controls.Add(this.expenseBtn);
             this.Controls.Add(this.reportsBtn);
             this.Controls.Add(this.suppliersBtn);
             this.Controls.Add(this.customersBtn);
@@ -324,10 +359,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.Controls.Add(this.greetingLabel);
             this.Controls.Add(this.userInfoLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "AdminDashboardRedesigned";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin Dashboard - Distribution Management System";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,6 +384,7 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button customersBtn;
         private System.Windows.Forms.Button suppliersBtn;
         private System.Windows.Forms.Button reportsBtn;
+        private System.Windows.Forms.Button expenseBtn;
         private System.Windows.Forms.Button settingsBtn;
         private System.Windows.Forms.Button logoutBtn;
         private System.Windows.Forms.Panel salesChartPanel;

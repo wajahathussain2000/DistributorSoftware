@@ -39,6 +39,7 @@ namespace DistributionSoftware.Presentation.Forms
         private ContextMenuStrip customersDropdown;
         private ContextMenuStrip suppliersDropdown;
         private ContextMenuStrip reportsDropdown;
+        private ContextMenuStrip expenseDropdown;
         private ContextMenuStrip settingsDropdown;
 
         public AdminDashboardRedesigned()
@@ -147,13 +148,19 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
 
 
+            // Expense Dropdown (Expense Management Module)
+            expenseDropdown = new ContextMenuStrip();
+            expenseDropdown.Font = dropdownFont;
+            expenseDropdown.Items.Add("Expense Category Master", null, (s, e) => OpenExpenseCategoryMasterForm());
+            expenseDropdown.Items.Add("Expense Entry", null, (s, e) => OpenExpenseEntryForm());
+            expenseDropdown.Items.Add("-");
+            expenseDropdown.Items.Add("Expense Reports", null, (s, e) => OpenExpenseReports());
+
             // Settings Dropdown (Master Data & Configuration Module)
             settingsDropdown = new ContextMenuStrip();
             settingsDropdown.Font = dropdownFont;
             settingsDropdown.Items.Add("Master Data Management", null, (s, e) => OpenMasterDataManagement());
             settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("Expense Category Master", null, (s, e) => OpenExpenseCategoryMasterForm());
-            settingsDropdown.Items.Add("Expense Entry", null, (s, e) => OpenExpenseEntryForm());
             settingsDropdown.Items.Add("Customer Category Master", null, (s, e) => OpenCustomerCategoryForm());
             settingsDropdown.Items.Add("Vehicle Master", null, (s, e) => OpenVehicleMasterForm());
             settingsDropdown.Items.Add("Route Master", null, (s, e) => OpenRouteMasterForm());
@@ -805,6 +812,11 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Show(reportsBtn, new Point(0, reportsBtn.Height));
         }
 
+        private void ExpenseBtn_Click(object sender, EventArgs e)
+        {
+            expenseDropdown.Show(expenseBtn, new Point(0, expenseBtn.Height));
+        }
+
         private void SettingsBtn_Click(object sender, EventArgs e)
         {
             settingsDropdown.Show(settingsBtn, new Point(0, settingsBtn.Height));
@@ -1274,6 +1286,18 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Expense Entry Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenExpenseReports()
+        {
+            try
+            {
+                MessageBox.Show("Expense Reports functionality will be implemented soon.", "Expense Reports", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Expense Reports: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

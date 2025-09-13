@@ -452,7 +452,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "SalesmanAchievementForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Salesman Achievement Tracking";
-            this.Load += new System.EventHandler(this.SalesmanAchievementForm_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.Load += new System.EventHandler(this.SalesmanAchievementForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);

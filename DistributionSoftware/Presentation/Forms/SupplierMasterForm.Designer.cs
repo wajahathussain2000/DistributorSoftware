@@ -78,7 +78,7 @@ namespace DistributionSoftware.Presentation.Forms
             
             // Form setup
             this.Text = "Supplier Master - Distribution Software";
-            this.WindowState = FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(248, 249, 250);
             this.FormBorderStyle = FormBorderStyle.Sizable;

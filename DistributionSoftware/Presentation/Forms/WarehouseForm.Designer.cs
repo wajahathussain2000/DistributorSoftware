@@ -83,7 +83,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Controls.Add(this.txtWarehouseName);
             this.Name = "WarehouseForm";
             this.Text = "Warehouse Management - Distribution Software";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWarehouses)).EndInit();
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;((System.ComponentModel.ISupportInitialize)(this.dgvWarehouses)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }

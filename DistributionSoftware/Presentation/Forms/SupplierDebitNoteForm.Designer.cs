@@ -573,7 +573,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "SupplierDebitNoteForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Supplier Debit Note";
-            this.pnlHeader.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);

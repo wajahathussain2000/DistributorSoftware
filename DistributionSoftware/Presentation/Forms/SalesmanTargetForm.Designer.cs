@@ -711,7 +711,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "SalesmanTargetForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Salesman Target & Achievement Management";
-            this.Load += new System.EventHandler(this.SalesmanTargetForm_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.Load += new System.EventHandler(this.SalesmanTargetForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlMain.ResumeLayout(false);

@@ -934,7 +934,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.MinimumSize = new System.Drawing.Size(1300, 600);
             this.Name = "SalesReturnForm";
             this.Text = "Sales Return - POS System";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SalesReturnForm_FormClosing);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SalesReturnForm_FormClosing);
             this.Load += new System.EventHandler(this.SalesReturnForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();

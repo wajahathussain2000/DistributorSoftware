@@ -70,7 +70,7 @@ namespace DistributionSoftware.Presentation.Forms
 
             // Form settings
             this.Text = "Supplier Payment - Distribution Software";
-            this.WindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Maximized;
             this.StartPosition = FormStartPosition.CenterParent;
             this.BackColor = Color.FromArgb(248, 249, 250);
             this.FormBorderStyle = FormBorderStyle.Sizable;

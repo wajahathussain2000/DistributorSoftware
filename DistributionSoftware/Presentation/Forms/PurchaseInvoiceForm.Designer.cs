@@ -527,7 +527,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "PurchaseInvoiceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Purchase Invoice Form";
-            this.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.ResumeLayout(false);
             this.PerformLayout();
 
         }

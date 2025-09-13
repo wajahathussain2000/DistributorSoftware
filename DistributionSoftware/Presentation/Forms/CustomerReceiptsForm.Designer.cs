@@ -37,6 +37,8 @@ namespace DistributionSoftware.Presentation.Forms
             this.headerLabel = new System.Windows.Forms.Label();
             this.closeBtn = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.receiptsListGroup = new System.Windows.Forms.GroupBox();
+            this.dgvReceipts = new System.Windows.Forms.DataGridView();
             this.leftPanel = new System.Windows.Forms.Panel();
             this.actionsGroup = new System.Windows.Forms.GroupBox();
             this.btnPrint = new System.Windows.Forms.Button();
@@ -80,18 +82,14 @@ namespace DistributionSoftware.Presentation.Forms
             this.dtpReceiptDate = new System.Windows.Forms.DateTimePicker();
             this.receiptNumberLabel = new System.Windows.Forms.Label();
             this.txtReceiptNumber = new System.Windows.Forms.TextBox();
-            this.rightPanel = new System.Windows.Forms.Panel();
-            this.receiptsListGroup = new System.Windows.Forms.GroupBox();
-            this.dgvReceipts = new System.Windows.Forms.DataGridView();
             this.headerPanel.SuspendLayout();
             this.mainPanel.SuspendLayout();
+            this.receiptsListGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReceipts)).BeginInit();
             this.leftPanel.SuspendLayout();
             this.actionsGroup.SuspendLayout();
             this.receiptGroup.SuspendLayout();
             this.paymentDetailsGroup.SuspendLayout();
-            this.rightPanel.SuspendLayout();
-            this.receiptsListGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReceipts)).BeginInit();
             this.SuspendLayout();
             // 
             // headerPanel
@@ -134,23 +132,61 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             // mainPanel
             // 
+            this.mainPanel.AutoScroll = true;
+            this.mainPanel.Controls.Add(this.receiptsListGroup);
             this.mainPanel.Controls.Add(this.leftPanel);
-            this.mainPanel.Controls.Add(this.rightPanel);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(0, 60);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1284, 641);
             this.mainPanel.TabIndex = 1;
             // 
+            // receiptsListGroup
+            // 
+            this.receiptsListGroup.Controls.Add(this.dgvReceipts);
+            this.receiptsListGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.receiptsListGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.receiptsListGroup.Location = new System.Drawing.Point(102, 440);
+            this.receiptsListGroup.Name = "receiptsListGroup";
+            this.receiptsListGroup.Size = new System.Drawing.Size(1027, 200);
+            this.receiptsListGroup.TabIndex = 1;
+            this.receiptsListGroup.TabStop = false;
+            this.receiptsListGroup.Text = "📋 Receipts List";
+            // 
+            // dgvReceipts
+            // 
+            this.dgvReceipts.AllowUserToAddRows = false;
+            this.dgvReceipts.AllowUserToDeleteRows = false;
+            this.dgvReceipts.BackgroundColor = System.Drawing.Color.White;
+            this.dgvReceipts.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvReceipts.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dgvReceipts.ColumnHeadersHeight = 35;
+            this.dgvReceipts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvReceipts.EnableHeadersVisualStyles = false;
+            this.dgvReceipts.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.dgvReceipts.Location = new System.Drawing.Point(3, 25);
+            this.dgvReceipts.MultiSelect = false;
+            this.dgvReceipts.Name = "dgvReceipts";
+            this.dgvReceipts.ReadOnly = true;
+            this.dgvReceipts.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dgvReceipts.RowHeadersVisible = false;
+            this.dgvReceipts.RowHeadersWidth = 62;
+            this.dgvReceipts.RowTemplate.Height = 30;
+            this.dgvReceipts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvReceipts.Size = new System.Drawing.Size(1021, 172);
+            this.dgvReceipts.TabIndex = 0;
+            this.dgvReceipts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReceipts_CellContentClick);
+            this.dgvReceipts.SelectionChanged += new System.EventHandler(this.DgvReceipts_SelectionChanged);
+            this.dgvReceipts.Resize += new System.EventHandler(this.DgvReceipts_Resize);
+            // 
             // leftPanel
             // 
             this.leftPanel.Controls.Add(this.actionsGroup);
             this.leftPanel.Controls.Add(this.receiptGroup);
-            this.leftPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftPanel.Location = new System.Drawing.Point(0, 0);
+            this.leftPanel.Location = new System.Drawing.Point(20, 20);
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.leftPanel.Size = new System.Drawing.Size(766, 641);
+            this.leftPanel.Size = new System.Drawing.Size(1273, 400);
             this.leftPanel.TabIndex = 0;
             // 
             // actionsGroup
@@ -160,12 +196,11 @@ namespace DistributionSoftware.Presentation.Forms
             this.actionsGroup.Controls.Add(this.btnDelete);
             this.actionsGroup.Controls.Add(this.btnClear);
             this.actionsGroup.Controls.Add(this.btnSave);
-            this.actionsGroup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.actionsGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.actionsGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.actionsGroup.Location = new System.Drawing.Point(20, 463);
+            this.actionsGroup.Location = new System.Drawing.Point(20, 280);
             this.actionsGroup.Name = "actionsGroup";
-            this.actionsGroup.Size = new System.Drawing.Size(726, 158);
+            this.actionsGroup.Size = new System.Drawing.Size(987, 100);
             this.actionsGroup.TabIndex = 2;
             this.actionsGroup.TabStop = false;
             this.actionsGroup.Text = "⚡ Actions";
@@ -183,6 +218,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.btnPrint.Size = new System.Drawing.Size(120, 40);
             this.btnPrint.TabIndex = 4;
             this.btnPrint.Text = "🖨️ Print Receipt";
+            this.btnPrint.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnPrint.UseVisualStyleBackColor = false;
             this.btnPrint.Click += new System.EventHandler(this.BtnPrint_Click);
             // 
@@ -269,12 +305,11 @@ namespace DistributionSoftware.Presentation.Forms
             this.receiptGroup.Controls.Add(this.dtpReceiptDate);
             this.receiptGroup.Controls.Add(this.receiptNumberLabel);
             this.receiptGroup.Controls.Add(this.txtReceiptNumber);
-            this.receiptGroup.Dock = System.Windows.Forms.DockStyle.Top;
             this.receiptGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.receiptGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.receiptGroup.Location = new System.Drawing.Point(20, 20);
             this.receiptGroup.Name = "receiptGroup";
-            this.receiptGroup.Size = new System.Drawing.Size(726, 351);
+            this.receiptGroup.Size = new System.Drawing.Size(1230, 250);
             this.receiptGroup.TabIndex = 0;
             this.receiptGroup.TabStop = false;
             this.receiptGroup.Text = "📝 Receipt Information";
@@ -283,7 +318,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.receivedByLabel.AutoSize = true;
             this.receivedByLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.receivedByLabel.Location = new System.Drawing.Point(400, 150);
+            this.receivedByLabel.Location = new System.Drawing.Point(40, 218);
             this.receivedByLabel.Name = "receivedByLabel";
             this.receivedByLabel.Size = new System.Drawing.Size(73, 15);
             this.receivedByLabel.TabIndex = 15;
@@ -292,7 +327,7 @@ namespace DistributionSoftware.Presentation.Forms
             // txtReceivedBy
             // 
             this.txtReceivedBy.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtReceivedBy.Location = new System.Drawing.Point(480, 147);
+            this.txtReceivedBy.Location = new System.Drawing.Point(120, 215);
             this.txtReceivedBy.Name = "txtReceivedBy";
             this.txtReceivedBy.Size = new System.Drawing.Size(200, 23);
             this.txtReceivedBy.TabIndex = 14;
@@ -319,7 +354,7 @@ namespace DistributionSoftware.Presentation.Forms
             // 
             this.invoiceRefLabel.AutoSize = true;
             this.invoiceRefLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.invoiceRefLabel.Location = new System.Drawing.Point(391, 110);
+            this.invoiceRefLabel.Location = new System.Drawing.Point(31, 189);
             this.invoiceRefLabel.Name = "invoiceRefLabel";
             this.invoiceRefLabel.Size = new System.Drawing.Size(103, 15);
             this.invoiceRefLabel.TabIndex = 11;
@@ -330,7 +365,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.cmbInvoiceReference.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbInvoiceReference.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cmbInvoiceReference.FormattingEnabled = true;
-            this.cmbInvoiceReference.Location = new System.Drawing.Point(500, 107);
+            this.cmbInvoiceReference.Location = new System.Drawing.Point(140, 186);
             this.cmbInvoiceReference.Name = "cmbInvoiceReference";
             this.cmbInvoiceReference.Size = new System.Drawing.Size(200, 23);
             this.cmbInvoiceReference.TabIndex = 10;
@@ -377,9 +412,9 @@ namespace DistributionSoftware.Presentation.Forms
             this.paymentDetailsGroup.Controls.Add(this.txtPaymentReference);
             this.paymentDetailsGroup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.paymentDetailsGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.paymentDetailsGroup.Location = new System.Drawing.Point(20, 200);
+            this.paymentDetailsGroup.Location = new System.Drawing.Point(356, 110);
             this.paymentDetailsGroup.Name = "paymentDetailsGroup";
-            this.paymentDetailsGroup.Size = new System.Drawing.Size(720, 140);
+            this.paymentDetailsGroup.Size = new System.Drawing.Size(720, 157);
             this.paymentDetailsGroup.TabIndex = 10;
             this.paymentDetailsGroup.TabStop = false;
             this.paymentDetailsGroup.Text = "💳 Payment Details";
@@ -646,60 +681,11 @@ namespace DistributionSoftware.Presentation.Forms
             this.txtReceiptNumber.Size = new System.Drawing.Size(150, 23);
             this.txtReceiptNumber.TabIndex = 0;
             // 
-            // rightPanel
-            // 
-            this.rightPanel.Controls.Add(this.receiptsListGroup);
-            this.rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightPanel.Location = new System.Drawing.Point(0, 0);
-            this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.rightPanel.Size = new System.Drawing.Size(1284, 641);
-            this.rightPanel.TabIndex = 1;
-            // 
-            // receiptsListGroup
-            // 
-            this.receiptsListGroup.Controls.Add(this.dgvReceipts);
-            this.receiptsListGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.receiptsListGroup.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.receiptsListGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.receiptsListGroup.Location = new System.Drawing.Point(20, 20);
-            this.receiptsListGroup.Name = "receiptsListGroup";
-            this.receiptsListGroup.Size = new System.Drawing.Size(1244, 601);
-            this.receiptsListGroup.TabIndex = 1;
-            this.receiptsListGroup.TabStop = false;
-            this.receiptsListGroup.Text = "📋 Receipts List";
-            // 
-            // dgvReceipts
-            // 
-            this.dgvReceipts.AllowUserToAddRows = false;
-            this.dgvReceipts.AllowUserToDeleteRows = false;
-            this.dgvReceipts.BackgroundColor = System.Drawing.Color.White;
-            this.dgvReceipts.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvReceipts.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dgvReceipts.ColumnHeadersHeight = 35;
-            this.dgvReceipts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvReceipts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvReceipts.EnableHeadersVisualStyles = false;
-            this.dgvReceipts.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.dgvReceipts.Location = new System.Drawing.Point(3, 25);
-            this.dgvReceipts.MultiSelect = false;
-            this.dgvReceipts.Name = "dgvReceipts";
-            this.dgvReceipts.ReadOnly = true;
-            this.dgvReceipts.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dgvReceipts.RowHeadersVisible = false;
-            this.dgvReceipts.RowHeadersWidth = 62;
-            this.dgvReceipts.RowTemplate.Height = 30;
-            this.dgvReceipts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvReceipts.Size = new System.Drawing.Size(1238, 573);
-            this.dgvReceipts.TabIndex = 0;
-            this.dgvReceipts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReceipts_CellContentClick);
-            this.dgvReceipts.SelectionChanged += new System.EventHandler(this.DgvReceipts_SelectionChanged);
-            this.dgvReceipts.Resize += new System.EventHandler(this.DgvReceipts_Resize);
-            // 
             // CustomerReceiptsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
             this.ClientSize = new System.Drawing.Size(1284, 701);
             this.Controls.Add(this.mainPanel);
@@ -711,18 +697,18 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "CustomerReceiptsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Customer Receipts";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.mainPanel.ResumeLayout(false);
+            this.receiptsListGroup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReceipts)).EndInit();
             this.leftPanel.ResumeLayout(false);
             this.actionsGroup.ResumeLayout(false);
             this.receiptGroup.ResumeLayout(false);
             this.receiptGroup.PerformLayout();
             this.paymentDetailsGroup.ResumeLayout(false);
             this.paymentDetailsGroup.PerformLayout();
-            this.rightPanel.ResumeLayout(false);
-            this.receiptsListGroup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReceipts)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -776,7 +762,6 @@ namespace DistributionSoftware.Presentation.Forms
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Panel rightPanel;
         private System.Windows.Forms.GroupBox receiptsListGroup;
         private System.Windows.Forms.DataGridView dgvReceipts;
     }

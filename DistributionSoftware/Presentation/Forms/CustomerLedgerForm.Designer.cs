@@ -217,7 +217,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.ShowInTaskbar = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Customer Ledger - Distribution Software";
-            this.filterGroup.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.filterGroup.ResumeLayout(false);
             this.ledgerGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLedger)).EndInit();
             this.ResumeLayout(false);

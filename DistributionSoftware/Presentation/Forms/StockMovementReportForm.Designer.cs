@@ -322,7 +322,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockMovementReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stock Movement Report";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
             this.filterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovements)).EndInit();
             this.ResumeLayout(false);

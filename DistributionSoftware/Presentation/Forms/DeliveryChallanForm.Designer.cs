@@ -592,7 +592,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.MinimumSize = new System.Drawing.Size(1300, 600);
             this.Name = "DeliveryChallanForm";
             this.Text = "Delivery Challan - POS System";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeliveryChallanForm_FormClosing);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeliveryChallanForm_FormClosing);
             this.Load += new System.EventHandler(this.DeliveryChallanForm_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();

@@ -1,4 +1,4 @@
-﻿namespace DistributionSoftware
+namespace DistributionSoftware
 {
     partial class Form1
     {
@@ -32,7 +32,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "Form1";
-        }
+        this.WindowState = System.Windows.Forms.FormWindowState.Normal;}
 
         #endregion
     }

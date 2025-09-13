@@ -461,7 +461,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "GRNForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GRN (Goods Receipt Note) Form";
-            ((System.ComponentModel.ISupportInitialize)(this.picBarcode)).EndInit();
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;((System.ComponentModel.ISupportInitialize)(this.picBarcode)).EndInit();
             this.groupBoxItems.ResumeLayout(false);
             this.groupBoxItems.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGRNItems)).EndInit();

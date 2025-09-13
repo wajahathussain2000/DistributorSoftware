@@ -676,6 +676,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SalesInvoiceForm";
             this.Text = "Sales Invoice - POS System";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SalesInvoiceForm_FormClosing);
             this.Load += new System.EventHandler(this.SalesInvoiceForm_Load);
             this.pnlHeader.ResumeLayout(false);

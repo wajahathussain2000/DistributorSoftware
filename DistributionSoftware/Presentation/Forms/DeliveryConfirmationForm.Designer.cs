@@ -473,7 +473,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "DeliveryConfirmationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Delivery Confirmation";
-            this.pnlMain.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
             this.pnlLeft.ResumeLayout(false);
             this.pnlRight.ResumeLayout(false);

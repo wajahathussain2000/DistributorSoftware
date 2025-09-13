@@ -38,7 +38,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "UserManagementTestForm";
             this.Text = "User Management Test";
-            this.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.ResumeLayout(false);
         }
 
         #endregion

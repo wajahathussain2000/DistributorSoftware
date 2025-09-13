@@ -219,7 +219,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "StockReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Stock Report";
-            this.groupBoxFilters.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;this.groupBoxFilters.ResumeLayout(false);
             this.groupBoxFilters.PerformLayout();
             this.ResumeLayout(false);
 

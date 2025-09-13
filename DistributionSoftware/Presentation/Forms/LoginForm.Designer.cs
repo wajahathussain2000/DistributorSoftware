@@ -263,6 +263,7 @@ namespace DistributionSoftware.Presentation.Forms
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login - Distribution Software";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelMain.ResumeLayout(false);
             this.panelLoginCard.ResumeLayout(false);
             this.panelLoginCard.PerformLayout();
