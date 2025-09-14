@@ -16,6 +16,11 @@ namespace DistributionSoftware.Models
         public int VoucherId { get; set; }
         
         /// <summary>
+        /// Alias for VoucherId for backward compatibility
+        /// </summary>
+        public int JournalVoucherId { get => VoucherId; set => VoucherId = value; }
+        
+        /// <summary>
         /// Journal voucher number (e.g., JV-2024-001)
         /// </summary>
         public string VoucherNumber { get; set; }
@@ -29,6 +34,11 @@ namespace DistributionSoftware.Models
         /// Reference to the source transaction (e.g., SalesInvoiceId, PurchaseInvoiceId)
         /// </summary>
         public string Reference { get; set; }
+        
+        /// <summary>
+        /// Reference to bank account for bank-related transactions
+        /// </summary>
+        public int? BankAccountId { get; set; }
         
         /// <summary>
         /// Description of the journal voucher
@@ -163,6 +173,15 @@ namespace DistributionSoftware.Models
                 errors.Add("At least one journal voucher detail is required");
             
             return errors;
+        }
+        
+        /// <summary>
+        /// Gets the net amount (TotalDebit - TotalCredit)
+        /// </summary>
+        /// <returns>Net amount</returns>
+        public decimal GetNetAmount()
+        {
+            return TotalDebit - TotalCredit;
         }
         
         #endregion

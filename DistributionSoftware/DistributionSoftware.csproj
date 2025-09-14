@@ -204,6 +204,18 @@
     <Compile Include="Models\ChartOfAccount.cs" />
     <Compile Include="Models\JournalVoucher.cs" />
     <Compile Include="Models\JournalVoucherDetail.cs" />
+    <Compile Include="Models\ReorderLevel.cs" />
+    <Compile Include="Models\PricingRule.cs" />
+    <Compile Include="Models\DiscountRule.cs" />
+    <Compile Include="Models\TaxCategory.cs" />
+    <Compile Include="Models\TaxRate.cs" />
+    <Compile Include="Models\BankAccount.cs" />
+    <Compile Include="Models\BankStatement.cs" />
+    <Compile Include="Models\BankReconciliation.cs" />
+    <Compile Include="Models\BackupSchedule.cs" />
+    <Compile Include="Models\BackupHistory.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\PurchasePayment.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -228,6 +240,34 @@
     <Compile Include="DataAccess\ChartOfAccountRepository.cs" />
     <Compile Include="DataAccess\IJournalVoucherRepository.cs" />
     <Compile Include="DataAccess\JournalVoucherRepository.cs" />
+    <Compile Include="DataAccess\IReorderLevelRepository.cs" />
+    <Compile Include="DataAccess\ReorderLevelRepository.cs" />
+    <Compile Include="DataAccess\IPricingRuleRepository.cs" />
+    <Compile Include="DataAccess\PricingRuleRepository.cs" />
+    <Compile Include="DataAccess\IDiscountRuleRepository.cs" />
+    <Compile Include="DataAccess\DiscountRuleRepository.cs" />
+    <Compile Include="DataAccess\ITaxCategoryRepository.cs" />
+    <Compile Include="DataAccess\TaxCategoryRepository.cs" />
+    <Compile Include="DataAccess\ITaxRateRepository.cs" />
+    <Compile Include="DataAccess\TaxRateRepository.cs" />
+    <Compile Include="DataAccess\IBankAccountRepository.cs" />
+    <Compile Include="DataAccess\BankAccountRepository.cs" />
+    <Compile Include="DataAccess\IBankStatementRepository.cs" />
+    <Compile Include="DataAccess\BankStatementRepository.cs" />
+    <Compile Include="DataAccess\IBankReconciliationRepository.cs" />
+    <Compile Include="DataAccess\BankReconciliationRepository.cs" />
+    <Compile Include="DataAccess\IBackupScheduleRepository.cs" />
+    <Compile Include="DataAccess\BackupScheduleRepository.cs" />
+    <Compile Include="DataAccess\IRoleRepository.cs" />
+    <Compile Include="DataAccess\RoleRepository.cs" />
+    <Compile Include="DataAccess\IUserRoleRepository.cs" />
+    <Compile Include="DataAccess\UserRoleRepository.cs" />
+    <Compile Include="DataAccess\ISalesPaymentRepository.cs" />
+    <Compile Include="DataAccess\SalesPaymentRepository.cs" />
+    <Compile Include="DataAccess\IPurchasePaymentRepository.cs" />
+    <Compile Include="DataAccess\PurchasePaymentRepository.cs" />
+    <Compile Include="DataAccess\IBackupHistoryRepository.cs" />
+    <Compile Include="DataAccess\BackupHistoryRepository.cs" />
     <Compile Include="Business\ISalesInvoiceService.cs" />
     <Compile Include="Business\SalesInvoiceService.cs" />
     <Compile Include="Business\ISalesReturnService.cs" />
@@ -248,6 +288,10 @@
     <Compile Include="Business\ChartOfAccountService.cs" />
     <Compile Include="Business\IJournalVoucherService.cs" />
     <Compile Include="Business\JournalVoucherService.cs" />
+    <Compile Include="Business\IReorderLevelService.cs" />
+    <Compile Include="Business\ReorderLevelService.cs" />
+    <Compile Include="Business\IProductService.cs" />
+    <Compile Include="Business\ProductService.cs" />
     <Compile Include="Presentation\Forms\SalesInvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,6 +368,36 @@
     <Compile Include="Business\SalesmanTargetService.cs" />
     <Compile Include="Business\IStockMovementService.cs" />
     <Compile Include="Business\StockMovementService.cs" />
+    <Compile Include="Business\IPricingRuleService.cs" />
+    <Compile Include="Business\PricingRuleService.cs" />
+    <Compile Include="Business\IDiscountRuleService.cs" />
+    <Compile Include="Business\DiscountRuleService.cs" />
+    <Compile Include="Business\ITaxCategoryService.cs" />
+    <Compile Include="Business\TaxCategoryService.cs" />
+    <Compile Include="Business\ITaxCalculationService.cs" />
+    <Compile Include="Business\TaxCalculationService.cs" />
+    <Compile Include="Business\IPricingCalculationService.cs" />
+    <Compile Include="Business\PricingCalculationService.cs" />
+    <Compile Include="Business\IBankAccountService.cs" />
+    <Compile Include="Business\BankAccountService.cs" />
+    <Compile Include="Business\IBankStatementService.cs" />
+    <Compile Include="Business\BankStatementService.cs" />
+    <Compile Include="Business\IBankReconciliationService.cs" />
+    <Compile Include="Business\BankReconciliationService.cs" />
+    <Compile Include="Business\IBankIntegrationService.cs" />
+    <Compile Include="Business\BankIntegrationService.cs" />
+    <Compile Include="Business\IBackupScheduleService.cs" />
+    <Compile Include="Business\BackupScheduleService.cs" />
+    <Compile Include="Business\IRoleService.cs" />
+    <Compile Include="Business\RoleService.cs" />
+    <Compile Include="Business\IUserRoleService.cs" />
+    <Compile Include="Business\UserRoleService.cs" />
+    <Compile Include="Business\IBackupHistoryService.cs" />
+    <Compile Include="Business\BackupHistoryService.cs" />
+    <Compile Include="Business\ICustomerService.cs" />
+    <Compile Include="Business\CustomerService.cs" />
+    <Compile Include="Business\ITaxRateService.cs" />
+    <Compile Include="Business\TaxRateService.cs" />
     <Compile Include="Common\ConfigurationManager.cs" />
     <Compile Include="Common\UserSession.cs" />
     <Compile Include="Common\DebugHelper.cs" />
@@ -441,6 +515,12 @@
     </Compile>
     <Compile Include="Presentation\Forms\ReorderLevelForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReorderLevelSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReorderLevelSetupForm.Designer.cs">
+      <DependentUpon>ReorderLevelSetupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\LowStockReportForm.cs">
       <SubType>Form</SubType>
@@ -574,6 +654,36 @@
     <Compile Include="Presentation\Forms\UserManagementTestForm.Designer.cs">
       <DependentUpon>UserManagementTestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\PricingDiscountSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\PricingDiscountSetupForm.Designer.cs">
+      <DependentUpon>PricingDiscountSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxConfigurationForm.Designer.cs">
+      <DependentUpon>TaxConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankReconciliationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankReconciliationForm.Designer.cs">
+      <DependentUpon>BankReconciliationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\DatabaseBackupRestoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\DatabaseBackupRestoreForm.Designer.cs">
+      <DependentUpon>DatabaseBackupRestoreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserAccessControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserAccessControlForm.Designer.cs">
+      <DependentUpon>UserAccessControlForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Icons\IconHelper.cs" />
     <Compile Include="Test\CompilationTest.cs" />
     <Compile Include="Test\DebugTest.cs" />
@@ -608,6 +718,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\RouteMasterForm.resx">
       <DependentUpon>RouteMasterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\PricingDiscountSetupForm.resx">
+      <DependentUpon>PricingDiscountSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\TaxConfigurationForm.resx">
+      <DependentUpon>TaxConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\BankReconciliationForm.resx">
+      <DependentUpon>BankReconciliationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\DatabaseBackupRestoreForm.resx">
+      <DependentUpon>DatabaseBackupRestoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\UserAccessControlForm.resx">
+      <DependentUpon>UserAccessControlForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

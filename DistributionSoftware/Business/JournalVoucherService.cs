@@ -4,6 +4,7 @@ using System.Linq;
 using DistributionSoftware.Models;
 using DistributionSoftware.DataAccess;
 using DistributionSoftware.Common;
+using DistributionSoftware.Business;
 
 namespace DistributionSoftware.Business
 {
@@ -14,17 +15,39 @@ namespace DistributionSoftware.Business
     {
         private readonly IChartOfAccountService _chartOfAccountService;
         private readonly IJournalVoucherRepository _journalVoucherRepository;
+        private readonly IBankIntegrationService _bankIntegrationService;
 
         public JournalVoucherService()
         {
+            var connectionString = Common.ConfigurationManager.GetConnectionString("DefaultConnection");
             _chartOfAccountService = new ChartOfAccountService();
-            _journalVoucherRepository = new JournalVoucherRepository();
+            _journalVoucherRepository = new JournalVoucherRepository(connectionString);
+            _bankIntegrationService = new BankIntegrationService(
+                new BankAccountRepository(connectionString),
+                new JournalVoucherRepository(connectionString),
+                new SalesPaymentRepository(connectionString),
+                new PurchasePaymentRepository(connectionString),
+                new BankStatementRepository(connectionString));
         }
 
         public JournalVoucherService(IChartOfAccountService chartOfAccountService, IJournalVoucherRepository journalVoucherRepository)
         {
             _chartOfAccountService = chartOfAccountService;
             _journalVoucherRepository = journalVoucherRepository;
+            var connectionString = Common.ConfigurationManager.GetConnectionString("DefaultConnection");
+            _bankIntegrationService = new BankIntegrationService(
+                new BankAccountRepository(connectionString),
+                new JournalVoucherRepository(connectionString),
+                new SalesPaymentRepository(connectionString),
+                new PurchasePaymentRepository(connectionString),
+                new BankStatementRepository(connectionString));
+        }
+
+        public JournalVoucherService(IChartOfAccountService chartOfAccountService, IJournalVoucherRepository journalVoucherRepository, IBankIntegrationService bankIntegrationService)
+        {
+            _chartOfAccountService = chartOfAccountService;
+            _journalVoucherRepository = journalVoucherRepository;
+            _bankIntegrationService = bankIntegrationService;
         }
 
         #region Basic CRUD Operations
@@ -51,11 +74,30 @@ namespace DistributionSoftware.Business
                 voucher.CreatedBy = UserSession.IsLoggedIn ? UserSession.CurrentUserId : 1; // Default to user ID 1 if not logged in
                 voucher.CreatedByName = UserSession.IsLoggedIn ? UserSession.GetDisplayName() : "System User";
 
+                // Auto-detect bank account if not set
+                if (!voucher.BankAccountId.HasValue)
+                {
+                    var bankAccountId = _bankIntegrationService.DetectBankAccountFromReference(voucher.Reference);
+                    if (bankAccountId.HasValue)
+                    {
+                        voucher.BankAccountId = bankAccountId;
+                    }
+                }
+
                 // Calculate totals
                 CalculateVoucherTotals(voucher);
 
                 // Save to database using repository
-                return _journalVoucherRepository.CreateJournalVoucher(voucher);
+                var voucherId = _journalVoucherRepository.CreateJournalVoucher(voucher);
+                voucher.VoucherId = voucherId;
+
+                // Create bank statement entry if bank account is linked
+                if (voucher.BankAccountId.HasValue)
+                {
+                    _bankIntegrationService.CreateBankStatementFromJournalVoucher(voucher);
+                }
+
+                return voucherId;
             }
             catch (Exception ex)
             {

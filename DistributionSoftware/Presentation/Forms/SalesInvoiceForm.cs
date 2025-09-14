@@ -537,6 +537,14 @@ namespace DistributionSoftware.Presentation.Forms
                 detail.LineTotal = detail.TaxableAmount + detail.TaxAmount;
                 detail.TotalAmount = detail.LineTotal; // Set TotalAmount for database (same as LineTotal)
 
+                // Apply automatic pricing, discount, and tax calculation
+                var pricingCalculationService = new PricingCalculationService(new PricingRuleRepository(), new DiscountRuleRepository(), new ProductRepository());
+                var taxCalculationService = new TaxCalculationService(new TaxCategoryRepository(), new TaxRateRepository());
+                
+                pricingCalculationService.ApplyPricingToSalesInvoiceDetail(detail);
+                pricingCalculationService.ApplyDiscountToSalesInvoiceDetail(detail);
+                taxCalculationService.ApplyTaxToSalesInvoiceDetail(detail);
+
                 // Add to invoice
                 _currentInvoice.Items.Add(detail);
 

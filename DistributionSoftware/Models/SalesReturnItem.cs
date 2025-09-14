@@ -20,6 +20,11 @@ namespace DistributionSoftware.Models
         public DateTime? StockUpdatedDate { get; set; }
         public int? StockUpdatedBy { get; set; }
         
+        // Additional properties for tax calculation compatibility
+        public int? TaxCategoryId { get; set; }
+        public decimal TaxableAmount { get; set; }
+        public decimal LineTotal { get; set; }
+        
         // Navigation properties
         public virtual SalesReturn SalesReturn { get; set; }
         public virtual Product Product { get; set; }

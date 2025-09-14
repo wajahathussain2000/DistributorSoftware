@@ -182,6 +182,11 @@ namespace DistributionSoftware.DataAccess
             }
         }
 
+        public bool Update(JournalVoucher voucher)
+        {
+            return UpdateJournalVoucher(voucher);
+        }
+
         public bool DeleteJournalVoucher(int voucherId)
         {
             try
@@ -587,6 +592,16 @@ namespace DistributionSoftware.DataAccess
                 CreditAmount = Convert.ToDecimal(reader["CreditAmount"]),
                 Narration = reader["Narration"]?.ToString()
             };
+        }
+
+        public List<JournalVoucher> GetByBankAccount(int bankAccountId, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                return GetJournalVouchersByDateRange(startDate.Value, endDate.Value)
+                    .Where(jv => jv.BankAccountId == bankAccountId).ToList();
+            }
+            return GetJournalVouchersByAccount(bankAccountId);
         }
     }
 }

@@ -16,6 +16,8 @@ namespace DistributionSoftware.DataAccess
         /// </summary>
         /// <returns>Collection of active permissions</returns>
         Task<IEnumerable<Permission>> GetAllActivePermissionsAsync();
+        List<Permission> GetByRoleId(int roleId);
+        Permission GetById(int permissionId);
         
         /// <summary>
         /// Retrieves permissions for a specific module

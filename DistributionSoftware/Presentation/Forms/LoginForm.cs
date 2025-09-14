@@ -342,13 +342,15 @@ namespace DistributionSoftware.Presentation.Forms
             try
             {
                 
-                // Get user permissions from the permission service
-                var permissionService = new PermissionService(
-                    new PermissionRepository(ConfigurationManager.GetConnectionString("DistributionConnection")),
-                    _activityLogRepository);
+                // Get user permissions from the user role service
+                var connectionString = Common.ConfigurationManager.GetConnectionString("DefaultConnection");
+                var userRoleService = new UserRoleService(
+                    new UserRoleRepository(connectionString),
+                    new RoleRepository(connectionString),
+                    new PermissionRepository(connectionString),
+                    new UserRepository(connectionString));
                 
-                
-                var userPermissions = await permissionService.GetUserPermissionsAsync(user.UserId);
+                var userPermissions = userRoleService.GetUserPermissions(user.UserId);
                 
                 
                 // Initialize the user session

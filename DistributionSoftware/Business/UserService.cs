@@ -59,6 +59,11 @@ namespace DistributionSoftware.Business
             return await _userRepository.GetAllUsersAsync();
         }
 
+        public List<User> GetAllUsers()
+        {
+            return GetAllUsersAsync().Result;
+        }
+
         public async Task<User> GetUserByIdAsync(int userId)
         {
             return await _userRepository.GetUserByIdAsync(userId);

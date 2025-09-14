@@ -93,6 +93,9 @@ namespace DistributionSoftware.Presentation.Forms
             productsDropdown.Items.Add("Barcode Generator", null, (s, e) => OpenBarcodeGenerator());
             productsDropdown.Items.Add("Stock Adjustment Form", null, (s, e) => OpenStockAdjustmentForm());
             productsDropdown.Items.Add("Stock Movement Entry", null, (s, e) => OpenStockMovementEntryForm());
+            productsDropdown.Items.Add("Reorder Level Setup", null, (s, e) => OpenReorderLevelSetupForm());
+            productsDropdown.Items.Add("-");
+            productsDropdown.Items.Add("Pricing & Discount Setup", null, (s, e) => OpenPricingDiscountSetupForm());
             productsDropdown.Items.Add("-");
             productsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
             productsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
@@ -171,6 +174,9 @@ namespace DistributionSoftware.Presentation.Forms
             accountingDropdown.Items.Add("General Ledger", null, (s, e) => OpenGeneralLedgerForm());
             accountingDropdown.Items.Add("Trial Balance", null, (s, e) => OpenTrialBalanceForm());
             accountingDropdown.Items.Add("-");
+            accountingDropdown.Items.Add("Tax Configuration", null, (s, e) => OpenTaxConfigurationForm());
+            accountingDropdown.Items.Add("Bank Reconciliation", null, (s, e) => OpenBankReconciliationForm());
+            accountingDropdown.Items.Add("-");
             accountingDropdown.Items.Add("Profit & Loss Statement", null, (s, e) => OpenProfitLossForm());
             accountingDropdown.Items.Add("Balance Sheet", null, (s, e) => OpenBalanceSheetForm());
 
@@ -184,9 +190,10 @@ namespace DistributionSoftware.Presentation.Forms
             settingsDropdown.Items.Add("Route Master", null, (s, e) => OpenRouteMasterForm());
             settingsDropdown.Items.Add("-");
             settingsDropdown.Items.Add("User Management", null, (s, e) => OpenUserMasterForm());
+            settingsDropdown.Items.Add("User Access Control", null, (s, e) => OpenUserAccessControlForm());
             settingsDropdown.Items.Add("System Configuration", null, (s, e) => OpenSystemConfiguration());
             settingsDropdown.Items.Add("-");
-            settingsDropdown.Items.Add("Database Backup", null, (s, e) => OpenDatabaseBackup());
+            settingsDropdown.Items.Add("Database Backup & Restore", null, (s, e) => OpenDatabaseBackupRestoreForm());
             settingsDropdown.Items.Add("System Logs", null, (s, e) => OpenSystemLogs());
         }
 
@@ -1255,6 +1262,21 @@ namespace DistributionSoftware.Presentation.Forms
                 MessageBox.Show($"Error opening Stock Movement Entry Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void OpenReorderLevelSetupForm()
+        {
+            try
+            {
+                ReorderLevelSetupForm reorderLevelSetupForm = new ReorderLevelSetupForm();
+                reorderLevelSetupForm.Owner = this;
+                reorderLevelSetupForm.ShowDialog();
+                reorderLevelSetupForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Reorder Level Setup Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         
 
 
@@ -1665,6 +1687,77 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Balance Sheet: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // New Priority Forms Methods
+        private void OpenPricingDiscountSetupForm()
+        {
+            try
+            {
+                var pricingDiscountForm = new PricingDiscountSetupForm();
+                pricingDiscountForm.StartPosition = FormStartPosition.CenterParent;
+                pricingDiscountForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Pricing & Discount Setup: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenTaxConfigurationForm()
+        {
+            try
+            {
+                var taxConfigForm = new TaxConfigurationForm();
+                taxConfigForm.StartPosition = FormStartPosition.CenterParent;
+                taxConfigForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Tax Configuration: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenBankReconciliationForm()
+        {
+            try
+            {
+                var bankReconciliationForm = new BankReconciliationForm();
+                bankReconciliationForm.StartPosition = FormStartPosition.CenterParent;
+                bankReconciliationForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Bank Reconciliation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenDatabaseBackupRestoreForm()
+        {
+            try
+            {
+                var databaseBackupForm = new DatabaseBackupRestoreForm();
+                databaseBackupForm.StartPosition = FormStartPosition.CenterParent;
+                databaseBackupForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Database Backup & Restore: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenUserAccessControlForm()
+        {
+            try
+            {
+                var userAccessForm = new UserAccessControlForm();
+                userAccessForm.StartPosition = FormStartPosition.CenterParent;
+                userAccessForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening User Access Control: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

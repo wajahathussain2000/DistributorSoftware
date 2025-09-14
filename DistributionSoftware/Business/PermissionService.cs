@@ -52,6 +52,19 @@ namespace DistributionSoftware.Business
                 throw;
             }
         }
+
+        public List<Permission> GetAllPermissions()
+        {
+            try
+            {
+                return GetAllActivePermissionsAsync().Result.ToList();
+            }
+            catch (Exception ex)
+            {
+                // Log the error and rethrow for proper error handling
+                throw;
+            }
+        }
         
         /// <summary>
         /// Retrieves permissions for a specific module

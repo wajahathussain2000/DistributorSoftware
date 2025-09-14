@@ -17,6 +17,9 @@ namespace DistributionSoftware.Models
         public decimal TaxableAmount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal TaxPercentage { get; set; }
+        public int? TaxCategoryId { get; set; } // Reference to TaxCategories table
+        public int? PricingRuleId { get; set; } // Reference to PricingRules table
+        public int? DiscountRuleId { get; set; } // Reference to DiscountRules table
         public decimal LineTotal { get; set; }
         public decimal TotalAmount { get; set; } // Database column name
         public string BatchNumber { get; set; }

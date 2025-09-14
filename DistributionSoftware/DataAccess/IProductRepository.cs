@@ -1,29 +1,30 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using DistributionSoftware.Models;
-using DistributionSoftware.Common;
 
 namespace DistributionSoftware.DataAccess
 {
     public interface IProductRepository
     {
-        List<Product> GetAllProducts();
-        List<Product> GetActiveProducts();
-        Product GetProductById(int productId);
-        Product GetProductByCode(string productCode);
-        List<Product> GetProductsByCategory(int categoryId);
-        List<Product> GetProductsByBrand(int brandId);
-        List<Product> GetLowStockProducts(decimal threshold);
-        List<Product> GetOutOfStockProducts();
-        bool CreateProduct(Product product);
+        // CRUD Operations
+        int CreateProduct(Product product);
         bool UpdateProduct(Product product);
         bool DeleteProduct(int productId);
-        bool UpdateStock(int productId, decimal quantity);
-        bool ReserveStock(int productId, decimal quantity);
-        bool ReleaseStock(int productId, decimal quantity);
-        decimal GetAvailableStock(int productId);
-        List<Product> SearchProducts(string searchTerm);
+        Product GetProductById(int productId);
+        Product GetById(int productId);
+        Product GetProductByCode(string productCode);
+        List<Product> GetAllProducts();
+        List<Product> GetActiveProducts();
+        List<Product> GetProductsByCategory(int categoryId);
+        List<Product> GetProductsByBrand(int brandId);
+        
+        // Business Logic
+        bool UpdateStockQuantity(int productId, decimal quantity, string operation);
+        
+        // Reports
+        List<Product> GetProductReport(DateTime? startDate, DateTime? endDate, int? categoryId, int? brandId, bool? isActive);
+        int GetProductCount(bool? isActive);
+        decimal GetTotalStockValue();
+        List<Product> GetLowStockProducts(decimal threshold);
     }
 }

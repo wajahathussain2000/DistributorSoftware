@@ -322,7 +322,7 @@ namespace DistributionSoftware.DataAccess
                         // Assign role if specified
                         if (user.RoleId > 0)
                         {
-                            await AssignRoleToUserAsync(Convert.ToInt32(userId), user.RoleId);
+                            await AssignRoleToUserAsync(Convert.ToInt32(userId), user.RoleId.Value);
                         }
                         
                         return true;
@@ -424,6 +424,11 @@ namespace DistributionSoftware.DataAccess
             return null;
         }
 
+        public User GetById(int userId)
+        {
+            return GetUserByIdAsync(userId).Result;
+        }
+
         public async Task<bool> UpdateUserAsync(User user)
         {
             try
@@ -455,7 +460,7 @@ namespace DistributionSoftware.DataAccess
                         // Update role if specified
                         if (user.RoleId > 0)
                         {
-                            await AssignRoleToUserAsync(user.UserId, user.RoleId);
+                            await AssignRoleToUserAsync(user.UserId, user.RoleId.Value);
                         }
                         
                         return rowsAffected > 0;

@@ -15,6 +15,7 @@ namespace DistributionSoftware.DataAccess
         // User management methods
         Task<List<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(int userId);
+        User GetById(int userId);
         Task<bool> CreateUserAsync(User user);
         Task<bool> UpdateUserAsync(User user);
         Task<bool> DeleteUserAsync(int userId);

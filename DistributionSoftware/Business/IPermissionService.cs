@@ -18,6 +18,12 @@ namespace DistributionSoftware.Business
         Task<IEnumerable<Permission>> GetAllActivePermissionsAsync();
         
         /// <summary>
+        /// Retrieves all permissions from the system (synchronous)
+        /// </summary>
+        /// <returns>Collection of all permissions</returns>
+        List<Permission> GetAllPermissions();
+        
+        /// <summary>
         /// Retrieves permissions for a specific module
         /// </summary>
         /// <param name="module">The module name to filter by</param>

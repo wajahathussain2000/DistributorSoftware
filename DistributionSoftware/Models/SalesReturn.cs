@@ -29,6 +29,11 @@ namespace DistributionSoftware.Models
         public int? TaxAccountId { get; set; } // Tax payable account
         public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this return
         
+        // Additional properties for tax calculation compatibility
+        public int? TaxCategoryId { get; set; }
+        public decimal TaxPercentage { get; set; }
+        public decimal TaxableAmount { get; set; }
+        
         // Navigation properties
         public virtual Customer Customer { get; set; }
         public virtual SalesInvoice ReferenceSalesInvoice { get; set; }

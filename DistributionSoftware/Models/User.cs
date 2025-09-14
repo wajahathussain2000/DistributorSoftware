@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace DistributionSoftware.Models
 {
@@ -15,8 +16,13 @@ namespace DistributionSoftware.Models
         public DateTime CreatedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; } // Reference to Roles table
         public string RoleName { get; set; }
         public string FullName => $"{FirstName} {LastName}".Trim();
+        
+        // Navigation Properties
+        public Role Role { get; set; }
+        public List<UserRole> UserRoles { get; set; }
+        public List<Permission> Permissions { get; set; }
     }
 }

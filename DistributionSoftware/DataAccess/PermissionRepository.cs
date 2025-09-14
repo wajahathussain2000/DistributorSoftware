@@ -63,6 +63,94 @@ namespace DistributionSoftware.DataAccess
             return permissions;
         }
 
+        public List<Permission> GetByRoleId(int roleId)
+        {
+            var permissions = new List<Permission>();
+            
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    
+                    var query = @"
+                        SELECT p.PermissionId, p.PermissionCode, p.PermissionName, p.Description, p.Module, p.IsActive, p.CreatedDate
+                        FROM Permissions p
+                        INNER JOIN RolePermissions rp ON p.PermissionId = rp.PermissionId
+                        WHERE rp.RoleId = @RoleId AND p.IsActive = 1 AND rp.IsGranted = 1";
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@RoleId", roleId);
+                        
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                permissions.Add(new Permission
+                                {
+                                    PermissionId = reader.GetInt32(0),
+                                    PermissionCode = reader.GetString(1),
+                                    PermissionName = reader.GetString(2),
+                                    Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                                    Module = reader.IsDBNull(4) ? "" : reader.GetString(4),
+                                    IsActive = reader.GetBoolean(5),
+                                    CreatedDate = reader.GetDateTime(6)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetByRoleId error: {ex.Message}");
+            }
+            
+            return permissions;
+        }
+
+        public Permission GetById(int permissionId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    
+                    var query = "SELECT PermissionId, PermissionCode, PermissionName, Description, Module, IsActive, CreatedDate FROM Permissions WHERE PermissionId = @PermissionId";
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PermissionId", permissionId);
+                        
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return new Permission
+                                {
+                                    PermissionId = reader.GetInt32(0),
+                                    PermissionCode = reader.GetString(1),
+                                    PermissionName = reader.GetString(2),
+                                    Description = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                                    Module = reader.IsDBNull(4) ? "" : reader.GetString(4),
+                                    IsActive = reader.GetBoolean(5),
+                                    CreatedDate = reader.GetDateTime(6)
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"GetById error: {ex.Message}");
+            }
+            
+            return null;
+        }
+
         public async Task<IEnumerable<Permission>> GetPermissionsByModuleAsync(string module)
         {
             var permissions = new List<Permission>();

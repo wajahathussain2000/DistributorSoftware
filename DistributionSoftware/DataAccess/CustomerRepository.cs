@@ -11,9 +11,9 @@ namespace DistributionSoftware.DataAccess
     {
         private readonly string _connectionString;
 
-        public CustomerRepository()
+        public CustomerRepository(string connectionString = null)
         {
-            _connectionString = ConfigurationManager.DistributionConnectionString;
+            _connectionString = connectionString ?? ConfigurationManager.DistributionConnectionString;
         }
 
         public List<Customer> GetAllCustomers()
@@ -489,6 +489,132 @@ namespace DistributionSoftware.DataAccess
             {
                 System.Diagnostics.Debug.WriteLine($"Error reading datetime nullable column '{columnName}': {ex.Message}");
                 return null;
+            }
+        }
+
+        // Alias methods for backward compatibility
+        public bool Create(Customer customer)
+        {
+            return CreateCustomer(customer);
+        }
+
+        public bool Update(Customer customer)
+        {
+            return UpdateCustomer(customer);
+        }
+
+        public bool Delete(int customerId)
+        {
+            return DeleteCustomer(customerId);
+        }
+
+        public Customer GetById(int customerId)
+        {
+            return GetCustomerById(customerId);
+        }
+
+        public Customer GetByCode(string customerCode)
+        {
+            return GetCustomerByCode(customerCode);
+        }
+
+        // Additional methods for service compatibility
+        public List<Customer> GetAll()
+        {
+            return GetAllCustomers();
+        }
+
+        public List<Customer> GetActive()
+        {
+            return GetActiveCustomers();
+        }
+
+        public bool IsCodeExists(string customerCode, int? excludeId = null)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT COUNT(*) FROM Customers WHERE CustomerCode = @CustomerCode";
+                if (excludeId.HasValue)
+                {
+                    query += " AND CustomerId != @ExcludeId";
+                }
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@CustomerCode", customerCode);
+                    if (excludeId.HasValue)
+                    {
+                        command.Parameters.AddWithValue("@ExcludeId", excludeId.Value);
+                    }
+
+                    return Convert.ToInt32(command.ExecuteScalar()) > 0;
+                }
+            }
+        }
+
+        public List<Customer> GetReport(DateTime? startDate, DateTime? endDate, bool? isActive)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Customers WHERE 1=1";
+                var parameters = new List<SqlParameter>();
+
+                if (startDate.HasValue)
+                {
+                    query += " AND CreatedDate >= @StartDate";
+                    parameters.Add(new SqlParameter("@StartDate", startDate.Value));
+                }
+
+                if (endDate.HasValue)
+                {
+                    query += " AND CreatedDate <= @EndDate";
+                    parameters.Add(new SqlParameter("@EndDate", endDate.Value));
+                }
+
+                if (isActive.HasValue)
+                {
+                    query += " AND IsActive = @IsActive";
+                    parameters.Add(new SqlParameter("@IsActive", isActive.Value));
+                }
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+                    using (var reader = command.ExecuteReader())
+                    {
+                        var customers = new List<Customer>();
+                        while (reader.Read())
+                        {
+                            customers.Add(MapCustomer(reader));
+                        }
+                        return customers;
+                    }
+                }
+            }
+        }
+
+        public int GetCount(bool? isActive)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var query = "SELECT COUNT(*) FROM Customers";
+                if (isActive.HasValue)
+                {
+                    query += " WHERE IsActive = @IsActive";
+                }
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    if (isActive.HasValue)
+                    {
+                        command.Parameters.AddWithValue("@IsActive", isActive.Value);
+                    }
+
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
             }
         }
     }

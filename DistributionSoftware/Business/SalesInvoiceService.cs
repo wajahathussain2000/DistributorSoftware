@@ -4,21 +4,35 @@ using System.Linq;
 using DistributionSoftware.Models;
 using DistributionSoftware.DataAccess;
 using DistributionSoftware.Common;
+using DistributionSoftware.Business;
 
 namespace DistributionSoftware.Business
 {
     public class SalesInvoiceService : ISalesInvoiceService
     {
         private readonly ISalesInvoiceRepository _salesInvoiceRepository;
+        private readonly ITaxCalculationService _taxCalculationService;
+        private readonly IPricingCalculationService _pricingCalculationService;
 
         public SalesInvoiceService()
         {
             _salesInvoiceRepository = new SalesInvoiceRepository();
+            _taxCalculationService = new TaxCalculationService(new TaxCategoryRepository(), new TaxRateRepository());
+            _pricingCalculationService = new PricingCalculationService(new PricingRuleRepository(), new DiscountRuleRepository(), new ProductRepository());
         }
 
         public SalesInvoiceService(ISalesInvoiceRepository salesInvoiceRepository)
         {
             _salesInvoiceRepository = salesInvoiceRepository;
+            _taxCalculationService = new TaxCalculationService(new TaxCategoryRepository(), new TaxRateRepository());
+            _pricingCalculationService = new PricingCalculationService(new PricingRuleRepository(), new DiscountRuleRepository(), new ProductRepository());
+        }
+
+        public SalesInvoiceService(ISalesInvoiceRepository salesInvoiceRepository, ITaxCalculationService taxCalculationService, IPricingCalculationService pricingCalculationService)
+        {
+            _salesInvoiceRepository = salesInvoiceRepository;
+            _taxCalculationService = taxCalculationService;
+            _pricingCalculationService = pricingCalculationService;
         }
 
         public int CreateSalesInvoice(SalesInvoice invoice)
@@ -241,6 +255,10 @@ namespace DistributionSoftware.Business
                 return false;
             }
 
+            // Apply automatic pricing and discount rules to each item
+            _pricingCalculationService.ApplyPricingToSalesInvoice(invoice);
+            _pricingCalculationService.ApplyDiscountToSalesInvoice(invoice);
+
             // Calculate subtotal
             invoice.Subtotal = invoice.Items.Sum(item => item.Quantity * item.UnitPrice);
 
@@ -253,8 +271,15 @@ namespace DistributionSoftware.Business
             // Calculate taxable amount
             invoice.TaxableAmount = invoice.Subtotal - invoice.DiscountAmount;
 
-            // Calculate tax (GST Pakistan)
-            invoice.TaxAmount = invoice.TaxableAmount * (invoice.TaxPercentage / 100);
+            // Apply automatic tax calculation using TaxCalculationService
+            _taxCalculationService.ApplyTaxToSalesInvoice(invoice);
+
+            // If no tax was applied, use default calculation
+            if (invoice.TaxAmount == 0 && invoice.TaxPercentage == 0)
+            {
+                invoice.TaxPercentage = 17; // Default GST rate
+                invoice.TaxAmount = invoice.TaxableAmount * (invoice.TaxPercentage / 100);
+            }
 
             // Calculate total
             invoice.TotalAmount = invoice.TaxableAmount + invoice.TaxAmount;

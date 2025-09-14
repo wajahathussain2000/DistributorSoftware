@@ -8,12 +8,14 @@ namespace DistributionSoftware.DataAccess
     {
         int CreateJournalVoucher(JournalVoucher voucher);
         bool UpdateJournalVoucher(JournalVoucher voucher);
+        bool Update(JournalVoucher voucher);
         bool DeleteJournalVoucher(int voucherId);
         JournalVoucher GetJournalVoucherById(int voucherId);
         JournalVoucher GetJournalVoucherByNumber(string voucherNumber);
         List<JournalVoucher> GetAllJournalVouchers();
         List<JournalVoucher> GetJournalVouchersByDateRange(DateTime startDate, DateTime endDate);
         List<JournalVoucher> GetJournalVouchersByAccount(int accountId);
+        List<JournalVoucher> GetByBankAccount(int bankAccountId, DateTime? startDate = null, DateTime? endDate = null);
         List<JournalVoucherDetail> GetJournalVoucherDetails(int voucherId);
         List<JournalVoucherDetail> GetAccountJournalVoucherDetails(int accountId, DateTime startDate, DateTime endDate);
         decimal GetAccountBalance(int accountId, DateTime asOfDate);

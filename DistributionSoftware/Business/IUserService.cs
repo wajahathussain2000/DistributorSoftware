@@ -13,6 +13,7 @@ namespace DistributionSoftware.Business
         
         // User management methods
         Task<List<User>> GetAllUsersAsync();
+        List<User> GetAllUsers();
         Task<User> GetUserByIdAsync(int userId);
         Task<bool> CreateUserAsync(User user);
         Task<bool> UpdateUserAsync(User user);

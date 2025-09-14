@@ -16,8 +16,11 @@ namespace DistributionSoftware.Models
         public string UnitName { get; set; }
         public decimal PurchasePrice { get; set; }
         public decimal SalePrice { get; set; }
+        public decimal Price { get => SalePrice; set => SalePrice = value; }
+        public decimal UnitPrice { get; set; }
         public decimal MRP { get; set; }
         public decimal Quantity { get; set; }
+        public decimal StockQuantity { get; set; }
         public decimal ReservedQuantity { get; set; }
         public decimal ReorderLevel { get; set; }
         public string Barcode { get; set; }
@@ -37,6 +40,7 @@ namespace DistributionSoftware.Models
             IsActive = true;
             CreatedDate = DateTime.Now;
             Quantity = 0;
+            StockQuantity = 0;
             ReservedQuantity = 0;
             ReorderLevel = 0;
         }
