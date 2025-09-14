@@ -13,6 +13,7 @@ namespace DistributionSoftware.Models
         public string CustomerPhone { get; set; }
         public string CustomerAddress { get; set; }
         public string PaymentMode { get; set; } // CASH, CARD, EASYPAISA, JAZZCASH, BANK_TRANSFER, CHEQUE
+        public string PaymentType { get; set; } // Same as PaymentMode for compatibility
         public decimal Subtotal { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountPercentage { get; set; }
@@ -20,10 +21,19 @@ namespace DistributionSoftware.Models
         public decimal TaxAmount { get; set; }
         public decimal TaxPercentage { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal NetAmount { get; set; } // Same as TotalAmount for compatibility
         public decimal PaidAmount { get; set; }
         public decimal ChangeAmount { get; set; }
         public string Status { get; set; } // DRAFT, CONFIRMED, PAID, DELIVERED, CANCELLED
         public string Remarks { get; set; }
+        
+        // Accounting Integration
+        public int? SalesAccountId { get; set; } // Revenue account (e.g., 4100 - Product Sales)
+        public int? CashAccountId { get; set; } // Cash account for cash sales (e.g., 1110 - Cash in Hand)
+        public int? ReceivableAccountId { get; set; } // Accounts receivable for credit sales (e.g., 1210 - Trade Receivables)
+        public int? TaxAccountId { get; set; } // Tax payable account (e.g., 2120 - Other Payables)
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this sale
+        
         public int CreatedBy { get; set; }
         public string CreatedByUser { get; set; }
         public DateTime CreatedDate { get; set; }

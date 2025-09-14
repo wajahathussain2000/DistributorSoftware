@@ -42,6 +42,7 @@
             this.suppliersBtn = new System.Windows.Forms.Button();
             this.reportsBtn = new System.Windows.Forms.Button();
             this.expenseBtn = new System.Windows.Forms.Button();
+            this.accountingBtn = new System.Windows.Forms.Button();
             this.settingsBtn = new System.Windows.Forms.Button();
             this.logoutBtn = new System.Windows.Forms.Button();
             this.salesChartPanel = new System.Windows.Forms.Panel();
@@ -240,6 +241,22 @@
             this.expenseBtn.UseVisualStyleBackColor = false;
             this.expenseBtn.Click += new System.EventHandler(this.ExpenseBtn_Click);
             // 
+            // accountingBtn
+            // 
+            this.accountingBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.accountingBtn.FlatAppearance.BorderSize = 0;
+            this.accountingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.accountingBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.accountingBtn.ForeColor = System.Drawing.Color.White;
+            this.accountingBtn.Location = new System.Drawing.Point(855, 65);
+            this.accountingBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.accountingBtn.Name = "accountingBtn";
+            this.accountingBtn.Size = new System.Drawing.Size(80, 30);
+            this.accountingBtn.TabIndex = 12;
+            this.accountingBtn.Text = "Accounting";
+            this.accountingBtn.UseVisualStyleBackColor = false;
+            this.accountingBtn.Click += new System.EventHandler(this.AccountingBtn_Click);
+            // 
             // settingsBtn
             // 
             this.settingsBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
@@ -247,11 +264,11 @@
             this.settingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsBtn.ForeColor = System.Drawing.Color.White;
-            this.settingsBtn.Location = new System.Drawing.Point(855, 65);
+            this.settingsBtn.Location = new System.Drawing.Point(940, 65);
             this.settingsBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.settingsBtn.Name = "settingsBtn";
             this.settingsBtn.Size = new System.Drawing.Size(80, 30);
-            this.settingsBtn.TabIndex = 12;
+            this.settingsBtn.TabIndex = 13;
             this.settingsBtn.Text = "Settings";
             this.settingsBtn.UseVisualStyleBackColor = false;
             this.settingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
@@ -263,7 +280,7 @@
             this.logoutBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.logoutBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.logoutBtn.ForeColor = System.Drawing.Color.White;
-            this.logoutBtn.Location = new System.Drawing.Point(940, 65);
+            this.logoutBtn.Location = new System.Drawing.Point(1025, 65);
             this.logoutBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.logoutBtn.Name = "logoutBtn";
             this.logoutBtn.Size = new System.Drawing.Size(80, 30);
@@ -347,6 +364,7 @@
             this.Controls.Add(this.salesChartPanel);
             this.Controls.Add(this.logoutBtn);
             this.Controls.Add(this.settingsBtn);
+            this.Controls.Add(this.accountingBtn);
             this.Controls.Add(this.expenseBtn);
             this.Controls.Add(this.reportsBtn);
             this.Controls.Add(this.suppliersBtn);
@@ -386,6 +404,7 @@
         private System.Windows.Forms.Button suppliersBtn;
         private System.Windows.Forms.Button reportsBtn;
         private System.Windows.Forms.Button expenseBtn;
+        private System.Windows.Forms.Button accountingBtn;
         private System.Windows.Forms.Button settingsBtn;
         private System.Windows.Forms.Button logoutBtn;
         private System.Windows.Forms.Panel salesChartPanel;

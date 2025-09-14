@@ -13,6 +13,7 @@ namespace DistributionSoftware.Models
         public string CustomerAddress { get; set; }
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; } // CASH, BANK_TRANSFER, CHEQUE, CARD, EASYPAISA, JAZZCASH, OTHER
+        public string PaymentMode { get; set; } // Same as PaymentMethod for compatibility
         public string InvoiceReference { get; set; }
         public string Description { get; set; }
         public string ReceivedBy { get; set; }
@@ -34,6 +35,11 @@ namespace DistributionSoftware.Models
         public string CardType { get; set; }
         public string MobileNumber { get; set; }
         public string PaymentReference { get; set; }
+        
+        // Accounting Integration
+        public int? ReceiptAccountId { get; set; } // Receipt account (Cash/Bank)
+        public int? ReceivableAccountId { get; set; } // Accounts receivable account
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this receipt
         
         public CustomerReceipt()
         {

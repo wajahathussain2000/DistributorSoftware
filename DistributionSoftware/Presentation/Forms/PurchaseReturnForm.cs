@@ -24,9 +24,7 @@ namespace DistributionSoftware.Presentation.Forms
         private DataTable suppliersDataTable;
         private DataTable productsDataTable;
         private DataTable purchasesDataTable;
-        private bool isEditMode = false;
         private int currentPurchaseReturnId = 0;
-        private string currentStatus = "Draft";
         
         // Services
         private IPurchaseReturnService _purchaseReturnService;

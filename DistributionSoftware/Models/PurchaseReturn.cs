@@ -23,6 +23,12 @@ namespace DistributionSoftware.Models
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         
+        // Accounting Integration
+        public int? PurchaseReturnAccountId { get; set; } // Expense account for purchase returns
+        public int? PayableAccountId { get; set; } // Accounts payable account
+        public int? TaxAccountId { get; set; } // Tax receivable account
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this return
+        
         // Navigation properties
         public List<PurchaseReturnItem> Items { get; set; } = new List<PurchaseReturnItem>();
     }

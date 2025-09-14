@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Text;
 using System.Drawing.Imaging;
 using System.IO;
+using DistributionSoftware.Common;
 
 namespace DistributionSoftware.Presentation.Forms
 {
@@ -18,9 +19,14 @@ namespace DistributionSoftware.Presentation.Forms
 
         public SupplierMasterForm()
         {
+            InitializeComponent();
+            InitializeForm();
+        }
+
+        private void InitializeForm()
+        {
             try
             {
-                InitializeComponent();
                 InitializeConnection();
                 GenerateSupplierCode();
                 LoadSuppliersGrid();
@@ -34,7 +40,7 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void InitializeConnection()
         {
-            connectionString = ConfigurationManager.ConnectionStrings["DistributionConnection"]?.ConnectionString;
+            connectionString = DistributionSoftware.Common.ConfigurationManager.DistributionConnectionString;
             if (string.IsNullOrEmpty(connectionString))
             {
                 MessageBox.Show("Database connection string not found.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -256,8 +262,8 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void InsertSupplier()
         {
-            string query = @"INSERT INTO Suppliers (SupplierCode, SupplierName, ContactPerson, Phone, Email, Address, City, State, ZipCode, Country, GST, NTN, PaymentTermsFrom, PaymentTermsTo, PaymentTermsDays, IsActive, Notes, CreatedDate) 
-                            VALUES (@SupplierCode, @SupplierName, @ContactPerson, @Phone, @Email, @Address, @City, @State, @ZipCode, @Country, @GST, @NTN, @PaymentTermsFrom, @PaymentTermsTo, @PaymentTermsDays, @IsActive, @Notes, @CreatedDate)";
+            string query = @"INSERT INTO Suppliers (SupplierCode, SupplierName, ContactPerson, Phone, Email, Address, City, State, PostalCode, Country, GST, NTN, PaymentTermsDate, PaymentTermsDays, IsActive, Notes, CreatedDate) 
+                            VALUES (@SupplierCode, @SupplierName, @ContactPerson, @Phone, @Email, @Address, @City, @State, @PostalCode, @Country, @GST, @NTN, @PaymentTermsDate, @PaymentTermsDays, @IsActive, @Notes, @CreatedDate)";
 
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
@@ -269,12 +275,11 @@ namespace DistributionSoftware.Presentation.Forms
                 cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
                 cmd.Parameters.AddWithValue("@City", txtCity.Text);
                 cmd.Parameters.AddWithValue("@State", txtState.Text);
-                cmd.Parameters.AddWithValue("@ZipCode", txtZipCode.Text);
+                cmd.Parameters.AddWithValue("@PostalCode", txtZipCode.Text);
                 cmd.Parameters.AddWithValue("@Country", txtCountry.Text);
                 cmd.Parameters.AddWithValue("@GST", txtGST.Text);
                 cmd.Parameters.AddWithValue("@NTN", txtNTN.Text);
-                cmd.Parameters.AddWithValue("@PaymentTermsFrom", dtpPaymentTermsFrom.Value);
-                cmd.Parameters.AddWithValue("@PaymentTermsTo", dtpPaymentTermsTo.Value);
+                cmd.Parameters.AddWithValue("@PaymentTermsDate", dtpPaymentTermsFrom.Value);
                 cmd.Parameters.AddWithValue("@PaymentTermsDays", txtPaymentTermsDays.Text);
                 cmd.Parameters.AddWithValue("@IsActive", chkIsActive.Checked);
                 cmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
@@ -290,7 +295,7 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void UpdateSupplier()
         {
-            string query = @"UPDATE Suppliers SET SupplierName = @SupplierName, ContactPerson = @ContactPerson, Phone = @Phone, Email = @Email, Address = @Address, City = @City, State = @State, ZipCode = @ZipCode, Country = @Country, GST = @GST, NTN = @NTN, PaymentTermsFrom = @PaymentTermsFrom, PaymentTermsTo = @PaymentTermsTo, PaymentTermsDays = @PaymentTermsDays, IsActive = @IsActive, Notes = @Notes, ModifiedDate = @ModifiedDate WHERE SupplierId = @SupplierId";
+            string query = @"UPDATE Suppliers SET SupplierName = @SupplierName, ContactPerson = @ContactPerson, Phone = @Phone, Email = @Email, Address = @Address, City = @City, State = @State, PostalCode = @PostalCode, Country = @Country, GST = @GST, NTN = @NTN, PaymentTermsDate = @PaymentTermsDate, PaymentTermsDays = @PaymentTermsDays, IsActive = @IsActive, Notes = @Notes, ModifiedDate = @ModifiedDate WHERE SupplierId = @SupplierId";
 
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
@@ -302,12 +307,11 @@ namespace DistributionSoftware.Presentation.Forms
                 cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
                 cmd.Parameters.AddWithValue("@City", txtCity.Text);
                 cmd.Parameters.AddWithValue("@State", txtState.Text);
-                cmd.Parameters.AddWithValue("@ZipCode", txtZipCode.Text);
+                cmd.Parameters.AddWithValue("@PostalCode", txtZipCode.Text);
                 cmd.Parameters.AddWithValue("@Country", txtCountry.Text);
                 cmd.Parameters.AddWithValue("@GST", txtGST.Text);
                 cmd.Parameters.AddWithValue("@NTN", txtNTN.Text);
-                cmd.Parameters.AddWithValue("@PaymentTermsFrom", dtpPaymentTermsFrom.Value);
-                cmd.Parameters.AddWithValue("@PaymentTermsTo", dtpPaymentTermsTo.Value);
+                cmd.Parameters.AddWithValue("@PaymentTermsDate", dtpPaymentTermsFrom.Value);
                 cmd.Parameters.AddWithValue("@PaymentTermsDays", txtPaymentTermsDays.Text);
                 cmd.Parameters.AddWithValue("@IsActive", chkIsActive.Checked);
                 cmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
@@ -357,12 +361,19 @@ namespace DistributionSoftware.Presentation.Forms
                         txtAddress.Text = reader["Address"].ToString();
                         txtCity.Text = reader["City"].ToString();
                         txtState.Text = reader["State"].ToString();
-                        txtZipCode.Text = reader["ZipCode"].ToString();
+                        txtZipCode.Text = reader["PostalCode"].ToString();
                         txtCountry.Text = reader["Country"].ToString();
                         txtGST.Text = reader["GST"].ToString();
                         txtNTN.Text = reader["NTN"].ToString();
-                        dtpPaymentTermsFrom.Value = Convert.ToDateTime(reader["PaymentTermsFrom"]);
-                        dtpPaymentTermsTo.Value = Convert.ToDateTime(reader["PaymentTermsTo"]);
+                        
+                        // Handle PaymentTermsDate (single field) instead of separate From/To fields
+                        if (reader["PaymentTermsDate"] != DBNull.Value)
+                        {
+                            DateTime paymentDate = Convert.ToDateTime(reader["PaymentTermsDate"]);
+                            dtpPaymentTermsFrom.Value = paymentDate;
+                            dtpPaymentTermsTo.Value = paymentDate;
+                        }
+                        
                         txtPaymentTermsDays.Text = reader["PaymentTermsDays"].ToString();
                         chkIsActive.Checked = Convert.ToBoolean(reader["IsActive"]);
                         txtNotes.Text = reader["Notes"].ToString();
@@ -401,5 +412,6 @@ namespace DistributionSoftware.Presentation.Forms
             picBarcode.Image = null;
             picQRCode.Image = null;
         }
+
     }
 }

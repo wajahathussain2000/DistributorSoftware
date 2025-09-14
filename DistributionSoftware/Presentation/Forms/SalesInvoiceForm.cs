@@ -15,6 +15,8 @@ namespace DistributionSoftware.Presentation.Forms
         private ISalesInvoiceService _salesInvoiceService;
         private IProductRepository _productRepository;
         private ICustomerRepository _customerRepository;
+        private IChartOfAccountService _chartOfAccountService;
+        private IJournalVoucherService _journalVoucherService;
         private SalesInvoice _currentInvoice;
         private bool _isInvoiceSaved;
         private bool _isPrintMode;
@@ -25,6 +27,8 @@ namespace DistributionSoftware.Presentation.Forms
             _salesInvoiceService = new SalesInvoiceService();
             _productRepository = new ProductRepository();
             _customerRepository = new CustomerRepository();
+            _chartOfAccountService = new ChartOfAccountService();
+            _journalVoucherService = new JournalVoucherService();
             _currentInvoice = new SalesInvoice();
             _isInvoiceSaved = false;
             _isPrintMode = false;
@@ -36,6 +40,7 @@ namespace DistributionSoftware.Presentation.Forms
             LoadCustomers();
             LoadProducts();
             LoadPaymentModes();
+            LoadChartOfAccounts();
             
             // Set default values
             SetDefaultValues();
@@ -43,10 +48,77 @@ namespace DistributionSoftware.Presentation.Forms
             // Update button state
             UpdateButtonState();
             
+            // Ensure form is scrollable and shows all controls
+            EnsureControlsVisible();
+            
+            // Add form load event to ensure scrolling works
+            this.Load += SalesInvoiceForm_Load;
+            
             // Add event handlers for real-time calculations
             //txtPaidAmount.TextChanged += TxtPaidAmount_TextChanged;
         }
 
+        private void EnsureControlsVisible()
+        {
+            try
+            {
+                // Force scrolling to be enabled
+                this.AutoScroll = true;
+                this.AutoScrollMargin = new Size(0, 50);
+                
+                // Calculate the required height to show all controls
+                int maxBottom = 0;
+                foreach (Control control in this.Controls)
+                {
+                    if (control.Bottom > maxBottom)
+                    {
+                        maxBottom = control.Bottom;
+                    }
+                }
+                
+                // Set minimum size to ensure all controls are visible
+                this.MinimumSize = new Size(1800, Math.Max(600, maxBottom + 100));
+                
+                // Force scroll to show the action buttons
+                this.ScrollControlIntoView(pnlActions);
+                
+                // Alternative: Set scroll position to show action buttons
+                this.AutoScrollPosition = new Point(0, Math.Max(0, pnlActions.Top - 200));
+                
+                // Refresh the form to ensure scrolling works
+                this.Refresh();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error ensuring controls visible: {ex.Message}");
+            }
+        }
+
+        private void SalesInvoiceForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                // Force scrolling to show action buttons
+                this.AutoScroll = true;
+                this.AutoScrollMargin = new Size(0, 50);
+                
+                // Scroll to show the action buttons
+                this.ScrollControlIntoView(pnlActions);
+                
+                // Set scroll position to show action buttons
+                this.AutoScrollPosition = new Point(0, Math.Max(0, pnlActions.Top - 200));
+                
+                // Refresh to ensure scrolling is applied
+                this.Refresh();
+                
+                // Show a message to confirm the form loaded with scrolling
+                System.Diagnostics.Debug.WriteLine($"Form loaded. Action panel location: {pnlActions.Location}, Size: {pnlActions.Size}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in form load: {ex.Message}");
+            }
+        }
 
         private void InitializeInvoice()
         {
@@ -173,6 +245,98 @@ namespace DistributionSoftware.Presentation.Forms
             //cmbPaymentMode.SelectedIndex = 0; // Default to CASH
         }
 
+        private void LoadChartOfAccounts()
+        {
+            try
+            {
+                // Load sales accounts (Revenue accounts)
+                var salesAccounts = _chartOfAccountService.GetAllChartOfAccounts()
+                    .Where(a => a.AccountType == "REVENUE" && a.IsActive)
+                    .OrderBy(a => a.AccountCode)
+                    .ToList();
+
+                cmbSalesAccount.Items.Clear();
+                foreach (var account in salesAccounts)
+                {
+                    cmbSalesAccount.Items.Add(account);
+                }
+                cmbSalesAccount.DisplayMember = "FullAccountName";
+                cmbSalesAccount.ValueMember = "AccountId";
+
+                // Load payment accounts (Asset accounts - Cash, Bank, etc.)
+                var paymentAccounts = _chartOfAccountService.GetAllChartOfAccounts()
+                    .Where(a => a.AccountType == "ASSET" && a.IsActive && 
+                               (a.AccountCategory == "CURRENT_ASSET" || a.AccountCategory == "FIXED_ASSET"))
+                    .OrderBy(a => a.AccountCode)
+                    .ToList();
+
+                cmbPaymentAccount.Items.Clear();
+                foreach (var account in paymentAccounts)
+                {
+                    cmbPaymentAccount.Items.Add(account);
+                }
+                cmbPaymentAccount.DisplayMember = "FullAccountName";
+                cmbPaymentAccount.ValueMember = "AccountId";
+
+                // Load tax accounts (Liability accounts)
+                var taxAccounts = _chartOfAccountService.GetAllChartOfAccounts()
+                    .Where(a => a.AccountType == "LIABILITY" && a.IsActive)
+                    .OrderBy(a => a.AccountCode)
+                    .ToList();
+
+                cmbTaxAccount.Items.Clear();
+                foreach (var account in taxAccounts)
+                {
+                    cmbTaxAccount.Items.Add(account);
+                }
+                cmbTaxAccount.DisplayMember = "FullAccountName";
+                cmbTaxAccount.ValueMember = "AccountId";
+
+                // Set default accounts
+                SetDefaultAccounts();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading Chart of Accounts: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SetDefaultAccounts()
+        {
+            try
+            {
+                // Set default sales account (Product Sales)
+                var defaultSalesAccount = _chartOfAccountService.GetAllChartOfAccounts()
+                    .FirstOrDefault(a => a.AccountCode == "4100"); // Product Sales
+                if (defaultSalesAccount != null)
+                {
+                    cmbSalesAccount.SelectedItem = defaultSalesAccount;
+                }
+
+                // Set default payment account (Cash in Hand)
+                var defaultCashAccount = _chartOfAccountService.GetAllChartOfAccounts()
+                    .FirstOrDefault(a => a.AccountCode == "1110"); // Cash in Hand
+                if (defaultCashAccount != null)
+                {
+                    cmbPaymentAccount.SelectedItem = defaultCashAccount;
+                }
+
+                // Set default tax account (Other Payables)
+                var defaultTaxAccount = _chartOfAccountService.GetAllChartOfAccounts()
+                    .FirstOrDefault(a => a.AccountCode == "2120"); // Other Payables
+                if (defaultTaxAccount != null)
+                {
+                    cmbTaxAccount.SelectedItem = defaultTaxAccount;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error setting default accounts: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void SetDefaultValues()
         {
             dtpInvoiceDate.Value = DateTime.Now;
@@ -237,21 +401,41 @@ namespace DistributionSoftware.Presentation.Forms
                 // Save invoice
                 var invoiceId = _salesInvoiceService.CreateSalesInvoice(_currentInvoice);
                 
-                // Debug: Show invoice creation result
-                MessageBox.Show($"Invoice Creation Debug:\nReturned Invoice ID: {invoiceId}\nInvoice Number: {_currentInvoice.InvoiceNumber}", 
-                    "Invoice Creation Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
                 if (invoiceId > 0)
                 {
                     _currentInvoice.SalesInvoiceId = invoiceId;
+                    
+                    // Create automatic journal entry for the sales transaction
+                    try
+                    {
+                        var journalVoucherId = _journalVoucherService.CreateSalesInvoiceJournalVoucher(_currentInvoice);
+                        
+                        // Update invoice with journal voucher reference
+                        _currentInvoice.JournalVoucherId = journalVoucherId;
+                        _salesInvoiceService.UpdateSalesInvoice(_currentInvoice);
+                        
+                        DebugHelper.WriteSuccess($"Journal Voucher {journalVoucherId} created for Sales Invoice {_currentInvoice.InvoiceNumber}");
+                    }
+                    catch (Exception journalEx)
+                    {
+                        DebugHelper.WriteException("SalesInvoiceForm.CreateJournalVoucher", journalEx);
+                        MessageBox.Show($"Invoice saved successfully, but journal entry creation failed:\n{journalEx.Message}\n\nPlease create journal entry manually.", 
+                            "Partial Success", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    
                     _isInvoiceSaved = true;
                     _isPrintMode = false;
                     
                     // Display barcode image
                     DisplayBarcodeImage(_currentInvoice.BarcodeImage, _currentInvoice.Barcode);
                     
-                    MessageBox.Show($"Invoice created successfully!\nInvoice Number: {_currentInvoice.InvoiceNumber}\nStatus: DRAFT - Ready for Payment", 
-                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var successMessage = $"Invoice created successfully!\nInvoice Number: {_currentInvoice.InvoiceNumber}\nStatus: DRAFT - Ready for Payment";
+                    if (_currentInvoice.JournalVoucherId.HasValue)
+                    {
+                        successMessage += $"\nJournal Voucher: {_currentInvoice.JournalVoucherId} (Auto-created)";
+                    }
+                    
+                    MessageBox.Show(successMessage, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
                     UpdateButtonState();
                     UpdateTotalsDisplay();
@@ -540,6 +724,22 @@ namespace DistributionSoftware.Presentation.Forms
             // _currentInvoice.PaymentMode = cmbPaymentMode.Text;
             _currentInvoice.Remarks = txtRemarks.Text;
             
+            // Set account references
+            if (cmbSalesAccount.SelectedItem is ChartOfAccount salesAccount)
+            {
+                _currentInvoice.SalesAccountId = salesAccount.AccountId;
+            }
+            
+            if (cmbPaymentAccount.SelectedItem is ChartOfAccount paymentAccount)
+            {
+                _currentInvoice.CashAccountId = paymentAccount.AccountId;
+            }
+            
+            if (cmbTaxAccount.SelectedItem is ChartOfAccount taxAccount)
+            {
+                _currentInvoice.TaxAccountId = taxAccount.AccountId;
+            }
+            
             // Update paid amount from form - commented out
             /*
             if (decimal.TryParse(txtPaidAmount.Text, out decimal paidAmount))
@@ -641,10 +841,6 @@ namespace DistributionSoftware.Presentation.Forms
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void SalesInvoiceForm_Load(object sender, EventArgs e)
-        {
-            // Form loaded event
-        }
 
         private void SalesInvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -712,6 +908,36 @@ namespace DistributionSoftware.Presentation.Forms
                         command.Parameters.AddWithValue("@Remarks", payment.Remarks ?? "");
 
                         int rowsAffected = command.ExecuteNonQuery();
+                        
+                        if (rowsAffected > 0)
+                        {
+                            // Create automatic journal entry for the payment
+                            try
+                            {
+                                var journalVoucherId = _journalVoucherService.CreateSalesPaymentJournalVoucher(payment);
+                                
+                                // Update payment with journal voucher reference
+                                payment.JournalVoucherId = journalVoucherId;
+                                
+                                // Update the payment record with journal voucher reference
+                                var updateQuery = "UPDATE SalesPayments SET JournalVoucherId = @JournalVoucherId WHERE SalesInvoiceId = @SalesInvoiceId AND PaymentDate = @PaymentDate";
+                                using (var updateCommand = new System.Data.SqlClient.SqlCommand(updateQuery, connection))
+                                {
+                                    updateCommand.Parameters.AddWithValue("@JournalVoucherId", journalVoucherId);
+                                    updateCommand.Parameters.AddWithValue("@SalesInvoiceId", payment.SalesInvoiceId);
+                                    updateCommand.Parameters.AddWithValue("@PaymentDate", DateTime.Now);
+                                    updateCommand.ExecuteNonQuery();
+                                }
+                                
+                                DebugHelper.WriteSuccess($"Journal Voucher {journalVoucherId} created for Sales Payment");
+                            }
+                            catch (Exception journalEx)
+                            {
+                                DebugHelper.WriteException("SalesInvoiceForm.CreatePaymentJournalVoucher", journalEx);
+                                // Don't fail the payment if journal entry fails
+                            }
+                        }
+                        
                         return rowsAffected > 0;
                     }
                 }

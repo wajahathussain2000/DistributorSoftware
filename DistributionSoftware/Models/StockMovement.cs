@@ -27,5 +27,9 @@ namespace DistributionSoftware.Models
         public decimal TotalValue { get; set; }
         public string SupplierName { get; set; }
         public string CustomerName { get; set; }
+        
+        // Accounting Integration
+        public int? InventoryAccountId { get; set; } // Inventory account
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this movement
     }
 }

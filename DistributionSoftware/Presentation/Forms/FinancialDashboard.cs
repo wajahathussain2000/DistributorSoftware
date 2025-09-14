@@ -277,11 +277,34 @@ namespace DistributionSoftware.Presentation.Forms
                 var cleanModuleName = moduleName.Replace("💰", "").Replace("💳", "").Replace("📊", "")
                                                .Replace("📈", "").Replace("🏦", "").Replace("📋", "").Trim();
                 
-                MessageBox.Show($"Opening {cleanModuleName} module...\n\nThis feature is under development.\n\n" +
-                              $"User: {UserSession.GetDisplayName()}\n" +
-                              $"Role: {UserSession.CurrentUserRole}\n" +
-                              $"Session: {UserSession.GetSessionDurationMinutes()} minutes", 
-                    "Module Access", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Handle specific modules
+                switch (cleanModuleName)
+                {
+                    case "General Ledger":
+                        OpenChartOfAccountsForm();
+                        break;
+                    default:
+                        MessageBox.Show($"Opening {cleanModuleName} module...\n\nThis feature is under development.\n\n" +
+                                      $"User: {UserSession.GetDisplayName()}\n" +
+                                      $"Role: {UserSession.CurrentUserRole}\n" +
+                                      $"Session: {UserSession.GetSessionDurationMinutes()} minutes", 
+                            "Module Access", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+                }
+            }
+        }
+
+        private void OpenChartOfAccountsForm()
+        {
+            try
+            {
+                ChartOfAccountsForm chartOfAccountsForm = new ChartOfAccountsForm();
+                chartOfAccountsForm.StartPosition = FormStartPosition.CenterParent;
+                chartOfAccountsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Chart of Accounts Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

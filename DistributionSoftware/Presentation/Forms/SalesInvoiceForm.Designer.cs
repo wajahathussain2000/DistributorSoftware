@@ -85,6 +85,14 @@
             this.lblRemarks = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.pnlAccountSelection = new System.Windows.Forms.Panel();
+            this.lblSalesAccount = new System.Windows.Forms.Label();
+            this.cmbSalesAccount = new System.Windows.Forms.ComboBox();
+            this.lblPaymentAccount = new System.Windows.Forms.Label();
+            this.cmbPaymentAccount = new System.Windows.Forms.ComboBox();
+            this.lblTaxAccount = new System.Windows.Forms.Label();
+            this.cmbTaxAccount = new System.Windows.Forms.ComboBox();
+            this.lblAccountSelectionTitle = new System.Windows.Forms.Label();
             this.pnlHeader.SuspendLayout();
             this.pnlInvoiceInfo.SuspendLayout();
             this.pnlCustomerInfo.SuspendLayout();
@@ -94,6 +102,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.pnlTotals.SuspendLayout();
             this.pnlActions.SuspendLayout();
+            this.pnlAccountSelection.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlHeader
@@ -607,15 +616,32 @@
             // 
             // pnlActions
             // 
+            this.pnlActions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.pnlActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlActions.Controls.Add(this.txtRemarks);
             this.pnlActions.Controls.Add(this.lblRemarks);
             this.pnlActions.Controls.Add(this.btnCancel);
             this.pnlActions.Controls.Add(this.btnSave);
-            this.pnlActions.Location = new System.Drawing.Point(713, 500);
+            this.pnlActions.Location = new System.Drawing.Point(713, 400);
             this.pnlActions.Name = "pnlActions";
             this.pnlActions.Size = new System.Drawing.Size(540, 80);
             this.pnlActions.TabIndex = 7;
+            // 
+            // pnlAccountSelection
+            // 
+            this.pnlAccountSelection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.pnlAccountSelection.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlAccountSelection.Controls.Add(this.lblSalesAccount);
+            this.pnlAccountSelection.Controls.Add(this.cmbSalesAccount);
+            this.pnlAccountSelection.Controls.Add(this.lblPaymentAccount);
+            this.pnlAccountSelection.Controls.Add(this.cmbPaymentAccount);
+            this.pnlAccountSelection.Controls.Add(this.lblTaxAccount);
+            this.pnlAccountSelection.Controls.Add(this.cmbTaxAccount);
+            this.pnlAccountSelection.Controls.Add(this.lblAccountSelectionTitle);
+            this.pnlAccountSelection.Location = new System.Drawing.Point(713, 300);
+            this.pnlAccountSelection.Name = "pnlAccountSelection";
+            this.pnlAccountSelection.Size = new System.Drawing.Size(540, 90);
+            this.pnlAccountSelection.TabIndex = 8;
             // 
             // txtRemarks
             // 
@@ -659,15 +685,83 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
+            // lblSalesAccount
+            // 
+            this.lblSalesAccount.AutoSize = true;
+            this.lblSalesAccount.Location = new System.Drawing.Point(15, 15);
+            this.lblSalesAccount.Name = "lblSalesAccount";
+            this.lblSalesAccount.Size = new System.Drawing.Size(95, 20);
+            this.lblSalesAccount.TabIndex = 0;
+            this.lblSalesAccount.Text = "Sales Account:";
+            // 
+            // cmbSalesAccount
+            // 
+            this.cmbSalesAccount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSalesAccount.FormattingEnabled = true;
+            this.cmbSalesAccount.Location = new System.Drawing.Point(120, 12);
+            this.cmbSalesAccount.Name = "cmbSalesAccount";
+            this.cmbSalesAccount.Size = new System.Drawing.Size(200, 28);
+            this.cmbSalesAccount.TabIndex = 1;
+            // 
+            // lblPaymentAccount
+            // 
+            this.lblPaymentAccount.AutoSize = true;
+            this.lblPaymentAccount.Location = new System.Drawing.Point(15, 50);
+            this.lblPaymentAccount.Name = "lblPaymentAccount";
+            this.lblPaymentAccount.Size = new System.Drawing.Size(125, 20);
+            this.lblPaymentAccount.TabIndex = 2;
+            this.lblPaymentAccount.Text = "Payment Account:";
+            // 
+            // cmbPaymentAccount
+            // 
+            this.cmbPaymentAccount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPaymentAccount.FormattingEnabled = true;
+            this.cmbPaymentAccount.Location = new System.Drawing.Point(150, 47);
+            this.cmbPaymentAccount.Name = "cmbPaymentAccount";
+            this.cmbPaymentAccount.Size = new System.Drawing.Size(170, 28);
+            this.cmbPaymentAccount.TabIndex = 3;
+            // 
+            // lblTaxAccount
+            // 
+            this.lblTaxAccount.AutoSize = true;
+            this.lblTaxAccount.Location = new System.Drawing.Point(330, 15);
+            this.lblTaxAccount.Name = "lblTaxAccount";
+            this.lblTaxAccount.Size = new System.Drawing.Size(85, 20);
+            this.lblTaxAccount.TabIndex = 4;
+            this.lblTaxAccount.Text = "Tax Account:";
+            // 
+            // cmbTaxAccount
+            // 
+            this.cmbTaxAccount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTaxAccount.FormattingEnabled = true;
+            this.cmbTaxAccount.Location = new System.Drawing.Point(425, 12);
+            this.cmbTaxAccount.Name = "cmbTaxAccount";
+            this.cmbTaxAccount.Size = new System.Drawing.Size(100, 28);
+            this.cmbTaxAccount.TabIndex = 5;
+            // 
+            // lblAccountSelectionTitle
+            // 
+            this.lblAccountSelectionTitle.AutoSize = true;
+            this.lblAccountSelectionTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAccountSelectionTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.lblAccountSelectionTitle.Location = new System.Drawing.Point(15, -20);
+            this.lblAccountSelectionTitle.Name = "lblAccountSelectionTitle";
+            this.lblAccountSelectionTitle.Size = new System.Drawing.Size(150, 20);
+            this.lblAccountSelectionTitle.TabIndex = 6;
+            this.lblAccountSelectionTitle.Text = "📊 Account Selection";
+            // 
             // SalesInvoiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1800, 900);
+            this.AutoScrollMargin = new System.Drawing.Size(0, 50);
+            this.ClientSize = new System.Drawing.Size(1800, 800);
+            this.MinimumSize = new System.Drawing.Size(1800, 600);
             this.Controls.Add(this.picBarcode);
             this.Controls.Add(this.lblBarcode);
             this.Controls.Add(this.pnlActions);
+            this.Controls.Add(this.pnlAccountSelection);
             this.Controls.Add(this.pnlTotals);
             this.Controls.Add(this.pnlItems);
             this.Controls.Add(this.pnlProductInfo);
@@ -695,6 +789,8 @@
             this.pnlTotals.PerformLayout();
             this.pnlActions.ResumeLayout(false);
             this.pnlActions.PerformLayout();
+            this.pnlAccountSelection.ResumeLayout(false);
+            this.pnlAccountSelection.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -759,6 +855,14 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblRemarks;
         private System.Windows.Forms.TextBox txtRemarks;
+        private System.Windows.Forms.Panel pnlAccountSelection;
+        private System.Windows.Forms.Label lblSalesAccount;
+        private System.Windows.Forms.ComboBox cmbSalesAccount;
+        private System.Windows.Forms.Label lblPaymentAccount;
+        private System.Windows.Forms.ComboBox cmbPaymentAccount;
+        private System.Windows.Forms.Label lblTaxAccount;
+        private System.Windows.Forms.ComboBox cmbTaxAccount;
+        private System.Windows.Forms.Label lblAccountSelectionTitle;
     }
 }
 

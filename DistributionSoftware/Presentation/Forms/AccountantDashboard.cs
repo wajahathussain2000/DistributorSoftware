@@ -240,7 +240,16 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void ShowAccounts()
         {
-            MessageBox.Show("Accounts module would open here", "Accounts", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                ChartOfAccountsForm chartOfAccountsForm = new ChartOfAccountsForm();
+                chartOfAccountsForm.StartPosition = FormStartPosition.CenterParent;
+                chartOfAccountsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Chart of Accounts Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ShowInvoices()
@@ -265,7 +274,16 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void ShowLedger()
         {
-            MessageBox.Show("Ledger module would open here", "Ledger", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                ChartOfAccountsForm chartOfAccountsForm = new ChartOfAccountsForm();
+                chartOfAccountsForm.StartPosition = FormStartPosition.CenterParent;
+                chartOfAccountsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Chart of Accounts Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Logout()

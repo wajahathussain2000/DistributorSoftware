@@ -26,5 +26,10 @@ namespace DistributionSoftware.Models
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public string ModifiedByName { get; set; } // For display purposes
+        
+        // Accounting Integration
+        public int? ExpenseAccountId { get; set; } // Expense account for this expense
+        public int? PaymentAccountId { get; set; } // Payment account (Cash/Bank)
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this expense
     }
 }

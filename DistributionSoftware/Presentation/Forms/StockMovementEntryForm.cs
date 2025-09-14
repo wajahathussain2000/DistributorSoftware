@@ -17,9 +17,6 @@ namespace DistributionSoftware.Presentation.Forms
     public partial class StockMovementEntryForm : Form
     {
         private IStockMovementService _stockMovementService;
-        private List<Product> _products;
-        private List<Warehouse> _warehouses;
-        private List<User> _users;
 
         public StockMovementEntryForm()
         {

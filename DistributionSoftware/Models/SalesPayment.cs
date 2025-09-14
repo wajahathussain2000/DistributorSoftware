@@ -7,6 +7,7 @@ namespace DistributionSoftware.Models
         public int PaymentId { get; set; }
         public int SalesInvoiceId { get; set; }
         public string PaymentMode { get; set; } // CASH, CARD, EASYPAISA, JAZZCASH, BANK_TRANSFER, CHEQUE
+        public string CustomerName { get; set; } // For display purposes
         public decimal Amount { get; set; }
         public string CardNumber { get; set; }
         public string CardType { get; set; }
@@ -21,6 +22,9 @@ namespace DistributionSoftware.Models
         public string Remarks { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        
+        // Accounting Integration
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this payment
         
         public SalesPayment()
         {

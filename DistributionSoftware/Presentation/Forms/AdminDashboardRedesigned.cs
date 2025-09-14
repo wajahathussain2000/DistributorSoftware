@@ -40,6 +40,7 @@ namespace DistributionSoftware.Presentation.Forms
         private ContextMenuStrip suppliersDropdown;
         private ContextMenuStrip reportsDropdown;
         private ContextMenuStrip expenseDropdown;
+        private ContextMenuStrip accountingDropdown;
         private ContextMenuStrip settingsDropdown;
 
         public AdminDashboardRedesigned()
@@ -160,6 +161,18 @@ namespace DistributionSoftware.Presentation.Forms
             expenseDropdown.Items.Add("Expense Entry", null, (s, e) => OpenExpenseEntryForm());
             expenseDropdown.Items.Add("-");
             expenseDropdown.Items.Add("Expense Reports", null, (s, e) => OpenExpenseReports());
+
+            // Accounting Dropdown (Accounting & Finance Module)
+            accountingDropdown = new ContextMenuStrip();
+            accountingDropdown.Font = dropdownFont;
+            accountingDropdown.Items.Add("Chart of Accounts", null, (s, e) => OpenChartOfAccountsForm());
+            accountingDropdown.Items.Add("-");
+            accountingDropdown.Items.Add("Journal Entries", null, (s, e) => OpenJournalEntriesForm());
+            accountingDropdown.Items.Add("General Ledger", null, (s, e) => OpenGeneralLedgerForm());
+            accountingDropdown.Items.Add("Trial Balance", null, (s, e) => OpenTrialBalanceForm());
+            accountingDropdown.Items.Add("-");
+            accountingDropdown.Items.Add("Profit & Loss Statement", null, (s, e) => OpenProfitLossForm());
+            accountingDropdown.Items.Add("Balance Sheet", null, (s, e) => OpenBalanceSheetForm());
 
             // Settings Dropdown (Master Data & Configuration Module)
             settingsDropdown = new ContextMenuStrip();
@@ -1047,6 +1060,11 @@ namespace DistributionSoftware.Presentation.Forms
             expenseDropdown.Show(expenseBtn, new Point(0, expenseBtn.Height));
         }
 
+        private void AccountingBtn_Click(object sender, EventArgs e)
+        {
+            accountingDropdown.Show(accountingBtn, new Point(0, accountingBtn.Height));
+        }
+
         private void SettingsBtn_Click(object sender, EventArgs e)
         {
             settingsDropdown.Show(settingsBtn, new Point(0, settingsBtn.Height));
@@ -1572,6 +1590,84 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        // Accounting Dropdown Methods
+        private void OpenChartOfAccountsForm()
+        {
+            try
+            {
+                ChartOfAccountsForm chartOfAccountsForm = new ChartOfAccountsForm();
+                chartOfAccountsForm.StartPosition = FormStartPosition.CenterParent;
+                chartOfAccountsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Chart of Accounts Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenJournalEntriesForm()
+        {
+            try
+            {
+                var journalVoucherForm = new JournalVoucherForm();
+                journalVoucherForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Journal Entries: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenGeneralLedgerForm()
+        {
+            try
+            {
+                var generalLedgerForm = new GeneralLedgerForm();
+                generalLedgerForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening General Ledger: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenTrialBalanceForm()
+        {
+            try
+            {
+                var trialBalanceForm = new TrialBalanceForm();
+                trialBalanceForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Trial Balance: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenProfitLossForm()
+        {
+            try
+            {
+                MessageBox.Show("Profit & Loss Statement functionality will be implemented soon.", "Profit & Loss", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Profit & Loss Statement: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenBalanceSheetForm()
+        {
+            try
+            {
+                MessageBox.Show("Balance Sheet functionality will be implemented soon.", "Balance Sheet", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Balance Sheet: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         // Settings Dropdown Methods
         private void OpenMasterDataManagement()
         {
@@ -1799,6 +1895,10 @@ namespace DistributionSoftware.Presentation.Forms
             startX += buttonWidth + buttonSpacing;
             expenseBtn.Location = new Point(startX, y);
             expenseBtn.Size = new Size(buttonWidth, 30);
+
+            startX += buttonWidth + buttonSpacing;
+            accountingBtn.Location = new Point(startX, y);
+            accountingBtn.Size = new Size(buttonWidth, 30);
 
             startX += buttonWidth + buttonSpacing;
             settingsBtn.Location = new Point(startX, y);

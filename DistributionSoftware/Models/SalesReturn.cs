@@ -23,6 +23,12 @@ namespace DistributionSoftware.Models
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         
+        // Accounting Integration
+        public int? SalesReturnAccountId { get; set; } // Revenue account for sales returns
+        public int? ReceivableAccountId { get; set; } // Accounts receivable account
+        public int? TaxAccountId { get; set; } // Tax payable account
+        public int? JournalVoucherId { get; set; } // Reference to the journal voucher created for this return
+        
         // Navigation properties
         public virtual Customer Customer { get; set; }
         public virtual SalesInvoice ReferenceSalesInvoice { get; set; }

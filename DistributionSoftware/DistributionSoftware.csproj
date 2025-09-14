@@ -201,6 +201,9 @@
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\Route.cs" />
+    <Compile Include="Models\ChartOfAccount.cs" />
+    <Compile Include="Models\JournalVoucher.cs" />
+    <Compile Include="Models\JournalVoucherDetail.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -221,6 +224,10 @@
     <Compile Include="DataAccess\VehicleRepository.cs" />
     <Compile Include="DataAccess\IRouteRepository.cs" />
     <Compile Include="DataAccess\RouteRepository.cs" />
+    <Compile Include="DataAccess\IChartOfAccountRepository.cs" />
+    <Compile Include="DataAccess\ChartOfAccountRepository.cs" />
+    <Compile Include="DataAccess\IJournalVoucherRepository.cs" />
+    <Compile Include="DataAccess\JournalVoucherRepository.cs" />
     <Compile Include="Business\ISalesInvoiceService.cs" />
     <Compile Include="Business\SalesInvoiceService.cs" />
     <Compile Include="Business\ISalesReturnService.cs" />
@@ -237,6 +244,10 @@
     <Compile Include="Business\ExpenseCategoryService.cs" />
     <Compile Include="Business\IExpenseService.cs" />
     <Compile Include="Business\ExpenseService.cs" />
+    <Compile Include="Business\IChartOfAccountService.cs" />
+    <Compile Include="Business\ChartOfAccountService.cs" />
+    <Compile Include="Business\IJournalVoucherService.cs" />
+    <Compile Include="Business\JournalVoucherService.cs" />
     <Compile Include="Presentation\Forms\SalesInvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -397,6 +408,30 @@
     </Compile>
     <Compile Include="Presentation\Forms\BrandsForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ChartOfAccountsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ChartOfAccountsForm.Designer.cs">
+      <DependentUpon>ChartOfAccountsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\JournalVoucherForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\JournalVoucherForm.Designer.cs">
+      <DependentUpon>JournalVoucherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\GeneralLedgerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\GeneralLedgerForm.Designer.cs">
+      <DependentUpon>GeneralLedgerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\TrialBalanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\TrialBalanceForm.Designer.cs">
+      <DependentUpon>TrialBalanceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\StockAdjustmentForm.cs">
       <SubType>Form</SubType>
@@ -564,6 +599,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\SalesReturnForm.resx">
       <DependentUpon>SalesReturnForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\SupplierMasterForm.resx">
+      <DependentUpon>SupplierMasterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\VehicleMasterForm.resx">
       <DependentUpon>VehicleMasterForm.cs</DependentUpon>
