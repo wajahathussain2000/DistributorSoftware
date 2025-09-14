@@ -17,6 +17,7 @@ namespace DistributionSoftware.Presentation.Forms
         private ICustomerRepository _customerRepository;
         private IChartOfAccountService _chartOfAccountService;
         private IJournalVoucherService _journalVoucherService;
+        private IPricingCalculationService _pricingCalculationService;
         private SalesInvoice _currentInvoice;
         private bool _isInvoiceSaved;
         private bool _isPrintMode;
@@ -29,6 +30,12 @@ namespace DistributionSoftware.Presentation.Forms
             _customerRepository = new CustomerRepository();
             _chartOfAccountService = new ChartOfAccountService();
             _journalVoucherService = new JournalVoucherService();
+            
+            // Initialize pricing calculation service
+            var connectionString = ConfigurationManager.GetConnectionString("DefaultConnection");
+            var pricingRuleRepository = new PricingRuleRepository(connectionString);
+            var discountRuleRepository = new DiscountRuleRepository(connectionString);
+            _pricingCalculationService = new PricingCalculationService(pricingRuleRepository, discountRuleRepository, _productRepository);
             _currentInvoice = new SalesInvoice();
             _isInvoiceSaved = false;
             _isPrintMode = false;
@@ -195,18 +202,21 @@ namespace DistributionSoftware.Presentation.Forms
                 
                 cmbProduct.Items.Clear();
                 
-                // Add real products from database
+                // Add real products from database with null safety checks
                 foreach (var product in products)
                 {
-                    var availableStock = product.Quantity - product.ReservedQuantity;
-                    cmbProduct.Items.Add(new { 
-                        Id = product.ProductId, 
-                        Code = product.ProductCode ?? "", 
-                        Name = product.ProductName ?? "", 
-                        Price = product.SalePrice > 0 ? product.SalePrice : product.PurchasePrice,
-                        Stock = availableStock,
-                        FullProduct = product
-                    });
+                    if (product != null && product.ProductId > 0)
+                    {
+                        var availableStock = product.Quantity - product.ReservedQuantity;
+                        cmbProduct.Items.Add(new { 
+                            Id = product.ProductId, 
+                            Code = product.ProductCode ?? "", 
+                            Name = product.ProductName ?? "Unnamed Product", 
+                            Price = product.SalePrice > 0 ? product.SalePrice : product.PurchasePrice,
+                            Stock = availableStock,
+                            FullProduct = product
+                        });
+                    }
                 }
                 
                 cmbProduct.DisplayMember = "Name";
@@ -632,6 +642,9 @@ namespace DistributionSoftware.Presentation.Forms
                     lblStock.ForeColor = Color.Green;
                 }
                 
+                // Calculate and display applicable discounts
+                CalculateAndDisplayDiscounts(selectedProduct.Id);
+                
                 // Auto-focus on quantity field for faster entry
                 txtQuantity.Focus();
             }
@@ -645,6 +658,109 @@ namespace DistributionSoftware.Presentation.Forms
                 txtCustomerName.Text = selectedCustomer.Name;
                 txtCustomerPhone.Text = selectedCustomer.Phone;
                 txtCustomerAddress.Text = selectedCustomer.Address;
+                
+                // Recalculate discounts when customer changes
+                if (cmbProduct.SelectedItem != null)
+                {
+                    var selectedProduct = (dynamic)cmbProduct.SelectedItem;
+                    CalculateAndDisplayDiscounts(selectedProduct.Id);
+                }
+            }
+        }
+
+        private void CalculateAndDisplayDiscounts(int productId)
+        {
+            try
+            {
+                // Get customer ID if selected
+                int? customerId = null;
+                if (cmbCustomer.SelectedItem != null)
+                {
+                    var selectedCustomer = (dynamic)cmbCustomer.SelectedItem;
+                    customerId = selectedCustomer.Id;
+                }
+
+                // Get quantity for discount calculation
+                decimal quantity = 1;
+                if (!string.IsNullOrEmpty(txtQuantity.Text) && decimal.TryParse(txtQuantity.Text, out decimal qty))
+                {
+                    quantity = qty;
+                }
+
+                // Calculate applicable discount
+                var discountAmount = _pricingCalculationService.CalculateDiscount(productId, customerId, quantity);
+                var discountRule = _pricingCalculationService.GetApplicableDiscountRule(productId, customerId, quantity);
+
+                // Display discount information
+                if (discountRule != null && discountAmount > 0)
+                {
+                    var discountPercentage = discountRule.DiscountType == "PERCENTAGE" ? discountRule.DiscountValue : 0;
+                    var discountText = discountRule.DiscountType == "PERCENTAGE" 
+                        ? $"{discountPercentage:N1}% Discount Available" 
+                        : $"₹{discountAmount:N2} Discount Available";
+                    
+                    // Show discount information in a label or tooltip
+                    ShowDiscountInfo(discountText, discountRule.RuleName, discountAmount);
+                }
+                else
+                {
+                    // Hide discount information if no applicable discount
+                    HideDiscountInfo();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error calculating discounts: {ex.Message}");
+                HideDiscountInfo();
+            }
+        }
+
+        private void ShowDiscountInfo(string discountText, string ruleName, decimal discountAmount)
+        {
+            // Create or update discount info label
+            if (Controls.Find("lblDiscountInfo", true).Length == 0)
+            {
+                var lblDiscountInfo = new Label
+                {
+                    Name = "lblDiscountInfo",
+                    Text = discountText,
+                    ForeColor = Color.Green,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                    Location = new Point(300, 200), // Adjust position as needed
+                    Size = new Size(200, 20),
+                    Visible = true
+                };
+                Controls.Add(lblDiscountInfo);
+            }
+            else
+            {
+                var lblDiscountInfo = Controls.Find("lblDiscountInfo", true)[0] as Label;
+                lblDiscountInfo.Text = discountText;
+                lblDiscountInfo.Visible = true;
+            }
+
+            // Show tooltip with rule details
+            var toolTip = new ToolTip();
+            toolTip.SetToolTip(Controls.Find("lblDiscountInfo", true)[0], 
+                $"Rule: {ruleName}\nDiscount Amount: ₹{discountAmount:N2}");
+        }
+
+        private void HideDiscountInfo()
+        {
+            if (Controls.Find("lblDiscountInfo", true).Length > 0)
+            {
+                var lblDiscountInfo = Controls.Find("lblDiscountInfo", true)[0] as Label;
+                lblDiscountInfo.Visible = false;
+            }
+        }
+
+        private void TxtQuantity_TextChanged(object sender, EventArgs e)
+        {
+            // Recalculate discounts when quantity changes
+            if (cmbProduct.SelectedItem != null)
+            {
+                var selectedProduct = (dynamic)cmbProduct.SelectedItem;
+                CalculateAndDisplayDiscounts(selectedProduct.Id);
             }
         }
 
