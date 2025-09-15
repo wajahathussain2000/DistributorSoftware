@@ -20,6 +20,12 @@ namespace DistributionSoftware.Business
         {
             try
             {
+                // Auto-generate unique code if not provided
+                if (string.IsNullOrWhiteSpace(taxRate.TaxRateCode))
+                {
+                    taxRate.TaxRateCode = GenerateUniqueTaxRateCode(taxRate.TaxRateName, taxRate.TaxPercentage);
+                }
+
                 if (!ValidateTaxRate(taxRate))
                     return 0;
 
@@ -200,6 +206,47 @@ namespace DistributionSoftware.Business
             {
                 Common.DebugHelper.WriteException("Error in TaxRateService.GetTaxRateCount", ex);
                 return 0;
+            }
+        }
+
+        private string GenerateUniqueTaxRateCode(string rateName, decimal percentage)
+        {
+            if (string.IsNullOrWhiteSpace(rateName))
+                return "TR" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            // Create code from rate name and percentage
+            var baseCode = rateName.Replace(" ", "").ToUpper();
+            if (baseCode.Length > 3)
+                baseCode = baseCode.Substring(0, 3);
+            else if (baseCode.Length < 2)
+                baseCode = baseCode.PadRight(2, 'X');
+
+            // Add percentage as suffix
+            var percentageSuffix = percentage.ToString("0");
+            var code = baseCode + percentageSuffix;
+
+            // Ensure uniqueness
+            var finalCode = code;
+            var counter = 1;
+            while (IsTaxRateCodeExists(finalCode))
+            {
+                finalCode = code + counter.ToString("00");
+                counter++;
+            }
+
+            return finalCode;
+        }
+
+        private bool IsTaxRateCodeExists(string code)
+        {
+            try
+            {
+                var existingRate = _taxRateRepository.GetByCode(code);
+                return existingRate != null;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

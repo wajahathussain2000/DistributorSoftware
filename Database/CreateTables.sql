@@ -204,7 +204,7 @@ BEGIN
         
         FOREIGN KEY (BankAccountId) REFERENCES BankAccounts(BankAccountId),
         FOREIGN KEY (MatchedAccountId) REFERENCES ChartOfAccounts(AccountId),
-        FOREIGN KEY (MatchedJournalVoucherId) REFERENCES JournalVouchers(JournalVoucherId)
+        FOREIGN KEY (MatchedJournalVoucherId) REFERENCES JournalVouchers(VoucherId)
     );
     
     PRINT 'BankStatements table created successfully';

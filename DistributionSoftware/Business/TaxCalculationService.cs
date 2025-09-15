@@ -22,7 +22,7 @@ namespace DistributionSoftware.Business
             try
             {
                 var taxRate = GetEffectiveTaxRate(taxCategoryId);
-                return taxRate != null ? taxableAmount * (taxRate.RatePercentage / 100) : 0;
+                return taxRate != null ? taxableAmount * (taxRate.TaxPercentage / 100) : 0;
             }
             catch (Exception ex)
             {
@@ -36,7 +36,7 @@ namespace DistributionSoftware.Business
             try
             {
                 var taxRate = GetEffectiveTaxRate(taxCategoryCode);
-                return taxRate != null ? taxableAmount * (taxRate.RatePercentage / 100) : 0;
+                return taxRate != null ? taxableAmount * (taxRate.TaxPercentage / 100) : 0;
             }
             catch (Exception ex)
             {
@@ -136,8 +136,8 @@ namespace DistributionSoftware.Business
                     var taxRate = GetEffectiveTaxRate(invoice.TaxCategoryId.Value);
                     if (taxRate != null)
                     {
-                        invoice.TaxPercentage = taxRate.RatePercentage;
-                        invoice.TaxAmount = invoice.TaxableAmount * (taxRate.RatePercentage / 100);
+                        invoice.TaxPercentage = taxRate.TaxPercentage;
+                        invoice.TaxAmount = invoice.TaxableAmount * (taxRate.TaxPercentage / 100);
                         invoice.TotalAmount = invoice.TaxableAmount + invoice.TaxAmount;
                     }
                 }
@@ -154,10 +154,10 @@ namespace DistributionSoftware.Business
             {
                 if (detail == null) return;
 
-                // Set default tax category if not set
+                // Set default tax category if not set (Sales Tax)
                 if (!detail.TaxCategoryId.HasValue)
                 {
-                    var defaultTaxCategory = GetTaxCategoryByCode("GST");
+                    var defaultTaxCategory = GetTaxCategoryByCode("SALE") ?? GetTaxCategoryByCode("GST") ?? GetTaxCategoryByCode("STD");
                     if (defaultTaxCategory != null)
                     {
                         detail.TaxCategoryId = defaultTaxCategory.TaxCategoryId;
@@ -170,8 +170,8 @@ namespace DistributionSoftware.Business
                     var taxRate = GetEffectiveTaxRate(detail.TaxCategoryId.Value);
                     if (taxRate != null)
                     {
-                        detail.TaxPercentage = taxRate.RatePercentage;
-                        detail.TaxAmount = detail.TaxableAmount * (taxRate.RatePercentage / 100);
+                        detail.TaxPercentage = taxRate.TaxPercentage;
+                        detail.TaxAmount = detail.TaxableAmount * (taxRate.TaxPercentage / 100);
                         detail.LineTotal = detail.TaxableAmount + detail.TaxAmount;
                         detail.TotalAmount = detail.LineTotal;
                     }
@@ -205,8 +205,8 @@ namespace DistributionSoftware.Business
                     var taxRate = GetEffectiveTaxRate(salesReturn.TaxCategoryId.Value);
                     if (taxRate != null)
                     {
-                        salesReturn.TaxPercentage = taxRate.RatePercentage;
-                        salesReturn.TaxAmount = salesReturn.TaxableAmount * (taxRate.RatePercentage / 100);
+                        salesReturn.TaxPercentage = taxRate.TaxPercentage;
+                        salesReturn.TaxAmount = salesReturn.TaxableAmount * (taxRate.TaxPercentage / 100);
                         salesReturn.TotalAmount = salesReturn.TaxableAmount + salesReturn.TaxAmount;
                     }
                 }
@@ -239,8 +239,8 @@ namespace DistributionSoftware.Business
                     var taxRate = GetEffectiveTaxRate(item.TaxCategoryId.Value);
                     if (taxRate != null)
                     {
-                        item.TaxPercentage = taxRate.RatePercentage;
-                        item.TaxAmount = item.TaxableAmount * (taxRate.RatePercentage / 100);
+                        item.TaxPercentage = taxRate.TaxPercentage;
+                        item.TaxAmount = item.TaxableAmount * (taxRate.TaxPercentage / 100);
                         item.LineTotal = item.TaxableAmount + item.TaxAmount;
                         item.TotalAmount = item.LineTotal;
                     }

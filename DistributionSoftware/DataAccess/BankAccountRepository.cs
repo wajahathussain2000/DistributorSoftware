@@ -20,13 +20,19 @@ namespace DistributionSoftware.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand("INSERT INTO BankAccounts (AccountNumber, BankName, BranchName, AccountHolder, CurrentBalance, IsActive, CreatedDate, CreatedBy) VALUES (@AccountNumber, @BankName, @BranchName, @AccountHolder, @CurrentBalance, @IsActive, @CreatedDate, @CreatedBy); SELECT SCOPE_IDENTITY();", connection))
+                using (var command = new SqlCommand("INSERT INTO BankAccounts (AccountNumber, BankName, Branch, AccountHolderName, AccountType, Address, Phone, Email, ChartOfAccountId, CurrentBalance, LastReconciliationDate, IsActive, CreatedDate, CreatedBy) VALUES (@AccountNumber, @BankName, @Branch, @AccountHolderName, @AccountType, @Address, @Phone, @Email, @ChartOfAccountId, @CurrentBalance, @LastReconciliationDate, @IsActive, @CreatedDate, @CreatedBy); SELECT SCOPE_IDENTITY();", connection))
                 {
-                    command.Parameters.AddWithValue("@AccountNumber", bankAccount.AccountNumber);
-                    command.Parameters.AddWithValue("@BankName", bankAccount.BankName);
-                    command.Parameters.AddWithValue("@BranchName", bankAccount.BranchName ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@AccountHolder", bankAccount.AccountHolder);
+                    command.Parameters.AddWithValue("@AccountNumber", bankAccount.AccountNumber ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@BankName", bankAccount.BankName ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Branch", bankAccount.Branch ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@AccountHolderName", bankAccount.AccountHolderName ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@AccountType", bankAccount.AccountType ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Address", bankAccount.Address ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Phone", bankAccount.Phone ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Email", bankAccount.Email ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@ChartOfAccountId", bankAccount.ChartOfAccountId ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CurrentBalance", bankAccount.CurrentBalance);
+                    command.Parameters.AddWithValue("@LastReconciliationDate", bankAccount.LastReconciliationDate ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@IsActive", bankAccount.IsActive);
                     command.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
                     command.Parameters.AddWithValue("@CreatedBy", bankAccount.CreatedBy);
@@ -41,17 +47,23 @@ namespace DistributionSoftware.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand("UPDATE BankAccounts SET AccountNumber = @AccountNumber, BankName = @BankName, BranchName = @BranchName, AccountHolder = @AccountHolder, CurrentBalance = @CurrentBalance, IsActive = @IsActive, ModifiedDate = @ModifiedDate, ModifiedBy = @ModifiedBy WHERE BankAccountId = @BankAccountId", connection))
+                using (var command = new SqlCommand("UPDATE BankAccounts SET AccountNumber = @AccountNumber, BankName = @BankName, Branch = @Branch, AccountHolderName = @AccountHolderName, AccountType = @AccountType, Address = @Address, Phone = @Phone, Email = @Email, ChartOfAccountId = @ChartOfAccountId, CurrentBalance = @CurrentBalance, LastReconciliationDate = @LastReconciliationDate, IsActive = @IsActive, ModifiedDate = @ModifiedDate, ModifiedBy = @ModifiedBy WHERE BankAccountId = @BankAccountId", connection))
                 {
                     command.Parameters.AddWithValue("@BankAccountId", bankAccount.BankAccountId);
-                    command.Parameters.AddWithValue("@AccountNumber", bankAccount.AccountNumber);
-                    command.Parameters.AddWithValue("@BankName", bankAccount.BankName);
-                    command.Parameters.AddWithValue("@BranchName", bankAccount.BranchName ?? (object)DBNull.Value);
-                    command.Parameters.AddWithValue("@AccountHolder", bankAccount.AccountHolder);
+                    command.Parameters.AddWithValue("@AccountNumber", bankAccount.AccountNumber ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@BankName", bankAccount.BankName ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Branch", bankAccount.Branch ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@AccountHolderName", bankAccount.AccountHolderName ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@AccountType", bankAccount.AccountType ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Address", bankAccount.Address ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Phone", bankAccount.Phone ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Email", bankAccount.Email ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@ChartOfAccountId", bankAccount.ChartOfAccountId ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CurrentBalance", bankAccount.CurrentBalance);
+                    command.Parameters.AddWithValue("@LastReconciliationDate", bankAccount.LastReconciliationDate ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@IsActive", bankAccount.IsActive);
                     command.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
-                    command.Parameters.AddWithValue("@ModifiedBy", bankAccount.ModifiedBy);
+                    command.Parameters.AddWithValue("@ModifiedBy", bankAccount.ModifiedBy ?? (object)DBNull.Value);
 
                     return command.ExecuteNonQuery() > 0;
                 }
@@ -207,12 +219,20 @@ namespace DistributionSoftware.DataAccess
                 BankAccountId = Convert.ToInt32(reader["BankAccountId"]),
                 AccountNumber = reader["AccountNumber"].ToString(),
                 BankName = reader["BankName"].ToString(),
-                BranchName = reader["BranchName"] == DBNull.Value ? null : reader["BranchName"].ToString(),
-                AccountHolder = reader["AccountHolder"].ToString(),
+                Branch = reader["Branch"] == DBNull.Value ? null : reader["Branch"].ToString(),
+                AccountHolderName = reader["AccountHolderName"].ToString(),
+                AccountType = reader["AccountType"] == DBNull.Value ? null : reader["AccountType"].ToString(),
+                Address = reader["Address"] == DBNull.Value ? null : reader["Address"].ToString(),
+                Phone = reader["Phone"] == DBNull.Value ? null : reader["Phone"].ToString(),
+                Email = reader["Email"] == DBNull.Value ? null : reader["Email"].ToString(),
+                ChartOfAccountId = reader["ChartOfAccountId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["ChartOfAccountId"]),
                 CurrentBalance = Convert.ToDecimal(reader["CurrentBalance"]),
+                LastReconciliationDate = reader["LastReconciliationDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["LastReconciliationDate"]),
                 IsActive = Convert.ToBoolean(reader["IsActive"]),
                 CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
-                CreatedBy = reader["CreatedBy"] == DBNull.Value ? 0 : Convert.ToInt32(reader["CreatedBy"])
+                CreatedBy = reader["CreatedBy"] == DBNull.Value ? 0 : Convert.ToInt32(reader["CreatedBy"]),
+                ModifiedDate = reader["ModifiedDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"]),
+                ModifiedBy = reader["ModifiedBy"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["ModifiedBy"])
             };
         }
     }

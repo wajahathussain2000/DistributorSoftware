@@ -128,6 +128,11 @@ namespace DistributionSoftware.Models
         /// </summary>
         public TaxCategory TaxCategory { get; set; }
         
+        /// <summary>
+        /// Tax category name for display purposes
+        /// </summary>
+        public string TaxCategoryName { get; set; }
+        
         #endregion
         
         #region Constructor
@@ -137,11 +142,18 @@ namespace DistributionSoftware.Models
         /// </summary>
         public TaxRate()
         {
+            TaxRateCode = string.Empty;
+            TaxRateName = string.Empty;
+            Description = string.Empty;
+            TaxPercentage = 0;
             IsActive = true;
             CreatedDate = DateTime.Now;
             IsSystemRate = false;
             IsCompound = false;
             IsInclusive = false;
+            EffectiveFrom = DateTime.Now;
+            CreatedBy = 1;
+            CreatedByName = "System User";
         }
         
         #endregion

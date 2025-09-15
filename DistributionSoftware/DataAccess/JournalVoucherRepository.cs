@@ -36,10 +36,10 @@ namespace DistributionSoftware.DataAccess
                             // Insert journal voucher
                             var voucherSql = @"INSERT INTO JournalVouchers 
                                              (VoucherNumber, VoucherDate, Reference, Narration, 
-                                              TotalDebit, TotalCredit, CreatedBy, CreatedByName, CreatedDate)
+                                              TotalDebit, TotalCredit, CreatedBy, CreatedDate)
                                              VALUES 
                                              (@VoucherNumber, @VoucherDate, @Reference, @Narration, 
-                                              @TotalDebit, @TotalCredit, @CreatedBy, @CreatedByName, @CreatedDate);
+                                              @TotalDebit, @TotalCredit, @CreatedBy, @CreatedDate);
                                              SELECT SCOPE_IDENTITY();";
 
                             int voucherId;
@@ -52,7 +52,6 @@ namespace DistributionSoftware.DataAccess
                                 command.Parameters.AddWithValue("@TotalDebit", voucher.TotalDebit);
                                 command.Parameters.AddWithValue("@TotalCredit", voucher.TotalCredit);
                                 command.Parameters.AddWithValue("@CreatedBy", voucher.CreatedBy);
-                                command.Parameters.AddWithValue("@CreatedByName", voucher.CreatedByName ?? (object)DBNull.Value);
                                 command.Parameters.AddWithValue("@CreatedDate", voucher.CreatedDate);
 
                                 voucherId = Convert.ToInt32(command.ExecuteScalar());
@@ -116,7 +115,6 @@ namespace DistributionSoftware.DataAccess
                                              TotalDebit = @TotalDebit,
                                              TotalCredit = @TotalCredit,
                                              ModifiedBy = @ModifiedBy,
-                                             ModifiedByName = @ModifiedByName,
                                              ModifiedDate = @ModifiedDate
                                              WHERE VoucherId = @VoucherId";
 
@@ -130,7 +128,6 @@ namespace DistributionSoftware.DataAccess
                                 command.Parameters.AddWithValue("@TotalDebit", voucher.TotalDebit);
                                 command.Parameters.AddWithValue("@TotalCredit", voucher.TotalCredit);
                                 command.Parameters.AddWithValue("@ModifiedBy", voucher.ModifiedBy ?? (object)DBNull.Value);
-                                command.Parameters.AddWithValue("@ModifiedByName", voucher.ModifiedByName ?? (object)DBNull.Value);
                                 command.Parameters.AddWithValue("@ModifiedDate", voucher.ModifiedDate ?? (object)DBNull.Value);
 
                                 command.ExecuteNonQuery();
@@ -575,7 +572,6 @@ namespace DistributionSoftware.DataAccess
                 TotalDebit = Convert.ToDecimal(reader["TotalDebit"]),
                 TotalCredit = Convert.ToDecimal(reader["TotalCredit"]),
                 CreatedBy = Convert.ToInt32(reader["CreatedBy"]),
-                CreatedByName = reader["CreatedByName"]?.ToString(),
                 CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                 ModifiedBy = reader["ModifiedBy"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["ModifiedBy"]),
                 ModifiedDate = reader["ModifiedDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"])

@@ -20,12 +20,14 @@ namespace DistributionSoftware.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand("INSERT INTO TaxCategories (TaxCategoryName, Description, IsActive, CreatedDate, CreatedBy) VALUES (@TaxCategoryName, @Description, @IsActive, @CreatedDate, @CreatedBy); SELECT SCOPE_IDENTITY();", connection))
+                using (var command = new SqlCommand("INSERT INTO TaxCategories (TaxCategoryCode, TaxCategoryName, Description, IsActive, IsSystemCategory, CreatedDate, CreatedBy) VALUES (@TaxCategoryCode, @TaxCategoryName, @Description, @IsActive, @IsSystemCategory, @CreatedDate, @CreatedBy); SELECT SCOPE_IDENTITY();", connection))
                 {
-                    command.Parameters.AddWithValue("@TaxCategoryName", taxCategory.TaxCategoryName);
+                    command.Parameters.AddWithValue("@TaxCategoryCode", taxCategory.TaxCategoryCode ?? string.Empty);
+                    command.Parameters.AddWithValue("@TaxCategoryName", taxCategory.TaxCategoryName ?? string.Empty);
                     command.Parameters.AddWithValue("@Description", taxCategory.Description ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@IsActive", taxCategory.IsActive);
-                    command.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@IsSystemCategory", taxCategory.IsSystemCategory);
+                    command.Parameters.AddWithValue("@CreatedDate", taxCategory.CreatedDate);
                     command.Parameters.AddWithValue("@CreatedBy", taxCategory.CreatedBy);
 
                     return Convert.ToInt32(command.ExecuteScalar());
@@ -38,13 +40,15 @@ namespace DistributionSoftware.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand("UPDATE TaxCategories SET TaxCategoryName = @TaxCategoryName, Description = @Description, IsActive = @IsActive, ModifiedDate = @ModifiedDate, ModifiedBy = @ModifiedBy WHERE TaxCategoryId = @TaxCategoryId", connection))
+                using (var command = new SqlCommand("UPDATE TaxCategories SET TaxCategoryCode = @TaxCategoryCode, TaxCategoryName = @TaxCategoryName, Description = @Description, IsActive = @IsActive, IsSystemCategory = @IsSystemCategory, ModifiedDate = @ModifiedDate, ModifiedBy = @ModifiedBy WHERE TaxCategoryId = @TaxCategoryId", connection))
                 {
                     command.Parameters.AddWithValue("@TaxCategoryId", taxCategory.TaxCategoryId);
-                    command.Parameters.AddWithValue("@TaxCategoryName", taxCategory.TaxCategoryName);
+                    command.Parameters.AddWithValue("@TaxCategoryCode", taxCategory.TaxCategoryCode ?? string.Empty);
+                    command.Parameters.AddWithValue("@TaxCategoryName", taxCategory.TaxCategoryName ?? string.Empty);
                     command.Parameters.AddWithValue("@Description", taxCategory.Description ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@IsActive", taxCategory.IsActive);
-                    command.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@IsSystemCategory", taxCategory.IsSystemCategory);
+                    command.Parameters.AddWithValue("@ModifiedDate", taxCategory.ModifiedDate);
                     command.Parameters.AddWithValue("@ModifiedBy", taxCategory.ModifiedBy);
 
                     return command.ExecuteNonQuery() > 0;

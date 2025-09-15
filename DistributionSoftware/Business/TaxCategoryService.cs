@@ -19,6 +19,12 @@ namespace DistributionSoftware.Business
         {
             try
             {
+                // Auto-generate unique code if not provided
+                if (string.IsNullOrWhiteSpace(taxCategory.TaxCategoryCode))
+                {
+                    taxCategory.TaxCategoryCode = GenerateUniqueTaxCategoryCode(taxCategory.TaxCategoryName);
+                }
+
                 if (!ValidateTaxCategory(taxCategory))
                     throw new InvalidOperationException("Tax category validation failed");
 
@@ -127,11 +133,17 @@ namespace DistributionSoftware.Business
                 return errors.ToArray();
             }
 
-            if (string.IsNullOrWhiteSpace(taxCategory.CategoryName))
-                errors.Add("Category name is required");
+            if (string.IsNullOrWhiteSpace(taxCategory.TaxCategoryCode))
+                errors.Add("Tax category code is required");
 
-            if (taxCategory.CategoryName != null && taxCategory.CategoryName.Length > 100)
-                errors.Add("Category name cannot exceed 100 characters");
+            if (string.IsNullOrWhiteSpace(taxCategory.TaxCategoryName))
+                errors.Add("Tax category name is required");
+
+            if (taxCategory.TaxCategoryCode != null && taxCategory.TaxCategoryCode.Length > 50)
+                errors.Add("Tax category code cannot exceed 50 characters");
+
+            if (taxCategory.TaxCategoryName != null && taxCategory.TaxCategoryName.Length > 100)
+                errors.Add("Tax category name cannot exceed 100 characters");
 
             if (taxCategory.Description != null && taxCategory.Description.Length > 500)
                 errors.Add("Description cannot exceed 500 characters");
@@ -177,6 +189,30 @@ namespace DistributionSoftware.Business
                 Common.DebugHelper.WriteException("Error in TaxCategoryService", ex);
                 throw;
             }
+        }
+
+        private string GenerateUniqueTaxCategoryCode(string categoryName)
+        {
+            if (string.IsNullOrWhiteSpace(categoryName))
+                return "TC" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            // Create code from category name (first 3-4 characters, uppercase)
+            var baseCode = categoryName.Replace(" ", "").ToUpper();
+            if (baseCode.Length > 4)
+                baseCode = baseCode.Substring(0, 4);
+            else if (baseCode.Length < 3)
+                baseCode = baseCode.PadRight(3, 'X');
+
+            // Ensure uniqueness
+            var code = baseCode;
+            var counter = 1;
+            while (IsTaxCategoryCodeExists(code))
+            {
+                code = baseCode + counter.ToString("00");
+                counter++;
+            }
+
+            return code;
         }
     }
 }

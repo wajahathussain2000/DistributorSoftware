@@ -18,6 +18,7 @@ namespace DistributionSoftware.Presentation.Forms
         private IChartOfAccountService _chartOfAccountService;
         private IJournalVoucherService _journalVoucherService;
         private IPricingCalculationService _pricingCalculationService;
+        private ITaxCalculationService _taxCalculationService;
         private SalesInvoice _currentInvoice;
         private bool _isInvoiceSaved;
         private bool _isPrintMode;
@@ -36,6 +37,12 @@ namespace DistributionSoftware.Presentation.Forms
             var pricingRuleRepository = new PricingRuleRepository(connectionString);
             var discountRuleRepository = new DiscountRuleRepository(connectionString);
             _pricingCalculationService = new PricingCalculationService(pricingRuleRepository, discountRuleRepository, _productRepository);
+            
+            // Initialize tax calculation service
+            var taxCategoryRepository = new TaxCategoryRepository(connectionString);
+            var taxRateRepository = new TaxRateRepository(connectionString);
+            _taxCalculationService = new TaxCalculationService(taxCategoryRepository, taxRateRepository);
+            
             _currentInvoice = new SalesInvoice();
             _isInvoiceSaved = false;
             _isPrintMode = false;
@@ -48,6 +55,7 @@ namespace DistributionSoftware.Presentation.Forms
             LoadProducts();
             LoadPaymentModes();
             LoadChartOfAccounts();
+            LoadTaxCategories();
             
             // Set default values
             SetDefaultValues();
@@ -60,6 +68,9 @@ namespace DistributionSoftware.Presentation.Forms
             
             // Add form load event to ensure scrolling works
             this.Load += SalesInvoiceForm_Load;
+            
+            // Apply professional styling
+            ApplyProfessionalStyling();
             
             // Add event handlers for real-time calculations
             //txtPaidAmount.TextChanged += TxtPaidAmount_TextChanged;
@@ -99,6 +110,182 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 System.Diagnostics.Debug.WriteLine($"Error ensuring controls visible: {ex.Message}");
             }
+        }
+
+        private void ApplyProfessionalStyling()
+        {
+            try
+            {
+                // Style DataGridView headers
+                StyleDataGridView();
+                
+                // Style panels with clean look
+                StylePanels();
+                
+                // Style text boxes
+                StyleTextBoxes();
+                
+                // Style combo boxes
+                StyleComboBoxes();
+                
+                // Optimize column widths
+                OptimizeDataGridViewColumns();
+                
+                System.Diagnostics.Debug.WriteLine("Professional styling applied successfully");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error applying professional styling: {ex.Message}");
+            }
+        }
+
+        private void StyleDataGridView()
+        {
+            try
+            {
+                // Set header styling
+                dgvItems.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(25, 25, 35);
+                dgvItems.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                dgvItems.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                dgvItems.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                
+                // Set alternating row colors
+                dgvItems.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
+                
+                // Set selection styling
+                dgvItems.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 123, 255);
+                dgvItems.DefaultCellStyle.SelectionForeColor = Color.White;
+                
+                // Set cell styling
+                dgvItems.DefaultCellStyle.Font = new Font("Segoe UI", 9F);
+                dgvItems.DefaultCellStyle.Padding = new Padding(5);
+                
+                // Style specific columns
+                colUnitPrice.DefaultCellStyle.Format = "N2";
+                colDiscount.DefaultCellStyle.Format = "N2";
+                colTax.DefaultCellStyle.Format = "N2";
+                colLineTotal.DefaultCellStyle.Format = "N2";
+                colLineTotal.DefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error styling DataGridView: {ex.Message}");
+            }
+        }
+
+        private void StylePanels()
+        {
+            try
+            {
+                // Style all panels with modern look
+                foreach (Control control in this.Controls)
+                {
+                    if (control is Panel panel)
+                    {
+                        if (panel.Name != "pnlHeader") // Skip header panel
+                        {
+                            panel.BackColor = Color.White;
+                            panel.Padding = new Padding(15);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error styling panels: {ex.Message}");
+            }
+        }
+
+        private void StyleTextBoxes()
+        {
+            try
+            {
+                // Style all text boxes
+                foreach (Control control in GetAllControls(this))
+                {
+                    if (control is TextBox textBox)
+                    {
+                        textBox.BorderStyle = BorderStyle.FixedSingle;
+                        textBox.Font = new Font("Segoe UI", 9F);
+                        textBox.BackColor = Color.White;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error styling text boxes: {ex.Message}");
+            }
+        }
+
+        private void StyleComboBoxes()
+        {
+            try
+            {
+                // Style all combo boxes
+                foreach (Control control in GetAllControls(this))
+                {
+                    if (control is ComboBox comboBox)
+                    {
+                        comboBox.Font = new Font("Segoe UI", 9F);
+                        comboBox.FlatStyle = FlatStyle.Flat;
+                        comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error styling combo boxes: {ex.Message}");
+            }
+        }
+
+        private List<Control> GetAllControls(Control parent)
+        {
+            List<Control> controls = new List<Control>();
+            foreach (Control control in parent.Controls)
+            {
+                controls.Add(control);
+                controls.AddRange(GetAllControls(control));
+            }
+            return controls;
+        }
+
+        private void OptimizeDataGridViewColumns()
+        {
+            try
+            {
+                // Set optimal column widths to fit without horizontal scroll
+                colProductCode.Width = 120;
+                colProductName.Width = 200;
+                colQuantity.Width = 80;
+                colUnitPrice.Width = 100;
+                colDiscount.Width = 100;
+                colTax.Width = 100;
+                colLineTotal.Width = 120;
+                
+                // Set column alignment
+                colQuantity.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                colUnitPrice.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                colDiscount.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                colTax.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                colLineTotal.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                
+                System.Diagnostics.Debug.WriteLine("DataGridView columns optimized");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error optimizing DataGridView columns: {ex.Message}");
+            }
+        }
+
+        private System.Drawing.Drawing2D.GraphicsPath GetRoundedRectanglePath(Rectangle rect, int radius)
+        {
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
+            path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90);
+            path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90);
+            path.CloseAllFigures();
+            return path;
         }
 
         private void SalesInvoiceForm_Load(object sender, EventArgs e)
@@ -314,6 +501,41 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 MessageBox.Show($"Error loading Chart of Accounts: {ex.Message}", "Error", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadTaxCategories()
+        {
+            try
+            {
+                var taxCategories = _taxCalculationService.GetActiveTaxCategories();
+                
+                cmbTaxCategory.Items.Clear();
+                foreach (var category in taxCategories)
+                {
+                    cmbTaxCategory.Items.Add(category);
+                }
+                cmbTaxCategory.DisplayMember = "TaxCategoryName";
+                cmbTaxCategory.ValueMember = "TaxCategoryId";
+                
+                // Set default tax category (Sales Tax)
+                var defaultTaxCategory = taxCategories.FirstOrDefault(tc => 
+                    tc.TaxCategoryCode == "SALE" || 
+                    tc.TaxCategoryCode == "GST" || 
+                    tc.TaxCategoryCode == "STD");
+                
+                if (defaultTaxCategory != null)
+                {
+                    cmbTaxCategory.SelectedItem = defaultTaxCategory;
+                }
+                else if (taxCategories.Any())
+                {
+                    cmbTaxCategory.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading tax categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -558,22 +780,24 @@ namespace DistributionSoftware.Presentation.Forms
                     ProductDescription = selectedProduct.FullProduct?.ProductDescription ?? "",
                     Quantity = quantity,
                     UnitPrice = unitPrice,
-                    TaxPercentage = 17, // Default GST rate
                     LineTotal = quantity * unitPrice
                 };
 
+                // Set tax category from selected dropdown
+                if (cmbTaxCategory.SelectedItem is TaxCategory selectedTaxCategory)
+                {
+                    detail.TaxCategoryId = selectedTaxCategory.TaxCategoryId;
+                }
+
                 // Calculate line totals
                 detail.TaxableAmount = detail.LineTotal;
-                detail.TaxAmount = detail.TaxableAmount * (detail.TaxPercentage / 100);
-                detail.LineTotal = detail.TaxableAmount + detail.TaxAmount;
                 detail.TotalAmount = detail.LineTotal; // Set TotalAmount for database (same as LineTotal)
 
                 // Apply automatic pricing, discount, and tax calculation
-                var taxCalculationService = new TaxCalculationService(new TaxCategoryRepository(), new TaxRateRepository());
                 
                 _pricingCalculationService.ApplyPricingToSalesInvoiceDetail(detail);
                 _pricingCalculationService.ApplyDiscountToSalesInvoiceDetail(detail);
-                taxCalculationService.ApplyTaxToSalesInvoiceDetail(detail);
+                _taxCalculationService.ApplyTaxToSalesInvoiceDetail(detail);
 
                 // Add to invoice
                 _currentInvoice.Items.Add(detail);
@@ -688,6 +912,36 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        private void CmbTaxCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Recalculate tax for all items when tax category changes
+            RecalculateAllTaxes();
+        }
+
+        private void RecalculateAllTaxes()
+        {
+            try
+            {
+                if (cmbTaxCategory.SelectedItem is TaxCategory selectedTaxCategory)
+                {
+                    // Update tax for all existing invoice items
+                    foreach (var detail in _currentInvoice.Items)
+                    {
+                        detail.TaxCategoryId = selectedTaxCategory.TaxCategoryId;
+                        _taxCalculationService.ApplyTaxToSalesInvoiceDetail(detail);
+                    }
+                    
+                    // Recalculate invoice totals
+                    _salesInvoiceService.CalculateInvoiceTotals(_currentInvoice);
+                    UpdateTotalsDisplay();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error recalculating taxes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void CalculateAndDisplayDiscounts(int productId)
         {
             try
@@ -747,28 +1001,39 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                // Create or update discount info label
+                // Create or update discount info label with professional styling
                 if (Controls.Find("lblDiscountInfo", true).Length == 0)
                 {
                     var lblDiscountInfo = new Label
                     {
                         Name = "lblDiscountInfo",
-                        Text = discountText,
-                        ForeColor = Color.Green,
-                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                        Location = new Point(20, 400), // Position near the product selection area
-                        Size = new Size(300, 25),
+                        Text = $"🎉 {discountText}",
+                        ForeColor = Color.White,
+                        Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                        Location = new Point(25, 500), // Position near the totals area
+                        Size = new Size(350, 35),
                         Visible = true,
-                        BackColor = Color.LightGreen,
-                        BorderStyle = BorderStyle.FixedSingle,
-                        TextAlign = ContentAlignment.MiddleLeft
+                        BackColor = Color.FromArgb(40, 167, 69), // Professional green
+                        BorderStyle = BorderStyle.None,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        FlatStyle = FlatStyle.Flat
                     };
+                    
+                    // Add rounded corners effect
+                    lblDiscountInfo.Paint += (sender, e) =>
+                    {
+                        var label = sender as Label;
+                        var rect = new Rectangle(0, 0, label.Width, label.Height);
+                        var path = GetRoundedRectanglePath(rect, 8);
+                        label.Region = new Region(path);
+                    };
+                    
                     Controls.Add(lblDiscountInfo);
                 }
                 else
                 {
                     var lblDiscountInfo = Controls.Find("lblDiscountInfo", true)[0] as Label;
-                    lblDiscountInfo.Text = discountText;
+                    lblDiscountInfo.Text = $"🎉 {discountText}";
                     lblDiscountInfo.Visible = true;
                 }
 
@@ -1152,8 +1417,30 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                     connection.Open();
                     
+                    System.Diagnostics.Debug.WriteLine($"=== STOCK REDUCTION START ===");
+                    System.Diagnostics.Debug.WriteLine($"Invoice: {_currentInvoice.InvoiceNumber}");
+                    System.Diagnostics.Debug.WriteLine($"Total Items: {_currentInvoice.Items.Count}");
+                    
                     foreach (var item in _currentInvoice.Items)
                     {
+                        System.Diagnostics.Debug.WriteLine($"Processing Item: {item.ProductName} (ID: {item.ProductId})");
+                        System.Diagnostics.Debug.WriteLine($"Quantity to deduct: {item.Quantity}");
+                        
+                        // Get current stock before reduction
+                        var getStockQuery = "SELECT StockQuantity FROM Products WHERE ProductId = @ProductId";
+                        decimal currentStock = 0;
+                        using (var getStockCommand = new System.Data.SqlClient.SqlCommand(getStockQuery, connection))
+                        {
+                            getStockCommand.Parameters.AddWithValue("@ProductId", item.ProductId);
+                            var result = getStockCommand.ExecuteScalar();
+                            if (result != null && result != DBNull.Value)
+                            {
+                                currentStock = Convert.ToDecimal(result);
+                            }
+                        }
+                        
+                        System.Diagnostics.Debug.WriteLine($"Current stock before reduction: {currentStock}");
+                        
                         // Reduce StockQuantity (the actual stock field used for display)
                         var query = @"
                             UPDATE Products 
@@ -1168,14 +1455,18 @@ namespace DistributionSoftware.Presentation.Forms
                             
                             if (rowsAffected == 0)
                             {
-                                System.Diagnostics.Debug.WriteLine($"Warning: No rows updated for ProductId {item.ProductId}");
+                                System.Diagnostics.Debug.WriteLine($"ERROR: No rows updated for ProductId {item.ProductId}");
+                                throw new Exception($"Failed to reduce stock for product {item.ProductName} (ID: {item.ProductId})");
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine($"Stock reduced for ProductId {item.ProductId}: {item.Quantity} units");
+                                System.Diagnostics.Debug.WriteLine($"SUCCESS: Stock reduced for ProductId {item.ProductId}: {item.Quantity} units");
+                                System.Diagnostics.Debug.WriteLine($"New stock should be: {currentStock - item.Quantity}");
                             }
                         }
                     }
+                    
+                    System.Diagnostics.Debug.WriteLine($"=== STOCK REDUCTION COMPLETE ===");
                 }
             }
             catch (Exception ex)

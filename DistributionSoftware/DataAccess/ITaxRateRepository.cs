@@ -11,6 +11,7 @@ namespace DistributionSoftware.DataAccess
         bool Update(TaxRate taxRate);
         bool Delete(int taxRateId);
         TaxRate GetById(int taxRateId);
+        TaxRate GetByCode(string taxRateCode);
         List<TaxRate> GetAll();
         List<TaxRate> GetActive();
         List<TaxRate> GetByTaxCategoryId(int taxCategoryId);

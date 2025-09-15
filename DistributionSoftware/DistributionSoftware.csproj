@@ -666,11 +666,35 @@
     <Compile Include="Presentation\Forms\TaxConfigurationForm.Designer.cs">
       <DependentUpon>TaxConfigurationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\TaxRateEditModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxRateEditModal.Designer.cs">
+      <DependentUpon>TaxRateEditModal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\BankReconciliationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\BankReconciliationForm.Designer.cs">
       <DependentUpon>BankReconciliationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankAccountForm.Designer.cs">
+      <DependentUpon>BankAccountForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankStatementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankStatementForm.Designer.cs">
+      <DependentUpon>BankStatementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReconciliationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReconciliationForm.Designer.cs">
+      <DependentUpon>ReconciliationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\DatabaseBackupRestoreForm.cs">
       <SubType>Form</SubType>
@@ -725,8 +749,20 @@
     <EmbeddedResource Include="Presentation\Forms\TaxConfigurationForm.resx">
       <DependentUpon>TaxConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\TaxRateEditModal.resx">
+      <DependentUpon>TaxRateEditModal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\BankReconciliationForm.resx">
       <DependentUpon>BankReconciliationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\BankAccountForm.resx">
+      <DependentUpon>BankAccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\BankStatementForm.resx">
+      <DependentUpon>BankStatementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\ReconciliationForm.resx">
+      <DependentUpon>ReconciliationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\DatabaseBackupRestoreForm.resx">
       <DependentUpon>DatabaseBackupRestoreForm.cs</DependentUpon>

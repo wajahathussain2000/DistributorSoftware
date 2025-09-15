@@ -88,9 +88,14 @@ namespace DistributionSoftware.Models
         /// </summary>
         public TaxCategory()
         {
+            TaxCategoryCode = string.Empty;
+            TaxCategoryName = string.Empty;
+            Description = string.Empty;
             IsActive = true;
             CreatedDate = DateTime.Now;
             IsSystemCategory = false;
+            CreatedBy = 1;
+            CreatedByName = "System User";
         }
         
         #endregion

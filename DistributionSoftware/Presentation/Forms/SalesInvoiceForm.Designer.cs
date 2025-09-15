@@ -57,6 +57,8 @@
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.lblProduct = new System.Windows.Forms.Label();
             this.cmbProduct = new System.Windows.Forms.ComboBox();
+            this.lblTaxCategory = new System.Windows.Forms.Label();
+            this.cmbTaxCategory = new System.Windows.Forms.ComboBox();
             this.btnRemoveItem = new System.Windows.Forms.Button();
             this.picBarcode = new System.Windows.Forms.PictureBox();
             this.lblBarcode = new System.Windows.Forms.Label();
@@ -107,27 +109,28 @@
             // 
             // pnlHeader
             // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
             this.pnlHeader.Controls.Add(this.lblTitle);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1800, 60);
+            this.pnlHeader.Size = new System.Drawing.Size(1400, 60);
             this.pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(20, 15);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(304, 45);
+            this.lblTitle.Size = new System.Drawing.Size(399, 48);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Sales Invoice - POS";
+            this.lblTitle.Text = "💳 Sales Invoice - POS";
             // 
             // pnlInvoiceInfo
             // 
+            this.pnlInvoiceInfo.BackColor = System.Drawing.Color.White;
             this.pnlInvoiceInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlInvoiceInfo.Controls.Add(this.lblTransactionTime);
             this.pnlInvoiceInfo.Controls.Add(this.txtTransactionTime);
@@ -139,41 +142,41 @@
             this.pnlInvoiceInfo.Controls.Add(this.txtInvoiceNumber);
             this.pnlInvoiceInfo.Location = new System.Drawing.Point(20, 80);
             this.pnlInvoiceInfo.Name = "pnlInvoiceInfo";
-            this.pnlInvoiceInfo.Size = new System.Drawing.Size(800, 100);
+            this.pnlInvoiceInfo.Size = new System.Drawing.Size(613, 100);
             this.pnlInvoiceInfo.TabIndex = 1;
             // 
             // lblTransactionTime
             // 
             this.lblTransactionTime.AutoSize = true;
-            this.lblTransactionTime.Location = new System.Drawing.Point(240, 49);
+            this.lblTransactionTime.Location = new System.Drawing.Point(240, 61);
             this.lblTransactionTime.Name = "lblTransactionTime";
-            this.lblTransactionTime.Size = new System.Drawing.Size(134, 20);
+            this.lblTransactionTime.Size = new System.Drawing.Size(147, 25);
             this.lblTransactionTime.TabIndex = 6;
             this.lblTransactionTime.Text = "Transaction Time:";
             // 
             // txtTransactionTime
             // 
-            this.txtTransactionTime.Location = new System.Drawing.Point(383, 47);
+            this.txtTransactionTime.Location = new System.Drawing.Point(398, 59);
             this.txtTransactionTime.Name = "txtTransactionTime";
             this.txtTransactionTime.ReadOnly = true;
-            this.txtTransactionTime.Size = new System.Drawing.Size(100, 26);
+            this.txtTransactionTime.Size = new System.Drawing.Size(100, 31);
             this.txtTransactionTime.TabIndex = 7;
             // 
             // lblCashier
             // 
             this.lblCashier.AutoSize = true;
-            this.lblCashier.Location = new System.Drawing.Point(10, 45);
+            this.lblCashier.Location = new System.Drawing.Point(10, 62);
             this.lblCashier.Name = "lblCashier";
-            this.lblCashier.Size = new System.Drawing.Size(67, 20);
+            this.lblCashier.Size = new System.Drawing.Size(73, 25);
             this.lblCashier.TabIndex = 4;
             this.lblCashier.Text = "Cashier:";
             // 
             // txtCashier
             // 
-            this.txtCashier.Location = new System.Drawing.Point(100, 45);
+            this.txtCashier.Location = new System.Drawing.Point(100, 58);
             this.txtCashier.Name = "txtCashier";
             this.txtCashier.ReadOnly = true;
-            this.txtCashier.Size = new System.Drawing.Size(120, 26);
+            this.txtCashier.Size = new System.Drawing.Size(120, 31);
             this.txtCashier.TabIndex = 5;
             // 
             // lblInvoiceDate
@@ -181,7 +184,7 @@
             this.lblInvoiceDate.AutoSize = true;
             this.lblInvoiceDate.Location = new System.Drawing.Point(284, 18);
             this.lblInvoiceDate.Name = "lblInvoiceDate";
-            this.lblInvoiceDate.Size = new System.Drawing.Size(102, 20);
+            this.lblInvoiceDate.Size = new System.Drawing.Size(114, 25);
             this.lblInvoiceDate.TabIndex = 2;
             this.lblInvoiceDate.Text = "Invoice Date:";
             // 
@@ -191,7 +194,7 @@
             this.dtpInvoiceDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpInvoiceDate.Location = new System.Drawing.Point(395, 15);
             this.dtpInvoiceDate.Name = "dtpInvoiceDate";
-            this.dtpInvoiceDate.Size = new System.Drawing.Size(200, 26);
+            this.dtpInvoiceDate.Size = new System.Drawing.Size(200, 31);
             this.dtpInvoiceDate.TabIndex = 3;
             // 
             // lblInvoiceNumber
@@ -199,20 +202,21 @@
             this.lblInvoiceNumber.AutoSize = true;
             this.lblInvoiceNumber.Location = new System.Drawing.Point(10, 15);
             this.lblInvoiceNumber.Name = "lblInvoiceNumber";
-            this.lblInvoiceNumber.Size = new System.Drawing.Size(123, 20);
+            this.lblInvoiceNumber.Size = new System.Drawing.Size(142, 25);
             this.lblInvoiceNumber.TabIndex = 0;
             this.lblInvoiceNumber.Text = "Invoice Number:";
             // 
             // txtInvoiceNumber
             // 
-            this.txtInvoiceNumber.Location = new System.Drawing.Point(138, 15);
+            this.txtInvoiceNumber.Location = new System.Drawing.Point(156, 15);
             this.txtInvoiceNumber.Name = "txtInvoiceNumber";
             this.txtInvoiceNumber.ReadOnly = true;
-            this.txtInvoiceNumber.Size = new System.Drawing.Size(120, 26);
+            this.txtInvoiceNumber.Size = new System.Drawing.Size(120, 31);
             this.txtInvoiceNumber.TabIndex = 1;
             // 
             // pnlCustomerInfo
             // 
+            this.pnlCustomerInfo.BackColor = System.Drawing.Color.White;
             this.pnlCustomerInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCustomerInfo.Controls.Add(this.lblCustomerAddress);
             this.pnlCustomerInfo.Controls.Add(this.txtCustomerAddress);
@@ -222,9 +226,9 @@
             this.pnlCustomerInfo.Controls.Add(this.txtCustomerName);
             this.pnlCustomerInfo.Controls.Add(this.lblCustomer);
             this.pnlCustomerInfo.Controls.Add(this.cmbCustomer);
-            this.pnlCustomerInfo.Location = new System.Drawing.Point(840, 80);
+            this.pnlCustomerInfo.Location = new System.Drawing.Point(639, 80);
             this.pnlCustomerInfo.Name = "pnlCustomerInfo";
-            this.pnlCustomerInfo.Size = new System.Drawing.Size(800, 100);
+            this.pnlCustomerInfo.Size = new System.Drawing.Size(627, 100);
             this.pnlCustomerInfo.TabIndex = 2;
             // 
             // lblCustomerAddress
@@ -232,7 +236,7 @@
             this.lblCustomerAddress.AutoSize = true;
             this.lblCustomerAddress.Location = new System.Drawing.Point(253, 51);
             this.lblCustomerAddress.Name = "lblCustomerAddress";
-            this.lblCustomerAddress.Size = new System.Drawing.Size(72, 20);
+            this.lblCustomerAddress.Size = new System.Drawing.Size(81, 25);
             this.lblCustomerAddress.TabIndex = 6;
             this.lblCustomerAddress.Text = "Address:";
             // 
@@ -241,7 +245,7 @@
             this.txtCustomerAddress.Location = new System.Drawing.Point(338, 50);
             this.txtCustomerAddress.Name = "txtCustomerAddress";
             this.txtCustomerAddress.ReadOnly = true;
-            this.txtCustomerAddress.Size = new System.Drawing.Size(270, 26);
+            this.txtCustomerAddress.Size = new System.Drawing.Size(270, 31);
             this.txtCustomerAddress.TabIndex = 7;
             // 
             // lblCustomerPhone
@@ -249,7 +253,7 @@
             this.lblCustomerPhone.AutoSize = true;
             this.lblCustomerPhone.Location = new System.Drawing.Point(10, 54);
             this.lblCustomerPhone.Name = "lblCustomerPhone";
-            this.lblCustomerPhone.Size = new System.Drawing.Size(59, 20);
+            this.lblCustomerPhone.Size = new System.Drawing.Size(66, 25);
             this.lblCustomerPhone.TabIndex = 4;
             this.lblCustomerPhone.Text = "Phone:";
             // 
@@ -258,7 +262,7 @@
             this.txtCustomerPhone.Location = new System.Drawing.Point(70, 52);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.ReadOnly = true;
-            this.txtCustomerPhone.Size = new System.Drawing.Size(120, 26);
+            this.txtCustomerPhone.Size = new System.Drawing.Size(120, 31);
             this.txtCustomerPhone.TabIndex = 5;
             // 
             // lblCustomerName
@@ -266,7 +270,7 @@
             this.lblCustomerName.AutoSize = true;
             this.lblCustomerName.Location = new System.Drawing.Point(345, 15);
             this.lblCustomerName.Name = "lblCustomerName";
-            this.lblCustomerName.Size = new System.Drawing.Size(55, 20);
+            this.lblCustomerName.Size = new System.Drawing.Size(63, 25);
             this.lblCustomerName.TabIndex = 2;
             this.lblCustomerName.Text = "Name:";
             // 
@@ -275,7 +279,7 @@
             this.txtCustomerName.Location = new System.Drawing.Point(404, 15);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
-            this.txtCustomerName.Size = new System.Drawing.Size(200, 26);
+            this.txtCustomerName.Size = new System.Drawing.Size(200, 31);
             this.txtCustomerName.TabIndex = 3;
             // 
             // lblCustomer
@@ -283,7 +287,7 @@
             this.lblCustomer.AutoSize = true;
             this.lblCustomer.Location = new System.Drawing.Point(7, 15);
             this.lblCustomer.Name = "lblCustomer";
-            this.lblCustomer.Size = new System.Drawing.Size(82, 20);
+            this.lblCustomer.Size = new System.Drawing.Size(93, 25);
             this.lblCustomer.TabIndex = 0;
             this.lblCustomer.Text = "Customer:";
             // 
@@ -291,14 +295,15 @@
             // 
             this.cmbCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCustomer.FormattingEnabled = true;
-            this.cmbCustomer.Location = new System.Drawing.Point(88, 15);
+            this.cmbCustomer.Location = new System.Drawing.Point(107, 15);
             this.cmbCustomer.Name = "cmbCustomer";
-            this.cmbCustomer.Size = new System.Drawing.Size(200, 28);
+            this.cmbCustomer.Size = new System.Drawing.Size(200, 33);
             this.cmbCustomer.TabIndex = 1;
             this.cmbCustomer.SelectedIndexChanged += new System.EventHandler(this.CmbCustomer_SelectedIndexChanged);
             // 
             // pnlProductInfo
             // 
+            this.pnlProductInfo.BackColor = System.Drawing.Color.White;
             this.pnlProductInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlProductInfo.Controls.Add(this.btnAddItem);
             this.pnlProductInfo.Controls.Add(this.lblStock);
@@ -308,21 +313,27 @@
             this.pnlProductInfo.Controls.Add(this.txtQuantity);
             this.pnlProductInfo.Controls.Add(this.lblProduct);
             this.pnlProductInfo.Controls.Add(this.cmbProduct);
-            this.pnlProductInfo.Location = new System.Drawing.Point(18, 183);
+            this.pnlProductInfo.Controls.Add(this.lblTaxCategory);
+            this.pnlProductInfo.Controls.Add(this.cmbTaxCategory);
+            this.pnlProductInfo.Location = new System.Drawing.Point(20, 200);
             this.pnlProductInfo.Name = "pnlProductInfo";
-            this.pnlProductInfo.Size = new System.Drawing.Size(802, 83);
+            this.pnlProductInfo.Size = new System.Drawing.Size(920, 94);
             this.pnlProductInfo.TabIndex = 3;
             // 
             // btnAddItem
             // 
-            this.btnAddItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnAddItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.btnAddItem.FlatAppearance.BorderSize = 0;
+            this.btnAddItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(115)))), ((int)(((byte)(28)))));
+            this.btnAddItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(40)))));
             this.btnAddItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnAddItem.ForeColor = System.Drawing.Color.White;
             this.btnAddItem.Location = new System.Drawing.Point(516, 11);
             this.btnAddItem.Name = "btnAddItem";
-            this.btnAddItem.Size = new System.Drawing.Size(80, 30);
+            this.btnAddItem.Size = new System.Drawing.Size(90, 35);
             this.btnAddItem.TabIndex = 7;
-            this.btnAddItem.Text = "Add Item";
+            this.btnAddItem.Text = "➕ Add Item";
             this.btnAddItem.UseVisualStyleBackColor = false;
             this.btnAddItem.Click += new System.EventHandler(this.BtnAddItem_Click);
             // 
@@ -331,24 +342,24 @@
             this.lblStock.AutoSize = true;
             this.lblStock.Location = new System.Drawing.Point(202, 45);
             this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(54, 20);
+            this.lblStock.Size = new System.Drawing.Size(59, 25);
             this.lblStock.TabIndex = 6;
             this.lblStock.Text = "Stock:";
             // 
             // lblUnitPrice
             // 
             this.lblUnitPrice.AutoSize = true;
-            this.lblUnitPrice.Location = new System.Drawing.Point(10, 45);
+            this.lblUnitPrice.Location = new System.Drawing.Point(8, 54);
             this.lblUnitPrice.Name = "lblUnitPrice";
-            this.lblUnitPrice.Size = new System.Drawing.Size(81, 20);
+            this.lblUnitPrice.Size = new System.Drawing.Size(90, 25);
             this.lblUnitPrice.TabIndex = 4;
             this.lblUnitPrice.Text = "Unit Price:";
             // 
             // txtUnitPrice
             // 
-            this.txtUnitPrice.Location = new System.Drawing.Point(92, 42);
+            this.txtUnitPrice.Location = new System.Drawing.Point(99, 51);
             this.txtUnitPrice.Name = "txtUnitPrice";
-            this.txtUnitPrice.Size = new System.Drawing.Size(100, 26);
+            this.txtUnitPrice.Size = new System.Drawing.Size(100, 31);
             this.txtUnitPrice.TabIndex = 5;
             // 
             // lblQuantity
@@ -356,7 +367,7 @@
             this.lblQuantity.AutoSize = true;
             this.lblQuantity.Location = new System.Drawing.Point(290, 15);
             this.lblQuantity.Name = "lblQuantity";
-            this.lblQuantity.Size = new System.Drawing.Size(72, 20);
+            this.lblQuantity.Size = new System.Drawing.Size(84, 25);
             this.lblQuantity.TabIndex = 2;
             this.lblQuantity.Text = "Quantity:";
             // 
@@ -364,7 +375,7 @@
             // 
             this.txtQuantity.Location = new System.Drawing.Point(369, 12);
             this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(80, 26);
+            this.txtQuantity.Size = new System.Drawing.Size(80, 31);
             this.txtQuantity.TabIndex = 3;
             // 
             // lblProduct
@@ -372,7 +383,7 @@
             this.lblProduct.AutoSize = true;
             this.lblProduct.Location = new System.Drawing.Point(10, 15);
             this.lblProduct.Name = "lblProduct";
-            this.lblProduct.Size = new System.Drawing.Size(68, 20);
+            this.lblProduct.Size = new System.Drawing.Size(78, 25);
             this.lblProduct.TabIndex = 0;
             this.lblProduct.Text = "Product:";
             // 
@@ -382,9 +393,28 @@
             this.cmbProduct.FormattingEnabled = true;
             this.cmbProduct.Location = new System.Drawing.Point(88, 12);
             this.cmbProduct.Name = "cmbProduct";
-            this.cmbProduct.Size = new System.Drawing.Size(200, 28);
+            this.cmbProduct.Size = new System.Drawing.Size(200, 33);
             this.cmbProduct.TabIndex = 1;
             this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.CmbProduct_SelectedIndexChanged);
+            // 
+            // lblTaxCategory
+            // 
+            this.lblTaxCategory.AutoSize = true;
+            this.lblTaxCategory.Location = new System.Drawing.Point(600, 20);
+            this.lblTaxCategory.Name = "lblTaxCategory";
+            this.lblTaxCategory.Size = new System.Drawing.Size(100, 20);
+            this.lblTaxCategory.TabIndex = 8;
+            this.lblTaxCategory.Text = "Tax Category:";
+            // 
+            // cmbTaxCategory
+            // 
+            this.cmbTaxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTaxCategory.FormattingEnabled = true;
+            this.cmbTaxCategory.Location = new System.Drawing.Point(710, 17);
+            this.cmbTaxCategory.Name = "cmbTaxCategory";
+            this.cmbTaxCategory.Size = new System.Drawing.Size(150, 28);
+            this.cmbTaxCategory.TabIndex = 9;
+            this.cmbTaxCategory.SelectedIndexChanged += new System.EventHandler(this.CmbTaxCategory_SelectedIndexChanged);
             // 
             // btnRemoveItem
             // 
@@ -421,18 +451,23 @@
             // 
             // pnlItems
             // 
+            this.pnlItems.BackColor = System.Drawing.Color.White;
             this.pnlItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlItems.Controls.Add(this.dgvItems);
-            this.pnlItems.Location = new System.Drawing.Point(20, 280);
+            this.pnlItems.Location = new System.Drawing.Point(20, 300);
             this.pnlItems.Name = "pnlItems";
-            this.pnlItems.Size = new System.Drawing.Size(877, 200);
+            this.pnlItems.Size = new System.Drawing.Size(920, 250);
             this.pnlItems.TabIndex = 4;
             // 
             // dgvItems
             // 
             this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToDeleteRows = false;
-            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItems.BackgroundColor = System.Drawing.Color.White;
+            this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvItems.ColumnHeadersHeight = 35;
+            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colProductCode,
             this.colProductName,
@@ -442,12 +477,17 @@
             this.colTax,
             this.colLineTotal});
             this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvItems.EnableHeadersVisualStyles = false;
+            this.dgvItems.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(245)))));
             this.dgvItems.Location = new System.Drawing.Point(0, 0);
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.ReadOnly = true;
-            this.dgvItems.RowHeadersWidth = 62;
+            this.dgvItems.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvItems.RowHeadersWidth = 4;
+            this.dgvItems.RowTemplate.Height = 30;
+            this.dgvItems.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvItems.Size = new System.Drawing.Size(875, 198);
+            this.dgvItems.Size = new System.Drawing.Size(918, 248);
             this.dgvItems.TabIndex = 0;
             this.dgvItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellContentClick);
             // 
@@ -509,6 +549,7 @@
             // 
             // pnlTotals
             // 
+            this.pnlTotals.BackColor = System.Drawing.Color.White;
             this.pnlTotals.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlTotals.Controls.Add(this.lblTotalAmount);
             this.pnlTotals.Controls.Add(this.txtTotalAmount);
@@ -520,9 +561,9 @@
             this.pnlTotals.Controls.Add(this.txtDiscountAmount);
             this.pnlTotals.Controls.Add(this.lblSubtotal);
             this.pnlTotals.Controls.Add(this.txtSubtotal);
-            this.pnlTotals.Location = new System.Drawing.Point(1040, 200);
+            this.pnlTotals.Location = new System.Drawing.Point(960, 200);
             this.pnlTotals.Name = "pnlTotals";
-            this.pnlTotals.Size = new System.Drawing.Size(340, 200);
+            this.pnlTotals.Size = new System.Drawing.Size(344, 250);
             this.pnlTotals.TabIndex = 5;
             // 
             // lblTotalAmount
@@ -550,7 +591,7 @@
             this.lblTaxAmount.AutoSize = true;
             this.lblTaxAmount.Location = new System.Drawing.Point(10, 105);
             this.lblTaxAmount.Name = "lblTaxAmount";
-            this.lblTaxAmount.Size = new System.Drawing.Size(98, 20);
+            this.lblTaxAmount.Size = new System.Drawing.Size(110, 25);
             this.lblTaxAmount.TabIndex = 6;
             this.lblTaxAmount.Text = "Tax Amount:";
             // 
@@ -559,7 +600,7 @@
             this.txtTaxAmount.Location = new System.Drawing.Point(200, 102);
             this.txtTaxAmount.Name = "txtTaxAmount";
             this.txtTaxAmount.ReadOnly = true;
-            this.txtTaxAmount.Size = new System.Drawing.Size(120, 26);
+            this.txtTaxAmount.Size = new System.Drawing.Size(120, 31);
             this.txtTaxAmount.TabIndex = 7;
             this.txtTaxAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -568,7 +609,7 @@
             this.lblTaxableAmount.AutoSize = true;
             this.lblTaxableAmount.Location = new System.Drawing.Point(10, 75);
             this.lblTaxableAmount.Name = "lblTaxableAmount";
-            this.lblTaxableAmount.Size = new System.Drawing.Size(128, 20);
+            this.lblTaxableAmount.Size = new System.Drawing.Size(143, 25);
             this.lblTaxableAmount.TabIndex = 4;
             this.lblTaxableAmount.Text = "Taxable Amount:";
             // 
@@ -577,7 +618,7 @@
             this.txtTaxableAmount.Location = new System.Drawing.Point(200, 72);
             this.txtTaxableAmount.Name = "txtTaxableAmount";
             this.txtTaxableAmount.ReadOnly = true;
-            this.txtTaxableAmount.Size = new System.Drawing.Size(120, 26);
+            this.txtTaxableAmount.Size = new System.Drawing.Size(120, 31);
             this.txtTaxableAmount.TabIndex = 5;
             this.txtTaxableAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -586,7 +627,7 @@
             this.lblDiscountAmount.AutoSize = true;
             this.lblDiscountAmount.Location = new System.Drawing.Point(10, 45);
             this.lblDiscountAmount.Name = "lblDiscountAmount";
-            this.lblDiscountAmount.Size = new System.Drawing.Size(136, 20);
+            this.lblDiscountAmount.Size = new System.Drawing.Size(156, 25);
             this.lblDiscountAmount.TabIndex = 2;
             this.lblDiscountAmount.Text = "Discount Amount:";
             // 
@@ -595,7 +636,7 @@
             this.txtDiscountAmount.Location = new System.Drawing.Point(200, 42);
             this.txtDiscountAmount.Name = "txtDiscountAmount";
             this.txtDiscountAmount.ReadOnly = true;
-            this.txtDiscountAmount.Size = new System.Drawing.Size(120, 26);
+            this.txtDiscountAmount.Size = new System.Drawing.Size(120, 31);
             this.txtDiscountAmount.TabIndex = 3;
             this.txtDiscountAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -604,7 +645,7 @@
             this.lblSubtotal.AutoSize = true;
             this.lblSubtotal.Location = new System.Drawing.Point(10, 15);
             this.lblSubtotal.Name = "lblSubtotal";
-            this.lblSubtotal.Size = new System.Drawing.Size(73, 20);
+            this.lblSubtotal.Size = new System.Drawing.Size(83, 25);
             this.lblSubtotal.TabIndex = 0;
             this.lblSubtotal.Text = "Subtotal:";
             // 
@@ -613,28 +654,28 @@
             this.txtSubtotal.Location = new System.Drawing.Point(200, 12);
             this.txtSubtotal.Name = "txtSubtotal";
             this.txtSubtotal.ReadOnly = true;
-            this.txtSubtotal.Size = new System.Drawing.Size(120, 26);
+            this.txtSubtotal.Size = new System.Drawing.Size(120, 31);
             this.txtSubtotal.TabIndex = 1;
             this.txtSubtotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // pnlActions
             // 
-            this.pnlActions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.pnlActions.BackColor = System.Drawing.Color.White;
             this.pnlActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlActions.Controls.Add(this.txtRemarks);
             this.pnlActions.Controls.Add(this.lblRemarks);
             this.pnlActions.Controls.Add(this.btnCancel);
             this.pnlActions.Controls.Add(this.btnSave);
-            this.pnlActions.Location = new System.Drawing.Point(329, 546);
+            this.pnlActions.Location = new System.Drawing.Point(20, 570);
             this.pnlActions.Name = "pnlActions";
-            this.pnlActions.Size = new System.Drawing.Size(540, 80);
+            this.pnlActions.Size = new System.Drawing.Size(920, 80);
             this.pnlActions.TabIndex = 7;
             // 
             // txtRemarks
             // 
             this.txtRemarks.Location = new System.Drawing.Point(96, 12);
             this.txtRemarks.Name = "txtRemarks";
-            this.txtRemarks.Size = new System.Drawing.Size(200, 26);
+            this.txtRemarks.Size = new System.Drawing.Size(200, 31);
             this.txtRemarks.TabIndex = 3;
             // 
             // lblRemarks
@@ -642,33 +683,41 @@
             this.lblRemarks.AutoSize = true;
             this.lblRemarks.Location = new System.Drawing.Point(10, 15);
             this.lblRemarks.Name = "lblRemarks";
-            this.lblRemarks.Size = new System.Drawing.Size(77, 20);
+            this.lblRemarks.Size = new System.Drawing.Size(83, 25);
             this.lblRemarks.TabIndex = 2;
             this.lblRemarks.Text = "Remarks:";
             // 
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(98)))), ((int)(((byte)(104)))));
+            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(135)))), ((int)(((byte)(141)))));
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(445, 10);
+            this.btnCancel.Location = new System.Drawing.Point(455, 10);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(80, 30);
+            this.btnCancel.Size = new System.Drawing.Size(100, 40);
             this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "❌ Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnSave
             // 
-            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(200)))));
+            this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(255)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(309, 10);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(120, 30);
+            this.btnSave.Size = new System.Drawing.Size(140, 40);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "Save Invoice";
+            this.btnSave.Text = "💾 Save Invoice";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -755,26 +804,25 @@
             // 
             // SalesInvoiceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.AutoScrollMargin = new System.Drawing.Size(0, 50);
-            this.ClientSize = new System.Drawing.Size(1800, 800);
-            this.Controls.Add(this.picBarcode);
-            this.Controls.Add(this.lblBarcode);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.ClientSize = new System.Drawing.Size(1400, 900);
             this.Controls.Add(this.pnlActions);
-            this.Controls.Add(this.pnlAccountSelection);
             this.Controls.Add(this.pnlTotals);
             this.Controls.Add(this.pnlItems);
             this.Controls.Add(this.pnlProductInfo);
             this.Controls.Add(this.pnlCustomerInfo);
             this.Controls.Add(this.pnlInvoiceInfo);
             this.Controls.Add(this.pnlHeader);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinimumSize = new System.Drawing.Size(1800, 600);
+            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1400, 900);
             this.Name = "SalesInvoiceForm";
-            this.Text = "Sales Invoice - POS System";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "💳 Sales Invoice - POS System";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SalesInvoiceForm_FormClosing);
             this.Load += new System.EventHandler(this.SalesInvoiceForm_Load);
             this.pnlHeader.ResumeLayout(false);
@@ -795,7 +843,6 @@
             this.pnlAccountSelection.ResumeLayout(false);
             this.pnlAccountSelection.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -824,6 +871,8 @@
         private System.Windows.Forms.Panel pnlProductInfo;
         private System.Windows.Forms.Label lblProduct;
         private System.Windows.Forms.ComboBox cmbProduct;
+        private System.Windows.Forms.Label lblTaxCategory;
+        private System.Windows.Forms.ComboBox cmbTaxCategory;
         private System.Windows.Forms.Label lblQuantity;
         private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Label lblUnitPrice;
