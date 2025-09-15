@@ -49,19 +49,17 @@ namespace DistributionSoftware.Business
             {
                 if (rule == null || !rule.IsActive) return basePrice;
 
-                switch (rule.RuleType.ToUpper())
+                switch (rule.PricingType.ToUpper())
                 {
-                    case "PERCENTAGE":
-                        return basePrice * (1 + rule.Value / 100);
-                    case "FIXED_AMOUNT":
-                        return basePrice + rule.Value;
-                    case "QUANTITY_DISCOUNT":
-                        if (quantity >= rule.MinimumQuantity)
-                            return basePrice * (1 - rule.Value / 100);
-                        return basePrice;
-                    case "VOLUME_PRICING":
-                        if (quantity >= rule.MinimumQuantity)
-                            return basePrice * (rule.Value / 100);
+                    case "FIXED_PRICE":
+                        return rule.BaseValue;
+                    case "PERCENTAGE_MARKUP":
+                        return basePrice * (1 + rule.BaseValue / 100);
+                    case "PERCENTAGE_MARGIN":
+                        return basePrice / (1 - rule.BaseValue / 100);
+                    case "QUANTITY_BREAK":
+                        if (rule.MinQuantity.HasValue && quantity >= rule.MinQuantity.Value)
+                            return rule.BaseValue;
                         return basePrice;
                     default:
                         return basePrice;
@@ -85,8 +83,10 @@ namespace DistributionSoftware.Business
                     r.IsActive && 
                     (r.ProductId == productId || r.ProductId == null) &&
                     (r.CustomerId == customerId || r.CustomerId == null) &&
-                    (r.StartDate <= DateTime.Now) &&
-                    (r.EndDate == null || r.EndDate >= DateTime.Now)
+                    (r.EffectiveFrom == null || r.EffectiveFrom <= DateTime.Now) &&
+                    (r.EffectiveTo == null || r.EffectiveTo >= DateTime.Now) &&
+                    (r.MinQuantity == null || r.MinQuantity <= quantity) &&
+                    (r.MaxQuantity == null || r.MaxQuantity >= quantity)
                 ).OrderByDescending(r => r.Priority);
 
                 // Return the highest priority rule
@@ -130,22 +130,35 @@ namespace DistributionSoftware.Business
                 if (rule == null || !rule.IsActive) return 0;
 
                 // Check minimum quantity requirement
-                if (rule.MinimumQuantity.HasValue && quantity < rule.MinimumQuantity.Value)
+                if (rule.MinQuantity.HasValue && quantity < rule.MinQuantity.Value)
                     return 0;
+
+                // Check maximum quantity requirement
+                if (rule.MaxQuantity.HasValue && quantity > rule.MaxQuantity.Value)
+                    return 0;
+
+                decimal discountAmount = 0;
 
                 switch (rule.DiscountType.ToUpper())
                 {
                     case "PERCENTAGE":
-                        return amount * (rule.DiscountValue / 100);
+                        discountAmount = amount * (rule.DiscountValue / 100);
+                        break;
                     case "FIXED_AMOUNT":
-                        return rule.DiscountValue;
-                    case "QUANTITY_DISCOUNT":
-                        if (quantity >= rule.MinimumQuantity)
-                            return amount * (rule.DiscountValue / 100);
-                        return 0;
+                        discountAmount = rule.DiscountValue;
+                        break;
+                    case "QUANTITY_BREAK":
+                        discountAmount = amount * (rule.DiscountValue / 100);
+                        break;
                     default:
                         return 0;
                 }
+
+                // Apply maximum discount cap
+                if (rule.MaxDiscountAmount.HasValue && discountAmount > rule.MaxDiscountAmount.Value)
+                    discountAmount = rule.MaxDiscountAmount.Value;
+
+                return Math.Min(discountAmount, amount); // Cannot discount more than the original amount
             }
             catch (Exception ex)
             {
@@ -159,19 +172,24 @@ namespace DistributionSoftware.Business
             try
             {
                 var rules = _discountRuleRepository.GetActive();
+                System.Diagnostics.Debug.WriteLine($"Found {rules.Count} active discount rules");
                 
                 // Filter by product and customer
                 var applicableRules = rules.Where(r => 
                     r.IsActive && 
                     (r.ProductId == productId || r.ProductId == null) &&
                     (r.CustomerId == customerId || r.CustomerId == null) &&
-                    (r.StartDate <= DateTime.Now) &&
-                    (r.EndDate == null || r.EndDate >= DateTime.Now) &&
-                    (r.MinimumQuantity == null || r.MinimumQuantity <= quantity)
+                    (r.EffectiveFrom == null || r.EffectiveFrom <= DateTime.Now) &&
+                    (r.EffectiveTo == null || r.EffectiveTo >= DateTime.Now) &&
+                    (r.MinQuantity == null || r.MinQuantity <= quantity) &&
+                    (r.MaxQuantity == null || r.MaxQuantity >= quantity)
                 ).OrderByDescending(r => r.Priority);
 
+                var applicableRule = applicableRules.FirstOrDefault();
+                System.Diagnostics.Debug.WriteLine($"Applicable rule: {applicableRule?.RuleName} (Priority: {applicableRule?.Priority})");
+                
                 // Return the highest priority rule
-                return applicableRules.FirstOrDefault();
+                return applicableRule;
             }
             catch (Exception ex)
             {
@@ -260,8 +278,9 @@ namespace DistributionSoftware.Business
             try
             {
                 if (rule == null) return false;
-                if (rule.Value < 0) return false;
-                if (rule.StartDate > rule.EndDate && rule.EndDate.HasValue) return false;
+                if (rule.BaseValue < 0) return false;
+                if (rule.EffectiveFrom.HasValue && rule.EffectiveTo.HasValue && rule.EffectiveFrom > rule.EffectiveTo) return false;
+                if (rule.MinQuantity.HasValue && rule.MaxQuantity.HasValue && rule.MinQuantity > rule.MaxQuantity) return false;
                 return true;
             }
             catch (Exception ex)
@@ -277,8 +296,9 @@ namespace DistributionSoftware.Business
             {
                 if (rule == null) return false;
                 if (rule.DiscountValue < 0) return false;
-                if (rule.StartDate > rule.EndDate && rule.EndDate.HasValue) return false;
-                if (rule.MinimumQuantity.HasValue && rule.MinimumQuantity.Value < 0) return false;
+                if (rule.EffectiveFrom.HasValue && rule.EffectiveTo.HasValue && rule.EffectiveFrom > rule.EffectiveTo) return false;
+                if (rule.MinQuantity.HasValue && rule.MaxQuantity.HasValue && rule.MinQuantity > rule.MaxQuantity) return false;
+                if (rule.MinQuantity.HasValue && rule.MinQuantity.Value < 0) return false;
                 return true;
             }
             catch (Exception ex)

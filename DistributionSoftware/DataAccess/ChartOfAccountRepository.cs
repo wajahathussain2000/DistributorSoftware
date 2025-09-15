@@ -159,8 +159,8 @@ namespace DistributionSoftware.DataAccess
                     var query = @"
                         SELECT AccountId, AccountCode, AccountName, AccountType, AccountCategory, 
                                ParentAccountId, AccountLevel, IsActive, IsSystemAccount, 
-                               NormalBalance, Description, CreatedDate, CreatedBy, 
-                               ModifiedDate, ModifiedBy
+                               NormalBalance, Description, CreatedDate, CreatedBy, CreatedByName,
+                               ModifiedDate, ModifiedBy, ModifiedByName
                         FROM ChartOfAccounts 
                         WHERE AccountId = @AccountId";
                     
@@ -190,14 +190,15 @@ namespace DistributionSoftware.DataAccess
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"ChartOfAccountRepository.GetChartOfAccountByCode: Looking for account code '{accountCode}'");
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = @"
                         SELECT AccountId, AccountCode, AccountName, AccountType, AccountCategory, 
                                ParentAccountId, AccountLevel, IsActive, IsSystemAccount, 
-                               NormalBalance, Description, CreatedDate, CreatedBy, 
-                               ModifiedDate, ModifiedBy
+                               NormalBalance, Description, CreatedDate, CreatedBy, CreatedByName,
+                               ModifiedDate, ModifiedBy, ModifiedByName
                         FROM ChartOfAccounts 
                         WHERE AccountCode = @AccountCode";
                     
@@ -209,7 +210,13 @@ namespace DistributionSoftware.DataAccess
                         {
                             if (reader.Read())
                             {
-                                return MapChartOfAccount(reader);
+                                var account = MapChartOfAccount(reader);
+                                System.Diagnostics.Debug.WriteLine($"ChartOfAccountRepository.GetChartOfAccountByCode: Found account '{account.AccountName}' with code '{account.AccountCode}'");
+                                return account;
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine($"ChartOfAccountRepository.GetChartOfAccountByCode: No account found with code '{accountCode}'");
                             }
                         }
                     }
@@ -483,14 +490,22 @@ namespace DistributionSoftware.DataAccess
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    using (var command = new SqlCommand("sp_CheckAccountCodeExists", connection))
+                    var query = "SELECT COUNT(*) FROM ChartOfAccounts WHERE AccountCode = @AccountCode";
+                    if (excludeAccountId.HasValue)
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                        query += " AND AccountId != @ExcludeAccountId";
+                    }
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    {
                         command.Parameters.AddWithValue("@AccountCode", accountCode);
-                        command.Parameters.AddWithValue("@ExcludeAccountId", excludeAccountId ?? (object)DBNull.Value);
+                        if (excludeAccountId.HasValue)
+                        {
+                            command.Parameters.AddWithValue("@ExcludeAccountId", excludeAccountId.Value);
+                        }
 
                         var result = command.ExecuteScalar();
-                        return Convert.ToBoolean(result);
+                        return Convert.ToInt32(result) > 0;
                     }
                 }
             }
@@ -508,14 +523,22 @@ namespace DistributionSoftware.DataAccess
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    using (var command = new SqlCommand("sp_CheckAccountNameExists", connection))
+                    var query = "SELECT COUNT(*) FROM ChartOfAccounts WHERE AccountName = @AccountName";
+                    if (excludeAccountId.HasValue)
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                        query += " AND AccountId != @ExcludeAccountId";
+                    }
+                    
+                    using (var command = new SqlCommand(query, connection))
+                    {
                         command.Parameters.AddWithValue("@AccountName", accountName);
-                        command.Parameters.AddWithValue("@ExcludeAccountId", excludeAccountId ?? (object)DBNull.Value);
+                        if (excludeAccountId.HasValue)
+                        {
+                            command.Parameters.AddWithValue("@ExcludeAccountId", excludeAccountId.Value);
+                        }
 
                         var result = command.ExecuteScalar();
-                        return Convert.ToBoolean(result);
+                        return Convert.ToInt32(result) > 0;
                     }
                 }
             }

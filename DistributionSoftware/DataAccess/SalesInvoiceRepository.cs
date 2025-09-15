@@ -58,34 +58,11 @@ namespace DistributionSoftware.DataAccess
                             command.CommandTimeout = 30; // 30 second timeout
                             command.Parameters.AddWithValue("@InvoiceNumber", invoice.InvoiceNumber);
                             command.Parameters.AddWithValue("@InvoiceDate", invoice.InvoiceDate);
-                            // Handle Walk-in Customer (ID = 0) by using the walk-in customer record
-                            if (invoice.CustomerId == 0)
+                            // Handle Walk-in Customer (ID = 0 or -1) by using the walk-in customer record
+                            if (invoice.CustomerId <= 0)
                             {
-                                // Get the walk-in customer ID
-                                var getWalkInCustomerQuery = "SELECT CustomerId FROM Customers WHERE CustomerCode = 'WALKIN'";
-                                using (var getCustomerCommand = new SqlCommand(getWalkInCustomerQuery, connection, transaction))
-                                {
-                                    getCustomerCommand.CommandTimeout = 10; // 10 second timeout
-                                    var walkInCustomerId = getCustomerCommand.ExecuteScalar();
-                                    if (walkInCustomerId != null && walkInCustomerId != DBNull.Value)
-                                    {
-                                        command.Parameters.AddWithValue("@CustomerId", Convert.ToInt32(walkInCustomerId));
-                                    }
-                                    else
-                                    {
-                                        // If walk-in customer doesn't exist, create it
-                                        var createWalkInQuery = @"
-                                            INSERT INTO Customers (CustomerCode, CompanyName, ContactName, Email, Phone, Address, City, State, PostalCode, Country, IsActive, CreatedDate)
-                                            VALUES ('WALKIN', 'Walk-in Customer', 'Walk-in Customer', 'walkin@company.com', '', 'Walk-in Customer', 'Karachi', 'Sindh', '75000', 'Pakistan', 1, GETDATE());
-                                            SELECT SCOPE_IDENTITY();";
-                                        using (var createCustomerCommand = new SqlCommand(createWalkInQuery, connection, transaction))
-                                        {
-                                            createCustomerCommand.CommandTimeout = 10; // 10 second timeout
-                                            var newCustomerId = Convert.ToInt32(createCustomerCommand.ExecuteScalar());
-                                            command.Parameters.AddWithValue("@CustomerId", newCustomerId);
-                                        }
-                                    }
-                                }
+                                var walkInCustomerId = GetOrCreateWalkInCustomerInTransaction(connection, transaction);
+                                command.Parameters.AddWithValue("@CustomerId", walkInCustomerId);
                             }
                             else
                             {
@@ -191,7 +168,16 @@ namespace DistributionSoftware.DataAccess
                 {
                     command.Parameters.AddWithValue("@SalesInvoiceId", invoice.SalesInvoiceId);
                     command.Parameters.AddWithValue("@InvoiceDate", invoice.InvoiceDate);
-                    command.Parameters.AddWithValue("@CustomerId", invoice.CustomerId);
+                    // Handle Walk-in Customer by getting or creating the walk-in customer record
+                    if (invoice.CustomerId <= 0)
+                    {
+                        var walkInCustomerId = GetOrCreateWalkInCustomer(connection);
+                        command.Parameters.AddWithValue("@CustomerId", walkInCustomerId);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@CustomerId", invoice.CustomerId);
+                    }
                     command.Parameters.AddWithValue("@CustomerName", invoice.CustomerName ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CustomerPhone", invoice.CustomerPhone ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CustomerAddress", invoice.CustomerAddress ?? (object)DBNull.Value);
@@ -1146,6 +1132,90 @@ namespace DistributionSoftware.DataAccess
                     var rowsAffected = command.ExecuteNonQuery();
                     return rowsAffected > 0;
                 }
+            }
+        }
+
+        private int GetOrCreateWalkInCustomer(SqlConnection connection)
+        {
+            try
+            {
+                // First, try to get existing walk-in customer
+                var getWalkInQuery = "SELECT CustomerId FROM Customers WHERE CustomerCode = 'WALKIN'";
+                using (var command = new SqlCommand(getWalkInQuery, connection))
+                {
+                    var result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                }
+
+                // If not found, create walk-in customer
+                var createWalkInQuery = @"
+                    INSERT INTO Customers (
+                        CustomerCode, CompanyName, ContactName, Email, Phone, Address, 
+                        City, State, PostalCode, Country, IsActive, CreatedDate, CreatedBy
+                    ) VALUES (
+                        'WALKIN', 'Walk-in Customer', 'Walk-in Customer', 'walkin@company.com', 
+                        '', 'Walk-in Customer', 'Karachi', 'Sindh', '75000', 'Pakistan', 
+                        1, GETDATE(), 1
+                    );
+                    SELECT SCOPE_IDENTITY();";
+
+                using (var command = new SqlCommand(createWalkInQuery, connection))
+                {
+                    var newCustomerId = command.ExecuteScalar();
+                    return Convert.ToInt32(newCustomerId);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("SalesInvoiceRepository.GetOrCreateWalkInCustomer", ex);
+                // Fallback to a default customer ID (assuming customer ID 1 exists)
+                return 1;
+            }
+        }
+
+        private int GetOrCreateWalkInCustomerInTransaction(SqlConnection connection, SqlTransaction transaction)
+        {
+            try
+            {
+                // First, try to get existing walk-in customer
+                var getWalkInQuery = "SELECT CustomerId FROM Customers WHERE CustomerCode = 'WALKIN'";
+                using (var command = new SqlCommand(getWalkInQuery, connection, transaction))
+                {
+                    command.CommandTimeout = 10;
+                    var result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                }
+
+                // If not found, create walk-in customer
+                var createWalkInQuery = @"
+                    INSERT INTO Customers (
+                        CustomerCode, CompanyName, ContactName, Email, Phone, Address, 
+                        City, State, PostalCode, Country, IsActive, CreatedDate, CreatedBy
+                    ) VALUES (
+                        'WALKIN', 'Walk-in Customer', 'Walk-in Customer', 'walkin@company.com', 
+                        '', 'Walk-in Customer', 'Karachi', 'Sindh', '75000', 'Pakistan', 
+                        1, GETDATE(), 1
+                    );
+                    SELECT SCOPE_IDENTITY();";
+
+                using (var command = new SqlCommand(createWalkInQuery, connection, transaction))
+                {
+                    command.CommandTimeout = 10;
+                    var newCustomerId = command.ExecuteScalar();
+                    return Convert.ToInt32(newCustomerId);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("SalesInvoiceRepository.GetOrCreateWalkInCustomerInTransaction", ex);
+                // Fallback to a default customer ID (assuming customer ID 1 exists)
+                return 1;
             }
         }
     }

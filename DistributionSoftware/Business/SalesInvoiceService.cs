@@ -283,6 +283,9 @@ namespace DistributionSoftware.Business
 
             // Calculate total
             invoice.TotalAmount = invoice.TaxableAmount + invoice.TaxAmount;
+            
+            // Set NetAmount (amount before tax - this is what goes to Sales account)
+            invoice.NetAmount = invoice.TaxableAmount;
 
             return true;
         }

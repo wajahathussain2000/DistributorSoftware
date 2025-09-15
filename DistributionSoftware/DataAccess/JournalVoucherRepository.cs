@@ -575,6 +575,7 @@ namespace DistributionSoftware.DataAccess
                 TotalDebit = Convert.ToDecimal(reader["TotalDebit"]),
                 TotalCredit = Convert.ToDecimal(reader["TotalCredit"]),
                 CreatedBy = Convert.ToInt32(reader["CreatedBy"]),
+                CreatedByName = reader["CreatedByName"]?.ToString(),
                 CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                 ModifiedBy = reader["ModifiedBy"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["ModifiedBy"]),
                 ModifiedDate = reader["ModifiedDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedDate"])

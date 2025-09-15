@@ -61,29 +61,29 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 // Position data grids on the RIGHT side of the form
                 int formWidth = this.ClientSize.Width;
-                int gridWidth = formWidth - 350; // Leave space for left panel (350px)
-                int gridHeight = this.ClientSize.Height - 120; // Leave space for buttons
+                int gridWidth = Math.Max(800, formWidth - 500); // Minimum 800px width, or remaining space
+                int gridHeight = Math.Max(400, this.ClientSize.Height - 200); // Minimum 400px height
                 
                 if (dgvPricingRules != null)
                 {
-                    dgvPricingRules.Location = new Point(350, 80);
+                    dgvPricingRules.Location = new Point(500, 100);
                     dgvPricingRules.Size = new Size(gridWidth, gridHeight);
-                    dgvPricingRules.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+                    dgvPricingRules.Visible = true;
                     dgvPricingRules.BringToFront();
                     
-                    // Enable horizontal scrolling
+                    // Ensure proper scrolling
                     dgvPricingRules.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                     dgvPricingRules.ScrollBars = ScrollBars.Both;
                 }
 
                 if (dgvDiscountRules != null)
                 {
-                    dgvDiscountRules.Location = new Point(350, 80);
+                    dgvDiscountRules.Location = new Point(500, 100);
                     dgvDiscountRules.Size = new Size(gridWidth, gridHeight);
-                    dgvDiscountRules.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+                    dgvDiscountRules.Visible = false; // Initially hidden
                     dgvDiscountRules.BringToFront();
                     
-                    // Enable horizontal scrolling
+                    // Ensure proper scrolling
                     dgvDiscountRules.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                     dgvDiscountRules.ScrollBars = ScrollBars.Both;
                 }
@@ -358,8 +358,15 @@ namespace DistributionSoftware.Presentation.Forms
             cmbDiscountType.Visible = false;
             
             // Show pricing rules grid and hide discount rules grid
-            if (dgvPricingRules != null) dgvPricingRules.Visible = true;
-            if (dgvDiscountRules != null) dgvDiscountRules.Visible = false;
+            if (dgvPricingRules != null) 
+            {
+                dgvPricingRules.Visible = true;
+                dgvPricingRules.BringToFront();
+            }
+            if (dgvDiscountRules != null) 
+            {
+                dgvDiscountRules.Visible = false;
+            }
             
             // Refresh pricing rules data
             BindPricingRulesToGrid();
@@ -377,8 +384,15 @@ namespace DistributionSoftware.Presentation.Forms
             cmbDiscountType.Visible = true;
             
             // Show discount rules grid and hide pricing rules grid
-            if (dgvPricingRules != null) dgvPricingRules.Visible = false;
-            if (dgvDiscountRules != null) dgvDiscountRules.Visible = true;
+            if (dgvPricingRules != null) 
+            {
+                dgvPricingRules.Visible = false;
+            }
+            if (dgvDiscountRules != null) 
+            {
+                dgvDiscountRules.Visible = true;
+                dgvDiscountRules.BringToFront();
+            }
             
             // Refresh discount rules data
             BindDiscountRulesToGrid();
@@ -425,19 +439,26 @@ namespace DistributionSoftware.Presentation.Forms
                 // Hide ID column
                 dgvPricingRules.Columns["ID"].Visible = false;
                 
-                // Set column widths - wider for better readability with horizontal scroll
-                dgvPricingRules.Columns["RuleName"].Width = 150;
-                dgvPricingRules.Columns["Description"].Width = 200;
-                dgvPricingRules.Columns["Product"].Width = 120;
-                dgvPricingRules.Columns["Customer"].Width = 120;
-                dgvPricingRules.Columns["PricingType"].Width = 130;
-                dgvPricingRules.Columns["BaseValue"].Width = 100;
-                dgvPricingRules.Columns["MinQuantity"].Width = 90;
-                dgvPricingRules.Columns["MaxQuantity"].Width = 90;
-                dgvPricingRules.Columns["Priority"].Width = 80;
-                dgvPricingRules.Columns["IsActive"].Width = 60;
-                dgvPricingRules.Columns["EffectiveFrom"].Width = 100;
-                dgvPricingRules.Columns["EffectiveTo"].Width = 100;
+                // Set column widths - optimized for better visibility
+                dgvPricingRules.Columns["RuleName"].Width = 120;
+                dgvPricingRules.Columns["Description"].Width = 180;
+                dgvPricingRules.Columns["Product"].Width = 100;
+                dgvPricingRules.Columns["Customer"].Width = 100;
+                dgvPricingRules.Columns["PricingType"].Width = 120;
+                dgvPricingRules.Columns["BaseValue"].Width = 80;
+                dgvPricingRules.Columns["MinQuantity"].Width = 70;
+                dgvPricingRules.Columns["MaxQuantity"].Width = 70;
+                dgvPricingRules.Columns["Priority"].Width = 60;
+                dgvPricingRules.Columns["IsActive"].Width = 50;
+                dgvPricingRules.Columns["EffectiveFrom"].Width = 80;
+                dgvPricingRules.Columns["EffectiveTo"].Width = 80;
+                
+                // Set text alignment for better readability
+                dgvPricingRules.Columns["BaseValue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvPricingRules.Columns["MinQuantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvPricingRules.Columns["MaxQuantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvPricingRules.Columns["Priority"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgvPricingRules.Columns["IsActive"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
         }
 
@@ -465,22 +486,32 @@ namespace DistributionSoftware.Presentation.Forms
                 // Hide ID column
                 dgvDiscountRules.Columns["ID"].Visible = false;
                 
-                // Set column widths - wider for better readability with horizontal scroll
-                dgvDiscountRules.Columns["RuleName"].Width = 150;
-                dgvDiscountRules.Columns["Description"].Width = 200;
-                dgvDiscountRules.Columns["Product"].Width = 120;
-                dgvDiscountRules.Columns["Customer"].Width = 120;
-                dgvDiscountRules.Columns["DiscountType"].Width = 130;
-                dgvDiscountRules.Columns["DiscountValue"].Width = 100;
-                dgvDiscountRules.Columns["MinQuantity"].Width = 90;
-                dgvDiscountRules.Columns["MaxQuantity"].Width = 90;
-                dgvDiscountRules.Columns["MinOrderAmount"].Width = 100;
-                dgvDiscountRules.Columns["MaxDiscountAmount"].Width = 100;
-                dgvDiscountRules.Columns["Priority"].Width = 80;
-                dgvDiscountRules.Columns["IsActive"].Width = 60;
-                dgvDiscountRules.Columns["IsPromotional"].Width = 80;
-                dgvDiscountRules.Columns["EffectiveFrom"].Width = 100;
-                dgvDiscountRules.Columns["EffectiveTo"].Width = 100;
+                // Set column widths - optimized for better visibility
+                dgvDiscountRules.Columns["RuleName"].Width = 120;
+                dgvDiscountRules.Columns["Description"].Width = 180;
+                dgvDiscountRules.Columns["Product"].Width = 100;
+                dgvDiscountRules.Columns["Customer"].Width = 100;
+                dgvDiscountRules.Columns["DiscountType"].Width = 120;
+                dgvDiscountRules.Columns["DiscountValue"].Width = 80;
+                dgvDiscountRules.Columns["MinQuantity"].Width = 70;
+                dgvDiscountRules.Columns["MaxQuantity"].Width = 70;
+                dgvDiscountRules.Columns["MinOrderAmount"].Width = 80;
+                dgvDiscountRules.Columns["MaxDiscountAmount"].Width = 80;
+                dgvDiscountRules.Columns["Priority"].Width = 60;
+                dgvDiscountRules.Columns["IsActive"].Width = 50;
+                dgvDiscountRules.Columns["IsPromotional"].Width = 70;
+                dgvDiscountRules.Columns["EffectiveFrom"].Width = 80;
+                dgvDiscountRules.Columns["EffectiveTo"].Width = 80;
+                
+                // Set text alignment for better readability
+                dgvDiscountRules.Columns["DiscountValue"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvDiscountRules.Columns["MinQuantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvDiscountRules.Columns["MaxQuantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvDiscountRules.Columns["MinOrderAmount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvDiscountRules.Columns["MaxDiscountAmount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dgvDiscountRules.Columns["Priority"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgvDiscountRules.Columns["IsActive"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgvDiscountRules.Columns["IsPromotional"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
         }
     }

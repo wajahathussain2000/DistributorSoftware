@@ -434,10 +434,11 @@ namespace DistributionSoftware.Presentation.Forms
 
             this.dgvPricingRules = new DataGridView
             {
-                Dock = DockStyle.Fill,
+                Location = new Point(20, 20),
+                Size = new Size(800, 400),
                 Font = new Font("Segoe UI", 9, FontStyle.Regular),
                 BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.None,
+                BorderStyle = BorderStyle.FixedSingle,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 MultiSelect = false,
                 ReadOnly = true,
@@ -445,7 +446,8 @@ namespace DistributionSoftware.Presentation.Forms
                 AllowUserToDeleteRows = false,
                 AllowUserToResizeRows = false,
                 RowHeadersVisible = false,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None,
+                ScrollBars = ScrollBars.Both,
                 GridColor = Color.FromArgb(230, 230, 230),
                 DefaultCellStyle = new DataGridViewCellStyle
                 {
@@ -464,10 +466,11 @@ namespace DistributionSoftware.Presentation.Forms
 
             this.dgvDiscountRules = new DataGridView
             {
-                Dock = DockStyle.Fill,
+                Location = new Point(20, 20),
+                Size = new Size(800, 400),
                 Font = new Font("Segoe UI", 9, FontStyle.Regular),
                 BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.None,
+                BorderStyle = BorderStyle.FixedSingle,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 MultiSelect = false,
                 ReadOnly = true,
@@ -475,7 +478,8 @@ namespace DistributionSoftware.Presentation.Forms
                 AllowUserToDeleteRows = false,
                 AllowUserToResizeRows = false,
                 RowHeadersVisible = false,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None,
+                ScrollBars = ScrollBars.Both,
                 GridColor = Color.FromArgb(230, 230, 230),
                 DefaultCellStyle = new DataGridViewCellStyle
                 {

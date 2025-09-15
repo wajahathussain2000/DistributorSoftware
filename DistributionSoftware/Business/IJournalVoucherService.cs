@@ -172,6 +172,11 @@ namespace DistributionSoftware.Business
         /// <returns>Appropriate chart of account</returns>
         ChartOfAccount GetAccountByPaymentMode(string paymentMode);
         
+        /// <summary>
+        /// Creates default chart of accounts if they don't exist
+        /// </summary>
+        void EnsureDefaultAccountsExist();
+        
         #endregion
         
         #region Reports

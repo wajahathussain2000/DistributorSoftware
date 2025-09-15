@@ -207,7 +207,12 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                     if (product != null && product.ProductId > 0)
                     {
-                        var availableStock = product.Quantity - product.ReservedQuantity;
+                        // Use StockQuantity (actual stock) instead of Quantity for stock calculation
+                        var availableStock = product.StockQuantity - product.ReservedQuantity;
+                        
+                        // Debug logging for stock calculation
+                        System.Diagnostics.Debug.WriteLine($"Product: {product.ProductName} | StockQuantity: {product.StockQuantity} | ReservedQuantity: {product.ReservedQuantity} | Available: {availableStock}");
+                        
                         cmbProduct.Items.Add(new { 
                             Id = product.ProductId, 
                             Code = product.ProductCode ?? "", 
@@ -415,9 +420,25 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                     _currentInvoice.SalesInvoiceId = invoiceId;
                     
+                    // Reduce stock quantities
+                    try
+                    {
+                        ProcessStockReductionDirect();
+                        DebugHelper.WriteSuccess($"Stock reduced for Sales Invoice {_currentInvoice.InvoiceNumber}");
+                    }
+                    catch (Exception stockEx)
+                    {
+                        DebugHelper.WriteException("SalesInvoiceForm.ProcessStockReduction", stockEx);
+                        MessageBox.Show($"Invoice saved successfully, but stock reduction failed:\n{stockEx.Message}\n\nPlease update stock manually.", 
+                            "Partial Success", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    
                     // Create automatic journal entry for the sales transaction
                     try
                     {
+                        // Ensure default accounts exist before creating journal voucher
+                        _journalVoucherService.EnsureDefaultAccountsExist();
+                        
                         var journalVoucherId = _journalVoucherService.CreateSalesInvoiceJournalVoucher(_currentInvoice);
                         
                         // Update invoice with journal voucher reference
@@ -429,8 +450,8 @@ namespace DistributionSoftware.Presentation.Forms
                     catch (Exception journalEx)
                     {
                         DebugHelper.WriteException("SalesInvoiceForm.CreateJournalVoucher", journalEx);
-                        MessageBox.Show($"Invoice saved successfully, but journal entry creation failed:\n{journalEx.Message}\n\nPlease create journal entry manually.", 
-                            "Partial Success", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        var fullErrorMessage = $"Invoice saved successfully, but journal entry creation failed:\n\nError: {journalEx.Message}\n\nStack Trace:\n{journalEx.StackTrace}\n\nPlease create journal entry manually.";
+                        MessageBox.Show(fullErrorMessage, "Partial Success", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     
                     _isInvoiceSaved = true;
@@ -548,11 +569,10 @@ namespace DistributionSoftware.Presentation.Forms
                 detail.TotalAmount = detail.LineTotal; // Set TotalAmount for database (same as LineTotal)
 
                 // Apply automatic pricing, discount, and tax calculation
-                var pricingCalculationService = new PricingCalculationService(new PricingRuleRepository(), new DiscountRuleRepository(), new ProductRepository());
                 var taxCalculationService = new TaxCalculationService(new TaxCategoryRepository(), new TaxRateRepository());
                 
-                pricingCalculationService.ApplyPricingToSalesInvoiceDetail(detail);
-                pricingCalculationService.ApplyDiscountToSalesInvoiceDetail(detail);
+                _pricingCalculationService.ApplyPricingToSalesInvoiceDetail(detail);
+                _pricingCalculationService.ApplyDiscountToSalesInvoiceDetail(detail);
                 taxCalculationService.ApplyTaxToSalesInvoiceDetail(detail);
 
                 // Add to invoice
@@ -687,9 +707,13 @@ namespace DistributionSoftware.Presentation.Forms
                     quantity = qty;
                 }
 
+                System.Diagnostics.Debug.WriteLine($"Calculating discount for ProductId: {productId}, CustomerId: {customerId}, Quantity: {quantity}");
+
                 // Calculate applicable discount
                 var discountAmount = _pricingCalculationService.CalculateDiscount(productId, customerId, quantity);
                 var discountRule = _pricingCalculationService.GetApplicableDiscountRule(productId, customerId, quantity);
+
+                System.Diagnostics.Debug.WriteLine($"Discount Rule: {discountRule?.RuleName}, Discount Amount: {discountAmount}");
 
                 // Display discount information
                 if (discountRule != null && discountAmount > 0)
@@ -699,11 +723,14 @@ namespace DistributionSoftware.Presentation.Forms
                         ? $"{discountPercentage:N1}% Discount Available" 
                         : $"₹{discountAmount:N2} Discount Available";
                     
+                    System.Diagnostics.Debug.WriteLine($"Showing discount: {discountText}");
+                    
                     // Show discount information in a label or tooltip
                     ShowDiscountInfo(discountText, discountRule.RuleName, discountAmount);
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("No applicable discount found");
                     // Hide discount information if no applicable discount
                     HideDiscountInfo();
                 }
@@ -711,38 +738,49 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error calculating discounts: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
                 HideDiscountInfo();
             }
         }
 
         private void ShowDiscountInfo(string discountText, string ruleName, decimal discountAmount)
         {
-            // Create or update discount info label
-            if (Controls.Find("lblDiscountInfo", true).Length == 0)
+            try
             {
-                var lblDiscountInfo = new Label
+                // Create or update discount info label
+                if (Controls.Find("lblDiscountInfo", true).Length == 0)
                 {
-                    Name = "lblDiscountInfo",
-                    Text = discountText,
-                    ForeColor = Color.Green,
-                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                    Location = new Point(300, 200), // Adjust position as needed
-                    Size = new Size(200, 20),
-                    Visible = true
-                };
-                Controls.Add(lblDiscountInfo);
-            }
-            else
-            {
-                var lblDiscountInfo = Controls.Find("lblDiscountInfo", true)[0] as Label;
-                lblDiscountInfo.Text = discountText;
-                lblDiscountInfo.Visible = true;
-            }
+                    var lblDiscountInfo = new Label
+                    {
+                        Name = "lblDiscountInfo",
+                        Text = discountText,
+                        ForeColor = Color.Green,
+                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                        Location = new Point(20, 400), // Position near the product selection area
+                        Size = new Size(300, 25),
+                        Visible = true,
+                        BackColor = Color.LightGreen,
+                        BorderStyle = BorderStyle.FixedSingle,
+                        TextAlign = ContentAlignment.MiddleLeft
+                    };
+                    Controls.Add(lblDiscountInfo);
+                }
+                else
+                {
+                    var lblDiscountInfo = Controls.Find("lblDiscountInfo", true)[0] as Label;
+                    lblDiscountInfo.Text = discountText;
+                    lblDiscountInfo.Visible = true;
+                }
 
-            // Show tooltip with rule details
-            var toolTip = new ToolTip();
-            toolTip.SetToolTip(Controls.Find("lblDiscountInfo", true)[0], 
-                $"Rule: {ruleName}\nDiscount Amount: ₹{discountAmount:N2}");
+                // Show tooltip with rule details
+                var toolTip = new ToolTip();
+                toolTip.SetToolTip(Controls.Find("lblDiscountInfo", true)[0], 
+                    $"Rule: {ruleName}\nDiscount Amount: ₹{discountAmount:N2}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error showing discount info: {ex.Message}");
+            }
         }
 
         private void HideDiscountInfo()
@@ -837,7 +875,8 @@ namespace DistributionSoftware.Presentation.Forms
             else
             {
                 // Default to Walk-in Customer if none selected
-                _currentInvoice.CustomerId = 0;
+                // Use -1 to indicate no customer (will be handled as NULL in database)
+                _currentInvoice.CustomerId = -1;
                 _currentInvoice.CustomerName = "Walk-in Customer";
                 _currentInvoice.CustomerPhone = "";
                 _currentInvoice.CustomerAddress = "";
@@ -1115,17 +1154,26 @@ namespace DistributionSoftware.Presentation.Forms
                     
                     foreach (var item in _currentInvoice.Items)
                     {
+                        // Reduce StockQuantity (the actual stock field used for display)
                         var query = @"
                             UPDATE Products 
-                            SET StockQuantity = StockQuantity - @Quantity,
-                                ReservedQuantity = ReservedQuantity - @Quantity
+                            SET StockQuantity = StockQuantity - @Quantity
                             WHERE ProductId = @ProductId";
 
                         using (var command = new System.Data.SqlClient.SqlCommand(query, connection))
                         {
                             command.Parameters.AddWithValue("@Quantity", item.Quantity);
                             command.Parameters.AddWithValue("@ProductId", item.ProductId);
-                            command.ExecuteNonQuery();
+                            int rowsAffected = command.ExecuteNonQuery();
+                            
+                            if (rowsAffected == 0)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Warning: No rows updated for ProductId {item.ProductId}");
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Stock reduced for ProductId {item.ProductId}: {item.Quantity} units");
+                            }
                         }
                     }
                 }

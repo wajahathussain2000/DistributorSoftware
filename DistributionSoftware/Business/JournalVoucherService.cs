@@ -56,23 +56,20 @@ namespace DistributionSoftware.Business
         {
             try
             {
-                // Validate voucher
-                if (!ValidateJournalVoucher(voucher))
-                {
-                    var errors = GetValidationErrors(voucher);
-                    throw new ArgumentException($"Invalid journal voucher: {string.Join(", ", errors)}");
-                }
-
+                System.Diagnostics.Debug.WriteLine($"CreateJournalVoucher: VoucherNumber: '{voucher.VoucherNumber}', Details Count: {voucher.Details?.Count ?? 0}");
+                System.Diagnostics.Debug.WriteLine($"TotalDebit: PKR {voucher.TotalDebit:N2}, TotalCredit: PKR {voucher.TotalCredit:N2}");
+                
                 // Generate voucher number if not provided
                 if (string.IsNullOrEmpty(voucher.VoucherNumber))
                 {
                     voucher.VoucherNumber = GenerateJournalVoucherNumber();
+                    System.Diagnostics.Debug.WriteLine($"Generated voucher number: {voucher.VoucherNumber}");
                 }
 
                 // Set audit fields
                 voucher.CreatedDate = DateTime.Now;
                 voucher.CreatedBy = UserSession.IsLoggedIn ? UserSession.CurrentUserId : 1; // Default to user ID 1 if not logged in
-                voucher.CreatedByName = UserSession.IsLoggedIn ? UserSession.GetDisplayName() : "System User";
+                voucher.CreatedByName = GetSafeCreatedByName();
 
                 // Auto-detect bank account if not set
                 if (!voucher.BankAccountId.HasValue)
@@ -86,6 +83,15 @@ namespace DistributionSoftware.Business
 
                 // Calculate totals
                 CalculateVoucherTotals(voucher);
+                System.Diagnostics.Debug.WriteLine($"After CalculateVoucherTotals: TotalDebit: PKR {voucher.TotalDebit:N2}, TotalCredit: PKR {voucher.TotalCredit:N2}");
+                
+                // Validate voucher AFTER setting all required fields
+                if (!ValidateJournalVoucher(voucher))
+                {
+                    var errors = GetValidationErrors(voucher);
+                    System.Diagnostics.Debug.WriteLine($"Validation failed: {string.Join(", ", errors)}");
+                    throw new ArgumentException($"Invalid journal voucher: {string.Join(", ", errors)}");
+                }
 
                 // Save to database using repository
                 var voucherId = _journalVoucherRepository.CreateJournalVoucher(voucher);
@@ -303,7 +309,7 @@ namespace DistributionSoftware.Business
                     Reference = $"SI-{salesInvoice.InvoiceNumber}",
                     Narration = $"Sales Invoice {salesInvoice.InvoiceNumber} - {salesInvoice.CustomerName}",
                     CreatedBy = UserSession.IsLoggedIn ? UserSession.CurrentUserId : 1,
-                    CreatedByName = UserSession.IsLoggedIn ? UserSession.GetDisplayName() : "System User"
+                    CreatedByName = GetSafeCreatedByName()
                 };
 
                 // Create journal voucher details based on payment type
@@ -368,7 +374,7 @@ namespace DistributionSoftware.Business
                     Reference = $"CR-{customerReceipt.ReceiptNumber}",
                     Narration = $"Customer Receipt - {customerReceipt.CustomerName}",
                     CreatedBy = UserSession.IsLoggedIn ? UserSession.CurrentUserId : 1,
-                    CreatedByName = UserSession.IsLoggedIn ? UserSession.GetDisplayName() : "System User"
+                    CreatedByName = GetSafeCreatedByName()
                 };
 
                 // Create journal voucher details for receipt
@@ -465,7 +471,7 @@ namespace DistributionSoftware.Business
                     Reference = $"EXP-{expense.ExpenseCode}",
                     Narration = $"Expense {expense.ExpenseCode} - {expense.Description}",
                     CreatedBy = UserSession.IsLoggedIn ? UserSession.CurrentUserId : 1,
-                    CreatedByName = UserSession.IsLoggedIn ? UserSession.GetDisplayName() : "System User"
+                    CreatedByName = GetSafeCreatedByName()
                 };
 
                 // Create journal voucher details for expense
@@ -496,7 +502,7 @@ namespace DistributionSoftware.Business
                     Reference = $"SM-{stockMovement.MovementId}",
                     Narration = $"Stock Movement {stockMovement.MovementType} - {stockMovement.ProductName}",
                     CreatedBy = UserSession.IsLoggedIn ? UserSession.CurrentUserId : 1,
-                    CreatedByName = UserSession.IsLoggedIn ? UserSession.GetDisplayName() : "System User"
+                    CreatedByName = GetSafeCreatedByName()
                 };
 
                 // Create journal voucher details for stock movement
@@ -519,7 +525,20 @@ namespace DistributionSoftware.Business
         {
             try
             {
-                return _chartOfAccountService.GetChartOfAccountByCode("4100"); // Product Sales
+                // Try to get Product Sales account
+                var account = _chartOfAccountService.GetChartOfAccountByCode("4100");
+                if (account != null) return account;
+
+                // Fallback: Try to get any sales account
+                var salesAccounts = _chartOfAccountService.GetChartOfAccountsByType("REVENUE");
+                var salesAccount = salesAccounts?.FirstOrDefault(a => 
+                    a.AccountName?.ToUpper().Contains("SALES") == true ||
+                    a.AccountName?.ToUpper().Contains("REVENUE") == true);
+                
+                if (salesAccount != null) return salesAccount;
+
+                // Last resort: Get first revenue account
+                return salesAccounts?.FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -545,7 +564,26 @@ namespace DistributionSoftware.Business
         {
             try
             {
-                return _chartOfAccountService.GetChartOfAccountByCode("1210"); // Trade Receivables
+                // Try to get Trade Receivables account
+                System.Diagnostics.Debug.WriteLine("Looking for Trade Receivables account with code 1210...");
+                var account = _chartOfAccountService.GetChartOfAccountByCode("1210");
+                if (account != null) 
+                {
+                    System.Diagnostics.Debug.WriteLine($"Found Trade Receivables account: {account.AccountName}");
+                    return account;
+                }
+                System.Diagnostics.Debug.WriteLine("Trade Receivables account with code 1210 not found, trying fallback...");
+
+                // Fallback: Try to get any receivable account
+                var receivableAccounts = _chartOfAccountService.GetChartOfAccountsByType("ASSET");
+                var receivableAccount = receivableAccounts?.FirstOrDefault(a => 
+                    a.AccountName?.ToUpper().Contains("RECEIVABLE") == true ||
+                    a.AccountName?.ToUpper().Contains("DEBTOR") == true);
+                
+                if (receivableAccount != null) return receivableAccount;
+
+                // Last resort: Get first asset account
+                return receivableAccounts?.FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -558,7 +596,20 @@ namespace DistributionSoftware.Business
         {
             try
             {
-                return _chartOfAccountService.GetChartOfAccountByCode("2120"); // Other Payables (Tax)
+                // Try to get Tax Payable account
+                var account = _chartOfAccountService.GetChartOfAccountByCode("2120");
+                if (account != null) return account;
+
+                // Fallback: Try to get any tax account
+                var taxAccounts = _chartOfAccountService.GetChartOfAccountsByType("LIABILITY");
+                var taxAccount = taxAccounts?.FirstOrDefault(a => 
+                    a.AccountName?.ToUpper().Contains("TAX") == true ||
+                    a.AccountName?.ToUpper().Contains("PAYABLE") == true);
+                
+                if (taxAccount != null) return taxAccount;
+
+                // Last resort: Get first liability account
+                return taxAccounts?.FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -658,6 +709,196 @@ namespace DistributionSoftware.Business
             }
         }
 
+        /// <summary>
+        /// Creates default chart of accounts if they don't exist
+        /// </summary>
+        public void EnsureDefaultAccountsExist()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Ensuring default accounts exist...");
+                
+                // Check if required accounts exist, create them if they don't
+                System.Diagnostics.Debug.WriteLine("Checking if Trade Receivables account exists...");
+                var receivableAccount = GetDefaultReceivableAccount();
+                System.Diagnostics.Debug.WriteLine($"Receivable account result: {(receivableAccount != null ? $"Found: {receivableAccount.AccountName}" : "Not found")}");
+                if (receivableAccount == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Creating Trade Receivables account...");
+                    try
+                    {
+                        // Create Trade Receivables account
+                        var newAccount = new ChartOfAccount
+                        {
+                            AccountCode = "1210",
+                            AccountName = "Trade Receivables",
+                            AccountType = "ASSET",
+                            AccountCategory = "CURRENT_ASSET",
+                            NormalBalance = "DEBIT",
+                            AccountLevel = 1,
+                            ParentAccountId = null,
+                            IsActive = true,
+                            CreatedBy = 1,
+                            CreatedDate = DateTime.Now
+                        };
+                        var accountId = _chartOfAccountService.CreateChartOfAccount(newAccount);
+                        System.Diagnostics.Debug.WriteLine($"Trade Receivables account created with ID: {accountId}");
+                    }
+                    catch (Exception createEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Failed to create Trade Receivables account: {createEx.Message}");
+                        // If creation fails due to "already exists", try to find it again
+                        if (createEx.Message.Contains("already exists"))
+                        {
+                            System.Diagnostics.Debug.WriteLine("Account already exists, trying to find it again...");
+                            receivableAccount = _chartOfAccountService.GetChartOfAccountByCode("1210");
+                            if (receivableAccount != null)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Found existing Trade Receivables account: {receivableAccount.AccountName}");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Trade Receivables account already exists: {receivableAccount.AccountName}");
+                }
+
+                var salesAccount = GetDefaultSalesAccount();
+                if (salesAccount == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Creating Product Sales account...");
+                    try
+                    {
+                        // Create Product Sales account
+                        var newAccount = new ChartOfAccount
+                        {
+                            AccountCode = "4100",
+                            AccountName = "Product Sales",
+                            AccountType = "REVENUE",
+                            AccountCategory = "SALES_REVENUE",
+                            NormalBalance = "CREDIT",
+                            AccountLevel = 1,
+                            ParentAccountId = null,
+                            IsActive = true,
+                            CreatedBy = 1,
+                            CreatedDate = DateTime.Now
+                        };
+                        var accountId = _chartOfAccountService.CreateChartOfAccount(newAccount);
+                        System.Diagnostics.Debug.WriteLine($"Product Sales account created with ID: {accountId}");
+                    }
+                    catch (Exception createEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Failed to create Product Sales account: {createEx.Message}");
+                        if (createEx.Message.Contains("already exists"))
+                        {
+                            System.Diagnostics.Debug.WriteLine("Account already exists, trying to find it again...");
+                            salesAccount = _chartOfAccountService.GetChartOfAccountByCode("4100");
+                            if (salesAccount != null)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Found existing Product Sales account: {salesAccount.AccountName}");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Product Sales account already exists: {salesAccount.AccountName}");
+                }
+
+                var taxAccount = GetDefaultTaxAccount();
+                if (taxAccount == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Creating Tax Payable account...");
+                    try
+                    {
+                        // Create Tax Payable account
+                        var newAccount = new ChartOfAccount
+                        {
+                            AccountCode = "2120",
+                            AccountName = "Tax Payable",
+                            AccountType = "LIABILITY",
+                            AccountCategory = "CURRENT_LIABILITY",
+                            NormalBalance = "CREDIT",
+                            AccountLevel = 1,
+                            ParentAccountId = null,
+                            IsActive = true,
+                            CreatedBy = 1,
+                            CreatedDate = DateTime.Now
+                        };
+                        var accountId = _chartOfAccountService.CreateChartOfAccount(newAccount);
+                        System.Diagnostics.Debug.WriteLine($"Tax Payable account created with ID: {accountId}");
+                    }
+                    catch (Exception createEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Failed to create Tax Payable account: {createEx.Message}");
+                        if (createEx.Message.Contains("already exists"))
+                        {
+                            System.Diagnostics.Debug.WriteLine("Account already exists, trying to find it again...");
+                            taxAccount = _chartOfAccountService.GetChartOfAccountByCode("2120");
+                            if (taxAccount != null)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Found existing Tax Payable account: {taxAccount.AccountName}");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Tax Payable account already exists: {taxAccount.AccountName}");
+                }
+
+                var cashAccount = GetDefaultCashAccount();
+                if (cashAccount == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Creating Cash in Hand account...");
+                    try
+                    {
+                        // Create Cash in Hand account
+                        var newAccount = new ChartOfAccount
+                        {
+                            AccountCode = "1110",
+                            AccountName = "Cash in Hand",
+                            AccountType = "ASSET",
+                            AccountCategory = "CURRENT_ASSET",
+                            NormalBalance = "DEBIT",
+                            AccountLevel = 1,
+                            ParentAccountId = null,
+                            IsActive = true,
+                            CreatedBy = 1,
+                            CreatedDate = DateTime.Now
+                        };
+                        var accountId = _chartOfAccountService.CreateChartOfAccount(newAccount);
+                        System.Diagnostics.Debug.WriteLine($"Cash in Hand account created with ID: {accountId}");
+                    }
+                    catch (Exception createEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Failed to create Cash in Hand account: {createEx.Message}");
+                        if (createEx.Message.Contains("already exists"))
+                        {
+                            System.Diagnostics.Debug.WriteLine("Account already exists, trying to find it again...");
+                            cashAccount = _chartOfAccountService.GetChartOfAccountByCode("1110");
+                            if (cashAccount != null)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Found existing Cash in Hand account: {cashAccount.AccountName}");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Cash in Hand account already exists: {cashAccount.AccountName}");
+                }
+                
+                System.Diagnostics.Debug.WriteLine("Default accounts check completed successfully.");
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("JournalVoucherService.EnsureDefaultAccountsExist", ex);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Reports
@@ -695,14 +936,53 @@ namespace DistributionSoftware.Business
         #region Helper Methods
 
         /// <summary>
+        /// Gets a safe CreatedByName value, ensuring it's never null or empty
+        /// </summary>
+        private string GetSafeCreatedByName()
+        {
+            try
+            {
+                if (UserSession.IsLoggedIn)
+                {
+                    var displayName = UserSession.GetDisplayName();
+                    if (!string.IsNullOrWhiteSpace(displayName))
+                        return displayName;
+                }
+                return "System User";
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("JournalVoucherService.GetSafeCreatedByName", ex);
+                return "System User";
+            }
+        }
+
+        /// <summary>
         /// Calculates total debit and credit amounts for the voucher
         /// </summary>
         private void CalculateVoucherTotals(JournalVoucher voucher)
         {
+            System.Diagnostics.Debug.WriteLine($"CalculateVoucherTotals: Details count: {voucher.Details?.Count ?? 0}");
+            
             if (voucher.Details != null && voucher.Details.Any())
             {
                 voucher.TotalDebit = voucher.Details.Sum(d => d.DebitAmount);
                 voucher.TotalCredit = voucher.Details.Sum(d => d.CreditAmount);
+                
+                System.Diagnostics.Debug.WriteLine($"Calculated totals - Debit: PKR {voucher.TotalDebit:N2}, Credit: PKR {voucher.TotalCredit:N2}");
+                System.Diagnostics.Debug.WriteLine($"Balance difference: PKR {voucher.TotalDebit - voucher.TotalCredit:N2}");
+                
+                // Log each detail
+                foreach (var detail in voucher.Details)
+                {
+                    System.Diagnostics.Debug.WriteLine($"  Detail - AccountId: {detail.AccountId}, Debit: PKR {detail.DebitAmount:N2}, Credit: PKR {detail.CreditAmount:N2}");
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No details found for voucher!");
+                voucher.TotalDebit = 0;
+                voucher.TotalCredit = 0;
             }
         }
 
@@ -756,12 +1036,34 @@ namespace DistributionSoftware.Business
         /// </summary>
         private void CreateCreditSalesJournalDetails(JournalVoucher voucher, SalesInvoice salesInvoice)
         {
+            System.Diagnostics.Debug.WriteLine($"CreateCreditSalesJournalDetails: Creating journal details for invoice {salesInvoice.InvoiceNumber}");
+            System.Diagnostics.Debug.WriteLine($"Sales Invoice TotalAmount: PKR {salesInvoice.TotalAmount:N2}, NetAmount: PKR {salesInvoice.NetAmount:N2}, TaxAmount: PKR {salesInvoice.TaxAmount:N2}");
+            
             var details = new List<JournalVoucherDetail>();
 
-            // Get accounts
+            // Get accounts with null checks
+            System.Diagnostics.Debug.WriteLine("Getting accounts...");
             var receivableAccount = _chartOfAccountService.GetChartOfAccountById(salesInvoice.ReceivableAccountId ?? 0) ?? GetDefaultReceivableAccount();
             var salesAccount = _chartOfAccountService.GetChartOfAccountById(salesInvoice.SalesAccountId ?? 0) ?? GetDefaultSalesAccount();
             var taxAccount = _chartOfAccountService.GetChartOfAccountById(salesInvoice.TaxAccountId ?? 0) ?? GetDefaultTaxAccount();
+            
+            System.Diagnostics.Debug.WriteLine($"Receivable Account: {(receivableAccount != null ? receivableAccount.AccountName : "NULL")}");
+            System.Diagnostics.Debug.WriteLine($"Sales Account: {(salesAccount != null ? salesAccount.AccountName : "NULL")}");
+            System.Diagnostics.Debug.WriteLine($"Tax Account: {(taxAccount != null ? taxAccount.AccountName : "NULL")}");
+
+            // Validate accounts exist
+            if (receivableAccount == null)
+            {
+                throw new InvalidOperationException("Receivable account not found. Please ensure Chart of Accounts is properly configured.");
+            }
+            if (salesAccount == null)
+            {
+                throw new InvalidOperationException("Sales account not found. Please ensure Chart of Accounts is properly configured.");
+            }
+            if (taxAccount == null)
+            {
+                throw new InvalidOperationException("Tax account not found. Please ensure Chart of Accounts is properly configured.");
+            }
 
             // Debit: Accounts Receivable (Total Amount)
             details.Add(new JournalVoucherDetail
@@ -794,6 +1096,12 @@ namespace DistributionSoftware.Business
             }
 
             voucher.Details = details;
+            
+            System.Diagnostics.Debug.WriteLine($"Created {details.Count} journal voucher details:");
+            foreach (var detail in details)
+            {
+                System.Diagnostics.Debug.WriteLine($"  AccountId: {detail.AccountId}, Debit: PKR {detail.DebitAmount:N2}, Credit: PKR {detail.CreditAmount:N2}, Narration: {detail.Narration}");
+            }
         }
 
         /// <summary>
@@ -835,9 +1143,19 @@ namespace DistributionSoftware.Business
         {
             var details = new List<JournalVoucherDetail>();
 
-            // Get accounts
+            // Get accounts with null checks
             var receiptAccount = GetAccountByPaymentMode(customerReceipt.PaymentMode) ?? GetDefaultCashAccount();
             var receivableAccount = GetDefaultReceivableAccount();
+
+            // Validate accounts exist
+            if (receiptAccount == null)
+            {
+                throw new InvalidOperationException("Receipt account not found. Please ensure Chart of Accounts is properly configured.");
+            }
+            if (receivableAccount == null)
+            {
+                throw new InvalidOperationException("Receivable account not found. Please ensure Chart of Accounts is properly configured.");
+            }
 
             // Debit: Receipt Account (Cash/Bank)
             details.Add(new JournalVoucherDetail

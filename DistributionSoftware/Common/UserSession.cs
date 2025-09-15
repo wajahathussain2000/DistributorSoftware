@@ -191,13 +191,25 @@ namespace DistributionSoftware.Common
         /// <returns>The user's full name or username if full name is not available</returns>
         public static string GetDisplayName()
         {
-            if (!IsLoggedIn)
-                return "Guest";
-                
-            if (!string.IsNullOrWhiteSpace(_currentUser.FirstName) && !string.IsNullOrWhiteSpace(_currentUser.LastName))
-                return $"{_currentUser.FirstName} {_currentUser.LastName}";
-                
-            return _currentUser.Username ?? "Unknown User";
+            try
+            {
+                if (!IsLoggedIn || _currentUser == null)
+                    return "System User";
+                    
+                if (!string.IsNullOrWhiteSpace(_currentUser.FirstName) && !string.IsNullOrWhiteSpace(_currentUser.LastName))
+                    return $"{_currentUser.FirstName} {_currentUser.LastName}";
+                    
+                if (!string.IsNullOrWhiteSpace(_currentUser.Username))
+                    return _currentUser.Username;
+                    
+                return "System User";
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging
+                System.Diagnostics.Debug.WriteLine($"Error in UserSession.GetDisplayName: {ex.Message}");
+                return "System User";
+            }
         }
         
         /// <summary>
@@ -215,6 +227,7 @@ namespace DistributionSoftware.Common
         #endregion
     }
 }
+
 
 
 
