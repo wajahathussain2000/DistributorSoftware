@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="StockDataSet">
+    <DataSource Name="BatchExpiryDataSet">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
@@ -12,12 +12,16 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="StockDataSet">
+    <DataSet Name="BatchExpiryDataSet">
       <Query>
-        <DataSourceName>StockDataSet</DataSourceName>
+        <DataSourceName>BatchExpiryDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="ProductId">
+          <DataField>ProductId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="ProductCode">
           <DataField>ProductCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -34,25 +38,9 @@
           <DataField>BrandName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="UnitName">
-          <DataField>UnitName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="UnitPrice">
-          <DataField>UnitPrice</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="StockQuantity">
-          <DataField>StockQuantity</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="WarehouseName">
           <DataField>WarehouseName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ReorderLevel">
-          <DataField>ReorderLevel</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="BatchNumber">
           <DataField>BatchNumber</DataField>
@@ -62,18 +50,47 @@
           <DataField>ExpiryDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="CurrentStock">
+          <DataField>CurrentStock</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="UnitName">
+          <DataField>UnitName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DaysToExpiry">
+          <DataField>DaysToExpiry</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ExpiryStatus">
+          <DataField>ExpiryStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LastUpdated">
+          <DataField>LastUpdated</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="ReportDate">
+    <ReportParameter Name="StartDate">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
           <Value>=Today()</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Report Date</Prompt>
+      <Prompt>Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EndDate">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Today()</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>End Date</Prompt>
     </ReportParameter>
     <ReportParameter Name="ProductFilter">
       <DataType>String</DataType>
@@ -84,47 +101,32 @@
       </DefaultValue>
       <Prompt>Product Filter</Prompt>
     </ReportParameter>
-    <ReportParameter Name="CategoryFilter">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>All Categories</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Category Filter</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="BrandFilter">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>All Brands</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Brand Filter</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="WarehouseFilter">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>All Warehouses</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Warehouse Filter</Prompt>
-    </ReportParameter>
   </ReportParameters>
   <Body>
     <ReportItems>
-      <Tablix Name="StockTable">
+      <Tablix Name="BatchExpiryTable">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
               <Width>0.8in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2in</Width>
+              <Width>1.5in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.2in</Width>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -140,15 +142,6 @@
             </TablixColumn>
             <TablixColumn>
               <Width>1.2in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.8in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -168,6 +161,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -199,11 +193,12 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                                <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -230,6 +225,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -261,99 +257,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Unit</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                                <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitPriceHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Unit Price</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="StockQuantityHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Stock Qty</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -385,37 +289,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="ReorderLevelHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Reorder Level</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -443,10 +317,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Batch No</Value>
+                              <Value>Batch Number</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -478,6 +353,167 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="CurrentStockHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Current Stock</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="UnitHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Unit</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DaysToExpiryHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Days to Expiry</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ExpiryStatusHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Status</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="LastUpdatedHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Last Updated</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -511,6 +547,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductCode.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -537,6 +576,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                         </Paragraph>
@@ -560,8 +602,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!CategoryName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <Style>
@@ -583,81 +631,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!BrandName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!UnitName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitPriceData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Format(Fields!UnitPrice.Value, "N2")</Value>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="StockQuantityData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!StockQuantity.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -684,29 +660,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!WarehouseName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="ReorderLevelData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!ReorderLevel.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -733,6 +689,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!BatchNumber.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -759,6 +718,154 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Format(Fields!ExpiryDate.Value, "dd-MM-yyyy")</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="CurrentStockData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!CurrentStock.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="UnitData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!UnitName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DaysToExpiryData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!DaysToExpiry.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ExpiryStatusData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!ExpiryStatus.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="LastUpdatedData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Format(Fields!LastUpdated.Value, "dd-MM-yyyy")</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -792,6 +899,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -804,7 +912,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>StockDataSet</DataSetName>
+        <DataSetName>BatchExpiryDataSet</DataSetName>
         <Top>0.5in</Top>
         <Left>0.25in</Left>
         <Height>0.55in</Height>
@@ -822,10 +930,10 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>STOCK REPORT</Value>
+                <Value>BATCH / EXPIRY REPORT</Value>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>18pt</FontSize>
+                  <FontSize>20pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>#2C3E50</Color>
                 </Style>
@@ -853,49 +961,34 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Report Date: </Value>
+                <Value>Date Range: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Parameters!ReportDate.Value</Value>
+                <Value>=Parameters!StartDate.Value</Value>
+              </TextRun>
+              <TextRun>
+                <Value> to </Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Parameters!EndDate.Value</Value>
               </TextRun>
               <TextRun>
                 <Value> | Product: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!ProductFilter.Value</Value>
-              </TextRun>
-              <TextRun>
-                <Value> | Category: </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>=Parameters!CategoryFilter.Value</Value>
-              </TextRun>
-              <TextRun>
-                <Value> | Brand: </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>=Parameters!BrandFilter.Value</Value>
-              </TextRun>
-              <TextRun>
-                <Value> | Warehouse: </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>=Parameters!WarehouseFilter.Value</Value>
               </TextRun>
             </TextRuns>
             <Style>

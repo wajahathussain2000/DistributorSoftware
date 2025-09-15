@@ -81,7 +81,8 @@ namespace DistributionSoftware.Presentation.Forms
             usersDropdown.Font = dropdownFont;
             usersDropdown.Items.Add("User Master", null, (s, e) => OpenUserMasterForm());
             usersDropdown.Items.Add("-");
-            usersDropdown.Items.Add("Test User Management", null, (s, e) => TestUserManagement());
+            usersDropdown.Items.Add("User Activity Report", null, (s, e) => OpenUserActivityReportForm());
+            usersDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReportForm());
 
             // Products Dropdown (Product & Inventory Management Module)
             productsDropdown = new ContextMenuStrip();
@@ -100,6 +101,8 @@ namespace DistributionSoftware.Presentation.Forms
             productsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
             productsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
             productsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
+            productsDropdown.Items.Add("Batch/Expiry Report", null, (s, e) => OpenBatchExpiryReportForm());
+            productsDropdown.Items.Add("Item Ledger Report", null, (s, e) => OpenItemLedgerReportForm());
 
 
             // Inventory Dropdown (Additional Inventory Features)
@@ -155,6 +158,13 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown = new ContextMenuStrip();
             reportsDropdown.Font = dropdownFont;
             reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
+            reportsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
+            reportsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
+            reportsDropdown.Items.Add("Batch/Expiry Report", null, (s, e) => OpenBatchExpiryReportForm());
+            reportsDropdown.Items.Add("Item Ledger Report", null, (s, e) => OpenItemLedgerReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("User Activity Report", null, (s, e) => OpenUserActivityReportForm());
+            reportsDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -1503,19 +1513,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private void TestUserManagement()
-        {
-            try
-            {
-                UserManagementTestForm testForm = new UserManagementTestForm();
-                testForm.StartPosition = FormStartPosition.CenterParent;
-                testForm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error testing User Management: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void OpenCustomerCategoryForm()
         {
@@ -1609,6 +1606,67 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Customer Report Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenUserActivityReportForm()
+        {
+            try
+            {
+                UserActivityReportForm userActivityReportForm = new UserActivityReportForm();
+                userActivityReportForm.Owner = this;
+                userActivityReportForm.ShowDialog();
+                userActivityReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening User Activity Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenLoginHistoryReportForm()
+        {
+            try
+            {
+                LoginHistoryReportForm loginHistoryReportForm = new LoginHistoryReportForm();
+                loginHistoryReportForm.Owner = this;
+                loginHistoryReportForm.ShowDialog();
+                loginHistoryReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Login History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void OpenBatchExpiryReportForm()
+        {
+            try
+            {
+                BatchExpiryReportForm batchExpiryReportForm = new BatchExpiryReportForm();
+                batchExpiryReportForm.Owner = this;
+                batchExpiryReportForm.ShowDialog();
+                batchExpiryReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Batch/Expiry Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenItemLedgerReportForm()
+        {
+            try
+            {
+                ItemLedgerReportForm itemLedgerReportForm = new ItemLedgerReportForm();
+                itemLedgerReportForm.Owner = this;
+                itemLedgerReportForm.ShowDialog();
+                itemLedgerReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Item Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

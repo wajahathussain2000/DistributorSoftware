@@ -20,7 +20,7 @@ namespace DistributionSoftware.Presentation.Forms
         private List<BankStatement> _bankStatements;
         private List<BankReconciliation> _reconciliations;
         private List<JournalVoucher> _journalVouchers;
-        
+
         // Current selected items for CRUD operations
         private BankAccount _currentBankAccount;
         private BankStatement _currentBankStatement;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="StockDataSet">
+    <DataSource Name="StockMovementDataSet">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
@@ -12,12 +12,16 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="StockDataSet">
+    <DataSet Name="StockMovementDataSet">
       <Query>
-        <DataSourceName>StockDataSet</DataSourceName>
+        <DataSourceName>StockMovementDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="MovementId">
+          <DataField>MovementId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="ProductCode">
           <DataField>ProductCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -26,32 +30,24 @@
           <DataField>ProductName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CategoryName">
-          <DataField>CategoryName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BrandName">
-          <DataField>BrandName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="UnitName">
-          <DataField>UnitName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="UnitPrice">
-          <DataField>UnitPrice</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="StockQuantity">
-          <DataField>StockQuantity</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="WarehouseName">
           <DataField>WarehouseName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ReorderLevel">
-          <DataField>ReorderLevel</DataField>
+        <Field Name="MovementType">
+          <DataField>MovementType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ReferenceType">
+          <DataField>ReferenceType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReferenceId">
+          <DataField>ReferenceId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="BatchNumber">
@@ -62,18 +58,39 @@
           <DataField>ExpiryDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="MovementDate">
+          <DataField>MovementDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CreatedByName">
+          <DataField>CreatedByName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Remarks">
+          <DataField>Remarks</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="ReportDate">
+    <ReportParameter Name="StartDate">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
           <Value>=Today()</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Report Date</Prompt>
+      <Prompt>Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EndDate">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Today()</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>End Date</Prompt>
     </ReportParameter>
     <ReportParameter Name="ProductFilter">
       <DataType>String</DataType>
@@ -84,24 +101,6 @@
       </DefaultValue>
       <Prompt>Product Filter</Prompt>
     </ReportParameter>
-    <ReportParameter Name="CategoryFilter">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>All Categories</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Category Filter</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="BrandFilter">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>All Brands</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Brand Filter</Prompt>
-    </ReportParameter>
     <ReportParameter Name="WarehouseFilter">
       <DataType>String</DataType>
       <DefaultValue>
@@ -111,20 +110,26 @@
       </DefaultValue>
       <Prompt>Warehouse Filter</Prompt>
     </ReportParameter>
+    <ReportParameter Name="MovementTypeFilter">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>All Types</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Movement Type Filter</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <Body>
     <ReportItems>
-      <Tablix Name="StockTable">
+      <Tablix Name="StockMovementTable">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
               <Width>0.8in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1.2in</Width>
+              <Width>1.5in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -139,10 +144,13 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.2in</Width>
+              <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8in</Width>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.2in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -168,6 +176,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -199,161 +208,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="CategoryHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Category</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="BrandHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Brand</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Unit</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                                <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitPriceHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Unit Price</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="StockQuantityHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Stock Qty</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -385,6 +240,7 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -405,17 +261,114 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ReorderLevelHeader">
+                    <Textbox Name="MovementTypeHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Reorder Level</Value>
+                              <Value>Type</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="QuantityHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Quantity</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ReferenceTypeHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Reference Type</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ReferenceIdHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Reference ID</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -443,10 +396,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Batch No</Value>
+                              <Value>Batch Number</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -478,6 +432,71 @@
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="MovementDateHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Movement Date</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <BackgroundColor>#2C3E50</BackgroundColor>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#34495E</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="CreatedByHeader">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Created By</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -511,6 +530,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductCode.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -537,132 +559,11 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="CategoryData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!CategoryName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="BrandData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!BrandName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!UnitName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitPriceData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Format(Fields!UnitPrice.Value, "N2")</Value>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="StockQuantityData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!StockQuantity.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <Style>
@@ -684,8 +585,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!WarehouseName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <Style>
@@ -699,14 +606,104 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ReorderLevelData">
+                    <Textbox Name="MovementTypeData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ReorderLevel.Value</Value>
+                              <Value>=Fields!MovementType.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="QuantityData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Quantity.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ReferenceTypeData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!ReferenceType.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ReferenceIdData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!ReferenceId.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -733,6 +730,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!BatchNumber.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -759,6 +759,67 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Format(Fields!ExpiryDate.Value, "dd-MM-yyyy")</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="MovementDateData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Format(Fields!MovementDate.Value, "dd-MM-yyyy")</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="CreatedByData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!CreatedByName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -804,7 +865,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>StockDataSet</DataSetName>
+        <DataSetName>StockMovementDataSet</DataSetName>
         <Top>0.5in</Top>
         <Left>0.25in</Left>
         <Height>0.55in</Height>
@@ -822,10 +883,10 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>STOCK REPORT</Value>
+                <Value>STOCK MOVEMENT REPORT</Value>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>18pt</FontSize>
+                  <FontSize>20pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>#2C3E50</Color>
                 </Style>
@@ -853,49 +914,54 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Report Date: </Value>
+                <Value>Date Range: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Parameters!ReportDate.Value</Value>
+                <Value>=Parameters!StartDate.Value</Value>
+              </TextRun>
+              <TextRun>
+                <Value> to </Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Parameters!EndDate.Value</Value>
               </TextRun>
               <TextRun>
                 <Value> | Product: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!ProductFilter.Value</Value>
               </TextRun>
               <TextRun>
-                <Value> | Category: </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>=Parameters!CategoryFilter.Value</Value>
-              </TextRun>
-              <TextRun>
-                <Value> | Brand: </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>=Parameters!BrandFilter.Value</Value>
-              </TextRun>
-              <TextRun>
                 <Value> | Warehouse: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
                 <Value>=Parameters!WarehouseFilter.Value</Value>
+              </TextRun>
+              <TextRun>
+                <Value> | Type: </Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Parameters!MovementTypeFilter.Value</Value>
               </TextRun>
             </TextRuns>
             <Style>

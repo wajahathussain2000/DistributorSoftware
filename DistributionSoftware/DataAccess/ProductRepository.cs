@@ -535,6 +535,111 @@ namespace DistributionSoftware.DataAccess
             }
         }
 
+        public List<LowStockReportData> GetLowStockReportData(int? productId, int? categoryId, DateTime? reportDate)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var sql = @"
+                        SELECT 
+                            p.ProductId,
+                            p.ProductCode,
+                            p.ProductName,
+                            ISNULL(c.CategoryName, ISNULL(p.Category, 'N/A')) AS CategoryName,
+                            ISNULL(b.BrandName, 'N/A') AS BrandName,
+                            ISNULL(u.UnitName, 'N/A') AS UnitName,
+                            p.UnitPrice,
+                            p.StockQuantity,
+                            ISNULL(w.WarehouseName, 'Main Warehouse') AS WarehouseName,
+                            p.ReorderLevel,
+                            ISNULL(p.BatchNumber, 'N/A') AS BatchNumber,
+                            p.ExpiryDate,
+                            CASE 
+                                WHEN p.StockQuantity <= 0 THEN 'Out of Stock'
+                                WHEN p.StockQuantity <= p.ReorderLevel THEN 'Low Stock'
+                                ELSE 'Normal'
+                            END AS StockStatus,
+                            CASE 
+                                WHEN p.StockQuantity <= 0 THEN 'Critical'
+                                WHEN p.StockQuantity <= p.ReorderLevel THEN 'Warning'
+                                ELSE 'Normal'
+                            END AS Priority,
+                            p.ModifiedDate AS LastUpdated
+                        FROM Products p 
+                        LEFT JOIN Categories c ON p.CategoryId = c.CategoryId AND c.IsActive = 1 
+                        LEFT JOIN Brands b ON p.BrandId = b.BrandId AND b.IsActive = 1 
+                        LEFT JOIN Units u ON p.UnitId = u.UnitId AND u.IsActive = 1 
+                        LEFT JOIN Warehouses w ON p.WarehouseId = w.WarehouseId AND w.IsActive = 1 
+                        WHERE p.IsActive = 1 
+                        AND p.StockQuantity <= p.ReorderLevel";
+
+                    var conditions = new List<string>();
+                    var parameters = new List<SqlParameter>();
+
+                    if (productId.HasValue)
+                    {
+                        conditions.Add("p.ProductId = @ProductId");
+                        parameters.Add(new SqlParameter("@ProductId", productId.Value));
+                    }
+
+                    if (categoryId.HasValue)
+                    {
+                        conditions.Add("p.CategoryId = @CategoryId");
+                        parameters.Add(new SqlParameter("@CategoryId", categoryId.Value));
+                    }
+
+                    if (conditions.Count > 0)
+                    {
+                        sql += " AND " + string.Join(" AND ", conditions);
+                    }
+
+                    sql += " ORDER BY p.StockQuantity ASC, p.ProductName";
+
+                    var reportData = new List<LowStockReportData>();
+                    using (var command = new SqlCommand(sql, connection))
+                    {
+                        foreach (var param in parameters)
+                        {
+                            command.Parameters.Add(param);
+                        }
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                reportData.Add(new LowStockReportData
+                                {
+                                    ProductId = reader["ProductId"] == DBNull.Value ? 0 : Convert.ToInt32(reader["ProductId"]),
+                                    ProductCode = reader["ProductCode"] == DBNull.Value ? "" : reader["ProductCode"].ToString(),
+                                    ProductName = reader["ProductName"] == DBNull.Value ? "" : reader["ProductName"].ToString(),
+                                    CategoryName = reader["CategoryName"] == DBNull.Value ? "" : reader["CategoryName"].ToString(),
+                                    BrandName = reader["BrandName"] == DBNull.Value ? "" : reader["BrandName"].ToString(),
+                                    UnitName = reader["UnitName"] == DBNull.Value ? "" : reader["UnitName"].ToString(),
+                                    UnitPrice = reader["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["UnitPrice"]),
+                                    StockQuantity = reader["StockQuantity"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["StockQuantity"]),
+                                    WarehouseName = reader["WarehouseName"] == DBNull.Value ? "" : reader["WarehouseName"].ToString(),
+                                    ReorderLevel = reader["ReorderLevel"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["ReorderLevel"]),
+                                    BatchNumber = reader["BatchNumber"] == DBNull.Value ? "" : reader["BatchNumber"].ToString(),
+                                    ExpiryDate = reader["ExpiryDate"] == DBNull.Value ? null : (DateTime?)reader["ExpiryDate"],
+                                    StockStatus = reader["StockStatus"] == DBNull.Value ? "" : reader["StockStatus"].ToString(),
+                                    Priority = reader["Priority"] == DBNull.Value ? "" : reader["Priority"].ToString(),
+                                    LastUpdated = reader["LastUpdated"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(reader["LastUpdated"])
+                                });
+                            }
+                        }
+                    }
+                    return reportData;
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("ProductRepository.GetLowStockReportData", ex);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Helper Methods

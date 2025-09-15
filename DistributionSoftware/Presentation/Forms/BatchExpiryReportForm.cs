@@ -7,13 +7,11 @@ using DistributionSoftware.DataAccess;
 
 namespace DistributionSoftware.Presentation.Forms
 {
-    public partial class StockMovementReportForm : Form
+    public partial class BatchExpiryReportForm : Form
     {
         private ProductRepository productRepository;
-        private WarehouseRepository warehouseRepository;
-        private StockMovementRepository stockMovementRepository;
 
-        public StockMovementReportForm()
+        public BatchExpiryReportForm()
         {
             InitializeComponent();
             InitializeRepositories();
@@ -25,8 +23,6 @@ namespace DistributionSoftware.Presentation.Forms
             try
             {
                 productRepository = new ProductRepository();
-                warehouseRepository = new WarehouseRepository();
-                stockMovementRepository = new StockMovementRepository();
             }
             catch (Exception ex)
             {
@@ -45,13 +41,8 @@ namespace DistributionSoftware.Presentation.Forms
                 // Load products
                 LoadProducts();
 
-                // Load warehouses
-                LoadWarehouses();
-
                 // Set default filters
                 cmbProductFilter.SelectedIndex = 0; // "All Products"
-                cmbWarehouseFilter.SelectedIndex = 0; // "All Warehouses"
-                cmbMovementTypeFilter.SelectedIndex = 0; // "All Types"
             }
             catch (Exception ex)
             {
@@ -78,25 +69,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private void LoadWarehouses()
-        {
-            try
-            {
-                var warehouses = warehouseRepository.GetAllWarehouses();
-                cmbWarehouseFilter.Items.Clear();
-                cmbWarehouseFilter.Items.Add("All Warehouses");
-                
-                foreach (var warehouse in warehouses)
-                {
-                    cmbWarehouseFilter.Items.Add(warehouse.WarehouseName);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading warehouses: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void btnGenerateReport_Click(object sender, EventArgs e)
         {
             try
@@ -117,14 +89,12 @@ namespace DistributionSoftware.Presentation.Forms
                 DateTime startDate = dtpStartDate.Value.Date;
                 DateTime endDate = dtpEndDate.Value.Date;
                 string productFilter = cmbProductFilter.SelectedItem?.ToString() ?? "All Products";
-                string warehouseFilter = cmbWarehouseFilter.SelectedItem?.ToString() ?? "All Warehouses";
-                string movementTypeFilter = cmbMovementTypeFilter.SelectedItem?.ToString() ?? "All Types";
 
                 // Get data from repository
-                var stockMovementData = GetStockMovementData(startDate, endDate, productFilter, warehouseFilter, movementTypeFilter);
+                var batchExpiryData = GetBatchExpiryData(startDate, endDate, productFilter);
 
                 // Set up report data source
-                ReportDataSource reportDataSource = new ReportDataSource("StockMovementDataSet", stockMovementData);
+                ReportDataSource reportDataSource = new ReportDataSource("BatchExpiryDataSet", batchExpiryData);
 
                 // Clear existing data sources
                 reportViewer1.LocalReport.DataSources.Clear();
@@ -135,9 +105,7 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                     new ReportParameter("StartDate", startDate.ToString("dd-MM-yyyy")),
                     new ReportParameter("EndDate", endDate.ToString("dd-MM-yyyy")),
-                    new ReportParameter("ProductFilter", productFilter),
-                    new ReportParameter("WarehouseFilter", warehouseFilter),
-                    new ReportParameter("MovementTypeFilter", movementTypeFilter)
+                    new ReportParameter("ProductFilter", productFilter)
                 };
 
                 reportViewer1.LocalReport.SetParameters(parameters);
@@ -151,16 +119,12 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private DataTable GetStockMovementData(DateTime startDate, DateTime endDate, string productFilter, string warehouseFilter, string movementTypeFilter)
+        private DataTable GetBatchExpiryData(DateTime startDate, DateTime endDate, string productFilter)
         {
             try
             {
-                // Parse filters to get IDs
-                int? productId = null;
-                int? warehouseId = null;
-                string movementType = null;
-
                 // Parse product filter
+                int? productId = null;
                 if (!string.IsNullOrEmpty(productFilter) && productFilter != "All Products")
                 {
                     var productCode = productFilter.Split('-')[0].Trim();
@@ -169,56 +133,66 @@ namespace DistributionSoftware.Presentation.Forms
                         productId = product.ProductId;
                 }
 
-                // Parse warehouse filter
-                if (!string.IsNullOrEmpty(warehouseFilter) && warehouseFilter != "All Warehouses")
+                // Get products with expiry dates
+                var products = productRepository.GetActiveProducts();
+                
+                // Filter by product if specified
+                if (productId.HasValue)
                 {
-                    var warehouses = warehouseRepository.GetAllWarehouses();
-                    var warehouse = warehouses.FirstOrDefault(w => w.WarehouseName == warehouseFilter);
-                    if (warehouse != null)
-                        warehouseId = warehouse.WarehouseId;
+                    products = products.Where(p => p.ProductId == productId.Value).ToList();
                 }
 
-                // Parse movement type filter
-                if (!string.IsNullOrEmpty(movementTypeFilter) && movementTypeFilter != "All Types")
-                {
-                    movementType = movementTypeFilter;
-                }
+                // Filter products that have expiry dates within the date range
+                var filteredProducts = products.Where(p => 
+                    p.ExpiryDate.HasValue && 
+                    p.ExpiryDate.Value >= startDate && 
+                    p.ExpiryDate.Value <= endDate &&
+                    p.StockQuantity > 0).ToList();
 
-                // Get real data from repository
-                var stockMovements = stockMovementRepository.GetStockMovements(startDate, endDate, productId, warehouseId, movementType, null);
-
-                // Convert to DataTable
+                // Create DataTable
                 DataTable dataTable = new DataTable();
-                dataTable.Columns.Add("MovementId", typeof(int));
+                dataTable.Columns.Add("ProductId", typeof(int));
                 dataTable.Columns.Add("ProductCode", typeof(string));
                 dataTable.Columns.Add("ProductName", typeof(string));
+                dataTable.Columns.Add("CategoryName", typeof(string));
+                dataTable.Columns.Add("BrandName", typeof(string));
                 dataTable.Columns.Add("WarehouseName", typeof(string));
-                dataTable.Columns.Add("MovementType", typeof(string));
-                dataTable.Columns.Add("Quantity", typeof(decimal));
-                dataTable.Columns.Add("ReferenceType", typeof(string));
-                dataTable.Columns.Add("ReferenceId", typeof(int));
                 dataTable.Columns.Add("BatchNumber", typeof(string));
                 dataTable.Columns.Add("ExpiryDate", typeof(DateTime));
-                dataTable.Columns.Add("MovementDate", typeof(DateTime));
-                dataTable.Columns.Add("CreatedByName", typeof(string));
-                dataTable.Columns.Add("Remarks", typeof(string));
+                dataTable.Columns.Add("CurrentStock", typeof(decimal));
+                dataTable.Columns.Add("UnitName", typeof(string));
+                dataTable.Columns.Add("DaysToExpiry", typeof(int));
+                dataTable.Columns.Add("ExpiryStatus", typeof(string));
+                dataTable.Columns.Add("LastUpdated", typeof(DateTime));
 
-                foreach (var movement in stockMovements)
+                foreach (var product in filteredProducts)
                 {
+                    var daysToExpiry = (int)(product.ExpiryDate.Value - DateTime.Now).TotalDays;
+                    string expiryStatus;
+                    
+                    if (daysToExpiry < 0)
+                        expiryStatus = "Expired";
+                    else if (daysToExpiry <= 30)
+                        expiryStatus = "Expiring Soon";
+                    else if (daysToExpiry <= 90)
+                        expiryStatus = "Expiring in 3 Months";
+                    else
+                        expiryStatus = "Valid";
+
                     dataTable.Rows.Add(
-                        movement.MovementId,
-                        movement.ProductCode ?? "N/A",
-                        movement.ProductName ?? "Unknown Product",
-                        movement.WarehouseName ?? "Unknown Warehouse",
-                        movement.MovementType ?? "N/A",
-                        movement.Quantity,
-                        movement.ReferenceType ?? "N/A",
-                        movement.ReferenceId ?? 0,
-                        movement.BatchNumber ?? "N/A",
-                        movement.ExpiryDate ?? DateTime.MinValue,
-                        movement.MovementDate,
-                        movement.CreatedByUser ?? "System",
-                        movement.Remarks ?? ""
+                        product.ProductId,
+                        product.ProductCode ?? "N/A",
+                        product.ProductName ?? "Unknown Product",
+                        "Category", // TODO: Get from Category table
+                        "Brand",    // TODO: Get from Brand table
+                        "Warehouse", // TODO: Get from Warehouse table
+                        product.BatchNumber ?? "N/A",
+                        product.ExpiryDate.Value,
+                        product.StockQuantity,
+                        "PCS", // TODO: Get from Unit table
+                        daysToExpiry,
+                        expiryStatus,
+                        product.ModifiedDate ?? product.CreatedDate
                     );
                 }
 
@@ -226,7 +200,7 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error getting stock movement data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error getting batch expiry data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable();
             }
         }
@@ -267,7 +241,7 @@ namespace DistributionSoftware.Presentation.Forms
 
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = format == "PDF" ? "PDF files (*.pdf)|*.pdf" : "Excel files (*.xlsx)|*.xlsx";
-                saveFileDialog.FileName = $"StockMovementReport_{DateTime.Now:yyyyMMdd_HHmmss}";
+                saveFileDialog.FileName = $"BatchExpiryReport_{DateTime.Now:yyyyMMdd_HHmmss}";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -287,12 +261,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.Close();
         }
 
-        private void StockMovementReportForm_Load(object sender, EventArgs e)
+        private void BatchExpiryReportForm_Load(object sender, EventArgs e)
         {
             try
             {
                 // Set the report path
-                reportViewer1.LocalReport.ReportPath = System.IO.Path.Combine(Application.StartupPath, "Reports", "StockMovementReport.rdlc");
+                reportViewer1.LocalReport.ReportPath = System.IO.Path.Combine(Application.StartupPath, "Reports", "BatchExpiryReport.rdlc");
                 
                 // Set processing mode
                 reportViewer1.ProcessingMode = ProcessingMode.Local;

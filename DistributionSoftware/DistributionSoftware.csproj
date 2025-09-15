@@ -654,6 +654,30 @@
     <Compile Include="Presentation\Forms\UserManagementTestForm.Designer.cs">
       <DependentUpon>UserManagementTestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\UserActivityReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserActivityReportForm.Designer.cs">
+      <DependentUpon>UserActivityReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\LoginHistoryReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\LoginHistoryReportForm.Designer.cs">
+      <DependentUpon>LoginHistoryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\BatchExpiryReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\BatchExpiryReportForm.Designer.cs">
+      <DependentUpon>BatchExpiryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ItemLedgerReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ItemLedgerReportForm.Designer.cs">
+      <DependentUpon>ItemLedgerReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\PricingDiscountSetupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -711,6 +735,7 @@
     <Compile Include="Resources\Icons\IconHelper.cs" />
     <Compile Include="Test\CompilationTest.cs" />
     <Compile Include="Test\DebugTest.cs" />
+    <Compile Include="Test\UserReportsTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\Forms\AdminDashboardRedesigned.resx">
@@ -802,6 +827,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SimpleStockReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\UserActivityReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\LoginHistoryReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\LowStockReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StockMovementReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\BatchExpiryReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ItemLedgerReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

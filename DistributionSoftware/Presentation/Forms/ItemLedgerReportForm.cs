@@ -7,13 +7,13 @@ using DistributionSoftware.DataAccess;
 
 namespace DistributionSoftware.Presentation.Forms
 {
-    public partial class StockMovementReportForm : Form
+    public partial class ItemLedgerReportForm : Form
     {
         private ProductRepository productRepository;
         private WarehouseRepository warehouseRepository;
         private StockMovementRepository stockMovementRepository;
 
-        public StockMovementReportForm()
+        public ItemLedgerReportForm()
         {
             InitializeComponent();
             InitializeRepositories();
@@ -51,7 +51,6 @@ namespace DistributionSoftware.Presentation.Forms
                 // Set default filters
                 cmbProductFilter.SelectedIndex = 0; // "All Products"
                 cmbWarehouseFilter.SelectedIndex = 0; // "All Warehouses"
-                cmbMovementTypeFilter.SelectedIndex = 0; // "All Types"
             }
             catch (Exception ex)
             {
@@ -118,13 +117,12 @@ namespace DistributionSoftware.Presentation.Forms
                 DateTime endDate = dtpEndDate.Value.Date;
                 string productFilter = cmbProductFilter.SelectedItem?.ToString() ?? "All Products";
                 string warehouseFilter = cmbWarehouseFilter.SelectedItem?.ToString() ?? "All Warehouses";
-                string movementTypeFilter = cmbMovementTypeFilter.SelectedItem?.ToString() ?? "All Types";
 
                 // Get data from repository
-                var stockMovementData = GetStockMovementData(startDate, endDate, productFilter, warehouseFilter, movementTypeFilter);
+                var itemLedgerData = GetItemLedgerData(startDate, endDate, productFilter, warehouseFilter);
 
                 // Set up report data source
-                ReportDataSource reportDataSource = new ReportDataSource("StockMovementDataSet", stockMovementData);
+                ReportDataSource reportDataSource = new ReportDataSource("ItemLedgerDataSet", itemLedgerData);
 
                 // Clear existing data sources
                 reportViewer1.LocalReport.DataSources.Clear();
@@ -136,8 +134,7 @@ namespace DistributionSoftware.Presentation.Forms
                     new ReportParameter("StartDate", startDate.ToString("dd-MM-yyyy")),
                     new ReportParameter("EndDate", endDate.ToString("dd-MM-yyyy")),
                     new ReportParameter("ProductFilter", productFilter),
-                    new ReportParameter("WarehouseFilter", warehouseFilter),
-                    new ReportParameter("MovementTypeFilter", movementTypeFilter)
+                    new ReportParameter("WarehouseFilter", warehouseFilter)
                 };
 
                 reportViewer1.LocalReport.SetParameters(parameters);
@@ -151,14 +148,13 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private DataTable GetStockMovementData(DateTime startDate, DateTime endDate, string productFilter, string warehouseFilter, string movementTypeFilter)
+        private DataTable GetItemLedgerData(DateTime startDate, DateTime endDate, string productFilter, string warehouseFilter)
         {
             try
             {
                 // Parse filters to get IDs
                 int? productId = null;
                 int? warehouseId = null;
-                string movementType = null;
 
                 // Parse product filter
                 if (!string.IsNullOrEmpty(productFilter) && productFilter != "All Products")
@@ -178,46 +174,65 @@ namespace DistributionSoftware.Presentation.Forms
                         warehouseId = warehouse.WarehouseId;
                 }
 
-                // Parse movement type filter
-                if (!string.IsNullOrEmpty(movementTypeFilter) && movementTypeFilter != "All Types")
-                {
-                    movementType = movementTypeFilter;
-                }
+                // Get real stock movement data from repository
+                var stockMovements = stockMovementRepository.GetStockMovements(startDate, endDate, productId, warehouseId, null, null);
 
-                // Get real data from repository
-                var stockMovements = stockMovementRepository.GetStockMovements(startDate, endDate, productId, warehouseId, movementType, null);
-
-                // Convert to DataTable
+                // Create DataTable
                 DataTable dataTable = new DataTable();
-                dataTable.Columns.Add("MovementId", typeof(int));
+                dataTable.Columns.Add("TransactionId", typeof(int));
+                dataTable.Columns.Add("TransactionDate", typeof(DateTime));
                 dataTable.Columns.Add("ProductCode", typeof(string));
                 dataTable.Columns.Add("ProductName", typeof(string));
                 dataTable.Columns.Add("WarehouseName", typeof(string));
-                dataTable.Columns.Add("MovementType", typeof(string));
-                dataTable.Columns.Add("Quantity", typeof(decimal));
+                dataTable.Columns.Add("TransactionType", typeof(string));
                 dataTable.Columns.Add("ReferenceType", typeof(string));
-                dataTable.Columns.Add("ReferenceId", typeof(int));
+                dataTable.Columns.Add("ReferenceNumber", typeof(string));
+                dataTable.Columns.Add("InQuantity", typeof(decimal));
+                dataTable.Columns.Add("OutQuantity", typeof(decimal));
+                dataTable.Columns.Add("BalanceQuantity", typeof(decimal));
+                dataTable.Columns.Add("UnitName", typeof(string));
+                dataTable.Columns.Add("UnitPrice", typeof(decimal));
+                dataTable.Columns.Add("TotalValue", typeof(decimal));
                 dataTable.Columns.Add("BatchNumber", typeof(string));
                 dataTable.Columns.Add("ExpiryDate", typeof(DateTime));
-                dataTable.Columns.Add("MovementDate", typeof(DateTime));
-                dataTable.Columns.Add("CreatedByName", typeof(string));
                 dataTable.Columns.Add("Remarks", typeof(string));
 
-                foreach (var movement in stockMovements)
+                // Calculate running balance
+                decimal runningBalance = 0;
+
+                foreach (var movement in stockMovements.OrderBy(m => m.MovementDate).ThenBy(m => m.MovementId))
                 {
+                    decimal inQuantity = 0;
+                    decimal outQuantity = 0;
+
+                    if (movement.MovementType == "IN")
+                    {
+                        inQuantity = movement.Quantity;
+                        runningBalance += movement.Quantity;
+                    }
+                    else if (movement.MovementType == "OUT")
+                    {
+                        outQuantity = movement.Quantity;
+                        runningBalance -= movement.Quantity;
+                    }
+
                     dataTable.Rows.Add(
                         movement.MovementId,
+                        movement.MovementDate,
                         movement.ProductCode ?? "N/A",
                         movement.ProductName ?? "Unknown Product",
                         movement.WarehouseName ?? "Unknown Warehouse",
                         movement.MovementType ?? "N/A",
-                        movement.Quantity,
                         movement.ReferenceType ?? "N/A",
-                        movement.ReferenceId ?? 0,
+                        movement.ReferenceNumber ?? "N/A",
+                        inQuantity,
+                        outQuantity,
+                        runningBalance,
+                        "PCS", // TODO: Get from Unit table
+                        movement.UnitPrice,
+                        movement.TotalValue,
                         movement.BatchNumber ?? "N/A",
                         movement.ExpiryDate ?? DateTime.MinValue,
-                        movement.MovementDate,
-                        movement.CreatedByUser ?? "System",
                         movement.Remarks ?? ""
                     );
                 }
@@ -226,7 +241,7 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error getting stock movement data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error getting item ledger data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable();
             }
         }
@@ -267,7 +282,7 @@ namespace DistributionSoftware.Presentation.Forms
 
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = format == "PDF" ? "PDF files (*.pdf)|*.pdf" : "Excel files (*.xlsx)|*.xlsx";
-                saveFileDialog.FileName = $"StockMovementReport_{DateTime.Now:yyyyMMdd_HHmmss}";
+                saveFileDialog.FileName = $"ItemLedgerReport_{DateTime.Now:yyyyMMdd_HHmmss}";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -287,12 +302,12 @@ namespace DistributionSoftware.Presentation.Forms
             this.Close();
         }
 
-        private void StockMovementReportForm_Load(object sender, EventArgs e)
+        private void ItemLedgerReportForm_Load(object sender, EventArgs e)
         {
             try
             {
                 // Set the report path
-                reportViewer1.LocalReport.ReportPath = System.IO.Path.Combine(Application.StartupPath, "Reports", "StockMovementReport.rdlc");
+                reportViewer1.LocalReport.ReportPath = System.IO.Path.Combine(Application.StartupPath, "Reports", "ItemLedgerReport.rdlc");
                 
                 // Set processing mode
                 reportViewer1.ProcessingMode = ProcessingMode.Local;

@@ -88,9 +88,10 @@
             // lblBrand
             // 
             this.lblBrand.AutoSize = true;
-            this.lblBrand.Location = new System.Drawing.Point(20, 60);
+            this.lblBrand.Location = new System.Drawing.Point(30, 90);
+            this.lblBrand.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(38, 13);
+            this.lblBrand.Size = new System.Drawing.Size(55, 20);
             this.lblBrand.TabIndex = 4;
             this.lblBrand.Text = "Brand:";
             // 
@@ -98,17 +99,19 @@
             // 
             this.cmbBrand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBrand.FormattingEnabled = true;
-            this.cmbBrand.Location = new System.Drawing.Point(100, 60);
+            this.cmbBrand.Location = new System.Drawing.Point(150, 89);
+            this.cmbBrand.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbBrand.Name = "cmbBrand";
-            this.cmbBrand.Size = new System.Drawing.Size(200, 21);
+            this.cmbBrand.Size = new System.Drawing.Size(298, 28);
             this.cmbBrand.TabIndex = 5;
             // 
             // lblWarehouse
             // 
             this.lblWarehouse.AutoSize = true;
-            this.lblWarehouse.Location = new System.Drawing.Point(320, 60);
+            this.lblWarehouse.Location = new System.Drawing.Point(480, 90);
+            this.lblWarehouse.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWarehouse.Name = "lblWarehouse";
-            this.lblWarehouse.Size = new System.Drawing.Size(65, 13);
+            this.lblWarehouse.Size = new System.Drawing.Size(95, 20);
             this.lblWarehouse.TabIndex = 6;
             this.lblWarehouse.Text = "Warehouse:";
             // 
@@ -116,25 +119,28 @@
             // 
             this.cmbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbWarehouse.FormattingEnabled = true;
-            this.cmbWarehouse.Location = new System.Drawing.Point(400, 60);
+            this.cmbWarehouse.Location = new System.Drawing.Point(600, 89);
+            this.cmbWarehouse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbWarehouse.Name = "cmbWarehouse";
-            this.cmbWarehouse.Size = new System.Drawing.Size(200, 21);
+            this.cmbWarehouse.Size = new System.Drawing.Size(298, 28);
             this.cmbWarehouse.TabIndex = 7;
             // 
             // lblReportDate
             // 
             this.lblReportDate.AutoSize = true;
-            this.lblReportDate.Location = new System.Drawing.Point(620, 30);
+            this.lblReportDate.Location = new System.Drawing.Point(30, 135);
+            this.lblReportDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblReportDate.Name = "lblReportDate";
-            this.lblReportDate.Size = new System.Drawing.Size(68, 13);
+            this.lblReportDate.Size = new System.Drawing.Size(95, 20);
             this.lblReportDate.TabIndex = 8;
             this.lblReportDate.Text = "Report Date:";
             // 
             // dtpReportDate
             // 
-            this.dtpReportDate.Location = new System.Drawing.Point(700, 30);
+            this.dtpReportDate.Location = new System.Drawing.Point(150, 133);
+            this.dtpReportDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpReportDate.Name = "dtpReportDate";
-            this.dtpReportDate.Size = new System.Drawing.Size(200, 20);
+            this.dtpReportDate.Size = new System.Drawing.Size(298, 28);
             this.dtpReportDate.TabIndex = 9;
             // 
             // btnGenerateReport
@@ -142,13 +148,14 @@
             this.btnGenerateReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.btnGenerateReport.FlatAppearance.BorderSize = 0;
             this.btnGenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerateReport.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenerateReport.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerateReport.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateReport.Location = new System.Drawing.Point(20, 90);
+            this.btnGenerateReport.Location = new System.Drawing.Point(480, 133);
+            this.btnGenerateReport.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnGenerateReport.Name = "btnGenerateReport";
-            this.btnGenerateReport.Size = new System.Drawing.Size(120, 30);
+            this.btnGenerateReport.Size = new System.Drawing.Size(140, 35);
             this.btnGenerateReport.TabIndex = 10;
-            this.btnGenerateReport.Text = "Generate Report";
+            this.btnGenerateReport.Text = "Generate";
             this.btnGenerateReport.UseVisualStyleBackColor = false;
             this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
             // 
@@ -157,13 +164,14 @@
             this.btnExportPDF.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
             this.btnExportPDF.FlatAppearance.BorderSize = 0;
             this.btnExportPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExportPDF.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportPDF.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExportPDF.ForeColor = System.Drawing.Color.White;
-            this.btnExportPDF.Location = new System.Drawing.Point(150, 90);
+            this.btnExportPDF.Location = new System.Drawing.Point(640, 133);
+            this.btnExportPDF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExportPDF.Name = "btnExportPDF";
-            this.btnExportPDF.Size = new System.Drawing.Size(100, 30);
+            this.btnExportPDF.Size = new System.Drawing.Size(120, 35);
             this.btnExportPDF.TabIndex = 11;
-            this.btnExportPDF.Text = "Export PDF";
+            this.btnExportPDF.Text = "Export";
             this.btnExportPDF.UseVisualStyleBackColor = false;
             this.btnExportPDF.Click += new System.EventHandler(this.btnExportPDF_Click);
             // 
@@ -172,11 +180,12 @@
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(260, 90);
+            this.btnClose.Location = new System.Drawing.Point(780, 133);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(80, 30);
+            this.btnClose.Size = new System.Drawing.Size(100, 35);
             this.btnClose.TabIndex = 12;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -201,7 +210,7 @@
             this.groupBoxFilters.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxFilters.Name = "groupBoxFilters";
             this.groupBoxFilters.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxFilters.Size = new System.Drawing.Size(1380, 195);
+            this.groupBoxFilters.Size = new System.Drawing.Size(1380, 180);
             this.groupBoxFilters.TabIndex = 13;
             this.groupBoxFilters.TabStop = false;
             this.groupBoxFilters.Text = "Report Filters";

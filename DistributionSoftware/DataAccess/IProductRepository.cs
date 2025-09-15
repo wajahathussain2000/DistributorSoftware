@@ -26,5 +26,6 @@ namespace DistributionSoftware.DataAccess
         int GetProductCount(bool? isActive);
         decimal GetTotalStockValue();
         List<Product> GetLowStockProducts(decimal threshold);
+        List<LowStockReportData> GetLowStockReportData(int? productId, int? categoryId, DateTime? reportDate);
     }
 }

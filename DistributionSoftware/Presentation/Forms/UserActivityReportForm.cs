@@ -14,12 +14,12 @@ using Microsoft.Reporting.WinForms;
 
 namespace DistributionSoftware.Presentation.Forms
 {
-    public partial class StockReportForm : Form
+    public partial class UserActivityReportForm : Form
     {
         private string connectionString;
         private ReportViewer reportViewer;
 
-        public StockReportForm()
+        public UserActivityReportForm()
         {
             InitializeComponent();
             
@@ -31,8 +31,7 @@ namespace DistributionSoftware.Presentation.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error initializing Stock Report Form: {ex.Message}", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Don't close the form here, let it show with error handling
+                MessageBox.Show($"Error initializing User Activity Report Form: {ex.Message}", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -66,29 +65,22 @@ namespace DistributionSoftware.Presentation.Forms
                     conn.Open();
                     
                     // Test if we have data in key tables
-                    string testQuery = "SELECT COUNT(*) FROM Products WHERE IsActive = 1";
+                    string testQuery = "SELECT COUNT(*) FROM Users WHERE IsActive = 1";
                     using (SqlCommand cmd = new SqlCommand(testQuery, conn))
                     {
-                        int productCount = (int)cmd.ExecuteScalar();
+                        int userCount = (int)cmd.ExecuteScalar();
                         
-                        if (productCount == 0)
+                        if (userCount == 0)
                         {
-                            MessageBox.Show("No products found in database. Please run the seed data script to populate the database.", "No Data Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("No users found in database. Please check the database setup.", "No Data Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     
-                    // Test stock data
-                    string stockQuery = "SELECT COUNT(*) FROM Stock";
-                    using (SqlCommand cmd = new SqlCommand(stockQuery, conn))
+                    // Test activity log data
+                    string activityQuery = "SELECT COUNT(*) FROM UserActivityLog";
+                    using (SqlCommand cmd = new SqlCommand(activityQuery, conn))
                     {
-                        int stockCount = (int)cmd.ExecuteScalar();
-                    }
-                    
-                    // Test categories
-                    string categoryQuery = "SELECT COUNT(*) FROM Categories WHERE IsActive = 1";
-                    using (SqlCommand cmd = new SqlCommand(categoryQuery, conn))
-                    {
-                        int categoryCount = (int)cmd.ExecuteScalar();
+                        int activityCount = (int)cmd.ExecuteScalar();
                     }
                 }
             }
@@ -131,7 +123,7 @@ namespace DistributionSoftware.Presentation.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Could not find the RDLC report file. Please ensure SimpleStockReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Could not find the RDLC report file. Please ensure UserActivityReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 
                 this.Controls.Add(reportViewer);
@@ -147,18 +139,17 @@ namespace DistributionSoftware.Presentation.Forms
         {
             // Try multiple possible paths for the RDLC file
             string[] possiblePaths = {
-                Path.Combine(Application.StartupPath, "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Application.StartupPath, "..", "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Application.StartupPath, "..", "..", "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Application.StartupPath, "..", "..", "..", "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Directory.GetCurrentDirectory(), "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Directory.GetCurrentDirectory(), "..", "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "Reports", "SimpleStockReport.rdlc"),
-                Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "Reports", "SimpleStockReport.rdlc"),
+                Path.Combine(Application.StartupPath, "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Application.StartupPath, "..", "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Application.StartupPath, "..", "..", "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Application.StartupPath, "..", "..", "..", "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "Reports", "UserActivityReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "Reports", "UserActivityReport.rdlc"),
                 // Try absolute path from project structure
-                Path.Combine(Application.StartupPath, "..", "..", "..", "DistributionSoftware", "Reports", "SimpleStockReport.rdlc")
+                Path.Combine(Application.StartupPath, "..", "..", "..", "DistributionSoftware", "Reports", "UserActivityReport.rdlc")
             };
-            
             
             foreach (string path in possiblePaths)
             {
@@ -192,7 +183,7 @@ namespace DistributionSoftware.Presentation.Forms
                 // Check if report file exists
                 if (!File.Exists(reportViewer.LocalReport.ReportPath))
                 {
-                    MessageBox.Show($"Report file not found at: {reportViewer.LocalReport.ReportPath}\n\nPlease ensure SimpleStockReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Report file not found at: {reportViewer.LocalReport.ReportPath}\n\nPlease ensure UserActivityReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 
@@ -232,17 +223,11 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                // Load Products
-                LoadProducts();
+                // Load Users
+                LoadUsers();
                 
-                // Load Categories
-                LoadCategories();
-                
-                // Load Brands
-                LoadBrands();
-                
-                // Load Warehouses
-                LoadWarehouses();
+                // Load Roles
+                LoadRoles();
             }
             catch (Exception ex)
             {
@@ -250,119 +235,61 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private void LoadProducts()
+        private void LoadUsers()
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT ProductId, ProductName FROM Products WHERE IsActive = 1 ORDER BY ProductName";
+                    string query = "SELECT UserId, Username FROM Users WHERE IsActive = 1 ORDER BY Username";
                     SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     
-                    // Add "All Products" option at the top
+                    // Add "All Users" option at the top
                     DataRow allRow = dt.NewRow();
-                    allRow["ProductId"] = -1;
-                    allRow["ProductName"] = "All Products";
+                    allRow["UserId"] = -1;
+                    allRow["Username"] = "All Users";
                     dt.Rows.InsertAt(allRow, 0);
                     
-                    cmbProduct.DataSource = dt;
-                    cmbProduct.DisplayMember = "ProductName";
-                    cmbProduct.ValueMember = "ProductId";
-                    cmbProduct.SelectedIndex = 0; // Select "All Products" by default
+                    cmbUser.DataSource = dt;
+                    cmbUser.DisplayMember = "Username";
+                    cmbUser.ValueMember = "UserId";
+                    cmbUser.SelectedIndex = 0; // Select "All Users" by default
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading products: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading users: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void LoadCategories()
+        private void LoadRoles()
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT CategoryId, CategoryName FROM Categories WHERE IsActive = 1 ORDER BY CategoryName";
+                    string query = "SELECT RoleId, RoleName FROM Roles WHERE IsActive = 1 ORDER BY RoleName";
                     SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     
-                    // Add "All Categories" option at the top
+                    // Add "All Roles" option at the top
                     DataRow allRow = dt.NewRow();
-                    allRow["CategoryId"] = -1;
-                    allRow["CategoryName"] = "All Categories";
+                    allRow["RoleId"] = -1;
+                    allRow["RoleName"] = "All Roles";
                     dt.Rows.InsertAt(allRow, 0);
                     
-                    cmbCategory.DataSource = dt;
-                    cmbCategory.DisplayMember = "CategoryName";
-                    cmbCategory.ValueMember = "CategoryId";
-                    cmbCategory.SelectedIndex = 0; // Select "All Categories" by default
+                    cmbRole.DataSource = dt;
+                    cmbRole.DisplayMember = "RoleName";
+                    cmbRole.ValueMember = "RoleId";
+                    cmbRole.SelectedIndex = 0; // Select "All Roles" by default
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading categories: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadBrands()
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    string query = "SELECT BrandId, BrandName FROM Brands WHERE IsActive = 1 ORDER BY BrandName";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-                    
-                    // Add "All Brands" option at the top
-                    DataRow allRow = dt.NewRow();
-                    allRow["BrandId"] = -1;
-                    allRow["BrandName"] = "All Brands";
-                    dt.Rows.InsertAt(allRow, 0);
-                    
-                    cmbBrand.DataSource = dt;
-                    cmbBrand.DisplayMember = "BrandName";
-                    cmbBrand.ValueMember = "BrandId";
-                    cmbBrand.SelectedIndex = 0; // Select "All Brands" by default
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading brands: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadWarehouses()
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    string query = "SELECT WarehouseId, WarehouseName FROM Warehouses WHERE IsActive = 1 ORDER BY WarehouseName";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-                    
-                    // Add "All Warehouses" option at the top
-                    DataRow allRow = dt.NewRow();
-                    allRow["WarehouseId"] = -1;
-                    allRow["WarehouseName"] = "All Warehouses";
-                    dt.Rows.InsertAt(allRow, 0);
-                    
-                    cmbWarehouse.DataSource = dt;
-                    cmbWarehouse.DisplayMember = "WarehouseName";
-                    cmbWarehouse.ValueMember = "WarehouseId";
-                    cmbWarehouse.SelectedIndex = 0; // Select "All Warehouses" by default
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading warehouses: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -384,14 +311,13 @@ namespace DistributionSoftware.Presentation.Forms
                 }
 
                 // Get filter values (ignore "All" options with ID = -1)
-                int? productId = cmbProduct.SelectedValue != null && (int)cmbProduct.SelectedValue != -1 ? (int?)cmbProduct.SelectedValue : null;
-                int? categoryId = cmbCategory.SelectedValue != null && (int)cmbCategory.SelectedValue != -1 ? (int?)cmbCategory.SelectedValue : null;
-                int? brandId = cmbBrand.SelectedValue != null && (int)cmbBrand.SelectedValue != -1 ? (int?)cmbBrand.SelectedValue : null;
-                int? warehouseId = cmbWarehouse.SelectedValue != null && (int)cmbWarehouse.SelectedValue != -1 ? (int?)cmbWarehouse.SelectedValue : null;
-                DateTime? reportDate = dtpReportDate.Value.Date;
+                int? userId = cmbUser.SelectedValue != null && (int)cmbUser.SelectedValue != -1 ? (int?)cmbUser.SelectedValue : null;
+                int? roleId = cmbRole.SelectedValue != null && (int)cmbRole.SelectedValue != -1 ? (int?)cmbRole.SelectedValue : null;
+                DateTime startDate = dtpStartDate.Value.Date;
+                DateTime endDate = dtpEndDate.Value.Date.AddDays(1).AddSeconds(-1); // End of day
 
                 // Get report data
-                DataTable reportData = GetStockReportData(productId, categoryId, brandId, warehouseId, reportDate);
+                DataTable reportData = GetUserActivityReportData(userId, roleId, startDate, endDate);
 
                 // Always show the report, even if no data
                 if (reportData == null)
@@ -399,23 +325,22 @@ namespace DistributionSoftware.Presentation.Forms
                     reportData = CreateEmptyDataTable();
                 }
 
-                
                 // Ensure we always have data structure even if empty
                 if (reportData.Rows.Count == 0)
                 {
                     // Add a "No data found" row
                     DataRow noDataRow = reportData.NewRow();
-                    noDataRow["ProductCode"] = "No data found";
-                    noDataRow["ProductName"] = "No products match the selected criteria";
-                    noDataRow["CategoryName"] = "N/A";
-                    noDataRow["BrandName"] = "N/A";
-                    noDataRow["UnitName"] = "N/A";
-                    noDataRow["UnitPrice"] = 0;
-                    noDataRow["StockQuantity"] = 0;
-                    noDataRow["WarehouseName"] = "N/A";
-                    noDataRow["ReorderLevel"] = 0;
-                    noDataRow["BatchNumber"] = "N/A";
-                    noDataRow["ExpiryDate"] = DBNull.Value;
+                    noDataRow["LogId"] = 0;
+                    noDataRow["Username"] = "No data found";
+                    noDataRow["Email"] = "No activities match the selected criteria";
+                    noDataRow["FullName"] = "N/A";
+                    noDataRow["RoleName"] = "N/A";
+                    noDataRow["ActivityType"] = "N/A";
+                    noDataRow["ActivityDescription"] = "N/A";
+                    noDataRow["Module"] = "N/A";
+                    noDataRow["IPAddress"] = "N/A";
+                    noDataRow["ActivityDate"] = DBNull.Value;
+                    noDataRow["AdditionalData"] = "N/A";
                     reportData.Rows.Add(noDataRow);
                 }
 
@@ -429,17 +354,16 @@ namespace DistributionSoftware.Presentation.Forms
                 reportViewer.LocalReport.DataSources.Clear();
                 
                 // Set up report data source first
-                ReportDataSource reportDataSource = new ReportDataSource("StockDataSet", reportData);
+                ReportDataSource reportDataSource = new ReportDataSource("UserActivityDataSet", reportData);
                 reportViewer.LocalReport.DataSources.Add(reportDataSource);
                 
                 // Set report parameters AFTER data source is added
                 ReportParameter[] parameters = new ReportParameter[]
                 {
-                    new ReportParameter("ReportDate", reportDate?.ToString("dd-MM-yyyy") ?? DateTime.Now.ToString("dd-MM-yyyy")),
-                    new ReportParameter("ProductFilter", productId.HasValue ? (cmbProduct?.Text ?? "Unknown Product") : "All Products"),
-                    new ReportParameter("CategoryFilter", categoryId.HasValue ? (cmbCategory?.Text ?? "Unknown Category") : "All Categories"),
-                    new ReportParameter("BrandFilter", brandId.HasValue ? (cmbBrand?.Text ?? "Unknown Brand") : "All Brands"),
-                    new ReportParameter("WarehouseFilter", warehouseId.HasValue ? (cmbWarehouse?.Text ?? "Unknown Warehouse") : "All Warehouses")
+                    new ReportParameter("StartDate", startDate.ToString("dd-MM-yyyy")),
+                    new ReportParameter("EndDate", endDate.ToString("dd-MM-yyyy")),
+                    new ReportParameter("UserFilter", userId.HasValue ? (cmbUser?.Text ?? "Unknown User") : "All Users"),
+                    new ReportParameter("RoleFilter", roleId.HasValue ? (cmbRole?.Text ?? "Unknown Role") : "All Roles")
                 };
                 
                 try
@@ -451,7 +375,6 @@ namespace DistributionSoftware.Presentation.Forms
                     // Continue without parameters if they fail
                 }
                 
-                
                 // Refresh the report
                 reportViewer.RefreshReport();
                 
@@ -459,14 +382,12 @@ namespace DistributionSoftware.Presentation.Forms
                 ImproveReportPositioning();
                 
                 // Update form title with filter information
-                string reportDateStr = reportDate?.ToString("dd-MM-yyyy") ?? DateTime.Now.ToString("dd-MM-yyyy");
-                string productFilterStr = productId.HasValue ? (cmbProduct?.Text ?? "Unknown Product") : "All Products";
-                string categoryFilterStr = categoryId.HasValue ? (cmbCategory?.Text ?? "Unknown Category") : "All Categories";
-                string brandFilterStr = brandId.HasValue ? (cmbBrand?.Text ?? "Unknown Brand") : "All Brands";
-                string warehouseFilterStr = warehouseId.HasValue ? (cmbWarehouse?.Text ?? "Unknown Warehouse") : "All Warehouses";
+                string startDateStr = startDate.ToString("dd-MM-yyyy");
+                string endDateStr = endDate.ToString("dd-MM-yyyy");
+                string userFilterStr = userId.HasValue ? (cmbUser?.Text ?? "Unknown User") : "All Users";
+                string roleFilterStr = roleId.HasValue ? (cmbRole?.Text ?? "Unknown Role") : "All Roles";
                 
-                this.Text = $"Stock Report - {reportDateStr} | {productFilterStr} | {categoryFilterStr} | {brandFilterStr} | {warehouseFilterStr}";
-                
+                this.Text = $"User Activity Report - {startDateStr} to {endDateStr} | {userFilterStr} | {roleFilterStr}";
                 
                 MessageBox.Show($"Report generated successfully!\n\nFound {reportData.Rows.Count} records matching your criteria.", "Report Generated", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -487,7 +408,7 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private DataTable GetStockReportData(int? productId, int? categoryId, int? brandId, int? warehouseId, DateTime? reportDate)
+        private DataTable GetUserActivityReportData(int? userId, int? roleId, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             
@@ -501,66 +422,18 @@ namespace DistributionSoftware.Presentation.Forms
                 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    StringBuilder query = new StringBuilder();
-                    query.AppendLine("SELECT ");
-                    query.AppendLine("    p.ProductCode, ");
-                    query.AppendLine("    p.ProductName, ");
-                    query.AppendLine("    ISNULL(c.CategoryName, ISNULL(p.Category, 'N/A')) AS CategoryName, ");
-                    query.AppendLine("    ISNULL(b.BrandName, 'N/A') AS BrandName, ");
-                    query.AppendLine("    ISNULL(u.UnitName, 'N/A') AS UnitName, ");
-                    query.AppendLine("    p.UnitPrice, ");
-                    query.AppendLine("    ISNULL(s.Quantity, p.StockQuantity) AS StockQuantity, ");
-                    query.AppendLine("    ISNULL(w.WarehouseName, ISNULL(w2.WarehouseName, 'Main Warehouse')) AS WarehouseName, ");
-                    query.AppendLine("    ISNULL(p.ReorderLevel, 0) AS ReorderLevel, ");
-                    query.AppendLine("    ISNULL(s.BatchNumber, p.BatchNumber) AS BatchNumber, ");
-                    query.AppendLine("    ISNULL(s.ExpiryDate, p.ExpiryDate) AS ExpiryDate ");
-                    query.AppendLine("FROM Products p ");
-                    query.AppendLine("LEFT JOIN Categories c ON p.CategoryId = c.CategoryId AND c.IsActive = 1 ");
-                    query.AppendLine("LEFT JOIN Brands b ON p.BrandId = b.BrandId AND b.IsActive = 1 ");
-                    query.AppendLine("LEFT JOIN Units u ON p.UnitId = u.UnitId AND u.IsActive = 1 ");
-                    query.AppendLine("LEFT JOIN Stock s ON p.ProductId = s.ProductId ");
-                    query.AppendLine("LEFT JOIN Warehouses w ON s.WarehouseId = w.WarehouseId AND w.IsActive = 1 ");
-                    query.AppendLine("LEFT JOIN Warehouses w2 ON p.WarehouseId = w2.WarehouseId AND w2.IsActive = 1 ");
-                    query.AppendLine("WHERE p.IsActive = 1 ");
-
-                    // Add filters
-                    if (productId.HasValue)
-                        query.AppendLine("AND p.ProductId = @ProductId ");
+                    // Use the stored procedure for user activity report
+                    SqlCommand cmd = new SqlCommand("sp_GetUserActivityReport", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
                     
-                    if (categoryId.HasValue)
-                        query.AppendLine("AND p.CategoryId = @CategoryId ");
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDate", endDate);
+                    cmd.Parameters.AddWithValue("@UserId", userId.HasValue ? (object)userId.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@RoleId", roleId.HasValue ? (object)roleId.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ActivityType", DBNull.Value); // All activity types
                     
-                    if (brandId.HasValue)
-                        query.AppendLine("AND p.BrandId = @BrandId ");
-                    
-                    if (warehouseId.HasValue)
-                        query.AppendLine("AND s.WarehouseId = @WarehouseId ");
-
-                    query.AppendLine("ORDER BY p.ProductName, w.WarehouseName");
-
-                    SqlCommand cmd = new SqlCommand(query.ToString(), conn);
-                    
-                    if (productId.HasValue)
-                        cmd.Parameters.AddWithValue("@ProductId", productId.Value);
-                    
-                    if (categoryId.HasValue)
-                        cmd.Parameters.AddWithValue("@CategoryId", categoryId.Value);
-                    
-                    if (brandId.HasValue)
-                        cmd.Parameters.AddWithValue("@BrandId", brandId.Value);
-                    
-                    if (warehouseId.HasValue)
-                        cmd.Parameters.AddWithValue("@WarehouseId", warehouseId.Value);
-
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(dt);
-                    
-                    
-                    // If no data returned, try a simpler query
-                    if (dt.Rows.Count == 0)
-                    {
-                        dt = GetSimpleStockData(productId, categoryId, brandId, warehouseId, reportDate);
-                    }
                 }
                 
                 // If no data found, add a "No data found" row
@@ -568,17 +441,17 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                     dt = CreateEmptyDataTable();
                     DataRow noDataRow = dt.NewRow();
-                    noDataRow["ProductCode"] = "N/A";
-                    noDataRow["ProductName"] = "No data found for the selected criteria";
-                    noDataRow["CategoryName"] = "N/A";
-                    noDataRow["BrandName"] = "N/A";
-                    noDataRow["UnitName"] = "N/A";
-                    noDataRow["UnitPrice"] = 0;
-                    noDataRow["StockQuantity"] = 0;
-                    noDataRow["WarehouseName"] = "N/A";
-                    noDataRow["ReorderLevel"] = 0;
-                    noDataRow["BatchNumber"] = "N/A";
-                    noDataRow["ExpiryDate"] = DBNull.Value;
+                    noDataRow["LogId"] = 0;
+                    noDataRow["Username"] = "N/A";
+                    noDataRow["Email"] = "No data found for the selected criteria";
+                    noDataRow["FullName"] = "N/A";
+                    noDataRow["RoleName"] = "N/A";
+                    noDataRow["ActivityType"] = "N/A";
+                    noDataRow["ActivityDescription"] = "N/A";
+                    noDataRow["Module"] = "N/A";
+                    noDataRow["IPAddress"] = "N/A";
+                    noDataRow["ActivityDate"] = DBNull.Value;
+                    noDataRow["AdditionalData"] = "N/A";
                     dt.Rows.Add(noDataRow);
                 }
             }
@@ -594,97 +467,17 @@ namespace DistributionSoftware.Presentation.Forms
         private DataTable CreateEmptyDataTable()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("ProductCode", typeof(string));
-            dt.Columns.Add("ProductName", typeof(string));
-            dt.Columns.Add("CategoryName", typeof(string));
-            dt.Columns.Add("BrandName", typeof(string));
-            dt.Columns.Add("UnitName", typeof(string));
-            dt.Columns.Add("UnitPrice", typeof(decimal));
-            dt.Columns.Add("StockQuantity", typeof(int));
-            dt.Columns.Add("WarehouseName", typeof(string));
-            dt.Columns.Add("ReorderLevel", typeof(int));
-            dt.Columns.Add("BatchNumber", typeof(string));
-            dt.Columns.Add("ExpiryDate", typeof(DateTime));
-            return dt;
-        }
-        
-        private DataTable GetSimpleStockData(int? productId, int? categoryId, int? brandId, int? warehouseId, DateTime? reportDate)
-        {
-            DataTable dt = CreateEmptyDataTable();
-            
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    // Simple query that just gets products with basic info
-                    string simpleQuery = @"
-                        SELECT 
-                            p.ProductCode,
-                            p.ProductName,
-                            ISNULL(p.Category, 'N/A') AS CategoryName,
-                            'N/A' AS BrandName,
-                            'N/A' AS UnitName,
-                            p.UnitPrice,
-                            p.StockQuantity,
-                            'Main Warehouse' AS WarehouseName,
-                            p.ReorderLevel,
-                            ISNULL(p.BatchNumber, 'N/A') AS BatchNumber,
-                            p.ExpiryDate
-                        FROM Products p
-                        WHERE p.IsActive = 1";
-                    
-                    List<string> conditions = new List<string>();
-                    List<SqlParameter> parameters = new List<SqlParameter>();
-                    
-                    if (productId.HasValue)
-                    {
-                        conditions.Add("p.ProductId = @ProductId");
-                        parameters.Add(new SqlParameter("@ProductId", productId.Value));
-                    }
-                    
-                    if (categoryId.HasValue)
-                    {
-                        conditions.Add("p.CategoryId = @CategoryId");
-                        parameters.Add(new SqlParameter("@CategoryId", categoryId.Value));
-                    }
-                    
-                    if (brandId.HasValue)
-                    {
-                        conditions.Add("p.BrandId = @BrandId");
-                        parameters.Add(new SqlParameter("@BrandId", brandId.Value));
-                    }
-                    
-                    if (warehouseId.HasValue)
-                    {
-                        conditions.Add("p.WarehouseId = @WarehouseId");
-                        parameters.Add(new SqlParameter("@WarehouseId", warehouseId.Value));
-                    }
-                    
-                    if (conditions.Count > 0)
-                    {
-                        simpleQuery += " AND " + string.Join(" AND ", conditions);
-                    }
-                    
-                    simpleQuery += " ORDER BY p.ProductName";
-                    
-                    using (SqlCommand cmd = new SqlCommand(simpleQuery, conn))
-                    {
-                        foreach (var param in parameters)
-                        {
-                            cmd.Parameters.Add(param);
-                        }
-                        
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        adapter.Fill(dt);
-                        
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Return empty table with structure
-            }
-            
+            dt.Columns.Add("LogId", typeof(long));
+            dt.Columns.Add("Username", typeof(string));
+            dt.Columns.Add("Email", typeof(string));
+            dt.Columns.Add("FullName", typeof(string));
+            dt.Columns.Add("RoleName", typeof(string));
+            dt.Columns.Add("ActivityType", typeof(string));
+            dt.Columns.Add("ActivityDescription", typeof(string));
+            dt.Columns.Add("Module", typeof(string));
+            dt.Columns.Add("IPAddress", typeof(string));
+            dt.Columns.Add("ActivityDate", typeof(DateTime));
+            dt.Columns.Add("AdditionalData", typeof(string));
             return dt;
         }
 
@@ -700,7 +493,7 @@ namespace DistributionSoftware.Presentation.Forms
 
                 SaveFileDialog saveDialog = new SaveFileDialog();
                 saveDialog.Filter = "PDF files (*.pdf)|*.pdf|Excel files (*.xls)|*.xls|Word files (*.doc)|*.doc";
-                saveDialog.FileName = "StockReport_" + DateTime.Now.ToString("ddMMyyyy_HHmmss") + ".pdf";
+                saveDialog.FileName = "UserActivityReport_" + DateTime.Now.ToString("ddMMyyyy_HHmmss") + ".pdf";
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -773,15 +566,12 @@ namespace DistributionSoftware.Presentation.Forms
                     
                     // Ensure the report is properly centered
                     reportViewer.RefreshReport();
-                    
                 }
             }
             catch (Exception ex)
             {
             }
         }
-        
-        
         
         private bool TestReportDataAvailability()
         {
@@ -791,8 +581,8 @@ namespace DistributionSoftware.Presentation.Forms
                 {
                     conn.Open();
                     
-                    // Test if Products table exists and has data
-                    string testQuery = "SELECT COUNT(*) FROM Products WHERE IsActive = 1";
+                    // Test if Users table exists and has data
+                    string testQuery = "SELECT COUNT(*) FROM Users WHERE IsActive = 1";
                     using (SqlCommand cmd = new SqlCommand(testQuery, conn))
                     {
                         int count = (int)cmd.ExecuteScalar();
@@ -804,7 +594,7 @@ namespace DistributionSoftware.Presentation.Forms
                     }
                     
                     // Test if we can execute a simple query
-                    string simpleTestQuery = "SELECT TOP 1 ProductCode, ProductName FROM Products WHERE IsActive = 1";
+                    string simpleTestQuery = "SELECT TOP 1 Username FROM Users WHERE IsActive = 1";
                     using (SqlCommand cmd = new SqlCommand(simpleTestQuery, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -824,6 +614,5 @@ namespace DistributionSoftware.Presentation.Forms
                 return false;
             }
         }
-        
     }
 }

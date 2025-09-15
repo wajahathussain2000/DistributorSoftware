@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="StockDataSet">
+    <DataSource Name="LoginHistoryDataSet">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
@@ -12,128 +12,114 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="StockDataSet">
+    <DataSet Name="LoginHistoryDataSet">
       <Query>
-        <DataSourceName>StockDataSet</DataSourceName>
+        <DataSourceName>LoginHistoryDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="ProductCode">
-          <DataField>ProductCode</DataField>
+        <Field Name="LoginId">
+          <DataField>LoginId</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="Username">
+          <DataField>Username</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ProductName">
-          <DataField>ProductName</DataField>
+        <Field Name="Email">
+          <DataField>Email</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CategoryName">
-          <DataField>CategoryName</DataField>
+        <Field Name="FullName">
+          <DataField>FullName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="BrandName">
-          <DataField>BrandName</DataField>
+        <Field Name="RoleName">
+          <DataField>RoleName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="UnitName">
-          <DataField>UnitName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="UnitPrice">
-          <DataField>UnitPrice</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="StockQuantity">
-          <DataField>StockQuantity</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="WarehouseName">
-          <DataField>WarehouseName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ReorderLevel">
-          <DataField>ReorderLevel</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="BatchNumber">
-          <DataField>BatchNumber</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ExpiryDate">
-          <DataField>ExpiryDate</DataField>
+        <Field Name="LoginDate">
+          <DataField>LoginDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="LogoutDate">
+          <DataField>LogoutDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="IPAddress">
+          <DataField>IPAddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="UserAgent">
+          <DataField>UserAgent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LoginStatus">
+          <DataField>LoginStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FailureReason">
+          <DataField>FailureReason</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SessionDuration">
+          <DataField>SessionDuration</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="ReportDate">
+    <ReportParameter Name="StartDate">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
           <Value>=Today()</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Report Date</Prompt>
+      <Prompt>Start Date</Prompt>
     </ReportParameter>
-    <ReportParameter Name="ProductFilter">
+    <ReportParameter Name="EndDate">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>All Products</Value>
+          <Value>=Today()</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Product Filter</Prompt>
+      <Prompt>End Date</Prompt>
     </ReportParameter>
-    <ReportParameter Name="CategoryFilter">
+    <ReportParameter Name="UserFilter">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>All Categories</Value>
+          <Value>All Users</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Category Filter</Prompt>
+      <Prompt>User Filter</Prompt>
     </ReportParameter>
-    <ReportParameter Name="BrandFilter">
+    <ReportParameter Name="LoginStatusFilter">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>All Brands</Value>
+          <Value>All Statuses</Value>
         </Values>
       </DefaultValue>
-      <Prompt>Brand Filter</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="WarehouseFilter">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>All Warehouses</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Warehouse Filter</Prompt>
+      <Prompt>Login Status Filter</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Body>
     <ReportItems>
-      <Tablix Name="StockTable">
+      <Tablix Name="LoginHistoryTable">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
               <Width>0.8in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2in</Width>
-            </TablixColumn>
-            <TablixColumn>
               <Width>1.2in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.8in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.5in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -142,13 +128,19 @@
               <Width>1.2in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8in</Width>
+              <Width>1.2in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.2in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -157,17 +149,18 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ProductCodeHeader">
+                    <Textbox Name="UsernameHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Product Code</Value>
+                              <Value>Username</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -188,17 +181,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ProductNameHeader">
+                    <Textbox Name="FullNameHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Product Name</Value>
+                              <Value>Full Name</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -219,17 +213,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="CategoryHeader">
+                    <Textbox Name="RoleHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Category</Value>
+                              <Value>Role</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -250,17 +245,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="BrandHeader">
+                    <Textbox Name="LoginStatusHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Brand</Value>
+                              <Value>Status</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -281,48 +277,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="UnitHeader">
+                    <Textbox Name="LoginDateHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Unit</Value>
+                              <Value>Login Date</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                                <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <BackgroundColor>#2C3E50</BackgroundColor>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#34495E</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitPriceHeader">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Unit Price</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -343,17 +309,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="StockQuantityHeader">
+                    <Textbox Name="LogoutDateHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Stock Qty</Value>
+                              <Value>Logout Date</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -374,17 +341,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="WarehouseHeader">
+                    <Textbox Name="IPAddressHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Warehouse</Value>
+                              <Value>IP Address</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -405,17 +373,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ReorderLevelHeader">
+                    <Textbox Name="LoginTimeHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Reorder Level</Value>
+                              <Value>Login Time</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -436,17 +405,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="BatchNumberHeader">
+                    <Textbox Name="LogoutTimeHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Batch No</Value>
+                              <Value>Logout Time</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -467,17 +437,18 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ExpiryDateHeader">
+                    <Textbox Name="SessionDurationHeader">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Expiry Date</Value>
+                              <Value>Duration (Min)</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
+                                <FontSize>10pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -503,14 +474,17 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ProductCodeData">
+                    <Textbox Name="UsernameData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ProductCode.Value</Value>
+                              <Value>=Fields!Username.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -529,14 +503,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ProductNameData">
+                    <Textbox Name="FullNameData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ProductName.Value</Value>
+                              <Value>=Fields!FullName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                         </Paragraph>
@@ -552,60 +529,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="CategoryData">
+                    <Textbox Name="RoleData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!CategoryName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="BrandData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!BrandName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="UnitData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!UnitName.Value</Value>
+                              <Value>=Fields!RoleName.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -624,40 +558,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="UnitPriceData">
+                    <Textbox Name="LoginStatusData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Format(Fields!UnitPrice.Value, "N2")</Value>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="StockQuantityData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!StockQuantity.Value</Value>
+                              <Value>=Fields!LoginStatus.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -676,37 +587,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="WarehouseData">
+                    <Textbox Name="LoginDateData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!WarehouseName.Value</Value>
-                            </TextRun>
-                          </TextRuns>
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                          <Color>#BDC3C7</Color>
-                        </Border>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="ReorderLevelData">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!ReorderLevel.Value</Value>
+                              <Value>=Format(Fields!LoginDate.Value, "dd-MM-yyyy")</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -725,14 +616,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="BatchNumberData">
+                    <Textbox Name="LogoutDateData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!BatchNumber.Value</Value>
+                              <Value>=IIF(IsNothing(Fields!LogoutDate.Value), "Active", Format(Fields!LogoutDate.Value, "dd-MM-yyyy"))</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -751,14 +645,104 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ExpiryDateData">
+                    <Textbox Name="IPAddressData">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Format(Fields!ExpiryDate.Value, "dd-MM-yyyy")</Value>
+                              <Value>=Fields!IPAddress.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="LoginTimeData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Format(Fields!LoginDate.Value, "HH:mm:ss")</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="LogoutTimeData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=IIF(IsNothing(Fields!LogoutDate.Value), "Active", Format(Fields!LogoutDate.Value, "HH:mm:ss"))</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                          <Color>#BDC3C7</Color>
+                        </Border>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="SessionDurationData">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=IIF(IsNothing(Fields!SessionDuration.Value), "Active", Fields!SessionDuration.Value)</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -791,7 +775,6 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -804,7 +787,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>StockDataSet</DataSetName>
+        <DataSetName>LoginHistoryDataSet</DataSetName>
         <Top>0.5in</Top>
         <Left>0.25in</Left>
         <Height>0.55in</Height>
@@ -822,10 +805,10 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>STOCK REPORT</Value>
+                <Value>LOGIN HISTORY REPORT</Value>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>18pt</FontSize>
+                  <FontSize>20pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Color>#2C3E50</Color>
                 </Style>
@@ -853,49 +836,44 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Report Date: </Value>
+                <Value>Date Range: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Parameters!ReportDate.Value</Value>
+                <Value>=Parameters!StartDate.Value</Value>
               </TextRun>
               <TextRun>
-                <Value> | Product: </Value>
+                <Value> to </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Parameters!ProductFilter.Value</Value>
+                <Value>=Parameters!EndDate.Value</Value>
               </TextRun>
               <TextRun>
-                <Value> | Category: </Value>
+                <Value> | User: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Parameters!CategoryFilter.Value</Value>
+                <Value>=Parameters!UserFilter.Value</Value>
               </TextRun>
               <TextRun>
-                <Value> | Brand: </Value>
+                <Value> | Status: </Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <FontSize>10pt</FontSize>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>=Parameters!BrandFilter.Value</Value>
-              </TextRun>
-              <TextRun>
-                <Value> | Warehouse: </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>=Parameters!WarehouseFilter.Value</Value>
+                <Value>=Parameters!LoginStatusFilter.Value</Value>
               </TextRun>
             </TextRuns>
             <Style>
