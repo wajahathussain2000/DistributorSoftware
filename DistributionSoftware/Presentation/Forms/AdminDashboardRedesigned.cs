@@ -150,9 +150,9 @@ namespace DistributionSoftware.Presentation.Forms
             suppliersDropdown.Items.Add("Supplier Payment Form", null, (s, e) => OpenSupplierPaymentForm());
             suppliersDropdown.Items.Add("Supplier Debit Note", null, (s, e) => OpenSupplierDebitNoteForm());
             suppliersDropdown.Items.Add("-");
-            suppliersDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReport());
-            suppliersDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReport());
-            suppliersDropdown.Items.Add("Supplier Payment History", null, (s, e) => OpenSupplierPaymentHistory());
+            suppliersDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
+            suppliersDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
+            suppliersDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
 
             // Reports Dropdown (Reports Dashboard & Additional Reports)
             reportsDropdown = new ContextMenuStrip();
@@ -162,6 +162,10 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
             reportsDropdown.Items.Add("Batch/Expiry Report", null, (s, e) => OpenBatchExpiryReportForm());
             reportsDropdown.Items.Add("Item Ledger Report", null, (s, e) => OpenItemLedgerReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
+            reportsDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
+            reportsDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("User Activity Report", null, (s, e) => OpenUserActivityReportForm());
             reportsDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReportForm());
@@ -1374,44 +1378,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
         
-        private void OpenSupplierLedgerReport() 
-        { 
-            try
-            {
-                SupplierLedgerForm supplierLedgerForm = new SupplierLedgerForm();
-                supplierLedgerForm.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Supplier Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        
-        private void OpenSupplierBalanceReport() 
-        { 
-            try
-            {
-                SupplierLedgerForm supplierLedgerForm = new SupplierLedgerForm();
-                supplierLedgerForm.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Supplier Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        
-        private void OpenSupplierPaymentHistory() 
-        { 
-            try
-            {
-                SupplierPaymentForm supplierPaymentForm = new SupplierPaymentForm();
-                supplierPaymentForm.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Supplier Payment History: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
 
         // Purchase Module
@@ -1667,6 +1633,50 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Item Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Supplier Reports Methods
+        private void OpenSupplierLedgerReportForm()
+        {
+            try
+            {
+                SupplierLedgerReportForm supplierLedgerReportForm = new SupplierLedgerReportForm();
+                supplierLedgerReportForm.Owner = this;
+                supplierLedgerReportForm.ShowDialog();
+                supplierLedgerReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSupplierBalanceReportForm()
+        {
+            try
+            {
+                SupplierBalanceReportForm supplierBalanceReportForm = new SupplierBalanceReportForm();
+                supplierBalanceReportForm.Owner = this;
+                supplierBalanceReportForm.ShowDialog();
+                supplierBalanceReportForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSupplierPaymentHistoryReportForm()
+        {
+            try
+            {
+                // TODO: Implement Supplier Payment History Report Form
+                MessageBox.Show("Supplier Payment History Report Form is not implemented yet.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Payment History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
