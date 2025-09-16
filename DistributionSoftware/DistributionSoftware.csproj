@@ -230,6 +230,8 @@
     <Compile Include="Models\SalesReturnReportData.cs" />
     <Compile Include="Models\SalesSummaryReportData.cs" />
     <Compile Include="Models\ProductWiseSalesReportData.cs" />
+    <Compile Include="Models\CustomerWiseSalesReportData.cs" />
+    <Compile Include="Models\SalesmanWiseSalesReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -821,6 +823,20 @@
     <Compile Include="Presentation\Forms\ProductWiseSalesReportForm.Designer.cs">
       <DependentUpon>ProductWiseSalesReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\CustomerWiseSalesReportForm.cs">
+      <DependentUpon>CustomerWiseSalesReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\CustomerWiseSalesReportForm.Designer.cs">
+      <DependentUpon>CustomerWiseSalesReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\SalesmanWiseSalesReportForm.cs">
+      <DependentUpon>SalesmanWiseSalesReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\SalesmanWiseSalesReportForm.Designer.cs">
+      <DependentUpon>SalesmanWiseSalesReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
       <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -971,6 +987,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ProductWiseSalesReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\CustomerWiseSalesReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SalesmanWiseSalesReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierBalanceReport.rdlc">

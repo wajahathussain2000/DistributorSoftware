@@ -172,6 +172,8 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Sales Return Report", null, (s, e) => OpenSalesReturnReportForm());
             reportsDropdown.Items.Add("Sales Summary Report", null, (s, e) => OpenSalesSummaryReportForm());
             reportsDropdown.Items.Add("Product-wise Sales Report", null, (s, e) => OpenProductWiseSalesReportForm());
+            reportsDropdown.Items.Add("Customer-wise Sales Report", null, (s, e) => OpenCustomerWiseSalesReportForm());
+            reportsDropdown.Items.Add("Salesman-wise Sales Report", null, (s, e) => OpenSalesmanWiseSalesReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2174,6 +2176,32 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Product-wise Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerWiseSalesReportForm()
+        {
+            try
+            {
+                var customerWiseSalesReportForm = new CustomerWiseSalesReportForm();
+                customerWiseSalesReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer-wise Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSalesmanWiseSalesReportForm()
+        {
+            try
+            {
+                var salesmanWiseSalesReportForm = new SalesmanWiseSalesReportForm();
+                salesmanWiseSalesReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Salesman-wise Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
