@@ -222,6 +222,7 @@
     <Compile Include="Models\SupplierLedgerReportData.cs" />
     <Compile Include="Models\SupplierBalanceReportData.cs" />
     <Compile Include="Models\SupplierPaymentHistoryReportData.cs" />
+    <Compile Include="Models\CustomerLedgerReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -703,60 +704,77 @@
     <Compile Include="Test\DebugTest.cs" />
     <Compile Include="Presentation\Forms\BatchExpiryReportForm.cs">
       <DependentUpon>BatchExpiryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\BatchExpiryReportForm.Designer.cs">
       <DependentUpon>BatchExpiryReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\ItemLedgerReportForm.cs">
       <DependentUpon>ItemLedgerReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\ItemLedgerReportForm.Designer.cs">
       <DependentUpon>ItemLedgerReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\LoginHistoryReportForm.cs">
       <DependentUpon>LoginHistoryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\LoginHistoryReportForm.Designer.cs">
       <DependentUpon>LoginHistoryReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\LowStockReportForm.cs">
       <DependentUpon>LowStockReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\LowStockReportForm.Designer.cs">
       <DependentUpon>LowStockReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\StockMovementReportForm.cs">
       <DependentUpon>StockMovementReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\StockMovementReportForm.Designer.cs">
       <DependentUpon>StockMovementReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\StockReportForm.cs">
       <DependentUpon>StockReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\StockReportForm.Designer.cs">
       <DependentUpon>StockReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\UserActivityReportForm.cs">
       <DependentUpon>UserActivityReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\UserActivityReportForm.Designer.cs">
       <DependentUpon>UserActivityReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\SupplierLedgerReportForm.cs">
       <DependentUpon>SupplierLedgerReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\SupplierLedgerReportForm.Designer.cs">
       <DependentUpon>SupplierLedgerReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\CustomerLedgerReportForm.cs">
+      <DependentUpon>CustomerLedgerReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\CustomerLedgerReportForm.Designer.cs">
+      <DependentUpon>CustomerLedgerReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
       <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.Designer.cs">
       <DependentUpon>SupplierBalanceReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\SupplierPaymentHistoryReportForm.cs">
       <DependentUpon>SupplierPaymentHistoryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\SupplierPaymentHistoryReportForm.Designer.cs">
       <DependentUpon>SupplierPaymentHistoryReportForm.cs</DependentUpon>
@@ -873,6 +891,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierLedgerReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\CustomerLedgerReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierBalanceReport.rdlc">

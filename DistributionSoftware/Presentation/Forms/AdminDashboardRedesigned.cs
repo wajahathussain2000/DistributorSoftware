@@ -133,7 +133,6 @@ namespace DistributionSoftware.Presentation.Forms
             customersDropdown.Items.Add("Customer Ledger", null, (s, e) => OpenCustomerLedgerForm());
             customersDropdown.Items.Add("Customer Receipts", null, (s, e) => OpenCustomerReceiptsForm());
             customersDropdown.Items.Add("-");
-            customersDropdown.Items.Add("-");
             customersDropdown.Items.Add("Customer Report", null, (s, e) => OpenCustomerReportForm());
 
             // Suppliers Dropdown (Supplier Management Module)
@@ -161,6 +160,9 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
             reportsDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
             reportsDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Customer Ledger Report", null, (s, e) => OpenCustomerLedgerReportForm());
+            reportsDropdown.Items.Add("-");
 
 
             // Expense Dropdown (Expense Management Module)
@@ -2061,6 +2063,19 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        private void OpenCustomerLedgerReportForm()
+        {
+            try
+            {
+                var customerLedgerReportForm = new CustomerLedgerReportForm();
+                customerLedgerReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void OpenSupplierBalanceReportForm()
         {
             try
@@ -2086,6 +2101,7 @@ namespace DistributionSoftware.Presentation.Forms
                 MessageBox.Show($"Error opening Supplier Payment History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
     }
 
