@@ -220,6 +220,7 @@
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\LowStockReportData.cs" />
     <Compile Include="Models\SupplierLedgerReportData.cs" />
+    <Compile Include="Models\SupplierBalanceReportData.cs" />
     <Compile Include="Models\SupplierPaymentHistoryReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
@@ -748,6 +749,12 @@
     <Compile Include="Presentation\Forms\SupplierLedgerReportForm.Designer.cs">
       <DependentUpon>SupplierLedgerReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
+      <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\SupplierBalanceReportForm.Designer.cs">
+      <DependentUpon>SupplierBalanceReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\Forms\AdminDashboardRedesigned.resx">
@@ -857,6 +864,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\UserActivityReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SupplierLedgerReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SupplierBalanceReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

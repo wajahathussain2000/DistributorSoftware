@@ -159,6 +159,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReportForm());
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
+            reportsDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -2068,6 +2069,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Supplier Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSupplierBalanceReportForm()
+        {
+            try
+            {
+                var supplierBalanceReportForm = new SupplierBalanceReportForm();
+                supplierBalanceReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
