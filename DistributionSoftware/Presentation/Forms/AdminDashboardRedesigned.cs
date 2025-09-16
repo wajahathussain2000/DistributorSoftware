@@ -81,8 +81,6 @@ namespace DistributionSoftware.Presentation.Forms
             usersDropdown.Font = dropdownFont;
             usersDropdown.Items.Add("User Master", null, (s, e) => OpenUserMasterForm());
             usersDropdown.Items.Add("-");
-            usersDropdown.Items.Add("User Activity Report", null, (s, e) => OpenUserActivityReportForm());
-            usersDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReportForm());
 
             // Products Dropdown (Product & Inventory Management Module)
             productsDropdown = new ContextMenuStrip();
@@ -98,11 +96,6 @@ namespace DistributionSoftware.Presentation.Forms
             productsDropdown.Items.Add("-");
             productsDropdown.Items.Add("Pricing & Discount Setup", null, (s, e) => OpenPricingDiscountSetupForm());
             productsDropdown.Items.Add("-");
-            productsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
-            productsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
-            productsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
-            productsDropdown.Items.Add("Batch/Expiry Report", null, (s, e) => OpenBatchExpiryReportForm());
-            productsDropdown.Items.Add("Item Ledger Report", null, (s, e) => OpenItemLedgerReportForm());
 
 
             // Inventory Dropdown (Additional Inventory Features)
@@ -140,6 +133,7 @@ namespace DistributionSoftware.Presentation.Forms
             customersDropdown.Items.Add("Customer Ledger", null, (s, e) => OpenCustomerLedgerForm());
             customersDropdown.Items.Add("Customer Receipts", null, (s, e) => OpenCustomerReceiptsForm());
             customersDropdown.Items.Add("-");
+            customersDropdown.Items.Add("-");
             customersDropdown.Items.Add("Customer Report", null, (s, e) => OpenCustomerReportForm());
 
             // Suppliers Dropdown (Supplier Management Module)
@@ -150,8 +144,6 @@ namespace DistributionSoftware.Presentation.Forms
             suppliersDropdown.Items.Add("Supplier Payment Form", null, (s, e) => OpenSupplierPaymentForm());
             suppliersDropdown.Items.Add("Supplier Debit Note", null, (s, e) => OpenSupplierDebitNoteForm());
             suppliersDropdown.Items.Add("-");
-            suppliersDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
-            suppliersDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
             suppliersDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
 
             // Reports Dropdown (Reports Dashboard & Additional Reports)
@@ -160,15 +152,13 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
             reportsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
             reportsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
-            reportsDropdown.Items.Add("Batch/Expiry Report", null, (s, e) => OpenBatchExpiryReportForm());
+            reportsDropdown.Items.Add("Batch Expiry Report", null, (s, e) => OpenBatchExpiryReportForm());
             reportsDropdown.Items.Add("Item Ledger Report", null, (s, e) => OpenItemLedgerReportForm());
-            reportsDropdown.Items.Add("-");
-            reportsDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
-            reportsDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
-            reportsDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("User Activity Report", null, (s, e) => OpenUserActivityReportForm());
             reportsDropdown.Items.Add("Login History Report", null, (s, e) => OpenLoginHistoryReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -1142,35 +1132,7 @@ namespace DistributionSoftware.Presentation.Forms
             stockAdjustmentForm.Show();
         }
         
-        private void OpenStockReportForm()
-        {
-            try
-            {
-                StockReportForm stockReportForm = new StockReportForm();
-                stockReportForm.Owner = this;
-                stockReportForm.ShowDialog();
-                stockReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private void OpenLowStockReportForm()
-        {
-            try
-            {
-                LowStockReportForm lowStockReportForm = new LowStockReportForm();
-                lowStockReportForm.Owner = this;
-                lowStockReportForm.ShowDialog();
-                lowStockReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Low Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void OpenSalesInvoiceForm()
         {
@@ -1247,20 +1209,6 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private void OpenStockMovementReportForm()
-        {
-            try
-            {
-                StockMovementReportForm stockMovementReportForm = new StockMovementReportForm();
-                stockMovementReportForm.Owner = this;
-                stockMovementReportForm.ShowDialog();
-                stockMovementReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Stock Movement Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void OpenStockMovementEntryForm()
         {
@@ -1575,97 +1523,11 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
-        private void OpenUserActivityReportForm()
-        {
-            try
-            {
-                UserActivityReportForm userActivityReportForm = new UserActivityReportForm();
-                userActivityReportForm.Owner = this;
-                userActivityReportForm.ShowDialog();
-                userActivityReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening User Activity Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void OpenLoginHistoryReportForm()
-        {
-            try
-            {
-                LoginHistoryReportForm loginHistoryReportForm = new LoginHistoryReportForm();
-                loginHistoryReportForm.Owner = this;
-                loginHistoryReportForm.ShowDialog();
-                loginHistoryReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Login History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
 
-        private void OpenBatchExpiryReportForm()
-        {
-            try
-            {
-                BatchExpiryReportForm batchExpiryReportForm = new BatchExpiryReportForm();
-                batchExpiryReportForm.Owner = this;
-                batchExpiryReportForm.ShowDialog();
-                batchExpiryReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Batch/Expiry Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private void OpenItemLedgerReportForm()
-        {
-            try
-            {
-                ItemLedgerReportForm itemLedgerReportForm = new ItemLedgerReportForm();
-                itemLedgerReportForm.Owner = this;
-                itemLedgerReportForm.ShowDialog();
-                itemLedgerReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Item Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        // Supplier Reports Methods
-        private void OpenSupplierLedgerReportForm()
-        {
-            try
-            {
-                SupplierLedgerReportForm supplierLedgerReportForm = new SupplierLedgerReportForm();
-                supplierLedgerReportForm.Owner = this;
-                supplierLedgerReportForm.ShowDialog();
-                supplierLedgerReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Supplier Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private void OpenSupplierBalanceReportForm()
-        {
-            try
-            {
-                SupplierBalanceReportForm supplierBalanceReportForm = new SupplierBalanceReportForm();
-                supplierBalanceReportForm.Owner = this;
-                supplierBalanceReportForm.ShowDialog();
-                supplierBalanceReportForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Supplier Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void OpenSupplierPaymentHistoryReportForm()
         {
@@ -1679,6 +1541,7 @@ namespace DistributionSoftware.Presentation.Forms
                 MessageBox.Show($"Error opening Supplier Payment History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // Accounting Dropdown Methods
         private void OpenChartOfAccountsForm()
@@ -2102,6 +1965,112 @@ namespace DistributionSoftware.Presentation.Forms
             purchaseVsSalesChartPanel.Location = new Point(startX, startY);
             purchaseVsSalesChartPanel.Size = new Size(chartWidth, chartHeight);
         }
+
+        // Report Form Methods
+        private void OpenStockReportForm()
+        {
+            try
+            {
+                var stockReportForm = new StockReportForm();
+                stockReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenLowStockReportForm()
+        {
+            try
+            {
+                var lowStockReportForm = new LowStockReportForm();
+                lowStockReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Low Stock Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenStockMovementReportForm()
+        {
+            try
+            {
+                var stockMovementReportForm = new StockMovementReportForm();
+                stockMovementReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Stock Movement Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenBatchExpiryReportForm()
+        {
+            try
+            {
+                var batchExpiryReportForm = new BatchExpiryReportForm();
+                batchExpiryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Batch Expiry Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenItemLedgerReportForm()
+        {
+            try
+            {
+                var itemLedgerReportForm = new ItemLedgerReportForm();
+                itemLedgerReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Item Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenUserActivityReportForm()
+        {
+            try
+            {
+                var userActivityReportForm = new UserActivityReportForm();
+                userActivityReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening User Activity Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenLoginHistoryReportForm()
+        {
+            try
+            {
+                var loginHistoryReportForm = new LoginHistoryReportForm();
+                loginHistoryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Login History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSupplierLedgerReportForm()
+        {
+            try
+            {
+                var supplierLedgerReportForm = new SupplierLedgerReportForm();
+                supplierLedgerReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 
     // Data classes

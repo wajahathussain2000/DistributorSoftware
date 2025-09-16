@@ -18,7 +18,6 @@ namespace DistributionSoftware.Presentation.Forms
         private ICustomerService _customerService;
         private List<PricingRule> _pricingRules;
         private List<DiscountRule> _discountRules;
-        private bool _isPricingMode = true;
 
         public PricingDiscountSetupForm()
         {
@@ -336,13 +335,11 @@ namespace DistributionSoftware.Presentation.Forms
 
         private void BtnPricingMode_Click(object sender, EventArgs e)
         {
-            _isPricingMode = true;
             SwitchToPricingMode();
         }
 
         private void BtnDiscountMode_Click(object sender, EventArgs e)
         {
-            _isPricingMode = false;
             SwitchToDiscountMode();
         }
 

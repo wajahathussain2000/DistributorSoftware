@@ -220,7 +220,6 @@
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\LowStockReportData.cs" />
     <Compile Include="Models\SupplierLedgerReportData.cs" />
-    <Compile Include="Models\SupplierBalanceReportData.cs" />
     <Compile Include="Models\SupplierPaymentHistoryReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
@@ -274,7 +273,6 @@
     <Compile Include="DataAccess\PurchasePaymentRepository.cs" />
     <Compile Include="DataAccess\IBackupHistoryRepository.cs" />
     <Compile Include="DataAccess\BackupHistoryRepository.cs" />
-    <Compile Include="DataAccess\SupplierReportRepository.cs" />
     <Compile Include="DataAccess\CategoryRepository.cs" />
     <Compile Include="DataAccess\WarehouseRepository.cs" />
     <Compile Include="Business\ISalesInvoiceService.cs" />
@@ -531,29 +529,11 @@
     <Compile Include="Presentation\Forms\ReorderLevelSetupForm.Designer.cs">
       <DependentUpon>ReorderLevelSetupForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Forms\LowStockReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\LowStockReportForm.Designer.cs">
-      <DependentUpon>LowStockReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\StockMovementReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\StockMovementReportForm.Designer.cs">
-      <DependentUpon>StockMovementReportForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\Forms\StockMovementEntryForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Presentation\Forms\StockMovementEntryForm.Designer.cs">
       <DependentUpon>StockMovementEntryForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\StockReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\StockReportForm.Designer.cs">
-      <DependentUpon>StockReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Forms\SupplierMasterForm.cs">
       <SubType>Form</SubType>
@@ -663,42 +643,6 @@
     <Compile Include="Presentation\Forms\UserManagementTestForm.Designer.cs">
       <DependentUpon>UserManagementTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Forms\UserActivityReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\UserActivityReportForm.Designer.cs">
-      <DependentUpon>UserActivityReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\LoginHistoryReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\LoginHistoryReportForm.Designer.cs">
-      <DependentUpon>LoginHistoryReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\BatchExpiryReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\BatchExpiryReportForm.Designer.cs">
-      <DependentUpon>BatchExpiryReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\ItemLedgerReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\ItemLedgerReportForm.Designer.cs">
-      <DependentUpon>ItemLedgerReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\SupplierLedgerReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\SupplierLedgerReportForm.Designer.cs">
-      <DependentUpon>SupplierLedgerReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentation\Forms\SupplierBalanceReportForm.Designer.cs">
-      <DependentUpon>SupplierBalanceReportForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\Forms\PricingDiscountSetupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -756,7 +700,54 @@
     <Compile Include="Resources\Icons\IconHelper.cs" />
     <Compile Include="Test\CompilationTest.cs" />
     <Compile Include="Test\DebugTest.cs" />
-    <Compile Include="Test\UserReportsTest.cs" />
+    <Compile Include="Presentation\Forms\BatchExpiryReportForm.cs">
+      <DependentUpon>BatchExpiryReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\BatchExpiryReportForm.Designer.cs">
+      <DependentUpon>BatchExpiryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ItemLedgerReportForm.cs">
+      <DependentUpon>ItemLedgerReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ItemLedgerReportForm.Designer.cs">
+      <DependentUpon>ItemLedgerReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\LoginHistoryReportForm.cs">
+      <DependentUpon>LoginHistoryReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\LoginHistoryReportForm.Designer.cs">
+      <DependentUpon>LoginHistoryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\LowStockReportForm.cs">
+      <DependentUpon>LowStockReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\LowStockReportForm.Designer.cs">
+      <DependentUpon>LowStockReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockMovementReportForm.cs">
+      <DependentUpon>StockMovementReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockMovementReportForm.Designer.cs">
+      <DependentUpon>StockMovementReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockReportForm.cs">
+      <DependentUpon>StockReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\StockReportForm.Designer.cs">
+      <DependentUpon>StockReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserActivityReportForm.cs">
+      <DependentUpon>UserActivityReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\UserActivityReportForm.Designer.cs">
+      <DependentUpon>UserActivityReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\SupplierLedgerReportForm.cs">
+      <DependentUpon>SupplierLedgerReportForm.Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\SupplierLedgerReportForm.Designer.cs">
+      <DependentUpon>SupplierLedgerReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\Forms\AdminDashboardRedesigned.resx">
@@ -844,13 +835,10 @@
     <Content Include="Reports\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StockReport.rdlc">
+    <Content Include="Reports\BatchExpiryReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\SimpleStockReport.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\UserActivityReport.rdlc">
+    <Content Include="Reports\ItemLedgerReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\LoginHistoryReport.rdlc">
@@ -859,19 +847,16 @@
     <Content Include="Reports\LowStockReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SimpleStockReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\StockMovementReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\BatchExpiryReport.rdlc">
+    <Content Include="Reports\StockReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\ItemLedgerReport.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\SupplierLedgerReport.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\SupplierBalanceReport.rdlc">
+    <Content Include="Reports\UserActivityReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

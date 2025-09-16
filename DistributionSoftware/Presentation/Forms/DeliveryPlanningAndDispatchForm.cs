@@ -21,7 +21,6 @@ namespace DistributionSoftware.Presentation.Forms
         private List<DeliverySchedule> _schedules;
         private List<Vehicle> _vehicles;
         private List<Route> _routes;
-        private bool _isEditMode = false;
 
         public DeliveryPlanningAndDispatchForm()
         {
@@ -1043,7 +1042,6 @@ namespace DistributionSoftware.Presentation.Forms
             if (statusBadge != null) statusBadge.Text = "No Schedule Selected";
 
             _currentSchedule = null;
-            _isEditMode = false;
             UpdateActionButtons();
         }
 
@@ -1095,7 +1093,6 @@ namespace DistributionSoftware.Presentation.Forms
         private void BtnNewSchedule_Click(object sender, EventArgs e)
         {
             ClearForm();
-            _isEditMode = false;
             
             // Generate new schedule reference
             try
@@ -1147,7 +1144,6 @@ namespace DistributionSoftware.Presentation.Forms
             try
             {
                 _currentSchedule = schedule;
-                _isEditMode = true;
 
                 var txtScheduleRef = this.Controls.Find("txtScheduleRef", true).FirstOrDefault() as TextBox;
                 var dtpScheduledDateTime = this.Controls.Find("dtpScheduledDateTime", true).FirstOrDefault() as DateTimePicker;

@@ -20,7 +20,6 @@ namespace DistributionSoftware.Presentation.Forms
         private List<Role> _roles;
         private List<Permission> _permissions;
         private List<UserRole> _userRoles;
-        private User _currentUser;
 
         public UserAccessControlForm()
         {

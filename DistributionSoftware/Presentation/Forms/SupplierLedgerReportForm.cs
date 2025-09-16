@@ -11,55 +11,228 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
 using Microsoft.Reporting.WinForms;
-using DistributionSoftware.DataAccess;
-using DistributionSoftware.Models;
 
 namespace DistributionSoftware.Presentation.Forms
 {
     public partial class SupplierLedgerReportForm : Form
     {
-        private SupplierReportRepository supplierReportRepository;
+        private string connectionString;
+        private ReportViewer reportViewer;
 
         public SupplierLedgerReportForm()
         {
             InitializeComponent();
-            InitializeRepository();
-            LoadInitialData();
-        }
-
-        private void InitializeRepository()
-        {
+            
             try
             {
-                supplierReportRepository = new SupplierReportRepository();
+                InitializeConnection();
+                InitializeReportViewer();
+                LoadFilters();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error initializing repository: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error initializing Supplier Ledger Report Form: {ex.Message}", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void LoadInitialData()
+        private void InitializeConnection()
         {
             try
             {
-                // Set default dates
-                dtpStartDate.Value = DateTime.Now.AddMonths(-1);
-                dtpEndDate.Value = DateTime.Now;
+                connectionString = ConfigurationManager.ConnectionStrings["DistributionConnection"]?.ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    MessageBox.Show("Database connection string not found. Please check your configuration.", "Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+                // Test the connection
+                TestDatabaseConnection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing database connection: {ex.Message}", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        
+        private void TestDatabaseConnection()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    
+                    // Test if we have data in key tables
+                    string testQuery = "SELECT COUNT(*) FROM Suppliers WHERE IsActive = 1";
+                    using (SqlCommand cmd = new SqlCommand(testQuery, conn))
+                    {
+                        int supplierCount = (int)cmd.ExecuteScalar();
+                        
+                        if (supplierCount == 0)
+                        {
+                            MessageBox.Show("No suppliers found in database. Please check the database setup.", "No Data Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    
+                    // Test supplier transactions data
+                    string transactionQuery = "SELECT COUNT(*) FROM SupplierTransactions";
+                    using (SqlCommand cmd = new SqlCommand(transactionQuery, conn))
+                    {
+                        int transactionCount = (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database connection test failed: {ex.Message}\n\nPlease ensure:\n1. SQL Server is running\n2. Database 'DistributionDB' exists\n3. Connection string is correct", "Database Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                // Load suppliers
+        private void InitializeReportViewer()
+        {
+            try
+            {
+                reportViewer = new ReportViewer();
+                reportViewer.Location = new Point(0, 120); // Position below filters panel
+                reportViewer.Size = new Size(this.ClientSize.Width, this.ClientSize.Height - 120);
+                reportViewer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                reportViewer.ProcessingMode = ProcessingMode.Local;
+                
+                // Improve ReportViewer appearance and alignment
+                reportViewer.BackColor = Color.White;
+                reportViewer.BorderStyle = BorderStyle.None;
+                reportViewer.Dock = DockStyle.None; // Use manual positioning instead of dock
+                reportViewer.ZoomMode = ZoomMode.PageWidth; // Auto-fit to page width
+                reportViewer.SetDisplayMode(DisplayMode.PrintLayout); // Use print layout for better landscape view
+                reportViewer.ShowZoomControl = true;
+                reportViewer.ShowPrintButton = true;
+                reportViewer.ShowExportButton = true;
+                reportViewer.ShowRefreshButton = true;
+                reportViewer.ShowFindControls = true;
+                reportViewer.ShowPageNavigationControls = true;
+                reportViewer.ShowStopButton = false;
+                reportViewer.ShowProgress = true;
+                
+                // Set the report path
+                string reportPath = FindReportPath();
+                if (!string.IsNullOrEmpty(reportPath))
+                {
+                    reportViewer.LocalReport.ReportPath = reportPath;
+                }
+                else
+                {
+                    MessageBox.Show("Could not find the RDLC report file. Please ensure SupplierLedgerReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                
+                this.Controls.Add(reportViewer);
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing ReportViewer: {ex.Message}", "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private string FindReportPath()
+        {
+            // Try multiple possible paths for the RDLC file
+            string[] possiblePaths = {
+                Path.Combine(Application.StartupPath, "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Application.StartupPath, "..", "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Application.StartupPath, "..", "..", "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Application.StartupPath, "..", "..", "..", "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "Reports", "SupplierLedgerReport.rdlc"),
+                Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "Reports", "SupplierLedgerReport.rdlc"),
+                // Try absolute path from project structure
+                Path.Combine(Application.StartupPath, "..", "..", "..", "DistributionSoftware", "Reports", "SupplierLedgerReport.rdlc")
+            };
+            
+            foreach (string path in possiblePaths)
+            {
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+            }
+            
+            return null;
+        }
+        
+        private bool ValidateReportSetup()
+        {
+            try
+            {
+                // Check if ReportViewer is initialized
+                if (reportViewer == null)
+                {
+                    MessageBox.Show("Report viewer is not initialized. Please restart the application.", "Report Setup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                
+                // Check if report path is set
+                if (string.IsNullOrEmpty(reportViewer.LocalReport.ReportPath))
+                {
+                    MessageBox.Show("Report path is not set. Please ensure the RDLC file is accessible.", "Report Configuration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                
+                // Check if report file exists
+                if (!File.Exists(reportViewer.LocalReport.ReportPath))
+                {
+                    MessageBox.Show($"Report file not found at: {reportViewer.LocalReport.ReportPath}\n\nPlease ensure SupplierLedgerReport.rdlc exists in the Reports folder.", "Report File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                
+                // Check if report is properly loaded
+                if (reportViewer.LocalReport.DataSources == null)
+                {
+                    MessageBox.Show("Report data sources are not initialized properly.", "Report Setup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                
+                // Ensure report is properly initialized
+                EnsureReportInitialized();
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error validating report setup: {ex.Message}", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+        
+        private void EnsureReportInitialized()
+        {
+            try
+            {
+                // Force the report to initialize by calling GetDefaultPageSettings
+                var pageSettings = reportViewer.LocalReport.GetDefaultPageSettings();
+            }
+            catch (Exception ex)
+            {
+                // Don't throw here, just log the error
+            }
+        }
+
+        private void LoadFilters()
+        {
+            try
+            {
+                // Load Suppliers
                 LoadSuppliers();
-
-                // Load transaction types
-                LoadTransactionTypes();
-
-                // Set default filters
-                cmbSupplierFilter.SelectedIndex = 0; // "All Suppliers"
-                cmbTransactionTypeFilter.SelectedIndex = 0; // "All Types"
+                
+                // Set default date range to include 2025 data
+                dtpStartDate.Value = new DateTime(2025, 1, 1);
+                dtpEndDate.Value = new DateTime(2025, 12, 31);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading initial data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading filter data: {ex.Message}", "Data Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -67,35 +240,29 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                var suppliers = supplierReportRepository.GetActiveSuppliers();
-                
-                cmbSupplierFilter.Items.Clear();
-                cmbSupplierFilter.Items.Add(new { Text = "All Suppliers", Value = (int?)null });
-                
-                foreach (var supplier in suppliers)
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    cmbSupplierFilter.Items.Add(new { Text = $"{supplier.SupplierCode} - {supplier.SupplierName}", Value = (int?)supplier.SupplierId });
+                    string query = "SELECT SupplierId, SupplierCode, SupplierName FROM Suppliers WHERE IsActive = 1 ORDER BY SupplierName";
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    
+                    // Add "All Suppliers" option at the top
+                    DataRow allRow = dt.NewRow();
+                    allRow["SupplierId"] = -1;
+                    allRow["SupplierCode"] = "ALL";
+                    allRow["SupplierName"] = "All Suppliers";
+                    dt.Rows.InsertAt(allRow, 0);
+                    
+                    cmbSupplier.DataSource = dt;
+                    cmbSupplier.DisplayMember = "SupplierName";
+                    cmbSupplier.ValueMember = "SupplierId";
+                    cmbSupplier.SelectedIndex = 0; // Select "All Suppliers" by default
                 }
-                
-                cmbSupplierFilter.DisplayMember = "Text";
-                cmbSupplierFilter.ValueMember = "Value";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading suppliers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadTransactionTypes()
-        {
-            try
-            {
-                cmbTransactionTypeFilter.Items.Clear();
-                cmbTransactionTypeFilter.Items.AddRange(new string[] { "All Types", "Purchase", "Payment", "Return", "Debit Note", "Credit Note", "Adjustment" });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading transaction types: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading suppliers: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -103,241 +270,261 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                GenerateReport();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error generating report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+                if (reportViewer == null)
+                {
+                    MessageBox.Show("Report viewer is not initialized properly.", "Report Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+                // Test database connection and data availability first
+                if (!TestReportDataAvailability())
+                {
+                    MessageBox.Show("Database connection or data availability issues detected. Please check the database setup.", "Data Availability Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-        private void GenerateReport()
-        {
-            try
-            {
-                // Get filter values
+                // Get filter values (ignore "All" options with ID = -1)
+                int? supplierId = cmbSupplier.SelectedValue != null && (int)cmbSupplier.SelectedValue != -1 ? (int?)cmbSupplier.SelectedValue : null;
                 DateTime startDate = dtpStartDate.Value.Date;
-                DateTime endDate = dtpEndDate.Value.Date;
-                int? supplierId = null;
-                string transactionType = null;
+                DateTime endDate = dtpEndDate.Value.Date.AddDays(1).AddSeconds(-1); // End of day
 
-                if (cmbSupplierFilter.SelectedItem != null)
+                // Get report data
+                DataTable reportData = GetSupplierLedgerReportData(supplierId, startDate, endDate);
+
+                // Always show the report, even if no data
+                if (reportData == null)
                 {
-                    var selectedSupplier = cmbSupplierFilter.SelectedItem.GetType().GetProperty("Value").GetValue(cmbSupplierFilter.SelectedItem);
-                    if (selectedSupplier != null)
-                        supplierId = (int?)selectedSupplier;
+                    reportData = CreateEmptyDataTable();
                 }
 
-                if (cmbTransactionTypeFilter.SelectedItem != null && cmbTransactionTypeFilter.SelectedItem.ToString() != "All Types")
+                // Ensure we always have data structure even if empty
+                if (reportData.Rows.Count == 0)
                 {
-                    transactionType = cmbTransactionTypeFilter.SelectedItem.ToString();
-                }
-
-                // Get data from repository
-                var ledgerData = GetSupplierLedgerData(supplierId, startDate, endDate, transactionType);
-
-                // Set up report data source
-                ReportDataSource reportDataSource = new ReportDataSource("SupplierLedgerDataSet", ledgerData);
-
-                // Clear existing data sources
-                reportViewer1.LocalReport.DataSources.Clear();
-                reportViewer1.LocalReport.DataSources.Add(reportDataSource);
-
-                // Set report parameters
-                ReportParameter[] parameters = new ReportParameter[]
-                {
-                    new ReportParameter("StartDate", startDate.ToString("dd-MM-yyyy")),
-                    new ReportParameter("EndDate", endDate.ToString("dd-MM-yyyy")),
-                    new ReportParameter("SupplierFilter", supplierId.HasValue ? (cmbSupplierFilter?.Text ?? "Unknown Supplier") : "All Suppliers"),
-                    new ReportParameter("TransactionTypeFilter", transactionType ?? "All Types")
-                };
-
-                reportViewer1.LocalReport.SetParameters(parameters);
-
-                // Refresh the report
-                reportViewer1.RefreshReport();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error generating report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private DataTable GetSupplierLedgerData(int? supplierId, DateTime startDate, DateTime endDate, string transactionType)
-        {
-            DataTable dt = new DataTable();
-            
-            try
-            {
-                // Get data from repository
-                var reportData = supplierReportRepository.GetSupplierLedgerReportData(supplierId, startDate, endDate, transactionType);
-
-                // Create DataTable structure
-                dt.Columns.Add("TransactionId", typeof(int));
-                dt.Columns.Add("TransactionDate", typeof(DateTime));
-                dt.Columns.Add("TransactionType", typeof(string));
-                dt.Columns.Add("Description", typeof(string));
-                dt.Columns.Add("Amount", typeof(decimal));
-                dt.Columns.Add("RunningBalance", typeof(decimal));
-                dt.Columns.Add("ReferenceNumber", typeof(string));
-                dt.Columns.Add("DebitAmount", typeof(decimal));
-                dt.Columns.Add("CreditAmount", typeof(decimal));
-                dt.Columns.Add("SupplierId", typeof(int));
-                dt.Columns.Add("SupplierCode", typeof(string));
-                dt.Columns.Add("SupplierName", typeof(string));
-                dt.Columns.Add("ContactPerson", typeof(string));
-                dt.Columns.Add("Phone", typeof(string));
-                dt.Columns.Add("Email", typeof(string));
-                dt.Columns.Add("City", typeof(string));
-                dt.Columns.Add("State", typeof(string));
-                dt.Columns.Add("ReferenceDocument", typeof(string));
-                dt.Columns.Add("TransactionCategory", typeof(string));
-                dt.Columns.Add("DaysSinceTransaction", typeof(int));
-                dt.Columns.Add("TransactionStatus", typeof(string));
-
-                // Add data rows
-                foreach (var item in reportData)
-                {
-                    DataRow row = dt.NewRow();
-                    row["TransactionId"] = item.TransactionId;
-                    row["TransactionDate"] = item.TransactionDate;
-                    row["TransactionType"] = item.TransactionType;
-                    row["Description"] = item.Description;
-                    row["Amount"] = item.Amount;
-                    row["RunningBalance"] = item.RunningBalance;
-                    row["ReferenceNumber"] = item.ReferenceNumber;
-                    row["DebitAmount"] = item.DebitAmount;
-                    row["CreditAmount"] = item.CreditAmount;
-                    row["SupplierId"] = item.SupplierId;
-                    row["SupplierCode"] = item.SupplierCode;
-                    row["SupplierName"] = item.SupplierName;
-                    row["ContactPerson"] = item.ContactPerson;
-                    row["Phone"] = item.Phone;
-                    row["Email"] = item.Email;
-                    row["City"] = item.City;
-                    row["State"] = item.State;
-                    row["ReferenceDocument"] = item.ReferenceDocument;
-                    row["TransactionCategory"] = item.TransactionCategory;
-                    row["DaysSinceTransaction"] = item.DaysSinceTransaction;
-                    row["TransactionStatus"] = item.TransactionStatus;
-                    dt.Rows.Add(row);
-                }
-
-                // If no data found, add a "No data found" row
-                if (dt.Rows.Count == 0)
-                {
-                    DataRow noDataRow = dt.NewRow();
+                    // Add a "No data found" row
+                    DataRow noDataRow = reportData.NewRow();
                     noDataRow["TransactionId"] = 0;
-                    noDataRow["TransactionDate"] = DateTime.Now;
+                    noDataRow["TransactionDate"] = DBNull.Value;
                     noDataRow["TransactionType"] = "N/A";
+                    noDataRow["TransactionTypeDescription"] = "N/A";
                     noDataRow["Description"] = "No transactions found for the selected criteria";
-                    noDataRow["Amount"] = 0;
-                    noDataRow["RunningBalance"] = 0;
                     noDataRow["ReferenceNumber"] = "N/A";
                     noDataRow["DebitAmount"] = 0;
                     noDataRow["CreditAmount"] = 0;
+                    noDataRow["RunningBalance"] = 0;
                     noDataRow["SupplierId"] = 0;
                     noDataRow["SupplierCode"] = "N/A";
                     noDataRow["SupplierName"] = "N/A";
                     noDataRow["ContactPerson"] = "N/A";
                     noDataRow["Phone"] = "N/A";
                     noDataRow["Email"] = "N/A";
+                    noDataRow["Address"] = "N/A";
                     noDataRow["City"] = "N/A";
                     noDataRow["State"] = "N/A";
-                    noDataRow["ReferenceDocument"] = "N/A";
-                    noDataRow["TransactionCategory"] = "N/A";
-                    noDataRow["DaysSinceTransaction"] = 0;
-                    noDataRow["TransactionStatus"] = "N/A";
+                    noDataRow["Country"] = "N/A";
+                    noDataRow["GST"] = "N/A";
+                    noDataRow["PaymentTermsDays"] = DBNull.Value;
+                    reportData.Rows.Add(noDataRow);
+                }
+
+                // Validate report setup before proceeding
+                if (!ValidateReportSetup())
+                {
+                    return;
+                }
+                
+                // Clear existing data sources first
+                reportViewer.LocalReport.DataSources.Clear();
+                
+                // Set up report data source first
+                ReportDataSource reportDataSource = new ReportDataSource("SupplierLedgerDataSet", reportData);
+                reportViewer.LocalReport.DataSources.Add(reportDataSource);
+                
+                // Set report parameters AFTER data source is added
+                ReportParameter[] parameters = new ReportParameter[]
+                {
+                    new ReportParameter("StartDate", startDate.ToString("dd-MM-yyyy")),
+                    new ReportParameter("EndDate", endDate.ToString("dd-MM-yyyy")),
+                    new ReportParameter("SupplierFilter", supplierId.HasValue ? (cmbSupplier?.Text ?? "Unknown Supplier") : "All Suppliers")
+                };
+                
+                try
+                {
+                    reportViewer.LocalReport.SetParameters(parameters);
+                }
+                catch (Exception paramEx)
+                {
+                    // Continue without parameters if they fail
+                }
+                
+                // Refresh the report
+                reportViewer.RefreshReport();
+                
+                // Improve report positioning after refresh
+                ImproveReportPositioning();
+                
+                // Update form title with filter information
+                string startDateStr = startDate.ToString("dd-MM-yyyy");
+                string endDateStr = endDate.ToString("dd-MM-yyyy");
+                string supplierFilterStr = supplierId.HasValue ? (cmbSupplier?.Text ?? "Unknown Supplier") : "All Suppliers";
+                
+                this.Text = $"Supplier Ledger Report - {startDateStr} to {endDateStr} | {supplierFilterStr}";
+                
+                MessageBox.Show($"Report generated successfully!\n\nFound {reportData.Rows.Count} records matching your criteria.", "Report Generated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Error generating report: {ex.Message}\n\n" +
+                                   $"Technical Details:\n" +
+                                   $"- Exception Type: {ex.GetType().Name}\n" +
+                                   $"- Stack Trace: {ex.StackTrace}\n\n" +
+                                   $"Please check:\n" +
+                                   $"1. Database connection\n" +
+                                   $"2. Data availability\n" +
+                                   $"3. Filter selections\n" +
+                                   $"4. RDLC file accessibility\n\n" +
+                                   $"Contact administrator if problem persists.";
+                
+                MessageBox.Show(errorMessage, "Report Generation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private DataTable GetSupplierLedgerReportData(int? supplierId, DateTime startDate, DateTime endDate)
+        {
+            DataTable dt = new DataTable();
+            
+            try
+            {
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    MessageBox.Show("Database connection is not available.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return CreateEmptyDataTable();
+                }
+                
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    // Use the stored procedure for supplier ledger report
+                    SqlCommand cmd = new SqlCommand("sp_GetSupplierLedgerReport", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@EndDate", endDate);
+                    cmd.Parameters.AddWithValue("@SupplierId", supplierId.HasValue ? (object)supplierId.Value : DBNull.Value);
+                    
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dt);
+                }
+                
+                // If no data found, add a "No data found" row
+                if (dt.Rows.Count == 0)
+                {
+                    dt = CreateEmptyDataTable();
+                    DataRow noDataRow = dt.NewRow();
+                    noDataRow["TransactionId"] = 0;
+                    noDataRow["TransactionDate"] = DBNull.Value;
+                    noDataRow["TransactionType"] = "N/A";
+                    noDataRow["TransactionTypeDescription"] = "N/A";
+                    noDataRow["Description"] = "No data found for the selected criteria";
+                    noDataRow["ReferenceNumber"] = "N/A";
+                    noDataRow["DebitAmount"] = 0;
+                    noDataRow["CreditAmount"] = 0;
+                    noDataRow["RunningBalance"] = 0;
+                    noDataRow["SupplierId"] = 0;
+                    noDataRow["SupplierCode"] = "N/A";
+                    noDataRow["SupplierName"] = "N/A";
+                    noDataRow["ContactPerson"] = "N/A";
+                    noDataRow["Phone"] = "N/A";
+                    noDataRow["Email"] = "N/A";
+                    noDataRow["Address"] = "N/A";
+                    noDataRow["City"] = "N/A";
+                    noDataRow["State"] = "N/A";
+                    noDataRow["Country"] = "N/A";
+                    noDataRow["GST"] = "N/A";
+                    noDataRow["PaymentTermsDays"] = DBNull.Value;
                     dt.Rows.Add(noDataRow);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error retrieving supplier ledger data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error retrieving report data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return CreateEmptyDataTable();
             }
 
             return dt;
         }
-
+        
         private DataTable CreateEmptyDataTable()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("TransactionId", typeof(int));
+            dt.Columns.Add("TransactionId", typeof(long));
             dt.Columns.Add("TransactionDate", typeof(DateTime));
             dt.Columns.Add("TransactionType", typeof(string));
+            dt.Columns.Add("TransactionTypeDescription", typeof(string));
             dt.Columns.Add("Description", typeof(string));
-            dt.Columns.Add("Amount", typeof(decimal));
-            dt.Columns.Add("RunningBalance", typeof(decimal));
             dt.Columns.Add("ReferenceNumber", typeof(string));
             dt.Columns.Add("DebitAmount", typeof(decimal));
             dt.Columns.Add("CreditAmount", typeof(decimal));
+            dt.Columns.Add("RunningBalance", typeof(decimal));
             dt.Columns.Add("SupplierId", typeof(int));
             dt.Columns.Add("SupplierCode", typeof(string));
             dt.Columns.Add("SupplierName", typeof(string));
             dt.Columns.Add("ContactPerson", typeof(string));
             dt.Columns.Add("Phone", typeof(string));
             dt.Columns.Add("Email", typeof(string));
+            dt.Columns.Add("Address", typeof(string));
             dt.Columns.Add("City", typeof(string));
             dt.Columns.Add("State", typeof(string));
-            dt.Columns.Add("ReferenceDocument", typeof(string));
-            dt.Columns.Add("TransactionCategory", typeof(string));
-            dt.Columns.Add("DaysSinceTransaction", typeof(int));
-            dt.Columns.Add("TransactionStatus", typeof(string));
+            dt.Columns.Add("Country", typeof(string));
+            dt.Columns.Add("GST", typeof(string));
+            dt.Columns.Add("PaymentTermsDays", typeof(int));
             return dt;
         }
 
-        private void btnExportToPDF_Click(object sender, EventArgs e)
+        private void btnExportPDF_Click(object sender, EventArgs e)
         {
             try
             {
-                if (reportViewer1.LocalReport.DataSources.Count == 0)
+                if (reportViewer == null || reportViewer.LocalReport.DataSources.Count == 0)
                 {
-                    MessageBox.Show("Please generate the report first before exporting.", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Please generate a report first before exporting.", "No Report Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "PDF files (*.pdf)|*.pdf";
-                saveDialog.FileName = $"SupplierLedgerReport_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                saveDialog.Filter = "PDF files (*.pdf)|*.pdf|Excel files (*.xls)|*.xls|Word files (*.doc)|*.doc";
+                saveDialog.FileName = "SupplierLedgerReport_" + DateTime.Now.ToString("ddMMyyyy_HHmmss") + ".pdf";
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
-                    byte[] pdfBytes = reportViewer1.LocalReport.Render("PDF");
-                    File.WriteAllBytes(saveDialog.FileName, pdfBytes);
-                    MessageBox.Show($"Report exported successfully to: {saveDialog.FileName}", "Export Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Export using ReportViewer's built-in export functionality
+                    Warning[] warnings;
+                    string[] streamIds;
+                    string mimeType;
+                    string encoding;
+                    string extension;
+
+                    // Set device info for landscape orientation
+                    string deviceInfo = @"<DeviceInfo>
+                        <OutputFormat>PDF</OutputFormat>
+                        <PageWidth>14in</PageWidth>
+                        <PageHeight>8.5in</PageHeight>
+                        <MarginTop>0.5in</MarginTop>
+                        <MarginLeft>0.5in</MarginLeft>
+                        <MarginRight>0.5in</MarginRight>
+                        <MarginBottom>0.5in</MarginBottom>
+                    </DeviceInfo>";
+
+                    byte[] reportBytes = reportViewer.LocalReport.Render(
+                        saveDialog.FileName.EndsWith(".pdf") ? "PDF" : 
+                        saveDialog.FileName.EndsWith(".xls") ? "Excel" : "Word",
+                        deviceInfo, out mimeType, out encoding, out extension, out streamIds, out warnings);
+
+                    System.IO.File.WriteAllBytes(saveDialog.FileName, reportBytes);
+                    MessageBox.Show("Report exported successfully to " + saveDialog.FileName, "Export Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error exporting to PDF: {ex.Message}", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnExportToExcel_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (reportViewer1.LocalReport.DataSources.Count == 0)
-                {
-                    MessageBox.Show("Please generate the report first before exporting.", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
-                saveDialog.FileName = $"SupplierLedgerReport_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    byte[] excelBytes = reportViewer1.LocalReport.Render("EXCELOPENXML");
-                    File.WriteAllBytes(saveDialog.FileName, excelBytes);
-                    MessageBox.Show($"Report exported successfully to: {saveDialog.FileName}", "Export Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error exporting to Excel: {ex.Message}", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error exporting report: " + ex.Message, "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -345,21 +532,84 @@ namespace DistributionSoftware.Presentation.Forms
         {
             this.Close();
         }
-
-        private void SupplierLedgerReportForm_Load(object sender, EventArgs e)
+        
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            
+            // Adjust ReportViewer size and position when form is resized
+            if (reportViewer != null)
+            {
+                // Ensure ReportViewer stays below the filters panel (120px height)
+                int filtersPanelHeight = 120;
+                reportViewer.Location = new Point(0, filtersPanelHeight);
+                reportViewer.Size = new Size(this.ClientSize.Width, this.ClientSize.Height - filtersPanelHeight);
+                
+                // Ensure minimum size
+                if (reportViewer.Size.Width < 400)
+                    reportViewer.Size = new Size(400, reportViewer.Size.Height);
+                if (reportViewer.Size.Height < 300)
+                    reportViewer.Size = new Size(reportViewer.Size.Width, 300);
+            }
+        }
+        
+        private void ImproveReportPositioning()
         {
             try
             {
-                // Set up the report viewer
-                reportViewer1.LocalReport.ReportPath = Path.Combine(Application.StartupPath, "Reports", "SupplierLedgerReport.rdlc");
-                reportViewer1.LocalReport.EnableExternalImages = true;
-                reportViewer1.SetDisplayMode(Microsoft.Reporting.WinForms.DisplayMode.PrintLayout);
-                reportViewer1.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.Percent;
-                reportViewer1.ZoomPercent = 100;
+                if (reportViewer != null)
+                {
+                    // Set optimal zoom mode for better alignment
+                    reportViewer.ZoomMode = ZoomMode.PageWidth;
+                    
+                    // Ensure the report is properly centered
+                    reportViewer.RefreshReport();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading report viewer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private bool TestReportDataAvailability()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    
+                    // Test if Suppliers table exists and has data
+                    string testQuery = "SELECT COUNT(*) FROM Suppliers WHERE IsActive = 1";
+                    using (SqlCommand cmd = new SqlCommand(testQuery, conn))
+                    {
+                        int count = (int)cmd.ExecuteScalar();
+                        
+                        if (count == 0)
+                        {
+                            return false;
+                        }
+                    }
+                    
+                    // Test if we can execute a simple query
+                    string simpleTestQuery = "SELECT TOP 1 SupplierCode, SupplierName FROM Suppliers WHERE IsActive = 1";
+                    using (SqlCommand cmd = new SqlCommand(simpleTestQuery, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

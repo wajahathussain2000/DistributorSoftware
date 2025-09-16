@@ -11,7 +11,6 @@ namespace DistributionSoftware.Presentation.Forms
     {
         private string connectionString;
         private int selectedWarehouseId = -1;
-        private bool isEditMode = false;
 
         public WarehouseForm()
         {
@@ -322,7 +321,6 @@ namespace DistributionSoftware.Presentation.Forms
                 txtContactPhone.Text = row.Cells["ContactPhone"].Value.ToString();
                 chkIsActive.Checked = isActive;
                 
-                isEditMode = true;
                 btnAdd.Text = "➕ Add New";
                 btnUpdate.Enabled = true;
                 
@@ -420,7 +418,6 @@ namespace DistributionSoftware.Presentation.Forms
             txtContactPhone.Clear();
             chkIsActive.Checked = true;
             selectedWarehouseId = -1;
-            isEditMode = false;
             btnAdd.Text = "➕ Add New";
             btnUpdate.Enabled = true;
             btnDelete.Enabled = true;
