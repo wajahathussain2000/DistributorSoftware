@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="VehicleUtilizationDataSet">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="VehicleUtilizationDataSet">
+      <Query>
+        <DataSourceName>VehicleUtilizationDataSet</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="VehicleNo"><DataField>VehicleNo</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="VehicleType"><DataField>VehicleType</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="DriverName"><DataField>DriverName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TransporterName"><DataField>TransporterName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="VehicleStatus"><DataField>VehicleStatus</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TotalSchedules"><DataField>TotalSchedules</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="DeliveredCount"><DataField>DeliveredCount</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="TotalWorkingHours"><DataField>TotalWorkingHours</DataField><rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="TotalDistanceCovered"><DataField>TotalDistanceCovered</DataField><rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="UniqueRoutesUsed"><DataField>UniqueRoutesUsed</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="OnTimeDeliveryPercentage"><DataField>OnTimeDeliveryPercentage</DataField><rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="UtilizationCategory"><DataField>UtilizationCategory</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="PerformanceCategory"><DataField>PerformanceCategory</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="StartDate"><DataType>String</DataType><DefaultValue><Values><Value>01/01/2025</Value></Values></DefaultValue><Prompt>Start Date</Prompt><AllowBlank>true</AllowBlank></ReportParameter>
+    <ReportParameter Name="EndDate"><DataType>String</DataType><DefaultValue><Values><Value>12/31/2025</Value></Values></DefaultValue><Prompt>End Date</Prompt><AllowBlank>true</AllowBlank></ReportParameter>
+    <ReportParameter Name="VehicleFilter"><DataType>String</DataType><DefaultValue><Values><Value>All Vehicles</Value></Values></DefaultValue><Prompt>Vehicle Filter</Prompt></ReportParameter>
+  </ReportParameters>
+  <Body>
+    <ReportItems>
+      <Textbox Name="ReportTitle">
+        <Paragraphs><Paragraph><TextRuns><TextRun><Value>VEHICLE UTILIZATION REPORT</Value><Style><FontSize>18pt</FontSize><FontWeight>Bold</FontWeight><Color>#2C3E50</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs>
+        <Top>0.1in</Top><Left>0.25in</Left><Height>0.3in</Height><Width>8in</Width>
+      </Textbox>
+      <Textbox Name="ReportFilters">
+        <Paragraphs><Paragraph><TextRuns><TextRun><Value>Period: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=IIF(IsNothing(Parameters!StartDate.Value) Or Parameters!StartDate.Value = "", "All Dates", Parameters!StartDate.Value + " - " + Parameters!EndDate.Value)</Value></TextRun><TextRun><Value> | Vehicle: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=Parameters!VehicleFilter.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs>
+        <Top>0.4in</Top><Left>0.25in</Left><Height>0.15in</Height><Width>8in</Width>
+      </Textbox>
+      <Tablix Name="VehicleUtilizationTable">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1.2in</Width></TablixColumn>
+            <TablixColumn><Width>1.2in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1.2in</Width></TablixColumn>
+            <TablixColumn><Width>1.2in</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow><Height>0.3in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="VehicleNoHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Vehicle No</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="VehicleTypeHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Vehicle Type</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DriverNameHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Driver Name</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TransporterNameHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Transporter</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="StatusHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Status</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalSchedulesHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Total Schedules</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DeliveredCountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Delivered</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="WorkingHoursHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Working Hours</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DistanceHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Distance (Km)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="RoutesHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Routes Used</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="OnTimeHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>On Time %</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="UtilizationHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Utilization</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow><Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="VehicleNo"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!VehicleNo.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="VehicleType"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!VehicleType.Value), "N/A", Fields!VehicleType.Value)</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DriverName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!DriverName.Value), "N/A", Fields!DriverName.Value)</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TransporterName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!TransporterName.Value), "N/A", Fields!TransporterName.Value)</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="VehicleStatus"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!VehicleStatus.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalSchedules"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!TotalSchedules.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DeliveredCount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!DeliveredCount.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalWorkingHours"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!TotalWorkingHours.Value), "0", Format(Fields!TotalWorkingHours.Value, "N2"))</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalDistanceCovered"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!TotalDistanceCovered.Value), "0", Format(Fields!TotalDistanceCovered.Value, "N2"))</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="UniqueRoutesUsed"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!UniqueRoutesUsed.Value), "0", Fields!UniqueRoutesUsed.Value)</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="OnTimeDeliveryPercentage"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!OnTimeDeliveryPercentage.Value), "0%", Format(Fields!OnTimeDeliveryPercentage.Value, "N1") + "%")</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="UtilizationCategory"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!UtilizationCategory.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow><Height>0.3in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="TotalLabel"><Paragraphs><Paragraph><TextRuns><TextRun><Value>TOTAL:</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalVehicleType"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalDriverName"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalTransporterName"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalStatus"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalSchedulesSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!TotalSchedules.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalDeliveredCountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!DeliveredCount.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalWorkingHoursSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!TotalWorkingHours.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalDistanceSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!TotalDistanceCovered.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalRoutesSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalOnTimeSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalUtilization"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy><TablixMembers><TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember><TablixMember><Group Name="Details" /></TablixMember><TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember></TablixMembers></TablixRowHierarchy>
+        <DataSetName>VehicleUtilizationDataSet</DataSetName>
+        <Top>0.6in</Top><Left>0.25in</Left><Height>0.85in</Height><Width>8in</Width>
+      </Tablix>
+    </ReportItems>
+    <Height>1.5in</Height>
+  </Body>
+  <Width>8.5in</Width>
+  <Page>
+    <PageHeader>
+      <Height>0.5in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="CompanyLogo">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>DISTRIBUTION SOFTWARE</Value>
+                  <Style>
+                    <FontFamily>Arial</FontFamily>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <Color>#2C3E50</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1in</Top>
+          <Left>0.25in</Left>
+          <Height>0.3in</Height>
+          <Width>4in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+        <Textbox Name="ReportDateHeader">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Now()</Value>
+                  <Style>
+                    <FontSize>10pt</FontSize>
+                    <Color>#7F8C8D</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1in</Top>
+          <Left>4.25in</Left>
+          <Height>0.3in</Height>
+          <Width>3in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>Solid</Style>
+          <Color>#BDC3C7</Color>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.3in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="PageNumber">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Page </Value>
+                </TextRun>
+                <TextRun>
+                  <Value>=Globals!PageNumber</Value>
+                </TextRun>
+                <TextRun>
+                  <Value> of </Value>
+                </TextRun>
+                <TextRun>
+                  <Value>=Globals!TotalPages</Value>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.05in</Top>
+          <Left>0.25in</Left>
+          <Height>0.2in</Height>
+          <Width>8in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>Solid</Style>
+          <Color>#BDC3C7</Color>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageWidth>8.5in</PageWidth>
+    <PageHeight>11in</PageHeight>
+    <LeftMargin>0.5in</LeftMargin>
+    <RightMargin>0.5in</RightMargin>
+    <TopMargin>0.5in</TopMargin>
+    <BottomMargin>0.5in</BottomMargin>
+    <Style>
+      <BackgroundColor>White</BackgroundColor>
+    </Style>
+  </Page>
+</Report>

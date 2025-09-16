@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="DispatchDataSet">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DispatchDataSet">
+      <Query>
+        <DataSourceName>DispatchDataSet</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ScheduleRef"><DataField>ScheduleRef</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ScheduledDateTime"><DataField>ScheduledDateTime</DataField><rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="VehicleNo"><DataField>VehicleNo</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="RouteName"><DataField>RouteName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="DriverName"><DataField>DriverName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="StatusDescription"><DataField>StatusDescription</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="DispatchDateTime"><DataField>DispatchDateTime</DataField><rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="ItemsCount"><DataField>ItemsCount</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="CustomersCount"><DataField>CustomersCount</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="ChallansCount"><DataField>ChallansCount</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="StartDate"><DataType>String</DataType><DefaultValue><Values><Value>01/01/2025</Value></Values></DefaultValue><Prompt>Start Date</Prompt><AllowBlank>true</AllowBlank></ReportParameter>
+    <ReportParameter Name="EndDate"><DataType>String</DataType><DefaultValue><Values><Value>12/31/2025</Value></Values></DefaultValue><Prompt>End Date</Prompt><AllowBlank>true</AllowBlank></ReportParameter>
+    <ReportParameter Name="VehicleFilter"><DataType>String</DataType><DefaultValue><Values><Value>All Vehicles</Value></Values></DefaultValue><Prompt>Vehicle Filter</Prompt></ReportParameter>
+    <ReportParameter Name="RouteFilter"><DataType>String</DataType><DefaultValue><Values><Value>All Routes</Value></Values></DefaultValue><Prompt>Route Filter</Prompt></ReportParameter>
+  </ReportParameters>
+  <Body>
+    <ReportItems>
+      <Textbox Name="ReportTitle">
+        <Paragraphs><Paragraph><TextRuns><TextRun><Value>DISPATCH REPORT</Value><Style><FontSize>18pt</FontSize><FontWeight>Bold</FontWeight><Color>#2C3E50</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs>
+        <Top>0.1in</Top><Left>0.25in</Left><Height>0.3in</Height><Width>8in</Width>
+      </Textbox>
+      <Textbox Name="ReportFilters">
+        <Paragraphs><Paragraph><TextRuns><TextRun><Value>Period: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=IIF(IsNothing(Parameters!StartDate.Value) Or Parameters!StartDate.Value = "", "All Dates", Parameters!StartDate.Value + " - " + Parameters!EndDate.Value)</Value></TextRun><TextRun><Value> | Vehicle: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=Parameters!VehicleFilter.Value</Value></TextRun><TextRun><Value> | Route: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=Parameters!RouteFilter.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs>
+        <Top>0.4in</Top><Left>0.25in</Left><Height>0.15in</Height><Width>8in</Width>
+      </Textbox>
+      <Tablix Name="DispatchTable">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1.2in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow><Height>0.3in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="ScheduleRefHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Schedule Ref</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ScheduledDateTimeHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Scheduled Date</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="VehicleNoHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Vehicle No</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="RouteNameHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Route Name</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DriverNameHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Driver Name</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="StatusHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Status</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DispatchDateTimeHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Dispatch Date</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ItemsCountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Items Count</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="CustomersCountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Customers Count</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ChallansCountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Challans Count</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow><Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="ScheduleRef"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ScheduleRef.Value</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ScheduledDateTime"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Format(Fields!ScheduledDateTime.Value, "dd/MM/yyyy HH:mm")</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="VehicleNo"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!VehicleNo.Value), "N/A", Fields!VehicleNo.Value)</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="RouteName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!RouteName.Value), "N/A", Fields!RouteName.Value)</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DriverName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!DriverName.Value), "N/A", Fields!DriverName.Value)</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="StatusDescription"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!StatusDescription.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="DispatchDateTime"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!DispatchDateTime.Value), "", Format(Fields!DispatchDateTime.Value, "dd/MM/yyyy HH:mm"))</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ItemsCount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ItemsCount.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="CustomersCount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!CustomersCount.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ChallansCount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ChallansCount.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow><Height>0.3in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="TotalLabel"><Paragraphs><Paragraph><TextRuns><TextRun><Value>TOTAL:</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalScheduledDateTime"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalVehicleNo"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalRouteName"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalDriverName"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalStatus"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalDispatchDateTime"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalItemsCountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!ItemsCount.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalCustomersCountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!CustomersCount.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalChallansCountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!ChallansCount.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy><TablixMembers><TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember><TablixMember><Group Name="Details" /></TablixMember><TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember></TablixMembers></TablixRowHierarchy>
+        <DataSetName>DispatchDataSet</DataSetName>
+        <Top>0.6in</Top><Left>0.25in</Left><Height>0.85in</Height><Width>8in</Width>
+      </Tablix>
+    </ReportItems>
+    <Height>1.5in</Height>
+  </Body>
+  <Width>8.5in</Width>
+  <Page>
+    <PageHeader>
+      <Height>0.5in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="CompanyLogo">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>DISTRIBUTION SOFTWARE</Value>
+                  <Style>
+                    <FontFamily>Arial</FontFamily>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <Color>#2C3E50</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1in</Top>
+          <Left>0.25in</Left>
+          <Height>0.3in</Height>
+          <Width>4in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+        <Textbox Name="ReportDateHeader">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Now()</Value>
+                  <Style>
+                    <FontSize>10pt</FontSize>
+                    <Color>#7F8C8D</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1in</Top>
+          <Left>4.25in</Left>
+          <Height>0.3in</Height>
+          <Width>3in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>Solid</Style>
+          <Color>#BDC3C7</Color>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.3in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="PageNumber">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Page </Value>
+                </TextRun>
+                <TextRun>
+                  <Value>=Globals!PageNumber</Value>
+                </TextRun>
+                <TextRun>
+                  <Value> of </Value>
+                </TextRun>
+                <TextRun>
+                  <Value>=Globals!TotalPages</Value>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.05in</Top>
+          <Left>0.25in</Left>
+          <Height>0.2in</Height>
+          <Width>8in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>Solid</Style>
+          <Color>#BDC3C7</Color>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageWidth>8.5in</PageWidth>
+    <PageHeight>11in</PageHeight>
+    <LeftMargin>0.5in</LeftMargin>
+    <RightMargin>0.5in</RightMargin>
+    <TopMargin>0.5in</TopMargin>
+    <BottomMargin>0.5in</BottomMargin>
+    <Style>
+      <BackgroundColor>White</BackgroundColor>
+    </Style>
+  </Page>
+</Report>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="PendingDeliveryDataSet">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="PendingDeliveryDataSet">
+      <Query>
+        <DataSourceName>PendingDeliveryDataSet</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ChallanNo"><DataField>ChallanNo</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ChallanDate"><DataField>ChallanDate</DataField><rd:TypeName>System.DateTime</rd:TypeName></Field>
+        <Field Name="CustomerName"><DataField>CustomerName</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="InvoiceNumber"><DataField>InvoiceNumber</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="TotalAmount"><DataField>TotalAmount</DataField><rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="BalanceAmount"><DataField>BalanceAmount</DataField><rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="StatusDescription"><DataField>StatusDescription</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="PriorityLevel"><DataField>PriorityLevel</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="PaymentStatus"><DataField>PaymentStatus</DataField><rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="ItemsCount"><DataField>ItemsCount</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+        <Field Name="TotalQuantity"><DataField>TotalQuantity</DataField><rd:TypeName>System.Decimal</rd:TypeName></Field>
+        <Field Name="ChallanAgeDays"><DataField>ChallanAgeDays</DataField><rd:TypeName>System.Int32</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="StartDate"><DataType>String</DataType><DefaultValue><Values><Value>01/01/2025</Value></Values></DefaultValue><Prompt>Start Date</Prompt><AllowBlank>true</AllowBlank></ReportParameter>
+    <ReportParameter Name="EndDate"><DataType>String</DataType><DefaultValue><Values><Value>12/31/2025</Value></Values></DefaultValue><Prompt>End Date</Prompt><AllowBlank>true</AllowBlank></ReportParameter>
+    <ReportParameter Name="CustomerFilter"><DataType>String</DataType><DefaultValue><Values><Value>All Customers</Value></Values></DefaultValue><Prompt>Customer Filter</Prompt></ReportParameter>
+  </ReportParameters>
+  <Body>
+    <ReportItems>
+      <Textbox Name="ReportTitle">
+        <Paragraphs><Paragraph><TextRuns><TextRun><Value>PENDING DELIVERY REPORT</Value><Style><FontSize>18pt</FontSize><FontWeight>Bold</FontWeight><Color>#2C3E50</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs>
+        <Top>0.1in</Top><Left>0.25in</Left><Height>0.3in</Height><Width>8in</Width>
+      </Textbox>
+      <Textbox Name="ReportFilters">
+        <Paragraphs><Paragraph><TextRuns><TextRun><Value>Period: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=IIF(IsNothing(Parameters!StartDate.Value) Or Parameters!StartDate.Value = "", "All Dates", Parameters!StartDate.Value + " - " + Parameters!EndDate.Value)</Value></TextRun><TextRun><Value> | Customer: </Value><Style><FontWeight>Bold</FontWeight></Style></TextRun><TextRun><Value>=Parameters!CustomerFilter.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs>
+        <Top>0.4in</Top><Left>0.25in</Left><Height>0.15in</Height><Width>8in</Width>
+      </Textbox>
+      <Tablix Name="PendingDeliveryTable">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>1.5in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>1in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+            <TablixColumn><Width>0.8in</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow><Height>0.3in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="ChallanNoHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Challan No</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ChallanDateHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Challan Date</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="CustomerNameHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Customer Name</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="InvoiceNumberHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Invoice No</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalAmountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Total Amount</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="BalanceAmountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Balance Amount</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="StatusHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Status</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="PriorityHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Priority</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="PaymentStatusHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Payment Status</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ItemsCountHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Items Count</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="AgeHeader"><Paragraphs><Paragraph><TextRuns><TextRun><Value>Age (Days)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#2C3E50</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow><Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="ChallanNo"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ChallanNo.Value</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ChallanDate"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Format(Fields!ChallanDate.Value, "dd/MM/yyyy")</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="CustomerName"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!CustomerName.Value</Value></TextRun></TextRuns><Style><TextAlign>Left</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="InvoiceNumber"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=IIF(IsNothing(Fields!InvoiceNumber.Value), "N/A", Fields!InvoiceNumber.Value)</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalAmount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Format(Fields!TotalAmount.Value, "N2")</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="BalanceAmount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Format(Fields!BalanceAmount.Value, "N2")</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="StatusDescription"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!StatusDescription.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="PriorityLevel"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!PriorityLevel.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="PaymentStatus"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!PaymentStatus.Value</Value></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ItemsCount"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ItemsCount.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="ChallanAgeDays"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!ChallanAgeDays.Value</Value></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow><Height>0.3in</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="TotalLabel"><Paragraphs><Paragraph><TextRuns><TextRun><Value>TOTAL:</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalChallanDate"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalCustomerName"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalInvoiceNumber"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalAmountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Format(Sum(Fields!TotalAmount.Value), "N2")</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalBalanceAmountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Format(Sum(Fields!BalanceAmount.Value), "N2")</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalStatus"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalPriority"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalPaymentStatus"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalItemsCountSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Sum(Fields!ItemsCount.Value)</Value><Style><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Right</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TotalAgeSum"><Paragraphs><Paragraph><TextRuns><TextRun><Value></Value></TextRun></TextRuns></Paragraph></Paragraphs><Style><BackgroundColor>#34495E</BackgroundColor><Border><Style>Solid</Style></Border></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy><TablixMembers><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /><TablixMember /></TablixMembers></TablixColumnHierarchy>
+        <TablixRowHierarchy><TablixMembers><TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember><TablixMember><Group Name="Details" /></TablixMember><TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember></TablixMembers></TablixRowHierarchy>
+        <DataSetName>PendingDeliveryDataSet</DataSetName>
+        <Top>0.6in</Top><Left>0.25in</Left><Height>0.85in</Height><Width>8in</Width>
+      </Tablix>
+    </ReportItems>
+    <Height>1.5in</Height>
+  </Body>
+  <Width>8.5in</Width>
+  <Page>
+    <PageHeader>
+      <Height>0.5in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="CompanyLogo">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>DISTRIBUTION SOFTWARE</Value>
+                  <Style>
+                    <FontFamily>Arial</FontFamily>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <Color>#2C3E50</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1in</Top>
+          <Left>0.25in</Left>
+          <Height>0.3in</Height>
+          <Width>4in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+        <Textbox Name="ReportDateHeader">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Now()</Value>
+                  <Style>
+                    <FontSize>10pt</FontSize>
+                    <Color>#7F8C8D</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1in</Top>
+          <Left>4.25in</Left>
+          <Height>0.3in</Height>
+          <Width>3in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>Solid</Style>
+          <Color>#BDC3C7</Color>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.3in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="PageNumber">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Page </Value>
+                </TextRun>
+                <TextRun>
+                  <Value>=Globals!PageNumber</Value>
+                </TextRun>
+                <TextRun>
+                  <Value> of </Value>
+                </TextRun>
+                <TextRun>
+                  <Value>=Globals!TotalPages</Value>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.05in</Top>
+          <Left>0.25in</Left>
+          <Height>0.2in</Height>
+          <Width>8in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>Solid</Style>
+          <Color>#BDC3C7</Color>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageWidth>8.5in</PageWidth>
+    <PageHeight>11in</PageHeight>
+    <LeftMargin>0.5in</LeftMargin>
+    <RightMargin>0.5in</RightMargin>
+    <TopMargin>0.5in</TopMargin>
+    <BottomMargin>0.5in</BottomMargin>
+    <Style>
+      <BackgroundColor>White</BackgroundColor>
+    </Style>
+  </Page>
+</Report>

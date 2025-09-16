@@ -174,6 +174,13 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Product-wise Sales Report", null, (s, e) => OpenProductWiseSalesReportForm());
             reportsDropdown.Items.Add("Customer-wise Sales Report", null, (s, e) => OpenCustomerWiseSalesReportForm());
             reportsDropdown.Items.Add("Salesman-wise Sales Report", null, (s, e) => OpenSalesmanWiseSalesReportForm());
+            reportsDropdown.Items.Add("Invoice-wise Report", null, (s, e) => OpenInvoiceWiseReportForm());
+            reportsDropdown.Items.Add("Profit Margin Report", null, (s, e) => OpenProfitMarginReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Delivery Schedule Report", null, (s, e) => OpenDeliveryScheduleReportForm());
+            reportsDropdown.Items.Add("Dispatch Report", null, (s, e) => OpenDispatchReportForm());
+            reportsDropdown.Items.Add("Pending Delivery Report", null, (s, e) => OpenPendingDeliveryReportForm());
+            reportsDropdown.Items.Add("Vehicle Utilization Report", null, (s, e) => OpenVehicleUtilizationReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2202,6 +2209,84 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Salesman-wise Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenInvoiceWiseReportForm()
+        {
+            try
+            {
+                var invoiceWiseReportForm = new InvoiceWiseReportForm();
+                invoiceWiseReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Invoice-wise Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenProfitMarginReportForm()
+        {
+            try
+            {
+                var profitMarginReportForm = new ProfitMarginReportForm();
+                profitMarginReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Profit Margin Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenDeliveryScheduleReportForm()
+        {
+            try
+            {
+                var deliveryScheduleReportForm = new DeliveryScheduleReportForm();
+                deliveryScheduleReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Delivery Schedule Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenDispatchReportForm()
+        {
+            try
+            {
+                var dispatchReportForm = new DispatchReportForm();
+                dispatchReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Dispatch Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenPendingDeliveryReportForm()
+        {
+            try
+            {
+                var pendingDeliveryReportForm = new PendingDeliveryReportForm();
+                pendingDeliveryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Pending Delivery Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenVehicleUtilizationReportForm()
+        {
+            try
+            {
+                var vehicleUtilizationReportForm = new VehicleUtilizationReportForm();
+                vehicleUtilizationReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Vehicle Utilization Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

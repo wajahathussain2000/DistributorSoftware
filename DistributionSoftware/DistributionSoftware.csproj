@@ -232,6 +232,12 @@
     <Compile Include="Models\ProductWiseSalesReportData.cs" />
     <Compile Include="Models\CustomerWiseSalesReportData.cs" />
     <Compile Include="Models\SalesmanWiseSalesReportData.cs" />
+    <Compile Include="Models\InvoiceWiseReportData.cs" />
+    <Compile Include="Models\ProfitMarginReportData.cs" />
+    <Compile Include="Models\DeliveryScheduleReportData.cs" />
+    <Compile Include="Models\DispatchReportData.cs" />
+    <Compile Include="Models\PendingDeliveryReportData.cs" />
+    <Compile Include="Models\VehicleUtilizationReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -837,6 +843,48 @@
     <Compile Include="Presentation\Forms\SalesmanWiseSalesReportForm.Designer.cs">
       <DependentUpon>SalesmanWiseSalesReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\InvoiceWiseReportForm.cs">
+      <DependentUpon>InvoiceWiseReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\InvoiceWiseReportForm.Designer.cs">
+      <DependentUpon>InvoiceWiseReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ProfitMarginReportForm.cs">
+      <DependentUpon>ProfitMarginReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ProfitMarginReportForm.Designer.cs">
+      <DependentUpon>ProfitMarginReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\DeliveryScheduleReportForm.cs">
+      <DependentUpon>DeliveryScheduleReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\DeliveryScheduleReportForm.Designer.cs">
+      <DependentUpon>DeliveryScheduleReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\DispatchReportForm.cs">
+      <DependentUpon>DispatchReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\DispatchReportForm.Designer.cs">
+      <DependentUpon>DispatchReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\PendingDeliveryReportForm.cs">
+      <DependentUpon>PendingDeliveryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\PendingDeliveryReportForm.Designer.cs">
+      <DependentUpon>PendingDeliveryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\VehicleUtilizationReportForm.cs">
+      <DependentUpon>VehicleUtilizationReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\VehicleUtilizationReportForm.Designer.cs">
+      <DependentUpon>VehicleUtilizationReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
       <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -993,6 +1041,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SalesmanWiseSalesReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\InvoiceWiseReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ProfitMarginReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\DeliveryScheduleReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\DispatchReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\PendingDeliveryReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\VehicleUtilizationReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierBalanceReport.rdlc">
