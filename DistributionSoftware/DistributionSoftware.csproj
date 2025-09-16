@@ -223,6 +223,7 @@
     <Compile Include="Models\SupplierBalanceReportData.cs" />
     <Compile Include="Models\SupplierPaymentHistoryReportData.cs" />
     <Compile Include="Models\CustomerLedgerReportData.cs" />
+    <Compile Include="Models\CustomerBalanceReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -765,6 +766,13 @@
     <Compile Include="Presentation\Forms\CustomerLedgerReportForm.Designer.cs">
       <DependentUpon>CustomerLedgerReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\CustomerBalanceReportForm.cs">
+      <DependentUpon>CustomerBalanceReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\CustomerBalanceReportForm.Designer.cs">
+      <DependentUpon>CustomerBalanceReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
       <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -894,6 +902,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\CustomerLedgerReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\CustomerBalanceReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierBalanceReport.rdlc">

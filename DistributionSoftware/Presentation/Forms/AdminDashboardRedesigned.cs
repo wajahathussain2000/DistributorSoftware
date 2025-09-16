@@ -162,6 +162,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("Customer Ledger Report", null, (s, e) => OpenCustomerLedgerReportForm());
+            reportsDropdown.Items.Add("Customer Balance Report", null, (s, e) => OpenCustomerBalanceReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2073,6 +2074,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Customer Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCustomerBalanceReportForm()
+        {
+            try
+            {
+                var customerBalanceReportForm = new CustomerBalanceReportForm();
+                customerBalanceReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
