@@ -160,6 +160,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("Supplier Ledger Report", null, (s, e) => OpenSupplierLedgerReportForm());
             reportsDropdown.Items.Add("Supplier Balance Report", null, (s, e) => OpenSupplierBalanceReportForm());
+            reportsDropdown.Items.Add("Supplier Payment History Report", null, (s, e) => OpenSupplierPaymentHistoryReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -1530,18 +1531,6 @@ namespace DistributionSoftware.Presentation.Forms
 
 
 
-        private void OpenSupplierPaymentHistoryReportForm()
-        {
-            try
-            {
-                // TODO: Implement Supplier Payment History Report Form
-                MessageBox.Show("Supplier Payment History Report Form is not implemented yet.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error opening Supplier Payment History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
 
         // Accounting Dropdown Methods
@@ -2082,6 +2071,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Supplier Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSupplierPaymentHistoryReportForm()
+        {
+            try
+            {
+                var supplierPaymentHistoryReportForm = new SupplierPaymentHistoryReportForm();
+                supplierPaymentHistoryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Supplier Payment History Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
