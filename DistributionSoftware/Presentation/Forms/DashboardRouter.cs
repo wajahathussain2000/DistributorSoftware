@@ -223,6 +223,11 @@ namespace DistributionSoftware.Presentation.Forms
             {
                 System.Diagnostics.Debug.WriteLine($"Error creating AdminDashboardRedesigned: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                
+                // Show detailed error to user
+                MessageBox.Show($"Error creating Admin Dashboard: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", 
+                    "Dashboard Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
                 // Fallback to test dashboard if admin dashboard fails
                 return new TestDashboard();
             }

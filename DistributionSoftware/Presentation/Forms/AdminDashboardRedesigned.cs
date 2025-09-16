@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
@@ -46,7 +47,7 @@ namespace DistributionSoftware.Presentation.Forms
         public AdminDashboardRedesigned()
         {
             InitializeComponent();
-            connectionString = ConfigurationManager.GetConnectionString("DistributionConnection");
+            connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DistributionConnection"]?.ConnectionString;
             
             // Test database connection
             TestDatabaseConnection();
@@ -148,10 +149,8 @@ namespace DistributionSoftware.Presentation.Forms
             // Reports Dropdown (Reports Dashboard & Additional Reports)
             reportsDropdown = new ContextMenuStrip();
             reportsDropdown.Font = dropdownFont;
-            // Enable scrolling for the reports dropdown
-            reportsDropdown.AutoScroll = true;
-            reportsDropdown.MaxDropDownItems = 15; // Limit visible items to enable scrolling
-            reportsDropdown.DropDownHeight = 300; // Set maximum height for scrolling
+            // Set maximum size for scrolling (ContextMenuStrip handles scrolling automatically)
+            reportsDropdown.MaximumSize = new Size(300, 400);
             reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
             reportsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
             reportsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
@@ -169,6 +168,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Customer Balance Report", null, (s, e) => OpenCustomerBalanceReportForm());
             reportsDropdown.Items.Add("Customer Receipts Report", null, (s, e) => OpenCustomerReceiptsReportForm());
             reportsDropdown.Items.Add("Customer Aging Report", null, (s, e) => OpenAgingReportForm());
+            reportsDropdown.Items.Add("Sales Register Report", null, (s, e) => OpenSalesRegisterReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2119,6 +2119,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Customer Aging Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSalesRegisterReportForm()
+        {
+            try
+            {
+                var salesRegisterReportForm = new SalesRegisterReportForm();
+                salesRegisterReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Sales Register Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
