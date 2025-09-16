@@ -169,6 +169,8 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Customer Receipts Report", null, (s, e) => OpenCustomerReceiptsReportForm());
             reportsDropdown.Items.Add("Customer Aging Report", null, (s, e) => OpenAgingReportForm());
             reportsDropdown.Items.Add("Sales Register Report", null, (s, e) => OpenSalesRegisterReportForm());
+            reportsDropdown.Items.Add("Sales Return Report", null, (s, e) => OpenSalesReturnReportForm());
+            reportsDropdown.Items.Add("Sales Summary Report", null, (s, e) => OpenSalesSummaryReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2132,6 +2134,32 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Sales Register Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSalesReturnReportForm()
+        {
+            try
+            {
+                var salesReturnReportForm = new SalesReturnReportForm();
+                salesReturnReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Sales Return Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSalesSummaryReportForm()
+        {
+            try
+            {
+                var salesSummaryReportForm = new SalesSummaryReportForm();
+                salesSummaryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Sales Summary Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

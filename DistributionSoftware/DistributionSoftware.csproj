@@ -227,6 +227,8 @@
     <Compile Include="Models\CustomerReceiptsReportData.cs" />
     <Compile Include="Models\AgingReportData.cs" />
     <Compile Include="Models\SalesRegisterReportData.cs" />
+    <Compile Include="Models\SalesReturnReportData.cs" />
+    <Compile Include="Models\SalesSummaryReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\ICustomerRepository.cs" />
@@ -797,6 +799,20 @@
     <Compile Include="Presentation\Forms\SalesRegisterReportForm.Designer.cs">
       <DependentUpon>SalesRegisterReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\SalesReturnReportForm.cs">
+      <DependentUpon>SalesReturnReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\SalesReturnReportForm.Designer.cs">
+      <DependentUpon>SalesReturnReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\SalesSummaryReportForm.cs">
+      <DependentUpon>SalesSummaryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\SalesSummaryReportForm.Designer.cs">
+      <DependentUpon>SalesSummaryReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
       <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -938,6 +954,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SalesRegisterReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SalesReturnReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SalesSummaryReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierBalanceReport.rdlc">
