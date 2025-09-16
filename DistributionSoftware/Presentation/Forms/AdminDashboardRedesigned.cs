@@ -148,6 +148,10 @@ namespace DistributionSoftware.Presentation.Forms
             // Reports Dropdown (Reports Dashboard & Additional Reports)
             reportsDropdown = new ContextMenuStrip();
             reportsDropdown.Font = dropdownFont;
+            // Enable scrolling for the reports dropdown
+            reportsDropdown.AutoScroll = true;
+            reportsDropdown.MaxDropDownItems = 15; // Limit visible items to enable scrolling
+            reportsDropdown.DropDownHeight = 300; // Set maximum height for scrolling
             reportsDropdown.Items.Add("Stock Report", null, (s, e) => OpenStockReportForm());
             reportsDropdown.Items.Add("Low Stock Report", null, (s, e) => OpenLowStockReportForm());
             reportsDropdown.Items.Add("Stock Movement Report", null, (s, e) => OpenStockMovementReportForm());
@@ -164,6 +168,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Customer Ledger Report", null, (s, e) => OpenCustomerLedgerReportForm());
             reportsDropdown.Items.Add("Customer Balance Report", null, (s, e) => OpenCustomerBalanceReportForm());
             reportsDropdown.Items.Add("Customer Receipts Report", null, (s, e) => OpenCustomerReceiptsReportForm());
+            reportsDropdown.Items.Add("Customer Aging Report", null, (s, e) => OpenAgingReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2101,6 +2106,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Customer Receipts Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenAgingReportForm()
+        {
+            try
+            {
+                var agingReportForm = new AgingReportForm();
+                agingReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Customer Aging Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
