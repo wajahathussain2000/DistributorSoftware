@@ -171,6 +171,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Sales Register Report", null, (s, e) => OpenSalesRegisterReportForm());
             reportsDropdown.Items.Add("Sales Return Report", null, (s, e) => OpenSalesReturnReportForm());
             reportsDropdown.Items.Add("Sales Summary Report", null, (s, e) => OpenSalesSummaryReportForm());
+            reportsDropdown.Items.Add("Product-wise Sales Report", null, (s, e) => OpenProductWiseSalesReportForm());
             reportsDropdown.Items.Add("-");
 
 
@@ -2160,6 +2161,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Sales Summary Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenProductWiseSalesReportForm()
+        {
+            try
+            {
+                var productWiseSalesReportForm = new ProductWiseSalesReportForm();
+                productWiseSalesReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Product-wise Sales Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
