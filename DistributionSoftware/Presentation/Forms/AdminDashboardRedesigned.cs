@@ -182,6 +182,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Pending Delivery Report", null, (s, e) => OpenPendingDeliveryReportForm());
             reportsDropdown.Items.Add("Vehicle Utilization Report", null, (s, e) => OpenVehicleUtilizationReportForm());
             reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("General Ledger Report", null, (s, e) => OpenGeneralLedgerReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -2287,6 +2288,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Vehicle Utilization Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenGeneralLedgerReportForm()
+        {
+            try
+            {
+                var generalLedgerReportForm = new GeneralLedgerReportForm();
+                generalLedgerReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening General Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
