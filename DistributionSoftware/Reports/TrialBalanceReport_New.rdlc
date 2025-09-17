@@ -1154,9 +1154,9 @@
           <Paragraphs>
             <Paragraph>
               <TextRuns>
-                 <TextRun>
-                   <Value>=Parameters!StartDate.Value + " to " + Parameters!EndDate.Value</Value>
-                 </TextRun>
+                <TextRun>
+                  <Value>From: =Parameters!StartDate.Value To: =Parameters!EndDate.Value</Value>
+                </TextRun>
               </TextRuns>
               <Style>
                 <TextAlign>Center</TextAlign>
@@ -1225,4 +1225,10 @@
     <BottomMargin>1in</BottomMargin>
     <ColumnSpacing>0.13in</ColumnSpacing>
   </Page>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
 </Report>

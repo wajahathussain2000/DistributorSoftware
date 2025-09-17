@@ -893,6 +893,13 @@
     <Compile Include="Presentation\Forms\GeneralLedgerReportForm.Designer.cs">
       <DependentUpon>GeneralLedgerReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\TrialBalanceReportForm.cs">
+      <DependentUpon>TrialBalanceReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\TrialBalanceReportForm.Designer.cs">
+      <DependentUpon>TrialBalanceReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\SupplierBalanceReportForm.cs">
       <DependentUpon>SupplierBalanceReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -1070,6 +1077,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\GeneralLedgerReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\TrialBalanceReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierBalanceReport.rdlc">

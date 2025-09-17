@@ -183,6 +183,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Vehicle Utilization Report", null, (s, e) => OpenVehicleUtilizationReportForm());
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("General Ledger Report", null, (s, e) => OpenGeneralLedgerReportForm());
+            reportsDropdown.Items.Add("Trial Balance Report", null, (s, e) => OpenTrialBalanceReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -1600,7 +1601,7 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                var trialBalanceForm = new TrialBalanceForm();
+                var trialBalanceForm = new TrialBalanceReportForm();
                 trialBalanceForm.ShowDialog();
             }
             catch (Exception ex)
@@ -2301,6 +2302,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening General Ledger Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenTrialBalanceReportForm()
+        {
+            try
+            {
+                var trialBalanceReportForm = new TrialBalanceReportForm();
+                trialBalanceReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Trial Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
