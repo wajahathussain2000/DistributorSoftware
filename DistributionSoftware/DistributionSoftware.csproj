@@ -858,6 +858,13 @@
     <Compile Include="Presentation\Forms\BalanceSheetReportForm.Designer.cs">
       <DependentUpon>BalanceSheetReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\CashFlowReportForm.cs">
+      <DependentUpon>CashFlowReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\CashFlowReportForm.Designer.cs">
+      <DependentUpon>CashFlowReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\ProfitLossReportForm.cs">
       <DependentUpon>ProfitLossReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -1076,6 +1083,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\BalanceSheetReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\CashFlowReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ProfitLossReport.rdlc">

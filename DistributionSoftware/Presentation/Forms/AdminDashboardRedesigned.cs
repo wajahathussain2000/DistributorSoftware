@@ -185,6 +185,7 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("General Ledger Report", null, (s, e) => OpenGeneralLedgerReportForm());
             reportsDropdown.Items.Add("Trial Balance Report", null, (s, e) => OpenTrialBalanceReportForm());
             reportsDropdown.Items.Add("Balance Sheet Report", null, (s, e) => OpenBalanceSheetReportForm());
+            reportsDropdown.Items.Add("Cash Flow Report", null, (s, e) => OpenCashFlowReportForm());
             reportsDropdown.Items.Add("Profit & Loss Report", null, (s, e) => OpenProfitLossReportForm());
 
 
@@ -2331,6 +2332,19 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Balance Sheet Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenCashFlowReportForm()
+        {
+            try
+            {
+                var cashFlowReportForm = new CashFlowReportForm();
+                cashFlowReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Cash Flow Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
