@@ -184,6 +184,8 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("General Ledger Report", null, (s, e) => OpenGeneralLedgerReportForm());
             reportsDropdown.Items.Add("Trial Balance Report", null, (s, e) => OpenTrialBalanceReportForm());
+            reportsDropdown.Items.Add("Balance Sheet Report", null, (s, e) => OpenBalanceSheetReportForm());
+            reportsDropdown.Items.Add("Profit & Loss Report", null, (s, e) => OpenProfitLossReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -1614,7 +1616,8 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                MessageBox.Show("Profit & Loss Statement functionality will be implemented soon.", "Profit & Loss", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var profitLossForm = new ProfitLossReportForm();
+                profitLossForm.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -2315,6 +2318,32 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Trial Balance Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenBalanceSheetReportForm()
+        {
+            try
+            {
+                var balanceSheetReportForm = new BalanceSheetReportForm();
+                balanceSheetReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Balance Sheet Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenProfitLossReportForm()
+        {
+            try
+            {
+                var profitLossReportForm = new ProfitLossReportForm();
+                profitLossReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Profit & Loss Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
