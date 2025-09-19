@@ -11,13 +11,13 @@ BEGIN
         ec.CategoryId,
         ec.CategoryCode,
         ec.CategoryName,
-        ec.CategoryDescription,
+        ec.Description AS CategoryDescription,
         COUNT(e.ExpenseId) AS TotalExpenses,
         SUM(e.Amount) AS TotalAmount,
         AVG(e.Amount) AS AverageAmount,
         MIN(e.Amount) AS MinAmount,
         MAX(e.Amount) AS MaxAmount,
-        COUNT(DISTINCT e.UserId) AS TotalUsers,
+        COUNT(DISTINCT e.CreatedBy) AS TotalUsers, -- Using CreatedBy instead of UserId
         SUM(CASE WHEN e.Status = 'PENDING' THEN 1 ELSE 0 END) AS PendingExpenses,
         SUM(CASE WHEN e.Status = 'APPROVED' THEN 1 ELSE 0 END) AS ApprovedExpenses,
         SUM(CASE WHEN e.Status = 'REJECTED' THEN 1 ELSE 0 END) AS RejectedExpenses,
@@ -75,7 +75,7 @@ BEGIN
         AND e.ExpenseDate <= @EndDate
         AND (@CategoryId IS NULL OR e.CategoryId = @CategoryId)
     WHERE ec.IsActive = 1
-    GROUP BY ec.CategoryId, ec.CategoryCode, ec.CategoryName, ec.CategoryDescription
+    GROUP BY ec.CategoryId, ec.CategoryCode, ec.CategoryName, ec.Description
     HAVING COUNT(e.ExpenseId) > 0 OR @CategoryId IS NOT NULL
     ORDER BY SUM(e.Amount) DESC, ec.CategoryName;
 
@@ -83,7 +83,7 @@ BEGIN
     SELECT
         COUNT(*) AS TotalExpenses,
         COUNT(DISTINCT e.CategoryId) AS TotalCategories,
-        COUNT(DISTINCT e.UserId) AS TotalUsers,
+        COUNT(DISTINCT e.CreatedBy) AS TotalUsers, -- Using CreatedBy instead of UserId
         SUM(e.Amount) AS TotalAmount,
         AVG(e.Amount) AS AverageAmount,
         MIN(e.Amount) AS MinAmount,

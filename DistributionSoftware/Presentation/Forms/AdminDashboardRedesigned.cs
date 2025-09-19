@@ -186,7 +186,16 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Trial Balance Report", null, (s, e) => OpenTrialBalanceReportForm());
             reportsDropdown.Items.Add("Balance Sheet Report", null, (s, e) => OpenBalanceSheetReportForm());
             reportsDropdown.Items.Add("Cash Flow Report", null, (s, e) => OpenCashFlowReportForm());
+            reportsDropdown.Items.Add("Bank Reconciliation Report", null, (s, e) => OpenBankReconciliationReportForm());
             reportsDropdown.Items.Add("Profit & Loss Report", null, (s, e) => OpenProfitLossReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Expense Report", null, (s, e) => OpenExpenseReportForm());
+            reportsDropdown.Items.Add("Expense Summary", null, (s, e) => OpenExpenseSummaryReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Return Summary", null, (s, e) => OpenReturnSummaryReportForm());
+            reportsDropdown.Items.Add("Return Register", null, (s, e) => OpenReturnRegisterReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Tax Summary", null, (s, e) => OpenTaxSummaryReportForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -1502,7 +1511,14 @@ namespace DistributionSoftware.Presentation.Forms
         {
             try
             {
-                MessageBox.Show("Expense Reports functionality will be implemented soon.", "Expense Reports", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Create a submenu for expense reports
+                var expenseReportsMenu = new ContextMenuStrip();
+                expenseReportsMenu.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+                expenseReportsMenu.Items.Add("Expense Report", null, (s, e) => OpenExpenseReportForm());
+                expenseReportsMenu.Items.Add("Expense Summary", null, (s, e) => OpenExpenseSummaryReportForm());
+                
+                // Show the submenu at the current mouse position
+                expenseReportsMenu.Show(Cursor.Position);
             }
             catch (Exception ex)
             {
@@ -2348,6 +2364,20 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        private void OpenBankReconciliationReportForm()
+        {
+            try
+            {
+                var bankReconciliationReportForm = new BankReconciliationReportForm();
+                bankReconciliationReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Bank Reconciliation Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         private void OpenProfitLossReportForm()
         {
             try
@@ -2358,6 +2388,71 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Profit & Loss Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenExpenseReportForm()
+        {
+            try
+            {
+                var expenseReportForm = new ExpenseReportForm();
+                expenseReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Expense Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenExpenseSummaryReportForm()
+        {
+            try
+            {
+                var expenseSummaryReportForm = new ExpenseSummaryReportForm();
+                expenseSummaryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Expense Summary Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenReturnSummaryReportForm()
+        {
+            try
+            {
+                var returnSummaryReportForm = new ReturnSummaryReportForm();
+                returnSummaryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Return Summary Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenReturnRegisterReportForm()
+        {
+            try
+            {
+                var returnRegisterReportForm = new ReturnRegisterReportForm();
+                returnRegisterReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Return Register Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenTaxSummaryReportForm()
+        {
+            try
+            {
+                var taxSummaryReportForm = new TaxSummaryReportForm();
+                taxSummaryReportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Tax Summary Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

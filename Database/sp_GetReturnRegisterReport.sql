@@ -1,23 +1,26 @@
-CREATE PROCEDURE [dbo].[sp_GetReturnSummaryReport]
+CREATE PROCEDURE [dbo].[sp_GetReturnRegisterReport]
     @StartDate DATETIME,
     @EndDate DATETIME,
-    @ReturnType VARCHAR(20) = NULL, -- 'Sales' or 'Purchase'
-    @CustomerSupplierId INT = NULL
+    @InvoiceNumber VARCHAR(50) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Combined Sales and Purchase Returns Summary using UNION
+    -- Combined Sales and Purchase Returns Register using UNION
     SELECT
         'Sales' AS ReturnType,
         sr.ReturnId,
         sr.ReturnNumber,
+        sr.ReturnBarcode,
         sr.ReturnDate,
         sr.CustomerId,
         c.CustomerName,
         c.CustomerCode,
+        c.Phone AS CustomerPhone,
+        c.Address AS CustomerAddress,
         sr.ReferenceSalesInvoiceId,
         si.InvoiceNumber AS ReferenceInvoiceNumber,
+        si.InvoiceDate AS ReferenceInvoiceDate,
         sr.Reason,
         sr.SubTotal,
         sr.TaxAmount,
@@ -33,6 +36,7 @@ BEGIN
         sr.ProcessedBy,
         sr.ApprovedDate,
         sr.ApprovedBy,
+        sr.TaxCategoryId,
         -- Calculated fields
         CASE
             WHEN sr.Status = 'PENDING' THEN 'Pending Approval'
@@ -56,14 +60,29 @@ BEGIN
         END AS AmountCategory,
         YEAR(sr.ReturnDate) AS ReturnYear,
         MONTH(sr.ReturnDate) AS ReturnMonth,
-        DATENAME(month, sr.ReturnDate) AS ReturnMonthName
+        DATENAME(month, sr.ReturnDate) AS ReturnMonthName,
+        -- Additional register fields
+        CASE
+            WHEN sr.Status = 'PROCESSED' THEN 'Completed'
+            WHEN sr.Status = 'APPROVED' THEN 'In Progress'
+            WHEN sr.Status = 'PENDING' THEN 'Awaiting Approval'
+            WHEN sr.Status = 'REJECTED' THEN 'Cancelled'
+            ELSE 'Unknown'
+        END AS ProcessStatus,
+        CASE
+            WHEN sr.ProcessedDate IS NOT NULL THEN DATEDIFF(DAY, sr.ReturnDate, sr.ProcessedDate)
+            ELSE NULL
+        END AS ProcessingDays,
+        CASE
+            WHEN sr.ApprovedDate IS NOT NULL THEN DATEDIFF(DAY, sr.ReturnDate, sr.ApprovedDate)
+            ELSE NULL
+        END AS ApprovalDays
     FROM SalesReturns sr
     LEFT JOIN Customers c ON sr.CustomerId = c.CustomerId
     LEFT JOIN SalesInvoices si ON sr.ReferenceSalesInvoiceId = si.SalesInvoiceId
     WHERE sr.ReturnDate >= @StartDate
         AND sr.ReturnDate <= @EndDate
-        AND (@ReturnType IS NULL OR @ReturnType = 'Sales')
-        AND (@CustomerSupplierId IS NULL OR sr.CustomerId = @CustomerSupplierId)
+        AND (@InvoiceNumber IS NULL OR si.InvoiceNumber LIKE '%' + @InvoiceNumber + '%')
 
     UNION ALL
 
@@ -71,12 +90,16 @@ BEGIN
         'Purchase' AS ReturnType,
         pr.ReturnId,
         pr.ReturnNo AS ReturnNumber,
+        pr.ReturnBarcode,
         pr.ReturnDate,
         pr.SupplierId AS CustomerId, -- Using CustomerId for consistency
         s.SupplierName AS CustomerName,
         s.SupplierCode AS CustomerCode,
+        s.Phone AS CustomerPhone,
+        s.Address AS CustomerAddress,
         pr.ReferencePurchaseId AS ReferenceSalesInvoiceId, -- Using ReferenceSalesInvoiceId for consistency
         NULL AS ReferenceInvoiceNumber, -- Purchase returns don't have invoice numbers
+        NULL AS ReferenceInvoiceDate,
         pr.Reason,
         pr.NetReturnAmount AS SubTotal,
         0 AS TaxAmount, -- Purchase returns don't have separate tax
@@ -92,6 +115,7 @@ BEGIN
         pr.CreatedBy AS ProcessedBy, -- Using CreatedBy as ProcessedBy
         pr.CreatedDate AS ApprovedDate, -- Using CreatedDate as ApprovedDate
         pr.CreatedBy AS ApprovedBy, -- Using CreatedBy as ApprovedBy
+        NULL AS TaxCategoryId,
         -- Calculated fields
         'Processed' AS StatusDescription,
         DATEDIFF(DAY, pr.ReturnDate, GETDATE()) AS DaysSinceReturn,
@@ -105,13 +129,16 @@ BEGIN
         END AS AmountCategory,
         YEAR(pr.ReturnDate) AS ReturnYear,
         MONTH(pr.ReturnDate) AS ReturnMonth,
-        DATENAME(month, pr.ReturnDate) AS ReturnMonthName
+        DATENAME(month, pr.ReturnDate) AS ReturnMonthName,
+        -- Additional register fields
+        'Completed' AS ProcessStatus,
+        DATEDIFF(DAY, pr.ReturnDate, pr.CreatedDate) AS ProcessingDays,
+        0 AS ApprovalDays
     FROM PurchaseReturns pr
     LEFT JOIN Suppliers s ON pr.SupplierId = s.SupplierId
     WHERE pr.ReturnDate >= @StartDate
         AND pr.ReturnDate <= @EndDate
-        AND (@ReturnType IS NULL OR @ReturnType = 'Purchase')
-        AND (@CustomerSupplierId IS NULL OR pr.SupplierId = @CustomerSupplierId)
+        AND (@InvoiceNumber IS NULL OR pr.ReferencePurchaseId IS NOT NULL) -- Purchase returns don't have invoice numbers
 
     ORDER BY ReturnDate DESC, ReturnType, ReturnNumber;
 
@@ -187,10 +214,10 @@ BEGIN
         -- Sales Returns
         SELECT 'Sales' AS ReturnType, sr.CustomerId, sr.TotalAmount, sr.Status, sr.ReturnDate
         FROM SalesReturns sr
+        LEFT JOIN SalesInvoices si ON sr.ReferenceSalesInvoiceId = si.SalesInvoiceId
         WHERE sr.ReturnDate >= @StartDate
             AND sr.ReturnDate <= @EndDate
-            AND (@ReturnType IS NULL OR @ReturnType = 'Sales')
-            AND (@CustomerSupplierId IS NULL OR sr.CustomerId = @CustomerSupplierId)
+            AND (@InvoiceNumber IS NULL OR si.InvoiceNumber LIKE '%' + @InvoiceNumber + '%')
         
         UNION ALL
         
@@ -199,7 +226,6 @@ BEGIN
         FROM PurchaseReturns pr
         WHERE pr.ReturnDate >= @StartDate
             AND pr.ReturnDate <= @EndDate
-            AND (@ReturnType IS NULL OR @ReturnType = 'Purchase')
-            AND (@CustomerSupplierId IS NULL OR pr.SupplierId = @CustomerSupplierId)
+            AND (@InvoiceNumber IS NULL OR pr.ReferencePurchaseId IS NOT NULL)
     ) AS CombinedReturns;
 END;

@@ -238,6 +238,11 @@
     <Compile Include="Models\DispatchReportData.cs" />
     <Compile Include="Models\PendingDeliveryReportData.cs" />
     <Compile Include="Models\VehicleUtilizationReportData.cs" />
+    <Compile Include="Models\ExpenseReportData.cs" />
+    <Compile Include="Models\ExpenseSummaryReportData.cs" />
+    <Compile Include="Models\ReturnSummaryReportData.cs" />
+    <Compile Include="Models\ReturnRegisterReportData.cs" />
+    <Compile Include="Models\TaxSummaryReportData.cs" />
     <Compile Include="Models\GeneralLedgerReportData.cs" />
     <Compile Include="DataAccess\IProductRepository.cs" />
     <Compile Include="DataAccess\ProductRepository.cs" />
@@ -865,6 +870,13 @@
     <Compile Include="Presentation\Forms\CashFlowReportForm.Designer.cs">
       <DependentUpon>CashFlowReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\BankReconciliationReportForm.cs">
+      <DependentUpon>BankReconciliationReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\BankReconciliationReportForm.Designer.cs">
+      <DependentUpon>BankReconciliationReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Forms\ProfitLossReportForm.cs">
       <DependentUpon>ProfitLossReportForm.Designer.cs</DependentUpon>
       <SubType>Form</SubType>
@@ -934,6 +946,41 @@
     </Compile>
     <Compile Include="Presentation\Forms\SupplierPaymentHistoryReportForm.Designer.cs">
       <DependentUpon>SupplierPaymentHistoryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseReportForm.cs">
+      <DependentUpon>ExpenseReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseReportForm.Designer.cs">
+      <DependentUpon>ExpenseReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseSummaryReportForm.cs">
+      <DependentUpon>ExpenseSummaryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ExpenseSummaryReportForm.Designer.cs">
+      <DependentUpon>ExpenseSummaryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReturnSummaryReportForm.cs">
+      <DependentUpon>ReturnSummaryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReturnSummaryReportForm.Designer.cs">
+      <DependentUpon>ReturnSummaryReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReturnRegisterReportForm.cs">
+      <DependentUpon>ReturnRegisterReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReturnRegisterReportForm.Designer.cs">
+      <DependentUpon>ReturnRegisterReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxSummaryReportForm.cs">
+      <DependentUpon>TaxSummaryReportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxSummaryReportForm.Designer.cs">
+      <DependentUpon>TaxSummaryReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1088,6 +1135,9 @@
     <Content Include="Reports\CashFlowReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\BankReconciliationReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\ProfitLossReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1116,6 +1166,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\SupplierPaymentHistoryReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ExpenseReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ExpenseSummaryReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ReturnSummaryReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ReturnRegisterReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\TaxSummaryReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
