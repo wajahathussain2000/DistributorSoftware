@@ -287,15 +287,4 @@ namespace DistributionSoftware.Presentation.Forms
             UpdateButtonState();
         }
     }
-
-    public class TrialBalanceItem
-    {
-        public string AccountCode { get; set; }
-        public string AccountName { get; set; }
-        public string AccountType { get; set; }
-        public string NormalBalance { get; set; }
-        public decimal Balance { get; set; }
-        public decimal DebitAmount { get; set; }
-        public decimal CreditAmount { get; set; }
-    }
 }

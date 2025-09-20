@@ -188,6 +188,8 @@
     <Compile Include="Models\StockMovement.cs" />
     <Compile Include="Models\SalesInvoice.cs" />
     <Compile Include="Models\SalesInvoiceDetail.cs" />
+    <Compile Include="Models\PurchaseInvoice.cs" />
+    <Compile Include="Models\PurchaseInvoiceDetail.cs" />
     <Compile Include="Models\SalesPayment.cs" />
     <Compile Include="Models\SalesReturn.cs" />
     <Compile Include="Models\SalesReturnItem.cs" />
@@ -210,6 +212,8 @@
     <Compile Include="Models\DiscountRule.cs" />
     <Compile Include="Models\TaxCategory.cs" />
     <Compile Include="Models\TaxRate.cs" />
+    <Compile Include="Models\PaymentVoucher.cs" />
+    <Compile Include="Models\ReceiptVoucher.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\BankStatement.cs" />
     <Compile Include="Models\BankReconciliation.cs" />
@@ -218,6 +222,8 @@
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\PurchasePayment.cs" />
     <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Models\TrialBalanceItem.cs" />
     <Compile Include="Models\LowStockReportData.cs" />
     <Compile Include="Models\SupplierLedgerReportData.cs" />
     <Compile Include="Models\SupplierBalanceReportData.cs" />
@@ -252,6 +258,8 @@
     <Compile Include="DataAccess\CustomerReceiptRepository.cs" />
     <Compile Include="DataAccess\ISalesInvoiceRepository.cs" />
     <Compile Include="DataAccess\SalesInvoiceRepository.cs" />
+    <Compile Include="DataAccess\IPurchaseInvoiceRepository.cs" />
+    <Compile Include="DataAccess\PurchaseInvoiceRepository.cs" />
     <Compile Include="DataAccess\ISalesReturnRepository.cs" />
     <Compile Include="DataAccess\SalesReturnRepository.cs" />
     <Compile Include="DataAccess\IDeliveryChallanRepository.cs" />
@@ -278,6 +286,10 @@
     <Compile Include="DataAccess\TaxCategoryRepository.cs" />
     <Compile Include="DataAccess\ITaxRateRepository.cs" />
     <Compile Include="DataAccess\TaxRateRepository.cs" />
+    <Compile Include="DataAccess\IPaymentVoucherRepository.cs" />
+    <Compile Include="DataAccess\PaymentVoucherRepository.cs" />
+    <Compile Include="DataAccess\IReceiptVoucherRepository.cs" />
+    <Compile Include="DataAccess\ReceiptVoucherRepository.cs" />
     <Compile Include="DataAccess\IBankAccountRepository.cs" />
     <Compile Include="DataAccess\BankAccountRepository.cs" />
     <Compile Include="DataAccess\IBankStatementRepository.cs" />
@@ -300,6 +312,8 @@
     <Compile Include="DataAccess\WarehouseRepository.cs" />
     <Compile Include="Business\ISalesInvoiceService.cs" />
     <Compile Include="Business\SalesInvoiceService.cs" />
+    <Compile Include="Business\IPurchaseInvoiceService.cs" />
+    <Compile Include="Business\PurchaseInvoiceService.cs" />
     <Compile Include="Business\ISalesReturnService.cs" />
     <Compile Include="Business\SalesReturnService.cs" />
     <Compile Include="Business\IDeliveryChallanService.cs" />
@@ -428,6 +442,10 @@
     <Compile Include="Business\CustomerService.cs" />
     <Compile Include="Business\ITaxRateService.cs" />
     <Compile Include="Business\TaxRateService.cs" />
+    <Compile Include="Business\IPaymentVoucherService.cs" />
+    <Compile Include="Business\PaymentVoucherService.cs" />
+    <Compile Include="Business\IReceiptVoucherService.cs" />
+    <Compile Include="Business\ReceiptVoucherService.cs" />
     <Compile Include="Common\ConfigurationManager.cs" />
     <Compile Include="Common\UserSession.cs" />
     <Compile Include="Common\DebugHelper.cs" />
@@ -982,6 +1000,34 @@
     <Compile Include="Presentation\Forms\TaxSummaryReportForm.Designer.cs">
       <DependentUpon>TaxSummaryReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Forms\PaymentVoucherForm.cs">
+      <DependentUpon>PaymentVoucherForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\PaymentVoucherForm.Designer.cs">
+      <DependentUpon>PaymentVoucherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReceiptVoucherForm.cs">
+      <DependentUpon>ReceiptVoucherForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\ReceiptVoucherForm.Designer.cs">
+      <DependentUpon>ReceiptVoucherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxReturnExportForm.cs">
+      <DependentUpon>TaxReturnExportForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\TaxReturnExportForm.Designer.cs">
+      <DependentUpon>TaxReturnExportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Forms\BIDashboardForm.cs">
+      <DependentUpon>BIDashboardForm.Designer.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\Forms\BIDashboardForm.Designer.cs">
+      <DependentUpon>BIDashboardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\Forms\AdminDashboardRedesigned.resx">
@@ -1040,6 +1086,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\Forms\UserAccessControlForm.resx">
       <DependentUpon>UserAccessControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\PaymentVoucherForm.resx">
+      <DependentUpon>PaymentVoucherForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\ReceiptVoucherForm.resx">
+      <DependentUpon>ReceiptVoucherForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\TaxReturnExportForm.resx">
+      <DependentUpon>TaxReturnExportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\Forms\BIDashboardForm.resx">
+      <DependentUpon>BIDashboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

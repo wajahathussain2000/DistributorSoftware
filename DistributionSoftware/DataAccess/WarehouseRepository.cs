@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using DistributionSoftware.Common;
+using DistributionSoftware.Models;
 
 namespace DistributionSoftware.DataAccess
 {
@@ -77,11 +78,5 @@ namespace DistributionSoftware.DataAccess
                 throw;
             }
         }
-    }
-
-    public class Warehouse
-    {
-        public int WarehouseId { get; set; }
-        public string WarehouseName { get; set; }
     }
 }

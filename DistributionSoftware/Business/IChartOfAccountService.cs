@@ -386,5 +386,27 @@ namespace DistributionSoftware.Business
         List<string> GetComprehensiveValidationErrors(ChartOfAccount account);
 
         #endregion
+        
+        #region Default Account Methods
+        
+        /// <summary>
+        /// Gets the default bank account
+        /// </summary>
+        /// <returns>Default bank account</returns>
+        ChartOfAccount GetDefaultBankAccount();
+        
+        /// <summary>
+        /// Gets the default cash account
+        /// </summary>
+        /// <returns>Default cash account</returns>
+        ChartOfAccount GetDefaultCashAccount();
+        
+        /// <summary>
+        /// Gets the default mobile account
+        /// </summary>
+        /// <returns>Default mobile account</returns>
+        ChartOfAccount GetDefaultMobileAccount();
+        
+        #endregion
     }
 }

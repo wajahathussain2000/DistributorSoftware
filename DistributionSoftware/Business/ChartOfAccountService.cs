@@ -1195,5 +1195,99 @@ namespace DistributionSoftware.Business
         }
 
         #endregion
+        
+        #region Default Account Methods
+        
+        /// <summary>
+        /// Gets the default bank account
+        /// </summary>
+        /// <returns>Default bank account</returns>
+        public ChartOfAccount GetDefaultBankAccount()
+        {
+            try
+            {
+                // Try to get Bank Account with code 1120
+                var account = GetChartOfAccountByCode("1120");
+                if (account != null) return account;
+
+                // Fallback: Try to get any bank account
+                var bankAccounts = GetChartOfAccountsByType("ASSET");
+                var bankAccount = bankAccounts?.FirstOrDefault(a => 
+                    a.AccountName?.ToUpper().Contains("BANK") == true ||
+                    a.AccountName?.ToUpper().Contains("CURRENT") == true);
+                
+                if (bankAccount != null) return bankAccount;
+
+                // Last resort: Get first asset account
+                return bankAccounts?.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("ChartOfAccountService.GetDefaultBankAccount", ex);
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the default cash account
+        /// </summary>
+        /// <returns>Default cash account</returns>
+        public ChartOfAccount GetDefaultCashAccount()
+        {
+            try
+            {
+                // Try to get Cash in Hand with code 1110
+                var account = GetChartOfAccountByCode("1110");
+                if (account != null) return account;
+
+                // Fallback: Try to get any cash account
+                var cashAccounts = GetChartOfAccountsByType("ASSET");
+                var cashAccount = cashAccounts?.FirstOrDefault(a => 
+                    a.AccountName?.ToUpper().Contains("CASH") == true ||
+                    a.AccountName?.ToUpper().Contains("HAND") == true);
+                
+                if (cashAccount != null) return cashAccount;
+
+                // Last resort: Get first asset account
+                return cashAccounts?.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("ChartOfAccountService.GetDefaultCashAccount", ex);
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the default mobile account
+        /// </summary>
+        /// <returns>Default mobile account</returns>
+        public ChartOfAccount GetDefaultMobileAccount()
+        {
+            try
+            {
+                // Try to get Mobile Banking account with code 1130
+                var account = GetChartOfAccountByCode("1130");
+                if (account != null) return account;
+
+                // Fallback: Try to get any mobile account
+                var mobileAccounts = GetChartOfAccountsByType("ASSET");
+                var mobileAccount = mobileAccounts?.FirstOrDefault(a => 
+                    a.AccountName?.ToUpper().Contains("MOBILE") == true ||
+                    a.AccountName?.ToUpper().Contains("DIGITAL") == true);
+                
+                if (mobileAccount != null) return mobileAccount;
+
+                // Last resort: Get default bank account
+                return GetDefaultBankAccount();
+            }
+            catch (Exception ex)
+            {
+                DebugHelper.WriteException("ChartOfAccountService.GetDefaultMobileAccount", ex);
+                return null;
+            }
+        }
+        
+        #endregion
     }
 }

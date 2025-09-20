@@ -196,6 +196,8 @@ namespace DistributionSoftware.Presentation.Forms
             reportsDropdown.Items.Add("Return Register", null, (s, e) => OpenReturnRegisterReportForm());
             reportsDropdown.Items.Add("-");
             reportsDropdown.Items.Add("Tax Summary", null, (s, e) => OpenTaxSummaryReportForm());
+            reportsDropdown.Items.Add("-");
+            reportsDropdown.Items.Add("Business Intelligence Dashboard", null, (s, e) => OpenBIDashboardForm());
 
 
             // Expense Dropdown (Expense Management Module)
@@ -212,10 +214,14 @@ namespace DistributionSoftware.Presentation.Forms
             accountingDropdown.Items.Add("Chart of Accounts", null, (s, e) => OpenChartOfAccountsForm());
             accountingDropdown.Items.Add("-");
             accountingDropdown.Items.Add("Journal Entries", null, (s, e) => OpenJournalEntriesForm());
+            accountingDropdown.Items.Add("Payment Vouchers", null, (s, e) => OpenPaymentVoucherForm());
+            accountingDropdown.Items.Add("Receipt Vouchers", null, (s, e) => OpenReceiptVoucherForm());
+            accountingDropdown.Items.Add("-");
             accountingDropdown.Items.Add("General Ledger", null, (s, e) => OpenGeneralLedgerForm());
             accountingDropdown.Items.Add("Trial Balance", null, (s, e) => OpenTrialBalanceForm());
             accountingDropdown.Items.Add("-");
             accountingDropdown.Items.Add("Tax Configuration", null, (s, e) => OpenTaxConfigurationForm());
+            accountingDropdown.Items.Add("Tax Return Export", null, (s, e) => OpenTaxReturnExportForm());
             accountingDropdown.Items.Add("Bank Reconciliation", null, (s, e) => OpenBankReconciliationForm());
             accountingDropdown.Items.Add("-");
             accountingDropdown.Items.Add("Profit & Loss Statement", null, (s, e) => OpenProfitLossForm());
@@ -1603,6 +1609,32 @@ namespace DistributionSoftware.Presentation.Forms
             }
         }
 
+        private void OpenPaymentVoucherForm()
+        {
+            try
+            {
+                var paymentVoucherForm = new PaymentVoucherForm();
+                paymentVoucherForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Payment Voucher Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenReceiptVoucherForm()
+        {
+            try
+            {
+                var receiptVoucherForm = new ReceiptVoucherForm();
+                receiptVoucherForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Receipt Voucher Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void OpenGeneralLedgerForm()
         {
             try
@@ -1680,6 +1712,20 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Tax Configuration: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenTaxReturnExportForm()
+        {
+            try
+            {
+                var taxReturnExportForm = new TaxReturnExportForm();
+                taxReturnExportForm.StartPosition = FormStartPosition.CenterParent;
+                taxReturnExportForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Tax Return Export Form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2453,6 +2499,20 @@ namespace DistributionSoftware.Presentation.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error opening Tax Summary Report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenBIDashboardForm()
+        {
+            try
+            {
+                var biDashboardForm = new BIDashboardForm();
+                biDashboardForm.StartPosition = FormStartPosition.CenterParent;
+                biDashboardForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Business Intelligence Dashboard: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
